@@ -12,7 +12,8 @@
         <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <!--<GenerateDocumentationFile>true</GenerateDocumentationFile>-->
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>CS1591</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
