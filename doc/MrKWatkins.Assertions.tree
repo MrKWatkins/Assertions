@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE instance-profile SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd"[]>
+<instance-profile id="MrKWatkins.Assertions" name="MrKWatkins.Assertions" start-page="MrKWatkins.Assertions.md">
+  <toc-element topic="MrKWatkins.Assertions.md" />
+  <toc-element toc-title="API" id="API">
+    <toc-element toc-title="MrKWatkins.Assertions">
+      <toc-element toc-title="AssertionException">
+        <toc-element toc-title="AssertionException" topic="MrKWatkins.Assertions.AssertionException.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.AssertionException.-ctor.md" />
+      </toc-element>
+    </toc-element>
+  </toc-element>
+</instance-profile>
