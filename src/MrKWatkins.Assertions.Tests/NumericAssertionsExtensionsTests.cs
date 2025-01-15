@@ -2,53 +2,32 @@ namespace MrKWatkins.Assertions.Tests;
 
 public sealed class NumericAssertionsExtensionsTests
 {
-    [TestCase(0)]
-    [TestCase(1)]
-    public void BeNegative_NotNegative(int value) => Assert.Throws<AssertionException>(() => value.Should().BeNegative());
-
     [Test]
-    public void BeNegative_NotNegative()
+    public void BeNegative()
     {
-        const int value = -123;
-        Assert.DoesNotThrow(() => value.Should().BeNegative());
+        const int positive = 1;
+        const int zero = 0;
+        const int negative = -1;
+
+        Assert.Throws<AssertionException>(() => positive.Should().BeNegative());
+        Assert.Throws<AssertionException>(() => zero.Should().BeNegative());
+        Assert.DoesNotThrow(() => negative.Should().BeNegative());
+
+        Assert.DoesNotThrow(() => positive.Should().Not.BeNegative());
+        Assert.DoesNotThrow(() => zero.Should().Not.BeNegative());
+        Assert.Throws<AssertionException>(() => negative.Should().Not.BeNegative());
     }
 
     [Test]
-    public void BeNegative_ValueType_Value()
+    public void BeNull_Chain()
     {
-        const int value = -123;
-        Assert.That(value.Should().BeNegative().Value, Is.EqualTo(value));
-    }
+        const int negative = -1;
 
-    [Test]
-    public void BeNegative_ValueType_And()
-    {
-        const int value = -123;
-        Assert.That(value.Should().BeNegative().And.Value, Is.EqualTo(value));
-    }
+        var chain = negative.Should().BeNegative();
+        Assert.That(chain.Value, Is.EqualTo(negative));
 
-    [Test]
-    public void NotBeNegative_Negative()
-    {
-        const decimal value = -123M;
-        Assert.Throws<AssertionException>(() => value.Should().NotBeNegative());
-    }
-
-    [TestCase(0)]
-    [TestCase(1)]
-    public void NotBeNegative_NotNegative(int value) => Assert.DoesNotThrow(() => value.Should().NotBeNegative());
-
-    [Test]
-    public void NotBeNegative_ValueType_Value()
-    {
-        const int value = 123;
-        Assert.That(value.Should().NotBeNegative().Value, Is.EqualTo(value));
-    }
-
-    [Test]
-    public void NotBeNegative_ValueType_And()
-    {
-        const int value = 123;
-        Assert.That(value.Should().NotBeNegative().And.Value, Is.EqualTo(value));
+        var and = chain.And;
+        Assert.That(and.Value, Is.EqualTo(negative));
+        Assert.That(and.IsNot, Is.False);
     }
 }

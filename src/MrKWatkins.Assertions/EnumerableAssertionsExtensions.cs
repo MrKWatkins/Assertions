@@ -2,34 +2,17 @@ namespace MrKWatkins.Assertions;
 
 public static class EnumerableAssertionsExtensions
 {
-    public static EnumerableAssertionsChain<TItem> NotBeNull<TItem>(this EnumerableAssertions<TItem> assertions)
+    public static EnumerableAssertionsChain<TItem> BeNull<TItem>(this EnumerableAssertions<TItem> assertions)
     {
-        if (ReferenceEquals(assertions.Value, null))
-        {
-            throw new AssertionException("Value is null.");
-        }
-
-        return new EnumerableAssertionsChain<TItem>(assertions);
-    }
-
-    public static EnumerableAssertionsChain<TItem> NotBeEmpty<TItem>(this EnumerableAssertions<TItem> assertions)
-    {
-        assertions.NotBeNull();
-        if (!assertions.Value.Any())
-        {
-            throw new AssertionException("Value should not be empty.");
-        }
+        Verify.That(ReferenceEquals(assertions.Value, null), "Value should {0}be null.", assertions.IsNot);
 
         return new EnumerableAssertionsChain<TItem>(assertions);
     }
 
     public static EnumerableAssertionsChain<TItem> BeEmpty<TItem>(this EnumerableAssertions<TItem> assertions)
     {
-        assertions.NotBeNull();
-        if (assertions.Value.Any())
-        {
-            throw new AssertionException("Value should not be empty.");
-        }
+        assertions.Value.Should().Not.BeNull();
+        Verify.That(!assertions.Value.Any(), "Value should {0}be empty.", assertions.IsNot);
 
         return new EnumerableAssertionsChain<TItem>(assertions);
     }

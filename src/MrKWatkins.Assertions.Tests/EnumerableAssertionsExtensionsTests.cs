@@ -1,88 +1,61 @@
 namespace MrKWatkins.Assertions.Tests;
 
+[SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
 public sealed class EnumerableAssertionsExtensionsTests
 {
     [Test]
-    public void NotBeNull_Null()
+    public void BeNull()
     {
-        IEnumerable<byte> value = null!;
-        Assert.Throws<AssertionException>(() => value.Should().NotBeNull());
+        IEnumerable<byte> notNullValue = [];
+        IEnumerable<byte> nullValue = null!;
+
+        Assert.Throws<AssertionException>(() => notNullValue.Should().BeNull());
+        Assert.DoesNotThrow(() => notNullValue.Should().Not.BeNull());
+
+        Assert.DoesNotThrow(() => nullValue.Should().BeNull());
+        Assert.Throws<AssertionException>(() => nullValue.Should().Not.BeNull());
     }
 
     [Test]
-    public void NotBeNull_NotNull()
+    public void BeNull_Chain()
     {
-        IEnumerable<byte> value = [1, 2, 3];
-        Assert.DoesNotThrow(() => value.Should().NotBeNull());
+        IEnumerable<byte> nullValue = null!;
+
+        var chain = nullValue.Should().BeNull();
+        Assert.That(chain.Value, Is.EqualTo(nullValue));
+
+        var and = chain.And;
+        Assert.That(and.Value, Is.EqualTo(nullValue));
+        Assert.That(and.IsNot, Is.False);
     }
 
     [Test]
-    public void NotBeNull_Value()
+    public void BeEmpty()
     {
-        IEnumerable<byte> value = [1, 2, 3];
-        Assert.That(value.Should().NotBeNull().Value, Is.EqualTo(value));
+        IEnumerable<byte> nullValue = null!;
+        IEnumerable<byte> notEmptyValue = [1, 2, 3];
+        IEnumerable<byte> emptyValue = [];
+
+        Assert.Throws<AssertionException>(() => nullValue.Should().BeEmpty());
+        Assert.Throws<AssertionException>(() => nullValue.Should().Not.BeEmpty());
+
+        Assert.Throws<AssertionException>(() => notEmptyValue.Should().BeEmpty());
+        Assert.DoesNotThrow(() => notEmptyValue.Should().Not.BeEmpty());
+
+        Assert.DoesNotThrow(() => emptyValue.Should().BeEmpty());
+        Assert.Throws<AssertionException>(() => emptyValue.Should().Not.BeEmpty());
     }
 
     [Test]
-    public void NotBeNull_And()
+    public void BeEmpty_Chain()
     {
-        IEnumerable<byte> value = [1, 2, 3];
-        Assert.That(value.Should().NotBeNull().And.Value, Is.EqualTo(value));
-    }
+        IEnumerable<byte> emptyValue = [];
 
-    [Test]
-    public void NotBeEmpty_Empty()
-    {
-        IEnumerable<byte> value = [];
-        Assert.Throws<AssertionException>(() => value.Should().NotBeEmpty());
-    }
+        var chain = emptyValue.Should().BeEmpty();
+        Assert.That(chain.Value, Is.EqualTo(emptyValue));
 
-    [Test]
-    public void NotBeEmpty_NotEmpty()
-    {
-        IEnumerable<byte> value = [1, 2, 3];
-        Assert.DoesNotThrow(() => value.Should().NotBeEmpty());
-    }
-
-    [Test]
-    public void NotBeEmpty_Value()
-    {
-        IEnumerable<byte> value = [1, 2, 3];
-        Assert.That(value.Should().NotBeEmpty().Value, Is.EqualTo(value));
-    }
-
-    [Test]
-    public void NotBeEmpty_And()
-    {
-        IEnumerable<byte> value = [1, 2, 3];
-        Assert.That(value.Should().NotBeEmpty().And.Value, Is.EqualTo(value));
-    }
-
-    [Test]
-    public void BeEmpty_Empty()
-    {
-        IEnumerable<byte> value = [1, 2, 3];
-        Assert.Throws<AssertionException>(() => value.Should().BeEmpty());
-    }
-
-    [Test]
-    public void BeEmpty_NotEmpty()
-    {
-        IEnumerable<byte> value = [];
-        Assert.DoesNotThrow(() => value.Should().BeEmpty());
-    }
-
-    [Test]
-    public void BeEmpty_Value()
-    {
-        IEnumerable<byte> value = [];
-        Assert.That(value.Should().BeEmpty().Value, Is.EqualTo(value));
-    }
-
-    [Test]
-    public void BeEmpty_And()
-    {
-        IEnumerable<byte> value = [];
-        Assert.That(value.Should().BeEmpty().And.Value, Is.EqualTo(value));
+        var and = chain.And;
+        Assert.That(and.Value, Is.EqualTo(emptyValue));
+        Assert.That(and.IsNot, Is.False);
     }
 }
