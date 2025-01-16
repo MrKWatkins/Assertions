@@ -1,6 +1,6 @@
 namespace MrKWatkins.Assertions.Tests;
 
-public sealed class ReadOnlySpanAssertionsExtensionsTests
+public sealed class ReadOnlySpanAssertionsTests
 {
     [Test]
     public void BeEmpty()
@@ -16,18 +16,6 @@ public sealed class ReadOnlySpanAssertionsExtensionsTests
             ReadOnlySpan<byte> value = [];
             value.Should().BeEmpty();
         });
-
-        Assert.DoesNotThrow(() =>
-        {
-            ReadOnlySpan<byte> value = [1, 2, 3];
-            value.Should().Not.BeEmpty();
-        });
-
-        Assert.Throws<AssertionException>(() =>
-        {
-            ReadOnlySpan<byte> value = [];
-            value.Should().Not.BeEmpty();
-        });
     }
 
     [Test]
@@ -40,6 +28,33 @@ public sealed class ReadOnlySpanAssertionsExtensionsTests
 
         var and = chain.And;
         Assert.That(and.Value == emptyValue, Is.True);
-        Assert.That(and.IsNot, Is.False);
+    }
+
+    [Test]
+    public void NotBeEmpty()
+    {
+        Assert.DoesNotThrow(() =>
+        {
+            ReadOnlySpan<byte> value = [1, 2, 3];
+            value.Should().NotBeEmpty();
+        });
+
+        Assert.Throws<AssertionException>(() =>
+        {
+            ReadOnlySpan<byte> value = [];
+            value.Should().NotBeEmpty();
+        });
+    }
+
+    [Test]
+    public void NotBeEmpty_Chain()
+    {
+        ReadOnlySpan<byte> emptyValue = [1, 2, 3];
+
+        var chain = emptyValue.Should().NotBeEmpty();
+        Assert.That(chain.Value == emptyValue, Is.True);
+
+        var and = chain.And;
+        Assert.That(and.Value == emptyValue, Is.True);
     }
 }

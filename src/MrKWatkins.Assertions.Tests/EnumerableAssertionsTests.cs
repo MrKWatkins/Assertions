@@ -1,7 +1,7 @@
 namespace MrKWatkins.Assertions.Tests;
 
 [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-public sealed class EnumerableAssertionsExtensionsTests
+public sealed class EnumerableAssertionsTests
 {
     [Test]
     public void BeNull()
@@ -10,23 +10,29 @@ public sealed class EnumerableAssertionsExtensionsTests
         IEnumerable<byte> nullValue = null!;
 
         Assert.Throws<AssertionException>(() => notNullValue.Should().BeNull());
-        Assert.DoesNotThrow(() => notNullValue.Should().Not.BeNull());
-
         Assert.DoesNotThrow(() => nullValue.Should().BeNull());
-        Assert.Throws<AssertionException>(() => nullValue.Should().Not.BeNull());
     }
 
     [Test]
-    public void BeNull_Chain()
+    public void NotBeNull()
     {
+        IEnumerable<byte> notNullValue = [];
         IEnumerable<byte> nullValue = null!;
 
-        var chain = nullValue.Should().BeNull();
+        Assert.DoesNotThrow(() => notNullValue.Should().NotBeNull());
+        Assert.Throws<AssertionException>(() => nullValue.Should().NotBeNull());
+    }
+
+    [Test]
+    public void NotBeNull_Chain()
+    {
+        IEnumerable<byte> nullValue = [];
+
+        var chain = nullValue.Should().NotBeNull();
         Assert.That(chain.Value, Is.EqualTo(nullValue));
 
         var and = chain.And;
         Assert.That(and.Value, Is.EqualTo(nullValue));
-        Assert.That(and.IsNot, Is.False);
     }
 
     [Test]
@@ -37,13 +43,8 @@ public sealed class EnumerableAssertionsExtensionsTests
         IEnumerable<byte> emptyValue = [];
 
         Assert.Throws<AssertionException>(() => nullValue.Should().BeEmpty());
-        Assert.Throws<AssertionException>(() => nullValue.Should().Not.BeEmpty());
-
         Assert.Throws<AssertionException>(() => notEmptyValue.Should().BeEmpty());
-        Assert.DoesNotThrow(() => notEmptyValue.Should().Not.BeEmpty());
-
         Assert.DoesNotThrow(() => emptyValue.Should().BeEmpty());
-        Assert.Throws<AssertionException>(() => emptyValue.Should().Not.BeEmpty());
     }
 
     [Test]
@@ -56,6 +57,29 @@ public sealed class EnumerableAssertionsExtensionsTests
 
         var and = chain.And;
         Assert.That(and.Value, Is.EqualTo(emptyValue));
-        Assert.That(and.IsNot, Is.False);
+    }
+
+    [Test]
+    public void NotBeEmpty()
+    {
+        IEnumerable<byte> nullValue = null!;
+        IEnumerable<byte> notEmptyValue = [1, 2, 3];
+        IEnumerable<byte> emptyValue = [];
+
+        Assert.Throws<AssertionException>(() => nullValue.Should().NotBeEmpty());
+        Assert.DoesNotThrow(() => notEmptyValue.Should().NotBeEmpty());
+        Assert.Throws<AssertionException>(() => emptyValue.Should().NotBeEmpty());
+    }
+
+    [Test]
+    public void NotBeEmpty_Chain()
+    {
+        IEnumerable<byte> emptyValue = [1, 2, 3];
+
+        var chain = emptyValue.Should().NotBeEmpty();
+        Assert.That(chain.Value, Is.EqualTo(emptyValue));
+
+        var and = chain.And;
+        Assert.That(and.Value, Is.EqualTo(emptyValue));
     }
 }

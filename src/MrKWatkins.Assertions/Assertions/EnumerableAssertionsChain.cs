@@ -1,7 +1,6 @@
-namespace MrKWatkins.Assertions;
+namespace MrKWatkins.Assertions.Assertions;
 
 public readonly ref struct EnumerableAssertionsChain<TItem>
-    where TItem : allows ref struct
 {
     internal EnumerableAssertionsChain(EnumerableAssertions<TItem> assertions)
     {

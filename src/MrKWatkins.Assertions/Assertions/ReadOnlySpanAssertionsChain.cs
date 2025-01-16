@@ -1,4 +1,4 @@
-namespace MrKWatkins.Assertions;
+namespace MrKWatkins.Assertions.Assertions;
 
 public readonly ref struct ReadOnlySpanAssertionsChain<TItem>
 {

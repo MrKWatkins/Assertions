@@ -1,9 +1,11 @@
+using MrKWatkins.Assertions.Assertions;
+
 namespace MrKWatkins.Assertions;
 
 public static class Extensions
 {
     [Pure]
-    public static ObjectAssertions<T> Should<T>(this T value) where T : allows ref struct => new(value);
+    public static ObjectAssertions<T> Should<T>(this T value) => new(value);
 
     [Pure]
     public static EnumerableAssertions<T> Should<T>([NoEnumeration] this IEnumerable<T> value) => new(value);
