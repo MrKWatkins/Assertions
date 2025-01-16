@@ -29,11 +29,11 @@ internal sealed class FormattingScope : IDisposable
     internal (string prefix, string? format) GetIntegerFormat<T>(int? byteSize)
         where T : IBinaryInteger<T>? =>
         integerFormat switch
-    {
-        IntegerFormat.Hexadecimal => ("0x", byteSize != null ? $"X{byteSize * 2}" : "X"),
-        IntegerFormat.Binary => ("0b", byteSize != null ? $"B{byteSize * 8}" : "B"),
-        _ => ("", null)
-    };
+        {
+            IntegerFormat.Hexadecimal => ("0x", byteSize != null ? $"X{byteSize * 2}" : "X"),
+            IntegerFormat.Binary => ("0b", byteSize != null ? $"B{byteSize * 8}" : "B"),
+            _ => ("", null)
+        };
 
     public void Dispose() => AsyncLocal.Value = null;
 }
