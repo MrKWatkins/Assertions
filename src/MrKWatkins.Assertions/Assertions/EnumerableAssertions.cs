@@ -11,7 +11,7 @@ public readonly ref struct EnumerableAssertions<TItem>
 
     public void BeNull()
     {
-        Verify.That(Value is null, "Value should be null.");
+        Verify.That(Value is null, "Value should be null but was {0}.", Value);
     }
 
     public EnumerableAssertionsChain<TItem> NotBeNull()
@@ -24,7 +24,7 @@ public readonly ref struct EnumerableAssertions<TItem>
     public EnumerableAssertionsChain<TItem> BeEmpty()
     {
         NotBeNull();
-        Verify.That(!Value.Any(), "Value should be empty.");
+        Verify.That(!Value.Any(), "Value should be empty but has {0} items.", Value.Count());
 
         return new EnumerableAssertionsChain<TItem>(this);
     }

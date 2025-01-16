@@ -9,7 +9,9 @@ public sealed class EnumerableAssertionsTests
         IEnumerable<byte> notNullValue = [];
         IEnumerable<byte> nullValue = null!;
 
-        Assert.Throws<AssertionException>(() => notNullValue.Should().BeNull());
+        var exception = Assert.Throws<AssertionException>(() => notNullValue.Should().BeNull());
+        Assert.That(exception, Has.Message.EqualTo("Value should be null but was System.Byte[]."));
+
         Assert.DoesNotThrow(() => nullValue.Should().BeNull());
     }
 
@@ -20,7 +22,9 @@ public sealed class EnumerableAssertionsTests
         IEnumerable<byte> nullValue = null!;
 
         Assert.DoesNotThrow(() => notNullValue.Should().NotBeNull());
-        Assert.Throws<AssertionException>(() => nullValue.Should().NotBeNull());
+
+        var exception = Assert.Throws<AssertionException>(() => nullValue.Should().NotBeNull());
+        Assert.That(exception, Has.Message.EqualTo("Value should not be null."));
     }
 
     [Test]
@@ -42,8 +46,12 @@ public sealed class EnumerableAssertionsTests
         IEnumerable<byte> notEmptyValue = [1, 2, 3];
         IEnumerable<byte> emptyValue = [];
 
-        Assert.Throws<AssertionException>(() => nullValue.Should().BeEmpty());
-        Assert.Throws<AssertionException>(() => notEmptyValue.Should().BeEmpty());
+        var exception = Assert.Throws<AssertionException>(() => nullValue.Should().BeEmpty());
+        Assert.That(exception, Has.Message.EqualTo("Value should not be null."));
+
+        exception = Assert.Throws<AssertionException>(() => notEmptyValue.Should().BeEmpty());
+        Assert.That(exception, Has.Message.EqualTo("Value should be empty but has 3 items."));
+
         Assert.DoesNotThrow(() => emptyValue.Should().BeEmpty());
     }
 
@@ -66,9 +74,13 @@ public sealed class EnumerableAssertionsTests
         IEnumerable<byte> notEmptyValue = [1, 2, 3];
         IEnumerable<byte> emptyValue = [];
 
-        Assert.Throws<AssertionException>(() => nullValue.Should().NotBeEmpty());
+        var exception = Assert.Throws<AssertionException>(() => nullValue.Should().NotBeEmpty());
+        Assert.That(exception, Has.Message.EqualTo("Value should not be null."));
+
         Assert.DoesNotThrow(() => notEmptyValue.Should().NotBeEmpty());
-        Assert.Throws<AssertionException>(() => emptyValue.Should().NotBeEmpty());
+
+        exception = Assert.Throws<AssertionException>(() => emptyValue.Should().NotBeEmpty());
+        Assert.That(exception, Has.Message.EqualTo("Value should not be empty."));
     }
 
     [Test]

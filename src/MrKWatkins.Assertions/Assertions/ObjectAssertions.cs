@@ -11,7 +11,7 @@ public readonly ref struct ObjectAssertions<T>
 
     public void BeNull()
     {
-        Verify.That(Value is null, "Value should be null.");
+        Verify.That(Value is null, "Value should be null but was {0}.", Value);
     }
 
     public ObjectAssertionsChain<T> NotBeNull()
@@ -24,7 +24,9 @@ public readonly ref struct ObjectAssertions<T>
     public ObjectAssertionsChain<TOther> BeOfType<TOther>()
     {
         Verify.That(Value is not null, "Value should not be null.");
-        Verify.That(Value!.GetType().IsAssignableTo(typeof(TOther)), $"Value should be of type {typeof(TOther)}.");
+
+        var type = Value!.GetType();
+        Verify.That(type.IsAssignableTo(typeof(TOther)), "Value should be of type {0} but was of type {1}.", typeof(TOther), type);
 
         return new ObjectAssertionsChain<TOther>(new ObjectAssertions<TOther>((TOther)(object)Value!));
     }
@@ -32,7 +34,9 @@ public readonly ref struct ObjectAssertions<T>
     public ObjectAssertionsChain<T> NotBeOfType<TOther>()
     {
         Verify.That(Value is not null, "Value should not be null.");
-        Verify.That(!Value!.GetType().IsAssignableTo(typeof(TOther)), $"Value should not be of type {typeof(TOther)}.");
+
+        var type = Value!.GetType();
+        Verify.That(!type.IsAssignableTo(typeof(TOther)), "Value should not be of type {0}.", type);
 
         return new ObjectAssertionsChain<T>(this);
     }

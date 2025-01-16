@@ -5,11 +5,12 @@ public sealed class ReadOnlySpanAssertionsTests
     [Test]
     public void BeEmpty()
     {
-        Assert.Throws<AssertionException>(() =>
+        var exception = Assert.Throws<AssertionException>(() =>
         {
             ReadOnlySpan<byte> value = [1, 2, 3];
             value.Should().BeEmpty();
         });
+        Assert.That(exception, Has.Message.EqualTo("Value should be empty but contained 3 elements."));
 
         Assert.DoesNotThrow(() =>
         {
@@ -33,15 +34,16 @@ public sealed class ReadOnlySpanAssertionsTests
     [Test]
     public void NotBeEmpty()
     {
+        var exception = Assert.Throws<AssertionException>(() =>
+        {
+            ReadOnlySpan<byte> value = [];
+            value.Should().NotBeEmpty();
+        });
+        Assert.That(exception, Has.Message.EqualTo("Value should not be empty."));
+
         Assert.DoesNotThrow(() =>
         {
             ReadOnlySpan<byte> value = [1, 2, 3];
-            value.Should().NotBeEmpty();
-        });
-
-        Assert.Throws<AssertionException>(() =>
-        {
-            ReadOnlySpan<byte> value = [];
             value.Should().NotBeEmpty();
         });
     }

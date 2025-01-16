@@ -8,7 +8,9 @@ public sealed class ObjectAssertionsTests
         const string notNullValue = "Not Null";
         string nullValue = null!;
 
-        Assert.Throws<AssertionException>(() => notNullValue.Should().BeNull());
+        var exception = Assert.Throws<AssertionException>(() => notNullValue.Should().BeNull());
+        Assert.That(exception, Has.Message.EqualTo("Value should be null but was \"Not Null\"."));
+
         Assert.DoesNotThrow(() => nullValue.Should().BeNull());
     }
 
@@ -17,7 +19,8 @@ public sealed class ObjectAssertionsTests
     {
         const int notNullValue = 123;
 
-        Assert.Throws<AssertionException>(() => notNullValue.Should().BeNull());
+        var exception = Assert.Throws<AssertionException>(() => notNullValue.Should().BeNull());
+        Assert.That(exception, Has.Message.EqualTo("Value should be null but was 123."));
     }
 
     [Test]
@@ -26,7 +29,9 @@ public sealed class ObjectAssertionsTests
         string nullValue = null!;
         const string notNullValue = "Not Null";
 
-        Assert.Throws<AssertionException>(() => nullValue.Should().NotBeNull());
+        var exception = Assert.Throws<AssertionException>(() => nullValue.Should().NotBeNull());
+        Assert.That(exception, Has.Message.EqualTo("Value should not be null."));
+
         Assert.DoesNotThrow(() => notNullValue.Should().NotBeNull());
     }
 
@@ -56,8 +61,12 @@ public sealed class ObjectAssertionsTests
         object? nullValue = null;
         object value = "String";
 
-        Assert.Throws<AssertionException>(() => nullValue.Should().BeOfType<object>());
-        Assert.Throws<AssertionException>(() => value.Should().BeOfType<int>());
+        var exception = Assert.Throws<AssertionException>(() => nullValue.Should().BeOfType<object>());
+        Assert.That(exception, Has.Message.EqualTo("Value should not be null."));
+
+        exception = Assert.Throws<AssertionException>(() => value.Should().BeOfType<int>());
+        Assert.That(exception, Has.Message.EqualTo("Value should be of type Int32 but was of type String."));
+
         Assert.DoesNotThrow(() => value.Should().BeOfType<string>());
     }
 
@@ -79,8 +88,12 @@ public sealed class ObjectAssertionsTests
         object? nullValue = null;
         object value = "String";
 
-        Assert.Throws<AssertionException>(() => nullValue.Should().NotBeOfType<object>());
-        Assert.Throws<AssertionException>(() => value.Should().NotBeOfType<string>());
+        var exception = Assert.Throws<AssertionException>(() => nullValue.Should().NotBeOfType<object>());
+        Assert.That(exception, Has.Message.EqualTo("Value should not be null."));
+
+        exception = Assert.Throws<AssertionException>(() => value.Should().NotBeOfType<string>());
+        Assert.That(exception, Has.Message.EqualTo("Value should not be of type String."));
+
         Assert.DoesNotThrow(() => value.Should().NotBeOfType<int>());
     }
 
