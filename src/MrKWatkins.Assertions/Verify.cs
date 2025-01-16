@@ -33,6 +33,7 @@ internal static class Verify
     }
 
     [Pure]
+    [ExcludeFromCodeCoverage]
     private static Func<string, Exception> BuildCreateException()
     {
         var nunitExceptionType = AppDomain.CurrentDomain
@@ -44,6 +45,7 @@ internal static class Verify
     }
 
     [Pure]
+    [ExcludeFromCodeCoverage]
     private static Func<string, Exception>? BuildCreateException(Type? exceptionType)
     {
         if (exceptionType == null)

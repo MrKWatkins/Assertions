@@ -10,8 +10,7 @@
 ## Should&lt;T&gt;(T) {id="mrkwatkins-assertions-extensions-should-1(-0)"}
 
 ```c#
-public static ObjectAssertions<T> Should<T>(this T? value)
-   where T;
+public static ObjectAssertions<T> Should<T>(this T? value);
 ```
 
 ### Type Parameters {id="type-parameters-mrkwatkins-assertions-extensions-should-1(-0)"}
@@ -28,7 +27,7 @@ public static ObjectAssertions<T> Should<T>(this T? value)
 
 ## Returns {id="returns-mrkwatkins-assertions-extensions-should-1(-0)"}
 
-[ObjectAssertions&lt;T&gt;](MrKWatkins.Assertions.ObjectAssertions-1.md)
+[ObjectAssertions&lt;T&gt;](MrKWatkins.Assertions.Assertions.ObjectAssertions-1.md)
 ## Should&lt;T&gt;(IEnumerable&lt;T&gt;) {id="mrkwatkins-assertions-extensions-should-1(system-collections-generic-ienumerable((-0)))"}
 
 ```c#
@@ -49,7 +48,7 @@ public static EnumerableAssertions<T> Should<T>(this IEnumerable<T> value);
 
 ## Returns {id="returns-mrkwatkins-assertions-extensions-should-1(system-collections-generic-ienumerable((-0)))"}
 
-[EnumerableAssertions&lt;T&gt;](MrKWatkins.Assertions.EnumerableAssertions-1.md)
+[EnumerableAssertions&lt;T&gt;](MrKWatkins.Assertions.Assertions.EnumerableAssertions-1.md)
 ## Should&lt;T&gt;(ReadOnlySpan&lt;T&gt;) {id="mrkwatkins-assertions-extensions-should-1(system-readonlyspan((-0)))"}
 
 ```c#
@@ -70,4 +69,4 @@ public static ReadOnlySpanAssertions<T> Should<T>(this ReadOnlySpan<T> value);
 
 ## Returns {id="returns-mrkwatkins-assertions-extensions-should-1(system-readonlyspan((-0)))"}
 
-[ReadOnlySpanAssertions&lt;T&gt;](MrKWatkins.Assertions.ReadOnlySpanAssertions-1.md)
+[ReadOnlySpanAssertions&lt;T&gt;](MrKWatkins.Assertions.Assertions.ReadOnlySpanAssertions-1.md)
