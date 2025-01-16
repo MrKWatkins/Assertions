@@ -1,12 +1,16 @@
+using System.Linq.Expressions;
+
 namespace MrKWatkins.Assertions;
 
 internal static class Verify
 {
+    private static readonly Func<string, Exception> CreateException = BuildCreateException();
+
     internal static void That(bool condition, string exceptionMessage)
     {
         if (!condition)
         {
-            throw new AssertionException(exceptionMessage);
+            throw CreateException(exceptionMessage);
         }
     }
 
@@ -15,7 +19,7 @@ internal static class Verify
     {
         if (!condition)
         {
-            throw new AssertionException(string.Format(exceptionMessageFormat, Format.Value(arg0)));
+            throw CreateException(string.Format(exceptionMessageFormat, Format.Value(arg0)));
         }
     }
 
@@ -24,7 +28,39 @@ internal static class Verify
     {
         if (!condition)
         {
-            throw new AssertionException(string.Format(exceptionMessageFormat, Format.Value(arg0), Format.Value(arg1)));
+            throw CreateException(string.Format(exceptionMessageFormat, Format.Value(arg0), Format.Value(arg1)));
         }
+    }
+
+    [Pure]
+    private static Func<string, Exception> BuildCreateException()
+    {
+        var nunitExceptionType = AppDomain.CurrentDomain
+            .GetAssemblies()
+            .SelectMany(a => a.GetTypes())
+            .FirstOrDefault(t => t.FullName == "NUnit.Framework.AssertionException");
+
+        return BuildCreateException(nunitExceptionType) ?? (message => new ApplicationException(message));
+    }
+
+    [Pure]
+    private static Func<string, Exception>? BuildCreateException(Type? exceptionType)
+    {
+        if (exceptionType == null)
+        {
+            return null;
+        }
+
+        var constructor = exceptionType.GetConstructor([typeof(string)]);
+        if (constructor == null)
+        {
+            return null;
+        }
+
+        var parameter = Expression.Parameter(typeof(string), "message");
+        var construct = Expression.New(constructor, parameter);
+        var lambda = Expression.Lambda<Func<string, Exception>>(construct, parameter);
+
+        return lambda.Compile();
     }
 }

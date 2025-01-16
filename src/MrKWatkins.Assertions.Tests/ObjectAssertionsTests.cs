@@ -1,4 +1,5 @@
 namespace MrKWatkins.Assertions.Tests;
+using AssertionException = NUnit.Framework.AssertionException;
 
 public sealed class ObjectAssertionsTests
 {
