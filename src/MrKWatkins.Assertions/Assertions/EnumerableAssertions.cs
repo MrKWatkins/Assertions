@@ -1,6 +1,6 @@
 namespace MrKWatkins.Assertions.Assertions;
 
-public readonly ref struct EnumerableAssertions<TItem>
+public readonly struct EnumerableAssertions<TItem>
 {
     internal EnumerableAssertions([NoEnumeration] IEnumerable<TItem> value)
     {

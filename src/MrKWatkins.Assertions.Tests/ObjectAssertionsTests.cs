@@ -1,112 +1,96 @@
 namespace MrKWatkins.Assertions.Tests;
-using AssertionException = NUnit.Framework.AssertionException;
 
 public sealed class ObjectAssertionsTests
 {
     [Test]
-    public void BeNull_ReferenceType()
+    public async Task BeNull_ReferenceType()
     {
         const string notNullValue = "Not Null";
         string nullValue = null!;
 
-        var exception = Assert.Throws<AssertionException>(() => notNullValue.Should().BeNull());
-        Assert.That(exception, Has.Message.EqualTo("Value should be null but was \"Not Null\"."));
-
-        Assert.DoesNotThrow(() => nullValue.Should().BeNull());
+        await Assert.That(() => notNullValue.Should().BeNull()).Throws<AssertionException>().WithMessage("Value should be null but was \"Not Null\".");
+        await Assert.That(() => nullValue.Should().BeNull()).ThrowsNothing();
     }
 
     [Test]
-    public void BeNull_ValueType()
+    public async Task BeNull_ValueType()
     {
         const int notNullValue = 123;
 
-        var exception = Assert.Throws<AssertionException>(() => notNullValue.Should().BeNull());
-        Assert.That(exception, Has.Message.EqualTo("Value should be null but was 123."));
+        await Assert.That(() => notNullValue.Should().BeNull()).Throws<AssertionException>().WithMessage("Value should be null but was 123.");
     }
 
     [Test]
-    public void NotBeNull_ReferenceType()
+    public async Task NotBeNull_ReferenceType()
     {
         string nullValue = null!;
         const string notNullValue = "Not Null";
 
-        var exception = Assert.Throws<AssertionException>(() => nullValue.Should().NotBeNull());
-        Assert.That(exception, Has.Message.EqualTo("Value should not be null."));
-
-        Assert.DoesNotThrow(() => notNullValue.Should().NotBeNull());
+        await Assert.That(() => nullValue.Should().NotBeNull()).Throws<AssertionException>().WithMessage("Value should not be null.");
+        await Assert.That(() => notNullValue.Should().NotBeNull()).ThrowsNothing();
     }
 
     [Test]
-    public void NotBeNull_ValueType()
+    public async Task NotBeNull_ValueType()
     {
         const int notNullValue = 123;
 
-        Assert.DoesNotThrow(() => notNullValue.Should().NotBeNull());
+        await Assert.That(() => notNullValue.Should().NotBeNull()).ThrowsNothing();
     }
 
     [Test]
-    public void NotBeNull_Chain()
+    public async Task NotBeNull_Chain()
     {
         const string notNullValue = "Not Null";
 
         var chain = notNullValue.Should().NotBeNull();
-        Assert.That(chain.Value, Is.EqualTo(notNullValue));
+        await Assert.That(chain.Value).IsEqualTo(notNullValue);
 
         var and = chain.And;
-        Assert.That(and.Value, Is.EqualTo(notNullValue));
+        await Assert.That(and.Value).IsEqualTo(notNullValue);
     }
 
     [Test]
-    public void BeOfType()
+    public async Task BeOfType()
     {
         object? nullValue = null;
         object value = "String";
 
-        var exception = Assert.Throws<AssertionException>(() => nullValue.Should().BeOfType<object>());
-        Assert.That(exception, Has.Message.EqualTo("Value should not be null."));
-
-        exception = Assert.Throws<AssertionException>(() => value.Should().BeOfType<int>());
-        Assert.That(exception, Has.Message.EqualTo("Value should be of type Int32 but was of type String."));
-
-        Assert.DoesNotThrow(() => value.Should().BeOfType<string>());
+        await Assert.That(() => nullValue.Should().BeOfType<object>()).Throws<AssertionException>().WithMessage("Value should not be null.");
+        await Assert.That(() => value.Should().BeOfType<int>()).Throws<AssertionException>().WithMessage("Value should be of type Int32 but was of type String.");
+        await Assert.That(() => value.Should().BeOfType<string>()).ThrowsNothing();
     }
 
     [Test]
-    public void BeOfType_Chain()
+    public async Task BeOfType_Chain()
     {
         object value = "String";
 
         var chain = value.Should().BeOfType<string>();
-        Assert.That(chain.Value, Is.EqualTo(value));
-
-        var and = chain.And;
-        Assert.That(and.Value, Is.EqualTo(value));
+        await Assert.That(chain.Value).IsEqualTo((string)value);
+        await Assert.That(chain.And.Value).IsEqualTo((string)value);
     }
 
     [Test]
-    public void NotBeOfType()
+    public async Task NotBeOfType()
     {
         object? nullValue = null;
         object value = "String";
 
-        var exception = Assert.Throws<AssertionException>(() => nullValue.Should().NotBeOfType<object>());
-        Assert.That(exception, Has.Message.EqualTo("Value should not be null."));
-
-        exception = Assert.Throws<AssertionException>(() => value.Should().NotBeOfType<string>());
-        Assert.That(exception, Has.Message.EqualTo("Value should not be of type String."));
-
-        Assert.DoesNotThrow(() => value.Should().NotBeOfType<int>());
+        await Assert.That(() => nullValue.Should().NotBeOfType<object>()).Throws<AssertionException>().WithMessage("Value should not be null.");
+        await Assert.That(() => value.Should().NotBeOfType<string>()).Throws<AssertionException>().WithMessage("Value should not be of type String.");
+        await Assert.That(() => value.Should().NotBeOfType<int>()).ThrowsNothing();
     }
 
     [Test]
-    public void NotBeOfType_Chain()
+    public async Task NotBeOfType_Chain()
     {
         object value = "String";
 
         var chain = value.Should().NotBeOfType<int>();
-        Assert.That(chain.Value, Is.EqualTo(value));
+        await Assert.That(chain.Value).IsEqualTo(value);
 
         var and = chain.And;
-        Assert.That(and.Value, Is.EqualTo(value));
+        await Assert.That(and.Value).IsEqualTo(value);
     }
 }

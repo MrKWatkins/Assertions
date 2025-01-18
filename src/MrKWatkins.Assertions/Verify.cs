@@ -36,12 +36,22 @@ internal static class Verify
     [ExcludeFromCodeCoverage]
     private static Func<string, Exception> BuildCreateException()
     {
-        var nunitExceptionType = AppDomain.CurrentDomain
-            .GetAssemblies()
-            .SelectMany(a => a.GetTypes())
-            .FirstOrDefault(t => t.FullName == "NUnit.Framework.AssertionException");
+        Func<string, Exception>? constructor = null;
+        try
+        {
+            var nunitExceptionType = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .SelectMany(a => a.GetExportedTypes())
+                .FirstOrDefault(t => t.FullName == "NUnit.Framework.AssertionException");
 
-        return BuildCreateException(nunitExceptionType) ?? (message => new ApplicationException(message));
+            constructor = BuildCreateException(nunitExceptionType);
+        }
+        // ReSharper disable once EmptyGeneralCatchClause
+        catch
+        {
+        }
+
+        return constructor ?? (message => new AssertionException(message));
     }
 
     [Pure]

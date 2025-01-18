@@ -1,170 +1,144 @@
 namespace MrKWatkins.Assertions.Tests;
-using AssertionException = NUnit.Framework.AssertionException;
 
 public sealed class NumericAssertionsExtensionsTests
 {
     [Test]
-    public void BeZero()
+    public async Task BeZero()
     {
         const int positive = 1;
         const int zero = 0;
         const int negative = -1;
 
-        var exception = Assert.Throws<AssertionException>(() => positive.Should().BeZero());
-        Assert.That(exception, Has.Message.EqualTo("Value should be 0 but was 1."));
-
-        Assert.DoesNotThrow(() => zero.Should().BeZero());
-
-        exception = Assert.Throws<AssertionException>(() => negative.Should().BeZero());
-        Assert.That(exception, Has.Message.EqualTo("Value should be 0 but was -1."));
+        await Assert.That(() => positive.Should().BeZero()).Throws<AssertionException>().WithMessage("Value should be 0 but was 1.");
+        await Assert.That(() => zero.Should().BeZero()).ThrowsNothing();
+        await Assert.That(() => negative.Should().BeZero()).Throws<AssertionException>().WithMessage("Value should be 0 but was -1.");
     }
 
     [Test]
-    public void BeZero_Chain()
+    public async Task BeZero_Chain()
     {
         const int zero = 0;
 
         var chain = zero.Should().BeZero();
-        Assert.That(chain.Value, Is.EqualTo(zero));
+        await Assert.That(chain.Value).IsEqualTo(zero);
 
         var and = chain.And;
-        Assert.That(and.Value, Is.EqualTo(zero));
+        await Assert.That(and.Value).IsEqualTo(zero);
     }
 
     [Test]
-    public void NotBeZero()
+    public async Task NotBeZero()
     {
         const int positive = 1;
         const int zero = 0;
         const int negative = -1;
 
-        Assert.DoesNotThrow(() => positive.Should().NotBeZero());
-
-        var exception = Assert.Throws<AssertionException>(() => zero.Should().NotBeZero());
-        Assert.That(exception, Has.Message.EqualTo("Value should not be 0."));
-
-        Assert.DoesNotThrow(() => negative.Should().NotBeZero());
+        await Assert.That(() => positive.Should().NotBeZero()).ThrowsNothing();
+        await Assert.That(() => zero.Should().NotBeZero()).Throws<AssertionException>().WithMessage("Value should not be 0.");
+        await Assert.That(() => negative.Should().NotBeZero()).ThrowsNothing();
     }
 
     [Test]
-    public void NotBeZero_Chain()
+    public async Task NotBeZero_Chain()
     {
         const int positive = 1;
 
         var chain = positive.Should().NotBeZero();
-        Assert.That(chain.Value, Is.EqualTo(positive));
-
-        var and = chain.And;
-        Assert.That(and.Value, Is.EqualTo(positive));
+        await Assert.That(chain.Value).IsEqualTo(positive);
+        await Assert.That(chain.And.Value).IsEqualTo(positive);
     }
 
     [Test]
-    public void BeNegative()
+    public async Task BeNegative()
     {
         const int positive = 1;
         const int zero = 0;
         const int negative = -1;
 
-        var exception = Assert.Throws<AssertionException>(() => positive.Should().BeNegative());
-        Assert.That(exception, Has.Message.EqualTo("Value should be negative but was 1."));
-
-        exception = Assert.Throws<AssertionException>(() => zero.Should().BeNegative());
-        Assert.That(exception, Has.Message.EqualTo("Value should be negative but was 0."));
-
-        Assert.DoesNotThrow(() => negative.Should().BeNegative());
+        await Assert.That(() => positive.Should().BeNegative()).Throws<AssertionException>().WithMessage("Value should be negative but was 1.");
+        await Assert.That(() => zero.Should().BeNegative()).Throws<AssertionException>().WithMessage("Value should be negative but was 0.");
+        await Assert.That(() => negative.Should().BeNegative()).ThrowsNothing();
     }
 
     [Test]
-    public void BeNegative_Chain()
+    public async Task BeNegative_Chain()
     {
         const int negative = -1;
 
         var chain = negative.Should().BeNegative();
-        Assert.That(chain.Value, Is.EqualTo(negative));
+        await Assert.That(chain.Value).IsEqualTo(negative);
 
         var and = chain.And;
-        Assert.That(and.Value, Is.EqualTo(negative));
+        await Assert.That(and.Value).IsEqualTo(negative);
     }
 
     [Test]
-    public void NotBeNegative()
+    public async Task NotBeNegative()
     {
         const int positive = 1;
         const int zero = 0;
         const int negative = -1;
 
-        Assert.DoesNotThrow(() => positive.Should().NotBeNegative());
-
-        Assert.DoesNotThrow(() => zero.Should().NotBeNegative());
-
-        var exception = Assert.Throws<AssertionException>(() => negative.Should().NotBeNegative());
-        Assert.That(exception, Has.Message.EqualTo("Value should not be negative but was -1."));
+        await Assert.That(() => positive.Should().NotBeNegative()).ThrowsNothing();
+        await Assert.That(() => zero.Should().NotBeNegative()).ThrowsNothing();
+        await Assert.That(() => negative.Should().NotBeNegative()).Throws<AssertionException>().WithMessage("Value should not be negative but was -1.");
     }
 
     [Test]
-    public void NotBeNegative_Chain()
+    public async Task NotBeNegative_Chain()
     {
         const int positive = 1;
 
         var chain = positive.Should().NotBeNegative();
-        Assert.That(chain.Value, Is.EqualTo(positive));
-
-        var and = chain.And;
-        Assert.That(and.Value, Is.EqualTo(positive));
+        await Assert.That(chain.Value).IsEqualTo(positive);
+        await Assert.That(chain.And.Value).IsEqualTo(positive);
     }
 
     [Test]
-    public void BePositive()
+    public async Task BePositive()
     {
         const int negative = -1;
         const int zero = 0;
         const int positive = 1;
 
-        var exception = Assert.Throws<AssertionException>(() => negative.Should().BePositive());
-        Assert.That(exception, Has.Message.EqualTo("Value should be positive but was -1."));
-
-        Assert.DoesNotThrow(() => zero.Should().BePositive());
-
-        Assert.DoesNotThrow(() => positive.Should().BePositive());
+        await Assert.That(() => negative.Should().BePositive()).Throws<AssertionException>().WithMessage("Value should be positive but was -1.");
+        await Assert.That(() => zero.Should().BePositive()).ThrowsNothing();
+        await Assert.That(() => positive.Should().BePositive()).ThrowsNothing();
     }
 
     [Test]
-    public void BePositive_Chain()
+    public async Task BePositive_Chain()
     {
         const int positive = 1;
 
         var chain = positive.Should().BePositive();
-        Assert.That(chain.Value, Is.EqualTo(positive));
+        await Assert.That(chain.Value).IsEqualTo(positive);
 
         var and = chain.And;
-        Assert.That(and.Value, Is.EqualTo(positive));
+        await Assert.That(and.Value).IsEqualTo(positive);
     }
 
     [Test]
-    public void NotBePositive()
+    public async Task NotBePositive()
     {
         const int negative = -1;
         const int zero = 0;
         const int positive = 1;
 
-        Assert.DoesNotThrow(() => negative.Should().NotBePositive());
-
-        var exception = Assert.Throws<AssertionException>(() => zero.Should().NotBePositive());
-        Assert.That(exception, Has.Message.EqualTo("Value should not be positive but was 0."));
-
-        exception = Assert.Throws<AssertionException>(() => positive.Should().NotBePositive());
-        Assert.That(exception, Has.Message.EqualTo("Value should not be positive but was 1."));
+        await Assert.That(() => negative.Should().NotBePositive()).ThrowsNothing();
+        await Assert.That(() => zero.Should().NotBePositive()).Throws<AssertionException>().WithMessage("Value should not be positive but was 0.");
+        await Assert.That(() => positive.Should().NotBePositive()).Throws<AssertionException>().WithMessage("Value should not be positive but was 1.");
     }
 
     [Test]
-    public void NotBePositive_Chain()
+    public async Task NotBePositive_Chain()
     {
         const int negative = -1;
 
         var chain = negative.Should().NotBePositive();
-        Assert.That(chain.Value, Is.EqualTo(negative));
+        await Assert.That(chain.Value).IsEqualTo(negative);
 
         var and = chain.And;
-        Assert.That(and.Value, Is.EqualTo(negative));
+        await Assert.That(and.Value).IsEqualTo(negative);
     }
 }

@@ -1,6 +1,6 @@
 namespace MrKWatkins.Assertions.Assertions;
 
-public readonly ref struct ObjectAssertionsChain<T>
+public readonly struct ObjectAssertionsChain<T>
 {
     internal ObjectAssertionsChain(ObjectAssertions<T> objectAssertions)
     {

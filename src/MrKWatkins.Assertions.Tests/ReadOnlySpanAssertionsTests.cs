@@ -1,63 +1,72 @@
 namespace MrKWatkins.Assertions.Tests;
-using AssertionException = NUnit.Framework.AssertionException;
 
 public sealed class ReadOnlySpanAssertionsTests
 {
     [Test]
-    public void BeEmpty()
+    public async Task BeEmpty()
     {
-        var exception = Assert.Throws<AssertionException>(() =>
+        await Assert.That(() =>
         {
             ReadOnlySpan<byte> value = [1, 2, 3];
             value.Should().BeEmpty();
-        });
-        Assert.That(exception, Has.Message.EqualTo("Value should be empty but contained 3 elements."));
+        }).Throws<AssertionException>().WithMessage("Value should be empty but contained 3 elements.");
 
-        Assert.DoesNotThrow(() =>
+        await Assert.That(() =>
         {
             ReadOnlySpan<byte> value = [];
             value.Should().BeEmpty();
-        });
+        }).ThrowsNothing();
     }
 
     [Test]
-    public void BeEmpty_Chain()
+    public async Task BeEmpty_Chain_Value()
     {
         ReadOnlySpan<byte> emptyValue = [];
 
         var chain = emptyValue.Should().BeEmpty();
-        Assert.That(chain.Value == emptyValue, Is.True);
-
-        var and = chain.And;
-        Assert.That(and.Value == emptyValue, Is.True);
+        await Assert.That(chain.Value == emptyValue).IsTrue();
     }
 
     [Test]
-    public void NotBeEmpty()
+    public async Task BeEmpty_Chain_And_Value()
     {
-        var exception = Assert.Throws<AssertionException>(() =>
+        ReadOnlySpan<byte> emptyValue = [];
+
+        var and = emptyValue.Should().BeEmpty().And;
+        await Assert.That(and.Value == emptyValue).IsTrue();
+    }
+
+    [Test]
+    public async Task NotBeEmpty()
+    {
+        await Assert.That(() =>
         {
             ReadOnlySpan<byte> value = [];
             value.Should().NotBeEmpty();
-        });
-        Assert.That(exception, Has.Message.EqualTo("Value should not be empty."));
+        }).Throws<AssertionException>().WithMessage("Value should not be empty.");
 
-        Assert.DoesNotThrow(() =>
+        await Assert.That(() =>
         {
             ReadOnlySpan<byte> value = [1, 2, 3];
             value.Should().NotBeEmpty();
-        });
+        }).ThrowsNothing();
     }
 
     [Test]
-    public void NotBeEmpty_Chain()
+    public async Task NotBeEmpty_Chain_Value()
     {
         ReadOnlySpan<byte> emptyValue = [1, 2, 3];
 
         var chain = emptyValue.Should().NotBeEmpty();
-        Assert.That(chain.Value == emptyValue, Is.True);
+        await Assert.That(chain.Value == emptyValue).IsTrue();
+    }
 
-        var and = chain.And;
-        Assert.That(and.Value == emptyValue, Is.True);
+    [Test]
+    public async Task NotBeEmpty_Chain_And_Value()
+    {
+        ReadOnlySpan<byte> emptyValue = [1, 2, 3];
+
+        var and = emptyValue.Should().NotBeEmpty().And;
+        await Assert.That(and.Value == emptyValue).IsTrue();
     }
 }
