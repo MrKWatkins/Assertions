@@ -24,11 +24,29 @@ internal static class Verify
     }
 
     [StringFormatMethod("exceptionMessageFormat")]
+    internal static void That<T0>(bool condition, string exceptionMessageFormat, Func<T0> arg0)
+    {
+        if (!condition)
+        {
+            throw CreateException(string.Format(exceptionMessageFormat, Format.Value(arg0())));
+        }
+    }
+
+    [StringFormatMethod("exceptionMessageFormat")]
     internal static void That<T0, T1>(bool condition, string exceptionMessageFormat, T0 arg0, T1 arg1)
     {
         if (!condition)
         {
             throw CreateException(string.Format(exceptionMessageFormat, Format.Value(arg0), Format.Value(arg1)));
+        }
+    }
+
+    [StringFormatMethod("exceptionMessageFormat")]
+    internal static void That<T0, T1>(bool condition, string exceptionMessageFormat, Func<T0> arg0, Func<T1> arg1)
+    {
+        if (!condition)
+        {
+            throw CreateException(string.Format(exceptionMessageFormat, Format.Value(arg0()), Format.Value(arg1())));
         }
     }
 

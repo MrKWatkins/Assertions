@@ -68,9 +68,8 @@ public sealed class FormatTests
     [Arguments(IntegerFormat.Decimal, 15, "15")]
     [Arguments(IntegerFormat.Hexadecimal, 15, "0x0F")]
     [Arguments(IntegerFormat.Binary, 15, "0b00001111")]
-    public async Task Byte(IntegerFormat? integerFormat, int intValue, string expected)
+    public async Task Byte(IntegerFormat? integerFormat, byte value, string expected)
     {
-        var value = (byte)intValue;
         using var _ = integerFormat.HasValue ? With.IntegerFormat(integerFormat.Value) : NullDisposable.Instance;
 
         var actual = Format.Value(value);
@@ -87,9 +86,8 @@ public sealed class FormatTests
     [Arguments(IntegerFormat.Hexadecimal, 15, "0x0F")]
     [Arguments(IntegerFormat.Binary, -15, "0b11110001")]
     [Arguments(IntegerFormat.Binary, 15, "0b00001111")]
-    public async Task SByte(IntegerFormat? integerFormat, int intValue, string expected)
+    public async Task SByte(IntegerFormat? integerFormat, sbyte value, string expected)
     {
-        var value = (sbyte)intValue;
         using var _ = integerFormat.HasValue ? With.IntegerFormat(integerFormat.Value) : NullDisposable.Instance;
 
         var actual = Format.Value(value);
@@ -120,9 +118,8 @@ public sealed class FormatTests
     [Arguments(IntegerFormat.Hexadecimal, 1234, "0x04D2")]
     [Arguments(IntegerFormat.Binary, -1234, "0b1111101100101110")]
     [Arguments(IntegerFormat.Binary, 1234, "0b0000010011010010")]
-    public async Task Short(IntegerFormat? integerFormat, int intValue, string expected)
+    public async Task Short(IntegerFormat? integerFormat, short value, string expected)
     {
-        var value = (short)intValue;
         using var _ = integerFormat.HasValue ? With.IntegerFormat(integerFormat.Value) : NullDisposable.Instance;
 
         var actual = Format.Value(value);

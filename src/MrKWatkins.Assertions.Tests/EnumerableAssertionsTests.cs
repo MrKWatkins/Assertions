@@ -4,36 +4,6 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class EnumerableAssertionsTests
 {
     [Test]
-    public async Task BeNull()
-    {
-        IEnumerable<byte> notNullValue = [];
-        IEnumerable<byte> nullValue = null!;
-
-        await Assert.That(() => notNullValue.Should().BeNull()).Throws<AssertionException>().WithMessage("Value should be null but was System.Byte[].");
-        await Assert.That(() => nullValue.Should().BeNull()).ThrowsNothing();
-    }
-
-    [Test]
-    public async Task NotBeNull()
-    {
-        IEnumerable<byte> notNullValue = [];
-        IEnumerable<byte> nullValue = null!;
-
-        await Assert.That(() => notNullValue.Should().NotBeNull()).ThrowsNothing();
-        await Assert.That(() => nullValue.Should().NotBeNull()).Throws<AssertionException>().WithMessage("Value should not be null.");
-    }
-
-    [Test]
-    public async Task NotBeNull_Chain()
-    {
-        IEnumerable<byte> nullValue = [];
-
-        var chain = nullValue.Should().NotBeNull();
-        await Assert.That(chain.Value).IsEqualTo(nullValue);
-        await Assert.That(chain.And.Value).IsEqualTo(nullValue);
-    }
-
-    [Test]
     public async Task BeEmpty()
     {
         IEnumerable<byte> nullValue = null!;

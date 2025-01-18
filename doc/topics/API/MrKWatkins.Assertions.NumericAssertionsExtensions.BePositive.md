@@ -16,8 +16,8 @@ public static ObjectAssertionsChain<T> BePositive<T>(this ObjectAssertions<T> as
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| assertions | [ObjectAssertions&lt;T&gt;](MrKWatkins.Assertions.Assertions.ObjectAssertions-1.md) |  |
+| assertions | [ObjectAssertions&lt;T&gt;](MrKWatkins.Assertions.ObjectAssertions-1.md) |  |
 
 ## Returns
 
-[ObjectAssertionsChain&lt;T&gt;](MrKWatkins.Assertions.Assertions.ObjectAssertionsChain-1.md)
+[ObjectAssertionsChain&lt;T&gt;](MrKWatkins.Assertions.ObjectAssertionsChain-1.md)
