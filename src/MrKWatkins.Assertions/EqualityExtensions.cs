@@ -4,7 +4,7 @@ namespace MrKWatkins.Assertions;
 public static class EqualityExtensions
 {
     public static ObjectAssertionsChain<T> Equal<T>(this ObjectAssertions<T> assertions, T? expected)
-        where T : IEquatable<T>
+        where T : notnull
     {
         if (assertions.Value is null)
         {
@@ -19,7 +19,7 @@ public static class EqualityExtensions
     }
 
     public static ObjectAssertionsChain<T> NotEqual<T>(this ObjectAssertions<T> assertions, T? expected)
-        where T : IEquatable<T>
+        where T : notnull
     {
         if (assertions.Value is null)
         {

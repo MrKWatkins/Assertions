@@ -23,6 +23,16 @@ public sealed class EqualityExtensionsTests
     }
 
     [Test]
+    public async Task Equal_Enum()
+    {
+        const ConsoleColor value = ConsoleColor.Blue;
+        const ConsoleColor otherValue = ConsoleColor.Red;
+
+        await Assert.That(() => value.Should().Equal(otherValue)).Throws<AssertionException>().WithMessage("Value should equal Red but was Blue.");
+        await Assert.That(() => value.Should().Equal(value)).ThrowsNothing();
+    }
+
+    [Test]
     public async Task Equal_Chain()
     {
         const string value = "Test";

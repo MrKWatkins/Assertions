@@ -3,7 +3,7 @@ namespace MrKWatkins.Assertions;
 public class EnumerableAssertions<TEnumerable, T> : ObjectAssertions<TEnumerable>
     where TEnumerable : IEnumerable<T>
 {
-    internal EnumerableAssertions([NoEnumeration] TEnumerable value)
+    internal EnumerableAssertions([NoEnumeration] TEnumerable? value)
         : base(value)
     {
     }

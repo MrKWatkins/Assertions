@@ -16,13 +16,13 @@ public static class ShouldExtensions
     public static EnumerableAssertions<ICollection<T>, T> Should<T>([NoEnumeration] this ICollection<T> value) => new(value);
 
     [Pure]
-    public static EnumerableAssertions<IReadOnlyList<T>, T> Should<T>([NoEnumeration] this IReadOnlyList<T> value) => new(value);
+    public static ReadOnlyListAssertions<IReadOnlyList<T>, T> Should<T>([NoEnumeration] this IReadOnlyList<T> value) => new(value);
 
     [Pure]
     public static EnumerableAssertions<IList<T>, T> Should<T>([NoEnumeration] this IList<T> value) => new(value);
 
     [Pure]
-    public static EnumerableAssertions<List<T>, T> Should<T>([NoEnumeration] this List<T> value) => new(value);
+    public static ReadOnlyListAssertions<List<T>, T> Should<T>([NoEnumeration] this List<T> value) => new(value);
 
     [Pure]
     public static EnumerableAssertions<IReadOnlySet<T>, T> Should<T>([NoEnumeration] this IReadOnlySet<T> value) => new(value);
