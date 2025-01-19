@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace MrKWatkins.Assertions;
@@ -56,6 +57,38 @@ internal static class Format
         return formatted.ToString();
     }
 
+    [Pure]
+    internal static string Value<T>(IEnumerable<T> value)
+    {
+        var formatted = new StringBuilder().Append('[');
+        AppendValues(formatted, value.Take(ItemsToShowInSequence));
+        formatted.Append(", ...]");
+        return formatted.ToString();
+    }
+
+    [Pure]
+    [OverloadResolutionPriority(1)]
+    internal static string Value<T>(IReadOnlyList<T> value, bool openEnded = false)
+    {
+        var formatted = new StringBuilder().Append('[');
+        if (value.Count <= MaximumItemsToShow)
+        {
+            AppendValues(formatted, value);
+        }
+        else
+        {
+            AppendValues(formatted, value.Take(ItemsToShowInSequence));
+            formatted.Append(", ... ");
+            AppendValues(formatted, value.TakeLast(ItemsToShowInSequence));
+        }
+
+        if (openEnded)
+        {
+            formatted.Append(", ...");
+        }
+        formatted.Append(']');
+        return formatted.ToString();
+    }
 
     [Pure]
     internal static string Value<T>(Span<T> value, int highlightIndex) => Value((ReadOnlySpan<T>)value, highlightIndex);
@@ -113,15 +146,93 @@ internal static class Format
         return formatted.ToString();
     }
 
-    private static void AppendValues<T>(StringBuilder formatted, ReadOnlySpan<T> values)
+    [Pure]
+    internal static string Value<T>(IReadOnlyList<T> value, int highlightIndex, bool openEnded = false)
     {
-        for (var f = 0; f < values.Length; f++)
+        var formatted = new StringBuilder().Append('[');
+        if (value.Count <= MaximumItemsToShow)
         {
-            formatted.Append(Value(values[f]));
-            if (f < values.Length - 1)
+            AppendValues(formatted, value, highlightIndex);
+
+            if (openEnded)
+            {
+                formatted.Append(", ...");
+            }
+        }
+        else
+        {
+            var startIndex = highlightIndex - ItemsToShowInSequence;
+            if (startIndex > 0)
+            {
+                formatted.Append("... ");
+            }
+            else
+            {
+                startIndex = 0;
+            }
+
+            AppendValues(formatted, value.Skip(startIndex).Take(highlightIndex - startIndex));
+            if (highlightIndex > 0)
             {
                 formatted.Append(", ");
             }
+
+            formatted.Append('*');
+            formatted.Append(Value(value[highlightIndex]));
+            formatted.Append('*');
+
+            var endIndex = highlightIndex + ItemsToShowInSequence;
+            if (endIndex >= value.Count - 1)
+            {
+                endIndex = value.Count - 1;
+            }
+
+            if (highlightIndex < value.Count - 1)
+            {
+                formatted.Append(", ");
+            }
+
+            AppendValues(formatted, value.Skip(highlightIndex + 1).Take(endIndex - highlightIndex));
+
+            if (openEnded || endIndex < value.Count - 1)
+            {
+                formatted.Append(", ...");
+            }
+        }
+
+        formatted.Append(']');
+        return formatted.ToString();
+    }
+
+    private static void AppendValues<T>(StringBuilder formatted, ReadOnlySpan<T> values)
+    {
+        var enumerator = values.GetEnumerator();
+        if (!enumerator.MoveNext())
+        {
+            return;
+        }
+
+        formatted.Append(Value(enumerator.Current));
+        while (enumerator.MoveNext())
+        {
+            formatted.Append(", ");
+            formatted.Append(Value(enumerator.Current));
+        }
+    }
+
+    private static void AppendValues<T>(StringBuilder formatted, IEnumerable<T> values)
+    {
+        using var enumerator = values.GetEnumerator();
+        if (!enumerator.MoveNext())
+        {
+            return;
+        }
+
+        formatted.Append(Value(enumerator.Current));
+        while (enumerator.MoveNext())
+        {
+            formatted.Append(", ");
+            formatted.Append(Value(enumerator.Current));
         }
     }
 
@@ -139,6 +250,26 @@ internal static class Format
                 formatted.Append('*');
             }
             if (f < values.Length - 1)
+            {
+                formatted.Append(", ");
+            }
+        }
+    }
+
+    private static void AppendValues<T>(StringBuilder formatted, IReadOnlyList<T> values, int highlightIndex)
+    {
+        for (var f = 0; f < values.Count; f++)
+        {
+            if (f == highlightIndex)
+            {
+                formatted.Append('*');
+            }
+            formatted.Append(Value(values[f]));
+            if (f == highlightIndex)
+            {
+                formatted.Append('*');
+            }
+            if (f < values.Count - 1)
             {
                 formatted.Append(", ");
             }

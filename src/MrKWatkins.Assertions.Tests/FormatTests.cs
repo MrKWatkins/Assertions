@@ -255,6 +255,48 @@ public sealed class FormatTests
     }
 
     [Test]
+    [Arguments(new byte[0], null, false, "[]")]
+    [Arguments(new byte[0], IntegerFormat.Decimal, false, "[]")]
+    [Arguments(new byte[0], IntegerFormat.Hexadecimal, false, "[]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5 }, null, false, "[1, 2, 3, 4, 5]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5 }, null, true, "[1, 2, 3, 4, 5, ...]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5 }, IntegerFormat.Decimal, false, "[1, 2, 3, 4, 5]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5 }, IntegerFormat.Hexadecimal, false, "[0x01, 0x02, 0x03, 0x04, 0x05]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, null, false, "[1, 2, ... 9, 10]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, null, true, "[1, 2, ... 9, 10, ...]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, IntegerFormat.Decimal, false, "[1, 2, ... 9, 10]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, IntegerFormat.Hexadecimal, false, "[0x01, 0x02, ... 0x09, 0x0A]")]
+    public async Task IReadOnlyList(IReadOnlyList<byte> value, IntegerFormat? integerFormat, bool openEnded, string expected)
+    {
+        using var _ = integerFormat.HasValue ? With.IntegerFormat(integerFormat.Value) : NullDisposable.Instance;
+
+        var actual = Format.Value(value, openEnded);
+
+        await Assert.That(actual).IsEqualTo(expected);
+    }
+
+    [Test]
+    [Arguments(new byte[0], null, false, "[]")]
+    [Arguments(new byte[0], IntegerFormat.Decimal, false, "[]")]
+    [Arguments(new byte[0], IntegerFormat.Hexadecimal, false, "[]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5 }, null, false, "[1, 2, 3, 4, 5]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5 }, null, true, "[1, 2, 3, 4, 5, ...]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5 }, IntegerFormat.Decimal, false, "[1, 2, 3, 4, 5]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5 }, IntegerFormat.Hexadecimal, false, "[0x01, 0x02, 0x03, 0x04, 0x05]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, null, false, "[1, 2, ... 9, 10]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, null, true, "[1, 2, ... 9, 10, ...]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, IntegerFormat.Decimal, false, "[1, 2, ... 9, 10]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, IntegerFormat.Hexadecimal, false, "[0x01, 0x02, ... 0x09, 0x0A]")]
+    public async Task Enumerable(IReadOnlyList<byte> value, IntegerFormat? integerFormat, bool openEnded, string expected)
+    {
+        using var _ = integerFormat.HasValue ? With.IntegerFormat(integerFormat.Value) : NullDisposable.Instance;
+
+        var actual = Format.Value(value, openEnded);
+
+        await Assert.That(actual).IsEqualTo(expected);
+    }
+
+    [Test]
     [Arguments(new byte[0], 0, null, "[]")]
     [Arguments(new byte[] { 1, 2, 3, 4, 5 }, 2, null, "[1, 2, *3*, 4, 5]")]
     [Arguments(new byte[] { 1, 2, 3, 4, 5 }, 2, IntegerFormat.Hexadecimal, "[0x01, 0x02, *0x03*, 0x04, 0x05]")]
@@ -270,6 +312,28 @@ public sealed class FormatTests
         using var _ = integerFormat.HasValue ? With.IntegerFormat(integerFormat.Value) : NullDisposable.Instance;
 
         var actual = Format.Value(value.AsSpan(), highlightIndex);
+
+        await Assert.That(actual).IsEqualTo(expected);
+    }
+
+    [Test]
+    [Arguments(new byte[0], 0, null, false, "[]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5 }, 2, null, false, "[1, 2, *3*, 4, 5]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5 }, 2, null, true, "[1, 2, *3*, 4, 5, ...]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5 }, 2, IntegerFormat.Hexadecimal, false, "[0x01, 0x02, *0x03*, 0x04, 0x05]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 0, IntegerFormat.Decimal, false, "[*1*, 2, 3, ...]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 1, IntegerFormat.Hexadecimal, false, "[0x01, *0x02*, 0x03, 0x04, ...]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 2, null, false, "[1, 2, *3*, 4, 5, ...]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 2, null, true, "[1, 2, *3*, 4, 5, ...]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 4, IntegerFormat.Hexadecimal, false, "[... 0x03, 0x04, *0x05*, 0x06, 0x07, ...]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 7, null, false, "[... 6, 7, *8*, 9, 10]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 8, IntegerFormat.Hexadecimal, false, "[... 0x07, 0x08, *0x09*, 0x0A]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 9, IntegerFormat.Decimal, false, "[... 8, 9, *10*]")]
+    public async Task IReadOnlyList_HighlightIndex(IReadOnlyList<byte> value, int highlightIndex, IntegerFormat? integerFormat, bool openEnded, string expected)
+    {
+        using var _ = integerFormat.HasValue ? With.IntegerFormat(integerFormat.Value) : NullDisposable.Instance;
+
+        var actual = Format.Value(value, highlightIndex, openEnded);
 
         await Assert.That(actual).IsEqualTo(expected);
     }
