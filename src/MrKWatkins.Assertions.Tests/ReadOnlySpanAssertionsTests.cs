@@ -55,18 +55,18 @@ public sealed class ReadOnlySpanAssertionsTests
     [Test]
     public async Task NotBeEmpty_Chain_Value()
     {
-        ReadOnlySpan<byte> emptyValue = [1, 2, 3];
+        ReadOnlySpan<byte> value = [1, 2, 3];
 
-        var chain = emptyValue.Should().NotBeEmpty();
-        await Assert.That(chain.Value == emptyValue).IsTrue();
+        var chain = value.Should().NotBeEmpty();
+        await Assert.That(chain.Value == value).IsTrue();
     }
 
     [Test]
     public async Task NotBeEmpty_Chain_And_Value()
     {
-        ReadOnlySpan<byte> emptyValue = [1, 2, 3];
+        ReadOnlySpan<byte> value = [1, 2, 3];
 
-        var and = emptyValue.Should().NotBeEmpty().And;
-        await Assert.That(and.Value == emptyValue).IsTrue();
+        var and = value.Should().NotBeEmpty().And;
+        await Assert.That(and.Value == value).IsTrue();
     }
 }

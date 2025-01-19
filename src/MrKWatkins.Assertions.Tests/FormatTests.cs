@@ -234,4 +234,43 @@ public sealed class FormatTests
         yield return (IntegerFormat.Binary, System.Int128.Parse("-123456789012345678901234567890"), "0b11111111111111111111111111111110011100010001011011110000000010010011110010001100000111110001000110110001110000001111010100101110");
         yield return (IntegerFormat.Binary, System.Int128.Parse("123456789012345678901234567890"), "0b00000000000000000000000000000001100011101110100100001111111101101100001101110011111000001110111001001110001111110000101011010010");
     }
+
+    [Test]
+    [Arguments(new byte[0], null, "[]")]
+    [Arguments(new byte[0], IntegerFormat.Decimal, "[]")]
+    [Arguments(new byte[0], IntegerFormat.Hexadecimal, "[]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5 }, null, "[1, 2, 3, 4, 5]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5 }, IntegerFormat.Decimal, "[1, 2, 3, 4, 5]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5 }, IntegerFormat.Hexadecimal, "[0x01, 0x02, 0x03, 0x04, 0x05]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, null, "[1, 2, ... 9, 10]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, IntegerFormat.Decimal, "[1, 2, ... 9, 10]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, IntegerFormat.Hexadecimal, "[0x01, 0x02, ... 0x09, 0x0A]")]
+    public async Task ReadOnlySpan(byte[] value, IntegerFormat? integerFormat, string expected)
+    {
+        using var _ = integerFormat.HasValue ? With.IntegerFormat(integerFormat.Value) : NullDisposable.Instance;
+
+        var actual = Format.Value(value.AsSpan());
+
+        await Assert.That(actual).IsEqualTo(expected);
+    }
+
+    [Test]
+    [Arguments(new byte[0], 0, null, "[]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5 }, 2, null, "[1, 2, *3*, 4, 5]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5 }, 2, IntegerFormat.Hexadecimal, "[0x01, 0x02, *0x03*, 0x04, 0x05]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 0, IntegerFormat.Decimal, "[*1*, 2, 3, ...]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 1, IntegerFormat.Hexadecimal, "[0x01, *0x02*, 0x03, 0x04, ...]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 2, null, "[1, 2, *3*, 4, 5, ...]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 4, IntegerFormat.Hexadecimal, "[... 0x03, 0x04, *0x05*, 0x06, 0x07, ...]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 7, null, "[... 6, 7, *8*, 9, 10]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 8, IntegerFormat.Hexadecimal, "[... 0x07, 0x08, *0x09*, 0x0A]")]
+    [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, 9, IntegerFormat.Decimal, "[... 8, 9, *10*]")]
+    public async Task ReadOnlySpan_HighlightIndex(byte[] value, int highlightIndex, IntegerFormat? integerFormat, string expected)
+    {
+        using var _ = integerFormat.HasValue ? With.IntegerFormat(integerFormat.Value) : NullDisposable.Instance;
+
+        var actual = Format.Value(value.AsSpan(), highlightIndex);
+
+        await Assert.That(actual).IsEqualTo(expected);
+    }
 }

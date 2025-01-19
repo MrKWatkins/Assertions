@@ -4,13 +4,21 @@ namespace MrKWatkins.Assertions;
 
 internal static class Verify
 {
-    private static readonly Func<string, Exception> CreateException = BuildCreateException();
+    internal static readonly Func<string, Exception> CreateException = BuildCreateException();
 
     internal static void That(bool condition, string exceptionMessage)
     {
         if (!condition)
         {
             throw CreateException(exceptionMessage);
+        }
+    }
+
+    internal static void That(bool condition, Func<string> exceptionMessage)
+    {
+        if (!condition)
+        {
+            throw CreateException(exceptionMessage());
         }
     }
 
@@ -47,6 +55,42 @@ internal static class Verify
         if (!condition)
         {
             throw CreateException(string.Format(exceptionMessageFormat, Format.Value(arg0()), Format.Value(arg1())));
+        }
+    }
+
+    [StringFormatMethod("exceptionMessageFormat")]
+    internal static void That<T0, T1, T2>(bool condition, string exceptionMessageFormat, T0? arg0, T1? arg1, T2? arg2)
+    {
+        if (!condition)
+        {
+            throw CreateException(string.Format(exceptionMessageFormat, Format.Value(arg0), Format.Value(arg1), Format.Value(arg2)));
+        }
+    }
+
+    [StringFormatMethod("exceptionMessageFormat")]
+    internal static void That<T0, T1, T2>(bool condition, string exceptionMessageFormat, Func<T0?> arg0, Func<T1?> arg1, Func<T2?> arg2)
+    {
+        if (!condition)
+        {
+            throw CreateException(string.Format(exceptionMessageFormat, Format.Value(arg0()), Format.Value(arg1()), Format.Value(arg2())));
+        }
+    }
+
+    [StringFormatMethod("exceptionMessageFormat")]
+    internal static void That<T0, T1, T2, T3>(bool condition, string exceptionMessageFormat, T0? arg0, T1? arg1, T2? arg2, T3? arg3)
+    {
+        if (!condition)
+        {
+            throw CreateException(string.Format(exceptionMessageFormat, Format.Value(arg0), Format.Value(arg1), Format.Value(arg2), Format.Value(arg3)));
+        }
+    }
+
+    [StringFormatMethod("exceptionMessageFormat")]
+    internal static void That<T0, T1, T2, T3>(bool condition, string exceptionMessageFormat, Func<T0?> arg0, Func<T1?> arg1, Func<T2?> arg2, Func<T3?> arg3)
+    {
+        if (!condition)
+        {
+            throw CreateException(string.Format(exceptionMessageFormat, Format.Value(arg0()), Format.Value(arg1()), Format.Value(arg2()), Format.Value(arg3())));
         }
     }
 
