@@ -1,6 +1,6 @@
 namespace MrKWatkins.Assertions.Tests;
 
-public sealed class NumericAssertionsExtensionsTests
+public sealed class NumericExtensionsTests
 {
     [Test]
     public async Task BeZero()

@@ -2,7 +2,7 @@ using System.Numerics;
 
 namespace MrKWatkins.Assertions;
 
-public static class NumericAssertionsExtensions
+public static class NumericExtensions
 {
     public static ObjectAssertionsChain<T> BeZero<T>(this ObjectAssertions<T> assertions)
         where T : INumberBase<T>

@@ -51,6 +51,61 @@ public sealed class ObjectAssertionsTests
     }
 
     [Test]
+    public async Task BeTheSameInstanceAs()
+    {
+        TestObject nullValue = null!;
+        var value = new TestObject("Test");
+        var otherValue = new TestObject("Other");
+
+        await Assert.That(() => nullValue.Should().BeTheSameInstanceAs(nullValue)).ThrowsNothing();
+        await Assert.That(() => value.Should().BeTheSameInstanceAs(value)).ThrowsNothing();
+        await Assert.That(() => value.Should().BeTheSameInstanceAs(nullValue)).Throws<AssertionException>().WithMessage("Value should be the same instance as null but was Test.");
+        await Assert.That(() => nullValue.Should().BeTheSameInstanceAs(value)).Throws<AssertionException>().WithMessage("Value should be the same instance as Test but was null.");
+        await Assert.That(() => value.Should().BeTheSameInstanceAs(otherValue)).Throws<AssertionException>().WithMessage("Value should be the same instance as Other but was Test.");
+        await Assert.That(() => otherValue.Should().BeTheSameInstanceAs(value)).Throws<AssertionException>().WithMessage("Value should be the same instance as Test but was Other.");
+    }
+
+    [Test]
+    public async Task BeTheSameInstanceAs_Chain()
+    {
+        var value = new TestObject("Test");
+
+        var chain = value.Should().BeTheSameInstanceAs(value);
+        await Assert.That(chain.Value).IsEqualTo(value);
+
+        var and = chain.And;
+        await Assert.That(and.Value).IsEqualTo(value);
+    }
+
+    [Test]
+    public async Task NotBeTheSameInstanceAs()
+    {
+        TestObject nullValue = null!;
+        var value = new TestObject("Test");
+        var otherValue = new TestObject("Other");
+
+        await Assert.That(() => nullValue.Should().NotBeTheSameInstanceAs(nullValue)).Throws<AssertionException>().WithMessage("Value should not be the same instance as null.");
+        await Assert.That(() => value.Should().NotBeTheSameInstanceAs(value)).Throws<AssertionException>().WithMessage("Value should not be the same instance as Test.");
+        await Assert.That(() => value.Should().NotBeTheSameInstanceAs(nullValue)).ThrowsNothing();
+        await Assert.That(() => nullValue.Should().NotBeTheSameInstanceAs(value)).ThrowsNothing();
+        await Assert.That(() => value.Should().NotBeTheSameInstanceAs(otherValue)).ThrowsNothing();
+        await Assert.That(() => otherValue.Should().NotBeTheSameInstanceAs(value)).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task NotBeTheSameInstanceAs_Chain()
+    {
+        var value = new TestObject("Test");
+        var otherValue = new TestObject("Other");
+
+        var chain = value.Should().NotBeTheSameInstanceAs(otherValue);
+        await Assert.That(chain.Value).IsEqualTo(value);
+
+        var and = chain.And;
+        await Assert.That(and.Value).IsEqualTo(value);
+    }
+
+    [Test]
     public async Task BeOfType()
     {
         object? nullValue = null;
@@ -92,5 +147,18 @@ public sealed class ObjectAssertionsTests
 
         var and = chain.And;
         await Assert.That(and.Value).IsEqualTo(value);
+    }
+
+    private sealed class TestObject(string name) : IEquatable<TestObject>
+    {
+        private readonly string name = name;
+
+        public override string ToString() => name;
+
+        public override bool Equals(object? obj) => Equals(obj as TestObject);
+
+        public bool Equals(TestObject? other) => other is not null && other.name == name;
+
+        public override int GetHashCode() => name.GetHashCode();
     }
 }

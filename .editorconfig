@@ -126,7 +126,7 @@ dotnet_diagnostic.CA1019.severity = error
 dotnet_diagnostic.CA1021.severity = none
 
 # CA1024: Use properties where appropriate
-dotnet_diagnostic.CA1024.severity = error
+dotnet_diagnostic.CA1024.severity = none
 
 # CA1027: Mark enums with FlagsAttribute
 dotnet_diagnostic.CA1027.severity = error

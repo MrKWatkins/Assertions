@@ -1,6 +1,7 @@
 namespace MrKWatkins.Assertions;
 
 public readonly struct ObjectAssertionsChain<T>
+    where T : notnull
 {
     internal ObjectAssertionsChain(ObjectAssertions<T> objectAssertions)
     {
