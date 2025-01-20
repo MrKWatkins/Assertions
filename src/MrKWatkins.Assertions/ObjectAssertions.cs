@@ -24,6 +24,34 @@ public class ObjectAssertions<T>
         return new ObjectAssertionsChain<T>(this);
     }
 
+    public ObjectAssertionsChain<T> Equal(T? expected)
+    {
+        if (Value is null)
+        {
+            Verify.That(expected is null, "Value should equal {0} but was null.", expected);
+        }
+        else
+        {
+            Verify.That(EqualityComparer<T>.Default.Equals(Value, expected), "Value should equal {0} but was {1}.", expected, Value);
+        }
+
+        return new ObjectAssertionsChain<T>(this);
+    }
+
+    public ObjectAssertionsChain<T> NotEqual(T? expected)
+    {
+        if (Value is null)
+        {
+            Verify.That(expected is not null, "Value should not equal null.");
+        }
+        else
+        {
+            Verify.That(!EqualityComparer<T>.Default.Equals(Value, expected), "Value should not equal {0}.", expected);
+        }
+
+        return new ObjectAssertionsChain<T>(this);
+    }
+
     public ObjectAssertionsChain<T> BeTheSameInstanceAs(T? expected)
     {
         Verify.That(ReferenceEquals(Value, expected), "Value should be the same instance as {0} but was {1}.", expected, Value);

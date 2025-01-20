@@ -42,13 +42,6 @@
           <toc-element toc-title="Value" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-2.Value.md" />
         </toc-element>
       </toc-element>
-      <toc-element toc-title="EqualityExtensions">
-        <toc-element toc-title="EqualityExtensions" topic="MrKWatkins.Assertions.EqualityExtensions.md" />
-        <toc-element toc-title="Methods">
-          <toc-element toc-title="Equal" topic="MrKWatkins.Assertions.EqualityExtensions.Equal.md" />
-          <toc-element toc-title="NotEqual" topic="MrKWatkins.Assertions.EqualityExtensions.NotEqual.md" />
-        </toc-element>
-      </toc-element>
       <toc-element toc-title="ExceptionExtensions">
         <toc-element toc-title="ExceptionExtensions" topic="MrKWatkins.Assertions.ExceptionExtensions.md" />
         <toc-element toc-title="Methods">
@@ -94,12 +87,14 @@
           <toc-element toc-title="BeNull" topic="MrKWatkins.Assertions.ObjectAssertions-1.BeNull.md" />
           <toc-element toc-title="BeOfType" topic="MrKWatkins.Assertions.ObjectAssertions-1.BeOfType.md" />
           <toc-element toc-title="BeTheSameInstanceAs" topic="MrKWatkins.Assertions.ObjectAssertions-1.BeTheSameInstanceAs.md" />
+          <toc-element toc-title="Equal" topic="MrKWatkins.Assertions.ObjectAssertions-1.Equal.md" />
           <toc-element toc-title="Equals" topic="MrKWatkins.Assertions.ObjectAssertions-1.Equals.md" />
           <toc-element toc-title="GetHashCode" topic="MrKWatkins.Assertions.ObjectAssertions-1.GetHashCode.md" />
           <toc-element toc-title="GetType" topic="MrKWatkins.Assertions.ObjectAssertions-1.GetType.md" />
           <toc-element toc-title="NotBeNull" topic="MrKWatkins.Assertions.ObjectAssertions-1.NotBeNull.md" />
           <toc-element toc-title="NotBeOfType" topic="MrKWatkins.Assertions.ObjectAssertions-1.NotBeOfType.md" />
           <toc-element toc-title="NotBeTheSameInstanceAs" topic="MrKWatkins.Assertions.ObjectAssertions-1.NotBeTheSameInstanceAs.md" />
+          <toc-element toc-title="NotEqual" topic="MrKWatkins.Assertions.ObjectAssertions-1.NotEqual.md" />
           <toc-element toc-title="ToString" topic="MrKWatkins.Assertions.ObjectAssertions-1.ToString.md" />
         </toc-element>
       </toc-element>
