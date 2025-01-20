@@ -4,7 +4,6 @@ namespace MrKWatkins.Assertions;
 
 [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract")]
 public class ObjectAssertions<T>
-    where T : notnull
 {
     protected internal ObjectAssertions(T? value)
     {
@@ -25,14 +24,14 @@ public class ObjectAssertions<T>
         return new ObjectAssertionsChain<T>(this);
     }
 
-    public ObjectAssertionsChain<T> BeTheSameInstanceAs(T expected)
+    public ObjectAssertionsChain<T> BeTheSameInstanceAs(T? expected)
     {
         Verify.That(ReferenceEquals(Value, expected), "Value should be the same instance as {0} but was {1}.", expected, Value);
 
         return new ObjectAssertionsChain<T>(this);
     }
 
-    public ObjectAssertionsChain<T> NotBeTheSameInstanceAs(T expected)
+    public ObjectAssertionsChain<T> NotBeTheSameInstanceAs(T? expected)
     {
         Verify.That(!ReferenceEquals(Value, expected), "Value should not be the same instance as {0}.", expected);
 

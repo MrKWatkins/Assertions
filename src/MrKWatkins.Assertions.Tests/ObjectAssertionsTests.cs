@@ -53,7 +53,7 @@ public sealed class ObjectAssertionsTests
     [Test]
     public async Task BeTheSameInstanceAs()
     {
-        TestObject nullValue = null!;
+        TestObject? nullValue = null;
         var value = new TestObject("Test");
         var otherValue = new TestObject("Other");
 

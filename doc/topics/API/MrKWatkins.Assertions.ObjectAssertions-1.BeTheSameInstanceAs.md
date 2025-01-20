@@ -2,7 +2,7 @@
 ## Definition
 
 ```c#
-public ObjectAssertionsChain<T> BeTheSameInstanceAs(T expected);
+public ObjectAssertionsChain<T> BeTheSameInstanceAs(T? expected);
 ```
 
 ## Parameters
