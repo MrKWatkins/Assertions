@@ -45,4 +45,7 @@ public static class ShouldExtensions
 
     [Pure]
     public static ReadOnlySpanAssertions<T> Should<T>([NoEnumeration] this ReadOnlySpan<T> value) => new(value);
+
+    [Pure]
+    public static ActionAssertions Should(this Action value) => new(value);
 }

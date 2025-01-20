@@ -43,6 +43,7 @@ public sealed class EqualityExtensionsTests
         var and = chain.And;
         await Assert.That(and.Value).IsEqualTo(value);
     }
+
     [Test]
     public async Task NotEqual_Null()
     {

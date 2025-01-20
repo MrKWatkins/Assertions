@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -6,8 +7,12 @@ namespace MrKWatkins.Assertions;
 
 internal static class Format
 {
+    private static readonly FrozenSet<char> Vowels = new[] { 'a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U' }.ToFrozenSet();
     private const int MaximumItemsToShow = 5;
     private const int ItemsToShowInSequence = 2;
+
+    [Pure]
+    internal static string PrefixWithAOrAn(string value) => Vowels.Contains(value[0]) ? $"an {value}" : $"a {value}";
 
     [Pure]
     internal static string Value<T>(T value)
@@ -22,6 +27,7 @@ internal static class Format
             char charValue => char.IsControl(charValue) ? $"'\\u{(ushort)charValue:X4}'" : $"'{charValue}'",
             string stringValue => $"\"{stringValue}\"",
             Type typeValue => typeValue.Name,
+            Exception exceptionValue => $"{exceptionValue.GetType().Name} with message \"{exceptionValue.Message}\"",
             byte byteValue => Value(byteValue, 1),
             sbyte sbyteValue => Value(sbyteValue, 1),
             ushort ushortValue => Value(ushortValue, 2),

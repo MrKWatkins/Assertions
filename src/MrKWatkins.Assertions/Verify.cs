@@ -4,7 +4,10 @@ namespace MrKWatkins.Assertions;
 
 internal static class Verify
 {
-    internal static readonly Func<string, Exception> CreateException = BuildCreateException();
+    private static readonly Func<string, Exception?, Exception> ExceptionConstructor = BuildExceptionConstructor();
+
+    [Pure]
+    internal static Exception CreateException(string message, Exception? innerException = null) => ExceptionConstructor(message, innerException);
 
     internal static void That(bool condition, string exceptionMessage)
     {
@@ -96,9 +99,9 @@ internal static class Verify
 
     [Pure]
     [ExcludeFromCodeCoverage]
-    private static Func<string, Exception> BuildCreateException()
+    private static Func<string, Exception?, Exception> BuildExceptionConstructor()
     {
-        Func<string, Exception>? constructor = null;
+        Func<string, Exception?, Exception>? constructor = null;
         try
         {
             var nunitExceptionType = AppDomain.CurrentDomain
@@ -113,27 +116,28 @@ internal static class Verify
         {
         }
 
-        return constructor ?? (message => new AssertionException(message));
+        return constructor ?? ((message, innerException) => new AssertionException(message, innerException));
     }
 
     [Pure]
     [ExcludeFromCodeCoverage]
-    private static Func<string, Exception>? BuildCreateException(Type? exceptionType)
+    private static Func<string, Exception?, Exception>? BuildCreateException(Type? exceptionType)
     {
         if (exceptionType == null)
         {
             return null;
         }
 
-        var constructor = exceptionType.GetConstructor([typeof(string)]);
+        var constructor = exceptionType.GetConstructor([typeof(string), typeof(Exception)]);
         if (constructor == null)
         {
             return null;
         }
 
-        var parameter = Expression.Parameter(typeof(string), "message");
-        var construct = Expression.New(constructor, parameter);
-        var lambda = Expression.Lambda<Func<string, Exception>>(construct, parameter);
+        var message = Expression.Parameter(typeof(string), "message");
+        var innerException = Expression.Parameter(typeof(Exception), "innerException");
+        var construct = Expression.New(constructor, message, innerException);
+        var lambda = Expression.Lambda<Func<string, Exception?, Exception>>(construct, message, innerException);
 
         return lambda.Compile();
     }
