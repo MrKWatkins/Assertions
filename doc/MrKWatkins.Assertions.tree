@@ -28,6 +28,15 @@
           <toc-element toc-title="Invoking" topic="MrKWatkins.Assertions.AssertThat.Invoking.md" />
         </toc-element>
       </toc-element>
+      <toc-element toc-title="BooleanExtensions">
+        <toc-element toc-title="BooleanExtensions" topic="MrKWatkins.Assertions.BooleanExtensions.md" />
+        <toc-element toc-title="Methods">
+          <toc-element toc-title="BeFalse" topic="MrKWatkins.Assertions.BooleanExtensions.BeFalse.md" />
+          <toc-element toc-title="BeTrue" topic="MrKWatkins.Assertions.BooleanExtensions.BeTrue.md" />
+          <toc-element toc-title="NotBeFalse" topic="MrKWatkins.Assertions.BooleanExtensions.NotBeFalse.md" />
+          <toc-element toc-title="NotBeTrue" topic="MrKWatkins.Assertions.BooleanExtensions.NotBeTrue.md" />
+        </toc-element>
+      </toc-element>
       <toc-element toc-title="EnumerableAssertions&lt;TEnumerable, T&gt;">
         <toc-element toc-title="EnumerableAssertions&lt;TEnumerable, T&gt;" topic="MrKWatkins.Assertions.EnumerableAssertions-2.md" />
         <toc-element toc-title="Methods">

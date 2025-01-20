@@ -15,6 +15,17 @@ internal static class Format
     internal static string PrefixWithAOrAn(string value) => Vowels.Contains(value[0]) ? $"an {value}" : $"a {value}";
 
     [Pure]
+    internal static string Value<T>(T? value)
+        where T : struct
+    {
+        if (value.HasValue)
+        {
+            return Value(value.Value);
+        }
+        return "null";
+    }
+
+    [Pure]
     internal static string Value<T>(T value)
     {
         if (value is null)
@@ -24,6 +35,7 @@ internal static class Format
 
         return value switch
         {
+            bool boolValue => boolValue ? "true" : "false",
             char charValue => char.IsControl(charValue) ? $"'\\u{(ushort)charValue:X4}'" : $"'{charValue}'",
             string stringValue => $"\"{stringValue}\"",
             Type typeValue => typeValue.Name,

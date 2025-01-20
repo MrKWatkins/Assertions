@@ -25,11 +25,23 @@ public sealed class FormatTests
     [Test]
     public async Task NullableValueType()
     {
-        int? value = null;
+        byte? nullValue = null;
+        byte? notNullValue = 201;
 
-        var actual = Format.Value(value);
+        await Assert.That(Format.Value(nullValue)).IsEqualTo("null");
+        await Assert.That(Format.Value(notNullValue)).IsEqualTo("201");
 
-        await Assert.That(actual).IsEqualTo("null");
+        using var _ = With.IntegerFormat(IntegerFormat.Hexadecimal);
+
+        await Assert.That(Format.Value(nullValue)).IsEqualTo("null");
+        await Assert.That(Format.Value(notNullValue)).IsEqualTo("0xC9");
+    }
+
+    [Test]
+    public async Task Boolean()
+    {
+        await Assert.That(Format.Value(true)).IsEqualTo("true");
+        await Assert.That(Format.Value(false)).IsEqualTo("false");
     }
 
     [Test]
