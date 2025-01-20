@@ -21,6 +21,16 @@ public sealed class ObjectAssertionsTests
     }
 
     [Test]
+    public async Task BeNull_NullableValueType()
+    {
+        int? nullValue = null;
+        int? notNullValue = 123;
+
+        await Assert.That(() => nullValue.Should().BeNull()).ThrowsNothing();
+        await Assert.That(() => notNullValue.Should().BeNull()).Throws<AssertionException>().WithMessage("Value should be null but was 123.");
+    }
+
+    [Test]
     public async Task NotBeNull_ReferenceType()
     {
         string nullValue = null!;
@@ -35,6 +45,16 @@ public sealed class ObjectAssertionsTests
     {
         const int notNullValue = 123;
 
+        await Assert.That(() => notNullValue.Should().NotBeNull()).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task NotBeNull_NullableValueType()
+    {
+        int? nullValue = null;
+        int? notNullValue = 123;
+
+        await Assert.That(() => nullValue.Should().NotBeNull()).Throws<AssertionException>().WithMessage("Value should not be null.");
         await Assert.That(() => notNullValue.Should().NotBeNull()).ThrowsNothing();
     }
 

@@ -3,8 +3,7 @@ namespace MrKWatkins.Assertions;
 public static class ShouldExtensions
 {
     [Pure]
-    public static ObjectAssertions<T> Should<T>(this T? value)
-        where T : notnull => new(value);
+    public static ObjectAssertions<T> Should<T>(this T? value) => new(value);
 
     [Pure]
     public static EnumerableAssertions<IEnumerable<T>, T> Should<T>([NoEnumeration] this IEnumerable<T> value) => new(value);
