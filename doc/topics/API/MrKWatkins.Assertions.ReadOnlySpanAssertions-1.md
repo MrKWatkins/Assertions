@@ -1,15 +1,15 @@
-# ReadOnlySpanAssertions&lt;TItem&gt; Struct
+# ReadOnlySpanAssertions&lt;T&gt; Struct
 ## Definition
 
 ```c#
-public sealed struct ReadOnlySpanAssertions<TItem>
+public sealed struct ReadOnlySpanAssertions<T>
 ```
 
 ### Type Parameters
 
 | Name | Description |
 | ---- | ----------- |
-| TItem |  |
+| T |  |
 
 ## Properties
 

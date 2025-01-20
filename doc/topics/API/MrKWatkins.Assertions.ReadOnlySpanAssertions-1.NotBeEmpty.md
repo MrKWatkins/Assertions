@@ -1,10 +1,10 @@
-# ReadOnlySpanAssertions&lt;TItem&gt;.NotBeEmpty Method
+# ReadOnlySpanAssertions&lt;T&gt;.NotBeEmpty Method
 ## Definition
 
 ```c#
-public ReadOnlySpanAssertionsChain<TItem> NotBeEmpty();
+public ReadOnlySpanAssertionsChain<T> NotBeEmpty();
 ```
 
 ## Returns
 
-[ReadOnlySpanAssertionsChain&lt;TItem&gt;](MrKWatkins.Assertions.ReadOnlySpanAssertionsChain-1.md)
+[ReadOnlySpanAssertionsChain&lt;T&gt;](MrKWatkins.Assertions.ReadOnlySpanAssertionsChain-1.md)

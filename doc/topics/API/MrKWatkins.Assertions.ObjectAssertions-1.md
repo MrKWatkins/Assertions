@@ -29,6 +29,12 @@ public class ObjectAssertions<T>
 | ---- | ----------- |
 | [BeNull()](MrKWatkins.Assertions.ObjectAssertions-1.BeNull.md) |  |
 | [BeOfType&lt;TOther&gt;()](MrKWatkins.Assertions.ObjectAssertions-1.BeOfType.md) |  |
+| [BeTheSameInstanceAs(T)](MrKWatkins.Assertions.ObjectAssertions-1.BeTheSameInstanceAs.md) |  |
+| [Equals(Object)](MrKWatkins.Assertions.ObjectAssertions-1.Equals.md) |  |
+| [GetHashCode()](MrKWatkins.Assertions.ObjectAssertions-1.GetHashCode.md) |  |
+| [GetType()](MrKWatkins.Assertions.ObjectAssertions-1.GetType.md) |  |
 | [NotBeNull()](MrKWatkins.Assertions.ObjectAssertions-1.NotBeNull.md) |  |
 | [NotBeOfType&lt;TOther&gt;()](MrKWatkins.Assertions.ObjectAssertions-1.NotBeOfType.md) |  |
+| [NotBeTheSameInstanceAs(T)](MrKWatkins.Assertions.ObjectAssertions-1.NotBeTheSameInstanceAs.md) |  |
+| [ToString()](MrKWatkins.Assertions.ObjectAssertions-1.ToString.md) |  |
 

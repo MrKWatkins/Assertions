@@ -7,8 +7,8 @@ public static class SequenceEqualExtensions
 {
     [OverloadResolutionPriority(1)]
     public static ReadOnlySpanAssertionsChain<T> SequenceEqual<T>(this ReadOnlySpanAssertions<T> assertions, params ReadOnlySpan<T> expected)
-        where T : IEquatable<T>
     {
+        var equalityComparer = EqualityComparer<T>.Default;
         var actual = assertions.Value;
         if (assertions.Value.Length != expected.Length)
         {
@@ -20,7 +20,7 @@ public static class SequenceEqualExtensions
         {
             var actualItem = actual[f];
             var expectedItem = expected[f];
-            if (!actualItem.Equals(expectedItem))
+            if (!equalityComparer.Equals(actualItem, expectedItem))
             {
                 throw Verify.CreateException(
                     $"Value {Format.Value(actual, f)} should sequence equal {Format.Value(expected, f)} but it differs at index {f}.");
@@ -32,7 +32,6 @@ public static class SequenceEqualExtensions
 
     [OverloadResolutionPriority(1)]
     public static ReadOnlySpanAssertionsChain<T> NotSequenceEqual<T>(this ReadOnlySpanAssertions<T> assertions, params ReadOnlySpan<T> expected)
-        where T : IEquatable<T>
     {
         if (assertions.Value.SequenceEqual(expected))
         {
@@ -44,8 +43,8 @@ public static class SequenceEqualExtensions
 
     [OverloadResolutionPriority(1)]
     public static ReadOnlySpanAssertionsChain<T> SequenceEqual<T>(this ReadOnlySpanAssertions<T> assertions, params IReadOnlyList<T> expected)
-        where T : IEquatable<T>
     {
+        var equalityComparer = EqualityComparer<T>.Default;
         var actual = assertions.Value;
         if (assertions.Value.Length != expected.Count)
         {
@@ -57,7 +56,7 @@ public static class SequenceEqualExtensions
         {
             var actualItem = actual[f];
             var expectedItem = expected[f];
-            if (!actualItem.Equals(expectedItem))
+            if (!equalityComparer.Equals(actualItem, expectedItem))
             {
                 throw Verify.CreateException(
                     $"Value {Format.Value(actual, f)} should sequence equal {Format.Value(expected, f)} but it differs at index {f}.");
@@ -68,8 +67,8 @@ public static class SequenceEqualExtensions
     }
 
     public static ReadOnlySpanAssertionsChain<T> NotSequenceEqual<T>(this ReadOnlySpanAssertions<T> assertions, params IReadOnlyList<T> expected)
-        where T : IEquatable<T>
     {
+        var equalityComparer = EqualityComparer<T>.Default;
         var actual = assertions.Value;
         if (assertions.Value.Length != expected.Count)
         {
@@ -80,7 +79,7 @@ public static class SequenceEqualExtensions
         {
             var actualItem = actual[f];
             var expectedItem = expected[f];
-            if (!actualItem.Equals(expectedItem))
+            if (!equalityComparer.Equals(actualItem, expectedItem))
             {
                 return new ReadOnlySpanAssertionsChain<T>(assertions);
             }
@@ -92,10 +91,10 @@ public static class SequenceEqualExtensions
     [OverloadResolutionPriority(1)]
     public static ReadOnlyListAssertionsChain<TList, T> SequenceEqual<TList, T>(this ReadOnlyListAssertions<TList, T> assertions, params IReadOnlyList<T> expected)
         where TList : IReadOnlyList<T>
-        where T : IEquatable<T>
     {
         assertions.NotBeNull();
 
+        var equalityComparer = EqualityComparer<T>.Default;
         var actual = assertions.Value;
         if (actual.Count != expected.Count)
         {
@@ -107,7 +106,7 @@ public static class SequenceEqualExtensions
         {
             var actualItem = actual[f];
             var expectedItem = expected[f];
-            if (!actualItem.Equals(expectedItem))
+            if (!equalityComparer.Equals(actualItem, expectedItem))
             {
                 throw Verify.CreateException(
                     $"Value {Format.Value(actual, f)} should sequence equal {Format.Value(expected, f)} but it differs at index {f}.");
@@ -120,7 +119,6 @@ public static class SequenceEqualExtensions
     [OverloadResolutionPriority(1)]
     public static ReadOnlyListAssertionsChain<TList, T> NotSequenceEqual<TList, T>(this ReadOnlyListAssertions<TList, T> assertions, params IReadOnlyList<T> expected)
         where TList : IReadOnlyList<T>
-        where T : IEquatable<T>
     {
         assertions.NotBeNull();
         if (assertions.Value.SequenceEqual(expected))
@@ -133,10 +131,10 @@ public static class SequenceEqualExtensions
 
     // Allow sequence equal for actual IEnumerables, but not all things that implement IEnumerable, e.g. sets.
     public static EnumerableAssertionsChain<IEnumerable<T>, T> SequenceEqual<T>(this EnumerableAssertions<IEnumerable<T>, T> assertions, params IEnumerable<T> expected)
-        where T : IEquatable<T>
     {
         assertions.NotBeNull();
 
+        var equalityComparer = EqualityComparer<T>.Default;
         var actual = assertions.Value;
         if (actual.TryGetCount(out var actualCount) &&
             expected.TryGetCount(out var expectedCount) &&
@@ -173,7 +171,7 @@ public static class SequenceEqualExtensions
                     $"Value {Format.Value(actual)} should sequence equal {Format.Value(expected)} but it has more elements than the expected {expectedList.Count}.");
             }
 
-            if (!actualEnumerator.Current.Equals(expectedEnumerator.Current))
+            if (!equalityComparer.Equals(actualEnumerator.Current, expectedEnumerator.Current))
             {
                 var index = actualList.Count - 1;
                 throw Verify.CreateException(
@@ -191,7 +189,6 @@ public static class SequenceEqualExtensions
     }
 
     public static EnumerableAssertionsChain<IEnumerable<T>, T> NotSequenceEqual<T>(this EnumerableAssertions<IEnumerable<T>, T> assertions, params IEnumerable<T> expected)
-        where T : IEquatable<T>
     {
         if (assertions.Value.SequenceEqual(expected))
         {
