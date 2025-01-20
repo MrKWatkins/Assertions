@@ -47,9 +47,11 @@
         <toc-element toc-title="Methods">
           <toc-element toc-title="HaveInnerException" topic="MrKWatkins.Assertions.ExceptionExtensions.HaveInnerException.md" />
           <toc-element toc-title="HaveMessage" topic="MrKWatkins.Assertions.ExceptionExtensions.HaveMessage.md" />
+          <toc-element toc-title="HaveMessageStartingWith" topic="MrKWatkins.Assertions.ExceptionExtensions.HaveMessageStartingWith.md" />
           <toc-element toc-title="HaveParamName" topic="MrKWatkins.Assertions.ExceptionExtensions.HaveParamName.md" />
           <toc-element toc-title="NotHaveInnerException" topic="MrKWatkins.Assertions.ExceptionExtensions.NotHaveInnerException.md" />
           <toc-element toc-title="NotHaveMessage" topic="MrKWatkins.Assertions.ExceptionExtensions.NotHaveMessage.md" />
+          <toc-element toc-title="NotHaveMessageStartingWith" topic="MrKWatkins.Assertions.ExceptionExtensions.NotHaveMessageStartingWith.md" />
           <toc-element toc-title="NotHaveParamName" topic="MrKWatkins.Assertions.ExceptionExtensions.NotHaveParamName.md" />
         </toc-element>
       </toc-element>
