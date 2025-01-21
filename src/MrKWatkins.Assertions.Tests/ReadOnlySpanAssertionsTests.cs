@@ -134,9 +134,57 @@ public sealed class ReadOnlySpanAssertionsTests
         await Assert.That(() =>
         {
             ReadOnlySpan<byte> value = [];
+            var differentLength = CreateEnumerable(1);
+            value.Should().SequenceEqual(differentLength);
+        }).Throws<AssertionException>().WithMessage("Value [] should sequence equal [1, ...] but it has less elements (0) than expected.");
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<byte> value = [1];
+            var differentLength = CreateEnumerable();
+            value.Should().SequenceEqual(differentLength);
+        }).Throws<AssertionException>().WithMessage("Value [1] should sequence equal [] but it has 1 element rather than the expected 0.");
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<byte> value = [1, 2, 3];
+            var differentLength = CreateEnumerable(1, 2, 3, 4);
+            value.Should().SequenceEqual(differentLength);
+        }).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should sequence equal [1, 2, ...] but it has less elements (3) than expected.");
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<byte> value = [1, 2, 3, 4, 5];
+            var differentElements = CreateEnumerable(1, 2, 3, 5, 5);
+            value.Should().SequenceEqual(differentElements);
+        }).Throws<AssertionException>().WithMessage("Value [1, 2, 3, *4*, 5] should sequence equal [1, 2, 3, *5*, ...] but it differs at index 3.");
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<byte> value = [];
+            var sequenceEqual = CreateEnumerable();
+            value.Should().SequenceEqual(sequenceEqual);
+        }).ThrowsNothing();
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<byte> value = [1, 2, 3];
+            var sequenceEqual = CreateEnumerable(1, 2, 3);
+            value.Should().SequenceEqual(sequenceEqual);
+        }).ThrowsNothing();
+
+        static IEnumerable<byte> CreateEnumerable(params byte[] values) => values.Select(b => b);
+    }
+
+    [Test]
+    public async Task SequenceEqual_IReadOnlyCollection()
+    {
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<byte> value = [];
             IReadOnlyList<byte> differentLength = [1];
             value.Should().SequenceEqual(differentLength);
-        }).Throws<AssertionException>().WithMessage("Value [] should sequence equal [1, ...] but it has 0 elements rather than the expected 1.");
+        }).Throws<AssertionException>().WithMessage("Value [] should sequence equal [1] but it has 0 elements rather than the expected 1.");
 
         await Assert.That(() =>
         {
@@ -150,21 +198,14 @@ public sealed class ReadOnlySpanAssertionsTests
             ReadOnlySpan<byte> value = [1, 2, 3];
             IReadOnlyList<byte> differentLength = [1, 2, 3, 4];
             value.Should().SequenceEqual(differentLength);
-        }).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should sequence equal [1, 2, ...] but it has 3 elements rather than the expected 4.");
+        }).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should sequence equal [1, 2, 3, 4] but it has 3 elements rather than the expected 4.");
 
         await Assert.That(() =>
         {
             ReadOnlySpan<byte> value = [1, 2, 3, 4, 5];
             IReadOnlyList<byte> differentElements = [1, 2, 3, 5, 5];
             value.Should().SequenceEqual(differentElements);
-        }).Throws<AssertionException>().WithMessage("Value [1, 2, 3, *4*, ...] should sequence equal [1, 2, 3, *5*, ...] but it differs at index 3.");
-
-        await Assert.That(() =>
-        {
-            ReadOnlySpan<byte> value = [1, 2, 3];
-            IReadOnlyList<byte> differentElements = [1, 3, 4];
-            value.Should().SequenceEqual(differentElements);
-        }).Throws<AssertionException>().WithMessage("Value [1, *2*, ...] should sequence equal [1, *3*, ...] but it differs at index 1.");
+        }).Throws<AssertionException>().WithMessage("Value [1, 2, 3, *4*, 5] should sequence equal [1, 2, 3, *5*, ...] but it differs at index 3.");
 
         await Assert.That(() =>
         {

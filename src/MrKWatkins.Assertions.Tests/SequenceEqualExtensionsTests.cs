@@ -3,28 +3,51 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class SequenceEqualExtensionsTests
 {
     [Test]
-    public async Task SequenceEqual_IReadOnlyList()
+    public async Task SequenceEqual_Null()
     {
-        IReadOnlyList<int> nullValue = null!;
-        var value = new List<int> { 1, 2, 3 };
-        var sequenceEqualValue = new List<int> { 1, 2, 3 };
-        var sequenceDifferentValue = new List<int> { 1, 2, 4 };
-        var shorterValue = new List<int> { 1, 2 };
-        var longerValue = new List<int> { 1, 2, 3, 4 };
+        IEnumerable<int> nullEnumerable = null!;
 
-        await Assert.That(() => nullValue.Should().SequenceEqual(value)).Throws<AssertionException>()
+        await Assert.That(() => nullEnumerable.Should().SequenceEqual(1)).Throws<AssertionException>()
             .WithMessage("Value should not be null.");
+    }
 
-        await Assert.That(() => value.Should().SequenceEqual(shorterValue)).Throws<AssertionException>()
-            .WithMessage("Value [1, 2, 3] should sequence equal [1, 2] but it has 3 elements rather than the expected 2.");
+    [Test]
+    [Arguments(new int[0], true, new [] { 1, 2, 3 }, true, "Value [] should sequence equal [1, 2, 3] but it has 0 elements rather than the expected 3.")]
+    [Arguments(new int[0], true, new [] { 1, 2, 3 }, false, "Value [] should sequence equal [1, 2, ...] but it has less elements (0) than expected.")]
+    [Arguments(new int[0], false, new [] { 1, 2, 3 }, true, "Value [] should sequence equal [1, 2, 3] but it has 0 elements rather than the expected 3.")]
+    [Arguments(new int[0], false, new [] { 1, 2, 3 }, false, "Value [] should sequence equal [1, 2, ...] but it has less elements (0) than expected.")]
+    [Arguments(new [] { 1 }, true, new int[0], true, "Value [1] should sequence equal [] but it has 1 element rather than the expected 0.")]
+    [Arguments(new [] { 1, 2, 3 }, true, new int[0], false, "Value [1, 2, 3] should sequence equal [] but it has 3 elements rather than the expected 0.")]
+    [Arguments(new [] { 1, 2, 3 }, false, new int[0], true, "Value [1, 2, ...] should sequence equal [] but it has more elements than the expected 0.")]
+    [Arguments(new [] { 1, 2, 3 }, false, new int[0], false, "Value [1, 2, ...] should sequence equal [] but it has more elements than the expected 0.")]
+    [Arguments(new [] { 1, 2, 3 }, true, new [] { 1, 2, 4 }, true, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
+    [Arguments(new [] { 1, 2, 3 }, false, new [] { 1, 2, 4 }, true, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
+    [Arguments(new [] { 1, 2, 3 }, true, new [] { 1, 2, 4 }, false, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
+    [Arguments(new [] { 1, 2, 3 }, false, new [] { 1, 2, 4 }, false, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
+    public async Task SequenceEqual_Throws(int[] actual, bool actualIsCollection, int[] expected, bool expectedIsCollection, string expectedMessage)
+    {
+        var actualEnumerable = actualIsCollection ? actual : actual.Select(x => x);
+        var expectedEnumerable = expectedIsCollection ? expected : expected.Select(x => x);
 
-        await Assert.That(() => value.Should().SequenceEqual(longerValue)).Throws<AssertionException>()
-            .WithMessage("Value [1, 2, 3] should sequence equal [1, 2, 3, 4] but it has 3 elements rather than the expected 4.");
+        await Assert.That(() => actualEnumerable.Should().SequenceEqual(expectedEnumerable)).Throws<AssertionException>()
+            .WithMessage(expectedMessage);
+    }
 
-        await Assert.That(() => value.Should().SequenceEqual(sequenceDifferentValue)).Throws<AssertionException>()
-            .WithMessage("Value [1, 2, *3*] should sequence equal [1, 2, *4*] but it differs at index 2.");
+    [Test]
+    [Arguments(new int[0], true, new int[0], true)]
+    [Arguments(new int[0], false, new int[0], true)]
+    [Arguments(new int[0], true, new int[0], false)]
+    [Arguments(new int[0], false, new int[0], false)]
+    [Arguments(new [] { 1, 2, 3 }, true, new [] { 1, 2, 3 }, true)]
+    [Arguments(new [] { 1, 2, 3 }, false, new [] { 1, 2, 3 }, true)]
+    [Arguments(new [] { 1, 2, 3 }, true, new [] { 1, 2, 3 }, false)]
+    [Arguments(new [] { 1, 2, 3 }, false, new [] { 1, 2, 3 }, false)]
+    public async Task SequenceEqual(int[] actual, bool actualIsCollection, int[] expected, bool expectedIsCollection)
+    {
+        var actualEnumerable = actualIsCollection ? actual : actual.Select(x => x);
+        var expectedEnumerable = expectedIsCollection ? expected : expected.Select(x => x);
 
-        await Assert.That(() => value.Should().SequenceEqual(sequenceEqualValue)).ThrowsNothing();
+        await Assert.That(() => actualEnumerable.Should().SequenceEqual(expectedEnumerable)).ThrowsNothing();
     }
 
     [Test]
@@ -38,112 +61,38 @@ public sealed class SequenceEqualExtensionsTests
     }
 
     [Test]
-    public async Task NotSequenceEqual_IReadOnlyList()
+    public async Task NotSequenceEqual_Null()
     {
-        IReadOnlyList<int> nullValue = null!;
-        var value = new List<int> { 1, 2, 3 };
-        var sequenceDifferentValue = new List<int> { 1, 2, 4 };
+        IEnumerable<int> nullEnumerable = null!;
 
-        await Assert.That(() => nullValue.Should().NotSequenceEqual(value)).Throws<AssertionException>()
+        await Assert.That(() => nullEnumerable.Should().NotSequenceEqual(1)).Throws<AssertionException>()
             .WithMessage("Value should not be null.");
-
-        await Assert.That(() => value.Should().NotSequenceEqual(value)).Throws<AssertionException>()
-            .WithMessage("Value should not sequence equal [1, 2, 3].");
-
-        await Assert.That(() => value.Should().NotSequenceEqual(sequenceDifferentValue)).ThrowsNothing();
     }
 
     [Test]
-    public async Task NotSequenceEqual_IReadOnlyList_Chain()
+    [Arguments(new int[0], true, new int[0], true, "Value should not sequence equal [].")]
+    [Arguments(new int[0], false, new int[0], true, "Value should not sequence equal [].")]
+    [Arguments(new int[0], true, new int[0], false, "Value should not sequence equal [].")]
+    [Arguments(new int[0], false, new int[0], false, "Value should not sequence equal [].")]
+    [Arguments(new [] { 1, 2, 3 }, true, new [] { 1, 2, 3 }, true, "Value should not sequence equal [1, 2, 3].")]
+    [Arguments(new [] { 1, 2, 3 }, false, new [] { 1, 2, 3 }, true, "Value should not sequence equal [1, 2, 3].")]
+    [Arguments(new [] { 1, 2, 3 }, true, new [] { 1, 2, 3 }, false, "Value should not sequence equal [1, 2, ...].")]
+    [Arguments(new [] { 1, 2, 3 }, false, new [] { 1, 2, 3 }, false, "Value should not sequence equal [1, 2, ...].")]
+    public async Task NotSequenceEqual_Throws(int[] actual, bool actualIsCollection, int[] expected, bool expectedIsCollection, string expectedMessage)
+    {
+        var actualEnumerable = actualIsCollection ? actual : actual.Select(x => x);
+        var expectedEnumerable = expectedIsCollection ? expected : expected.Select(x => x);
+
+        await Assert.That(() => actualEnumerable.Should().NotSequenceEqual(expectedEnumerable)).Throws<AssertionException>()
+            .WithMessage(expectedMessage);
+    }
+
+    [Test]
+    public async Task NotSequenceEqual_Chain()
     {
         var value = new List<int> { 1, 2, 3 };
 
         var chain = value.Should().SequenceEqual(value);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
-    }
-
-    [Test]
-    public async Task SequenceEqual_IEnumerable()
-    {
-        IEnumerable<int> nullValue = null!;
-
-        IEnumerable<int> valueWithCount = new List<int> { 1, 2, 3 };
-        var valueWithoutCount = valueWithCount.Select(x => x);
-
-        IEnumerable<int> sequenceEqualValueWithCount = new List<int> { 1, 2, 3 };
-        var sequenceEqualValueWithoutCount = sequenceEqualValueWithCount.Select(x => x);
-
-        IEnumerable<int> sequenceDifferentValueWithCount = new List<int> { 1, 2, 4 };
-        var sequenceDifferentValueWithoutCount = sequenceDifferentValueWithCount.Select(x => x);
-
-        IEnumerable<int> shorterWithCount = new List<int> { 1, 2 };
-        var shorterWithoutCount = shorterWithCount.Select(x => x);
-
-        IEnumerable<int> longerWithCount = new List<int> { 1, 2, 3, 4 };
-        var longerWithoutCount = longerWithCount.Select(x => x);
-
-        await Assert.That(() => nullValue.Should().SequenceEqual(valueWithCount)).Throws<AssertionException>()
-            .WithMessage("Value should not be null.");
-
-        await Assert.That(() => valueWithCount.Should().SequenceEqual(shorterWithCount)).Throws<AssertionException>()
-            .WithMessage("Value [1, 2, ...] should sequence equal [1, 2, ...] but it has 3 elements rather than the expected 2.");
-
-        await Assert.That(() => valueWithCount.Should().SequenceEqual(longerWithCount)).Throws<AssertionException>()
-            .WithMessage("Value [1, 2, ...] should sequence equal [1, 2, ...] but it has 3 elements rather than the expected 4.");
-
-        await Assert.That(() => valueWithCount.Should().SequenceEqual(sequenceDifferentValueWithCount)).Throws<AssertionException>()
-            .WithMessage("Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.");
-
-        await Assert.That(() => valueWithCount.Should().SequenceEqual(sequenceEqualValueWithCount)).ThrowsNothing();
-
-        await Assert.That(() => valueWithoutCount.Should().SequenceEqual(shorterWithoutCount)).Throws<AssertionException>()
-            .WithMessage("Value [1, 2, ...] should sequence equal [1, 2, ...] but it has more elements than the expected 2.");
-
-        await Assert.That(() => valueWithoutCount.Should().SequenceEqual(longerWithoutCount)).Throws<AssertionException>()
-            .WithMessage("Value [1, 2, ...] should sequence equal [1, 2, ...] but it has less elements (3) than expected.");
-
-        await Assert.That(() => valueWithoutCount.Should().SequenceEqual(sequenceDifferentValueWithoutCount)).Throws<AssertionException>()
-            .WithMessage("Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.");
-
-        await Assert.That(() => valueWithoutCount.Should().SequenceEqual(sequenceEqualValueWithoutCount)).ThrowsNothing();
-    }
-
-    [Test]
-    public async Task SequenceEqual_IEnumerable_Chain()
-    {
-        IEnumerable<int> value = new List<int> { 1, 2, 3 };
-
-        var chain = value.Should().SequenceEqual(value);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
-    }
-
-    [Test]
-    public async Task NotSequenceEqual_IEnumerable()
-    {
-        IEnumerable<int> nullValue = null!;
-        IEnumerable<int> value = new List<int> { 1, 2, 3 };
-        IEnumerable<int> sequenceEqualValue = new List<int> { 1, 2, 3 };
-
-        IEnumerable<int> shorterValue = new List<int> { 1, 2 };
-
-        await Assert.That(() => nullValue.Should().SequenceEqual(value)).Throws<AssertionException>()
-            .WithMessage("Value should not be null.");
-
-        await Assert.That(() => value.Should().NotSequenceEqual(sequenceEqualValue)).Throws<AssertionException>()
-            .WithMessage("Value should not sequence equal [1, 2, ...].");
-
-        await Assert.That(() => value.Should().NotSequenceEqual(shorterValue)).ThrowsNothing();
-    }
-
-    [Test]
-    public async Task NotSequenceEqual_IEnumerable_Chain()
-    {
-        IEnumerable<int> value = new List<int> { 1, 2, 3 };
-        IEnumerable<int> otherValue = new List<int> { 1, 2 };
-
-        var chain = value.Should().NotSequenceEqual(otherValue);
         await Assert.That(chain.Value).IsEqualTo(value);
         await Assert.That(chain.And.Value).IsEqualTo(value);
     }

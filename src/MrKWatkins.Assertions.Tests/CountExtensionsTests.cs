@@ -1,7 +1,7 @@
 namespace MrKWatkins.Assertions.Tests;
 
 [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-public sealed class EnumerableAssertionsTests
+public sealed class CountExtensionsTests
 {
     [Test]
     public async Task BeEmpty()

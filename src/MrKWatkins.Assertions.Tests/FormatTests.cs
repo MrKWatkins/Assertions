@@ -278,11 +278,11 @@ public sealed class FormatTests
     [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, null, true, "[1, 2, ... 9, 10, ...]")]
     [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, IntegerFormat.Decimal, false, "[1, 2, ... 9, 10]")]
     [Arguments(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, IntegerFormat.Hexadecimal, false, "[0x01, 0x02, ... 0x09, 0x0A]")]
-    public async Task IReadOnlyList(IReadOnlyList<byte> value, IntegerFormat? integerFormat, bool openEnded, string expected)
+    public async Task Collection(IReadOnlyCollection<byte> value, IntegerFormat? integerFormat, bool openEnded, string expected)
     {
         using var _ = integerFormat.HasValue ? With.IntegerFormat(integerFormat.Value) : NullDisposable.Instance;
 
-        var actual = Format.Value(value, openEnded);
+        var actual = Format.Collection(value, openEnded);
 
         await Assert.That(actual).IsEqualTo(expected);
     }
@@ -295,11 +295,13 @@ public sealed class FormatTests
     [Arguments(new byte[] { 1, 2, 3, 4, 5 }, null, "[1, 2, ...]")]
     [Arguments(new byte[] { 1, 2, 3, 4, 5 }, IntegerFormat.Decimal, "[1, 2, ...]")]
     [Arguments(new byte[] { 1, 2, 3, 4, 5 }, IntegerFormat.Hexadecimal, "[0x01, 0x02, ...]")]
-    public async Task Enumerable(IEnumerable<byte> value, IntegerFormat? integerFormat, string expected)
+    public async Task Enumerable(byte[] value, IntegerFormat? integerFormat, string expected)
     {
+        var enumerable = value.Select(b => b);
+
         using var _ = integerFormat.HasValue ? With.IntegerFormat(integerFormat.Value) : NullDisposable.Instance;
 
-        var actual = Format.Value(value);
+        var actual = Format.Enumerable(enumerable);
 
         await Assert.That(actual).IsEqualTo(expected);
     }
@@ -341,7 +343,7 @@ public sealed class FormatTests
     {
         using var _ = integerFormat.HasValue ? With.IntegerFormat(integerFormat.Value) : NullDisposable.Instance;
 
-        var actual = Format.Value(value, highlightIndex, openEnded);
+        var actual = Format.Collection(value, highlightIndex, openEnded);
 
         await Assert.That(actual).IsEqualTo(expected);
     }

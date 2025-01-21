@@ -74,43 +74,6 @@ internal static class Format
         formatted.Append(']');
         return formatted.ToString();
     }
-
-    [Pure]
-    internal static string Value<T>(IEnumerable<T> value)
-    {
-        var formatted = new StringBuilder().Append('[');
-        if (AppendValues(formatted, value.Take(ItemsToShowInSequence)))
-        {
-            formatted.Append(", ...");
-        }
-        formatted.Append(']');
-        return formatted.ToString();
-    }
-
-    [Pure]
-    [OverloadResolutionPriority(1)]
-    internal static string Value<T>(IReadOnlyList<T> value, bool openEnded = false)
-    {
-        var formatted = new StringBuilder().Append('[');
-        if (value.Count <= MaximumItemsToShow)
-        {
-            AppendValues(formatted, value);
-        }
-        else
-        {
-            AppendValues(formatted, value.Take(ItemsToShowInSequence));
-            formatted.Append(", ... ");
-            AppendValues(formatted, value.TakeLast(ItemsToShowInSequence));
-        }
-
-        if (openEnded)
-        {
-            formatted.Append(", ...");
-        }
-        formatted.Append(']');
-        return formatted.ToString();
-    }
-
     [Pure]
     internal static string Value<T>(Span<T> value, int highlightIndex) => Value((ReadOnlySpan<T>)value, highlightIndex);
 
@@ -168,7 +131,48 @@ internal static class Format
     }
 
     [Pure]
-    internal static string Value<T>(IReadOnlyList<T> value, int highlightIndex, bool openEnded = false)
+    internal static string Enumerable<T>(IEnumerable<T> value)
+    {
+        if (value is IReadOnlyCollection<T> collection)
+        {
+            return Collection(collection);
+        }
+
+        var formatted = new StringBuilder().Append('[');
+        if (AppendValues(formatted, value.Take(ItemsToShowInSequence)))
+        {
+            formatted.Append(", ...");
+        }
+        formatted.Append(']');
+        return formatted.ToString();
+    }
+
+    [Pure]
+    [OverloadResolutionPriority(1)]
+    internal static string Collection<T>(IReadOnlyCollection<T> value, bool openEnded = false)
+    {
+        var formatted = new StringBuilder().Append('[');
+        if (value.Count <= MaximumItemsToShow)
+        {
+            AppendValues(formatted, value);
+        }
+        else
+        {
+            AppendValues(formatted, value.Take(ItemsToShowInSequence));
+            formatted.Append(", ... ");
+            AppendValues(formatted, value.TakeLast(ItemsToShowInSequence));
+        }
+
+        if (openEnded)
+        {
+            formatted.Append(", ...");
+        }
+        formatted.Append(']');
+        return formatted.ToString();
+    }
+
+    [Pure]
+    internal static string Collection<T>(IReadOnlyCollection<T> value, int highlightIndex, bool openEnded = false)
     {
         var formatted = new StringBuilder().Append('[');
         if (value.Count <= MaximumItemsToShow)
@@ -199,7 +203,7 @@ internal static class Format
             }
 
             formatted.Append('*');
-            formatted.Append(Value(value[highlightIndex]));
+            formatted.Append(Value(value.Skip(highlightIndex).First()));
             formatted.Append('*');
 
             var endIndex = highlightIndex + ItemsToShowInSequence;
@@ -279,23 +283,25 @@ internal static class Format
         }
     }
 
-    private static void AppendValues<T>(StringBuilder formatted, IReadOnlyList<T> values, int highlightIndex)
+    private static void AppendValues<T>(StringBuilder formatted, IReadOnlyCollection<T> values, int highlightIndex)
     {
-        for (var f = 0; f < values.Count; f++)
+        var index = 0;
+        foreach (var value in values)
         {
-            if (f == highlightIndex)
-            {
-                formatted.Append('*');
-            }
-            formatted.Append(Value(values[f]));
-            if (f == highlightIndex)
-            {
-                formatted.Append('*');
-            }
-            if (f < values.Count - 1)
+            if (index > 0)
             {
                 formatted.Append(", ");
             }
+            if (index == highlightIndex)
+            {
+                formatted.Append('*');
+            }
+            formatted.Append(Value(value));
+            if (index == highlightIndex)
+            {
+                formatted.Append('*');
+            }
+            index++;
         }
     }
 

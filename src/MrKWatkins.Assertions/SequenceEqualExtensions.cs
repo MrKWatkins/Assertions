@@ -1,65 +1,23 @@
-using System.Runtime.CompilerServices;
-
 namespace MrKWatkins.Assertions;
 
 [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
 public static class SequenceEqualExtensions
 {
-    [OverloadResolutionPriority(1)]
-    public static ReadOnlyListAssertionsChain<TList, T> SequenceEqual<TList, T>(this ReadOnlyListAssertions<TList, T> assertions, params IReadOnlyList<T> expected)
-        where TList : IReadOnlyList<T>
+    public static ObjectAssertionsChain<TEnumerable> SequenceEqual<TEnumerable, T>(this ObjectAssertions<TEnumerable> assertions, [InstantHandle] params IEnumerable<T> expected)
+        where TEnumerable : IEnumerable<T>
     {
         assertions.NotBeNull();
 
-        var equalityComparer = EqualityComparer<T>.Default;
-        var actual = assertions.Value;
-        if (actual.Count != expected.Count)
-        {
-            throw Verify.CreateException(
-                $"Value {Format.Value(actual)} should sequence equal {Format.Value(expected)} but it has {actual.Count} element{(actual.Count == 1 ? "" : "s")} rather than the expected {expected.Count}.");
-        }
-
-        for (var f = 0; f < actual.Count; f++)
-        {
-            var actualItem = actual[f];
-            var expectedItem = expected[f];
-            if (!equalityComparer.Equals(actualItem, expectedItem))
-            {
-                throw Verify.CreateException(
-                    $"Value {Format.Value(actual, f)} should sequence equal {Format.Value(expected, f)} but it differs at index {f}.");
-            }
-        }
-
-        return new ReadOnlyListAssertionsChain<TList, T>(assertions);
-    }
-
-    [OverloadResolutionPriority(1)]
-    public static ReadOnlyListAssertionsChain<TList, T> NotSequenceEqual<TList, T>(this ReadOnlyListAssertions<TList, T> assertions, params IReadOnlyList<T> expected)
-        where TList : IReadOnlyList<T>
-    {
-        assertions.NotBeNull();
-        if (assertions.Value.SequenceEqual(expected))
-        {
-            throw Verify.CreateException($"Value should not sequence equal {Format.Value(expected)}.");
-        }
-
-        return new ReadOnlyListAssertionsChain<TList, T>(assertions);
-    }
-
-    // Allow sequence equal for actual IEnumerables, but not all things that implement IEnumerable, e.g. sets.
-    public static EnumerableAssertionsChain<IEnumerable<T>, T> SequenceEqual<T>(this EnumerableAssertions<IEnumerable<T>, T> assertions, params IEnumerable<T> expected)
-    {
-        assertions.NotBeNull();
-
-        var equalityComparer = EqualityComparer<T>.Default;
         var actual = assertions.Value;
         if (actual.TryGetCount(out var actualCount) &&
             expected.TryGetCount(out var expectedCount) &&
             actualCount != expectedCount)
         {
             throw Verify.CreateException(
-                $"Value {Format.Value(actual)} should sequence equal {Format.Value(expected)} but it has {actualCount} element{(actualCount == 1 ? "" : "s")} rather than the expected {expectedCount}.");
+                $"Value {Format.Enumerable(actual)} should sequence equal {Format.Enumerable(expected)} but it has {actualCount} element{(actualCount == 1 ? "" : "s")} rather than the expected {expectedCount}.");
         }
+
+        var equalityComparer = EqualityComparer<T>.Default;
 
         var actualList = new List<T>();
         var expectedList = new List<T>();
@@ -85,33 +43,36 @@ public static class SequenceEqualExtensions
             else
             {
                 throw Verify.CreateException(
-                    $"Value {Format.Value(actual)} should sequence equal {Format.Value(expected)} but it has more elements than the expected {expectedList.Count}.");
+                    $"Value {Format.Enumerable(actual)} should sequence equal {Format.Enumerable(expected)} but it has more elements than the expected {expectedList.Count}.");
             }
 
             if (!equalityComparer.Equals(actualEnumerator.Current, expectedEnumerator.Current))
             {
                 var index = actualList.Count - 1;
                 throw Verify.CreateException(
-                    $"Value {Format.Value(actualList, index, true)} should sequence equal {Format.Value(expectedList, index, true)} but it differs at index {index}.");
+                    $"Value {Format.Collection(actualList, index, true)} should sequence equal {Format.Collection(expectedList, index, true)} but it differs at index {index}.");
             }
         }
 
         if (expectedEnumerator.MoveNext())
         {
             throw Verify.CreateException(
-                $"Value {Format.Value(actual)} should sequence equal {Format.Value(expected)} but it has less elements ({actualList.Count}) than expected.");
+                $"Value {Format.Enumerable(actual)} should sequence equal {Format.Enumerable(expected)} but it has less elements ({actualList.Count}) than expected.");
         }
 
-        return new EnumerableAssertionsChain<IEnumerable<T>, T>(assertions);
+        return new ObjectAssertionsChain<TEnumerable>(assertions);
     }
 
-    public static EnumerableAssertionsChain<IEnumerable<T>, T> NotSequenceEqual<T>(this EnumerableAssertions<IEnumerable<T>, T> assertions, params IEnumerable<T> expected)
+    public static ObjectAssertionsChain<TEnumerable> NotSequenceEqual<TEnumerable, T>(this ObjectAssertions<TEnumerable> assertions, params IEnumerable<T> expected)
+        where TEnumerable : IEnumerable<T>
     {
+        assertions.NotBeNull();
+
         if (assertions.Value.SequenceEqual(expected))
         {
-            throw Verify.CreateException($"Value should not sequence equal {Format.Value(expected)}.");
+            throw Verify.CreateException($"Value should not sequence equal {Format.Enumerable(expected)}.");
         }
 
-        return new EnumerableAssertionsChain<IEnumerable<T>, T>(assertions);
+        return new ObjectAssertionsChain<TEnumerable>(assertions);
     }
 }

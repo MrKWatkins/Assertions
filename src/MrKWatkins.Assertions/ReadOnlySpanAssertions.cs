@@ -63,22 +63,18 @@ public readonly ref struct ReadOnlySpanAssertions<T>
         if (expected.TryGetCount(out var expectedCount) && Value.Length != expectedCount)
         {
             throw Verify.CreateException(
-                $"Value {Format.Value(Value)} should sequence equal {Format.Value(expected)} but it has {Value.Length} element{(Value.Length == 1 ? "" : "s")} rather than the expected {expectedCount}.");
+                $"Value {Format.Value(Value)} should sequence equal {Format.Enumerable(expected)} but it has {Value.Length} element{(Value.Length == 1 ? "" : "s")} rather than the expected {expectedCount}.");
         }
 
-        var actualList = new List<T>();
         var expectedList = new List<T>();
 
         var actualEnumerator = Value.GetEnumerator();
         using var expectedEnumerator = expected.GetEnumerator();
 
+        var index = 0;
         while (true)
         {
-            if (actualEnumerator.MoveNext())
-            {
-                actualList.Add(actualEnumerator.Current);
-            }
-            else
+            if (!actualEnumerator.MoveNext())
             {
                 break;
             }
@@ -90,21 +86,22 @@ public readonly ref struct ReadOnlySpanAssertions<T>
             else
             {
                 throw Verify.CreateException(
-                    $"Value {Format.Value(Value)} should sequence equal {Format.Value(expected)} but it has more elements than the expected {expectedList.Count}.");
+                    $"Value {Format.Value(Value)} should sequence equal {Format.Enumerable(expected)} but it has more elements than the expected {expectedList.Count}.");
             }
 
             if (!equalityComparer.Equals(actualEnumerator.Current, expectedEnumerator.Current))
             {
-                var index = actualList.Count - 1;
                 throw Verify.CreateException(
-                    $"Value {Format.Value(actualList, index, true)} should sequence equal {Format.Value(expectedList, index, true)} but it differs at index {index}.");
+                    $"Value {Format.Value(Value, index)} should sequence equal {Format.Collection(expectedList, index, true)} but it differs at index {index}.");
             }
+
+            index++;
         }
 
         if (expectedEnumerator.MoveNext())
         {
             throw Verify.CreateException(
-                $"Value {Format.Value(Value)} should sequence equal {Format.Value(expected)} but it has less elements ({actualList.Count}) than expected.");
+                $"Value {Format.Value(Value)} should sequence equal {Format.Enumerable(expected)} but it has less elements ({Value.Length}) than expected.");
         }
 
         return new ReadOnlySpanAssertionsChain<T>(this);
