@@ -12,18 +12,18 @@ public sealed class SequenceEqualExtensionsTests
     }
 
     [Test]
-    [Arguments(new int[0], true, new [] { 1, 2, 3 }, true, "Value [] should sequence equal [1, 2, 3] but it has 0 elements rather than the expected 3.")]
-    [Arguments(new int[0], true, new [] { 1, 2, 3 }, false, "Value [] should sequence equal [1, 2, ...] but it has less elements (0) than expected.")]
-    [Arguments(new int[0], false, new [] { 1, 2, 3 }, true, "Value [] should sequence equal [1, 2, 3] but it has 0 elements rather than the expected 3.")]
-    [Arguments(new int[0], false, new [] { 1, 2, 3 }, false, "Value [] should sequence equal [1, 2, ...] but it has less elements (0) than expected.")]
-    [Arguments(new [] { 1 }, true, new int[0], true, "Value [1] should sequence equal [] but it has 1 element rather than the expected 0.")]
-    [Arguments(new [] { 1, 2, 3 }, true, new int[0], false, "Value [1, 2, 3] should sequence equal [] but it has 3 elements rather than the expected 0.")]
-    [Arguments(new [] { 1, 2, 3 }, false, new int[0], true, "Value [1, 2, ...] should sequence equal [] but it has more elements than the expected 0.")]
-    [Arguments(new [] { 1, 2, 3 }, false, new int[0], false, "Value [1, 2, ...] should sequence equal [] but it has more elements than the expected 0.")]
-    [Arguments(new [] { 1, 2, 3 }, true, new [] { 1, 2, 4 }, true, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
-    [Arguments(new [] { 1, 2, 3 }, false, new [] { 1, 2, 4 }, true, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
-    [Arguments(new [] { 1, 2, 3 }, true, new [] { 1, 2, 4 }, false, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
-    [Arguments(new [] { 1, 2, 3 }, false, new [] { 1, 2, 4 }, false, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
+    [Arguments(new int[0], true, new[] { 1, 2, 3 }, true, "Value [] should sequence equal [1, 2, 3] but it has 0 elements rather than the expected 3.")]
+    [Arguments(new int[0], true, new[] { 1, 2, 3 }, false, "Value [] should sequence equal [1, 2, ...] but it has less elements (0) than expected.")]
+    [Arguments(new int[0], false, new[] { 1, 2, 3 }, true, "Value [] should sequence equal [1, 2, 3] but it has 0 elements rather than the expected 3.")]
+    [Arguments(new int[0], false, new[] { 1, 2, 3 }, false, "Value [] should sequence equal [1, 2, ...] but it has less elements (0) than expected.")]
+    [Arguments(new[] { 1 }, true, new int[0], true, "Value [1] should sequence equal [] but it has 1 element rather than the expected 0.")]
+    [Arguments(new[] { 1, 2, 3 }, true, new int[0], false, "Value [1, 2, 3] should sequence equal [] but it has 3 elements rather than the expected 0.")]
+    [Arguments(new[] { 1, 2, 3 }, false, new int[0], true, "Value [1, 2, ...] should sequence equal [] but it has more elements than the expected 0.")]
+    [Arguments(new[] { 1, 2, 3 }, false, new int[0], false, "Value [1, 2, ...] should sequence equal [] but it has more elements than the expected 0.")]
+    [Arguments(new[] { 1, 2, 3 }, true, new[] { 1, 2, 4 }, true, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
+    [Arguments(new[] { 1, 2, 3 }, false, new[] { 1, 2, 4 }, true, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
+    [Arguments(new[] { 1, 2, 3 }, true, new[] { 1, 2, 4 }, false, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
+    [Arguments(new[] { 1, 2, 3 }, false, new[] { 1, 2, 4 }, false, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
     public async Task SequenceEqual_Throws(int[] actual, bool actualIsCollection, int[] expected, bool expectedIsCollection, string expectedMessage)
     {
         var actualEnumerable = actualIsCollection ? actual : actual.Select(x => x);
@@ -38,10 +38,10 @@ public sealed class SequenceEqualExtensionsTests
     [Arguments(new int[0], false, new int[0], true)]
     [Arguments(new int[0], true, new int[0], false)]
     [Arguments(new int[0], false, new int[0], false)]
-    [Arguments(new [] { 1, 2, 3 }, true, new [] { 1, 2, 3 }, true)]
-    [Arguments(new [] { 1, 2, 3 }, false, new [] { 1, 2, 3 }, true)]
-    [Arguments(new [] { 1, 2, 3 }, true, new [] { 1, 2, 3 }, false)]
-    [Arguments(new [] { 1, 2, 3 }, false, new [] { 1, 2, 3 }, false)]
+    [Arguments(new[] { 1, 2, 3 }, true, new[] { 1, 2, 3 }, true)]
+    [Arguments(new[] { 1, 2, 3 }, false, new[] { 1, 2, 3 }, true)]
+    [Arguments(new[] { 1, 2, 3 }, true, new[] { 1, 2, 3 }, false)]
+    [Arguments(new[] { 1, 2, 3 }, false, new[] { 1, 2, 3 }, false)]
     public async Task SequenceEqual(int[] actual, bool actualIsCollection, int[] expected, bool expectedIsCollection)
     {
         var actualEnumerable = actualIsCollection ? actual : actual.Select(x => x);
@@ -74,10 +74,10 @@ public sealed class SequenceEqualExtensionsTests
     [Arguments(new int[0], false, new int[0], true, "Value should not sequence equal [].")]
     [Arguments(new int[0], true, new int[0], false, "Value should not sequence equal [].")]
     [Arguments(new int[0], false, new int[0], false, "Value should not sequence equal [].")]
-    [Arguments(new [] { 1, 2, 3 }, true, new [] { 1, 2, 3 }, true, "Value should not sequence equal [1, 2, 3].")]
-    [Arguments(new [] { 1, 2, 3 }, false, new [] { 1, 2, 3 }, true, "Value should not sequence equal [1, 2, 3].")]
-    [Arguments(new [] { 1, 2, 3 }, true, new [] { 1, 2, 3 }, false, "Value should not sequence equal [1, 2, ...].")]
-    [Arguments(new [] { 1, 2, 3 }, false, new [] { 1, 2, 3 }, false, "Value should not sequence equal [1, 2, ...].")]
+    [Arguments(new[] { 1, 2, 3 }, true, new[] { 1, 2, 3 }, true, "Value should not sequence equal [1, 2, 3].")]
+    [Arguments(new[] { 1, 2, 3 }, false, new[] { 1, 2, 3 }, true, "Value should not sequence equal [1, 2, 3].")]
+    [Arguments(new[] { 1, 2, 3 }, true, new[] { 1, 2, 3 }, false, "Value should not sequence equal [1, 2, ...].")]
+    [Arguments(new[] { 1, 2, 3 }, false, new[] { 1, 2, 3 }, false, "Value should not sequence equal [1, 2, ...].")]
     public async Task NotSequenceEqual_Throws(int[] actual, bool actualIsCollection, int[] expected, bool expectedIsCollection, string expectedMessage)
     {
         var actualEnumerable = actualIsCollection ? actual : actual.Select(x => x);

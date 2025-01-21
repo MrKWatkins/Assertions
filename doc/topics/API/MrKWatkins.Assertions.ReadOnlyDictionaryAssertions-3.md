@@ -2,7 +2,7 @@
 ## Definition
 
 ```c#
-public sealed class ReadOnlyDictionaryAssertions<TDictionary, TKey, TValue> : EnumerableAssertions<TDictionary, KeyValuePair<TKey, TValue>>
+public sealed class ReadOnlyDictionaryAssertions<TDictionary, TKey, TValue> : ObjectAssertions<TDictionary>
    where TDictionary : IReadOnlyDictionary<TKey, TValue>
 ```
 

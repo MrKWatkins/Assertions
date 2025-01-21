@@ -9,8 +9,6 @@ public static class SequenceEqualExtensions
 
 | Name | Description |
 | ---- | ----------- |
-| [NotSequenceEqual&lt;TList, T&gt;(ReadOnlyListAssertions&lt;TList, T&gt;, IReadOnlyList&lt;T&gt;)](MrKWatkins.Assertions.SequenceEqualExtensions.NotSequenceEqual.md#mrkwatkins-assertions-sequenceequalextensions-notsequenceequal-2(mrkwatkins-assertions-readonlylistassertions((-0-1))-system-collections-generic-ireadonlylist((-1)))) |  |
-| [NotSequenceEqual&lt;T&gt;(EnumerableAssertions&lt;IEnumerable&lt;T&gt;, T&gt;, IEnumerable&lt;T&gt;)](MrKWatkins.Assertions.SequenceEqualExtensions.NotSequenceEqual.md#mrkwatkins-assertions-sequenceequalextensions-notsequenceequal-1(mrkwatkins-assertions-enumerableassertions((system-collections-generic-ienumerable((-0))-0))-system-collections-generic-ienumerable((-0)))) |  |
-| [SequenceEqual&lt;TList, T&gt;(ReadOnlyListAssertions&lt;TList, T&gt;, IReadOnlyList&lt;T&gt;)](MrKWatkins.Assertions.SequenceEqualExtensions.SequenceEqual.md#mrkwatkins-assertions-sequenceequalextensions-sequenceequal-2(mrkwatkins-assertions-readonlylistassertions((-0-1))-system-collections-generic-ireadonlylist((-1)))) |  |
-| [SequenceEqual&lt;T&gt;(EnumerableAssertions&lt;IEnumerable&lt;T&gt;, T&gt;, IEnumerable&lt;T&gt;)](MrKWatkins.Assertions.SequenceEqualExtensions.SequenceEqual.md#mrkwatkins-assertions-sequenceequalextensions-sequenceequal-1(mrkwatkins-assertions-enumerableassertions((system-collections-generic-ienumerable((-0))-0))-system-collections-generic-ienumerable((-0)))) |  |
+| [NotSequenceEqual&lt;TEnumerable, T&gt;(ObjectAssertions&lt;TEnumerable&gt;, IEnumerable&lt;T&gt;)](MrKWatkins.Assertions.SequenceEqualExtensions.NotSequenceEqual.md) |  |
+| [SequenceEqual&lt;TEnumerable, T&gt;(ObjectAssertions&lt;TEnumerable&gt;, IEnumerable&lt;T&gt;)](MrKWatkins.Assertions.SequenceEqualExtensions.SequenceEqual.md) |  |
 

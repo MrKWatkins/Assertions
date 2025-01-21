@@ -37,18 +37,13 @@
           <toc-element toc-title="NotBeTrue" topic="MrKWatkins.Assertions.BooleanExtensions.NotBeTrue.md" />
         </toc-element>
       </toc-element>
-      <toc-element toc-title="EnumerableAssertions&lt;TEnumerable, T&gt;">
-        <toc-element toc-title="EnumerableAssertions&lt;TEnumerable, T&gt;" topic="MrKWatkins.Assertions.EnumerableAssertions-2.md" />
+      <toc-element toc-title="CountExtensions">
+        <toc-element toc-title="CountExtensions" topic="MrKWatkins.Assertions.CountExtensions.md" />
         <toc-element toc-title="Methods">
-          <toc-element toc-title="BeEmpty" topic="MrKWatkins.Assertions.EnumerableAssertions-2.BeEmpty.md" />
-          <toc-element toc-title="NotBeEmpty" topic="MrKWatkins.Assertions.EnumerableAssertions-2.NotBeEmpty.md" />
-        </toc-element>
-      </toc-element>
-      <toc-element toc-title="EnumerableAssertionsChain&lt;TEnumerable, T&gt;">
-        <toc-element toc-title="EnumerableAssertionsChain&lt;TEnumerable, T&gt;" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-2.md" />
-        <toc-element toc-title="Properties">
-          <toc-element toc-title="And" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-2.And.md" />
-          <toc-element toc-title="Value" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-2.Value.md" />
+          <toc-element toc-title="BeEmpty" topic="MrKWatkins.Assertions.CountExtensions.BeEmpty.md" />
+          <toc-element toc-title="HaveCount" topic="MrKWatkins.Assertions.CountExtensions.HaveCount.md" />
+          <toc-element toc-title="NotBeEmpty" topic="MrKWatkins.Assertions.CountExtensions.NotBeEmpty.md" />
+          <toc-element toc-title="NotHaveCount" topic="MrKWatkins.Assertions.CountExtensions.NotHaveCount.md" />
         </toc-element>
       </toc-element>
       <toc-element toc-title="ExceptionExtensions">
@@ -62,12 +57,6 @@
           <toc-element toc-title="NotHaveMessage" topic="MrKWatkins.Assertions.ExceptionExtensions.NotHaveMessage.md" />
           <toc-element toc-title="NotHaveMessageStartingWith" topic="MrKWatkins.Assertions.ExceptionExtensions.NotHaveMessageStartingWith.md" />
           <toc-element toc-title="NotHaveParamName" topic="MrKWatkins.Assertions.ExceptionExtensions.NotHaveParamName.md" />
-        </toc-element>
-      </toc-element>
-      <toc-element toc-title="Extensions">
-        <toc-element toc-title="Extensions" topic="MrKWatkins.Assertions.Extensions.md" />
-        <toc-element toc-title="Methods">
-          <toc-element toc-title="TryGetCount" topic="MrKWatkins.Assertions.Extensions.TryGetCount.md" />
         </toc-element>
       </toc-element>
       <toc-element toc-title="IntegerFormat" topic="MrKWatkins.Assertions.IntegerFormat.md" />
@@ -128,16 +117,6 @@
         <toc-element toc-title="Properties">
           <toc-element toc-title="And" topic="MrKWatkins.Assertions.ReadOnlyDictionaryAssertionsChain-3.And.md" />
           <toc-element toc-title="Value" topic="MrKWatkins.Assertions.ReadOnlyDictionaryAssertionsChain-3.Value.md" />
-        </toc-element>
-      </toc-element>
-      <toc-element toc-title="ReadOnlyListAssertions&lt;TList, T&gt;">
-        <toc-element toc-title="ReadOnlyListAssertions&lt;TList, T&gt;" topic="MrKWatkins.Assertions.ReadOnlyListAssertions-2.md" />
-      </toc-element>
-      <toc-element toc-title="ReadOnlyListAssertionsChain&lt;TList, T&gt;">
-        <toc-element toc-title="ReadOnlyListAssertionsChain&lt;TList, T&gt;" topic="MrKWatkins.Assertions.ReadOnlyListAssertionsChain-2.md" />
-        <toc-element toc-title="Properties">
-          <toc-element toc-title="And" topic="MrKWatkins.Assertions.ReadOnlyListAssertionsChain-2.And.md" />
-          <toc-element toc-title="Value" topic="MrKWatkins.Assertions.ReadOnlyListAssertionsChain-2.Value.md" />
         </toc-element>
       </toc-element>
       <toc-element toc-title="ReadOnlySpanAssertions&lt;T&gt;">
