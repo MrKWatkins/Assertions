@@ -3,55 +3,9 @@
 
 | Name | Description |
 | ---- | ----------- |
-| [NotSequenceEqual&lt;T&gt;(ReadOnlySpanAssertions&lt;T&gt;, ReadOnlySpan&lt;T&gt;)](MrKWatkins.Assertions.SequenceEqualExtensions.NotSequenceEqual.md#mrkwatkins-assertions-sequenceequalextensions-notsequenceequal-1(mrkwatkins-assertions-readonlyspanassertions((-0))-system-readonlyspan((-0)))) |  |
-| [NotSequenceEqual&lt;T&gt;(ReadOnlySpanAssertions&lt;T&gt;, IReadOnlyList&lt;T&gt;)](MrKWatkins.Assertions.SequenceEqualExtensions.NotSequenceEqual.md#mrkwatkins-assertions-sequenceequalextensions-notsequenceequal-1(mrkwatkins-assertions-readonlyspanassertions((-0))-system-collections-generic-ireadonlylist((-0)))) |  |
 | [NotSequenceEqual&lt;TList, T&gt;(ReadOnlyListAssertions&lt;TList, T&gt;, IReadOnlyList&lt;T&gt;)](MrKWatkins.Assertions.SequenceEqualExtensions.NotSequenceEqual.md#mrkwatkins-assertions-sequenceequalextensions-notsequenceequal-2(mrkwatkins-assertions-readonlylistassertions((-0-1))-system-collections-generic-ireadonlylist((-1)))) |  |
 | [NotSequenceEqual&lt;T&gt;(EnumerableAssertions&lt;IEnumerable&lt;T&gt;, T&gt;, IEnumerable&lt;T&gt;)](MrKWatkins.Assertions.SequenceEqualExtensions.NotSequenceEqual.md#mrkwatkins-assertions-sequenceequalextensions-notsequenceequal-1(mrkwatkins-assertions-enumerableassertions((system-collections-generic-ienumerable((-0))-0))-system-collections-generic-ienumerable((-0)))) |  |
 
-## NotSequenceEqual&lt;T&gt;(ReadOnlySpanAssertions&lt;T&gt;, ReadOnlySpan&lt;T&gt;) {id="mrkwatkins-assertions-sequenceequalextensions-notsequenceequal-1(mrkwatkins-assertions-readonlyspanassertions((-0))-system-readonlyspan((-0)))"}
-
-```c#
-public static ReadOnlySpanAssertionsChain<T> NotSequenceEqual<T>(this ReadOnlySpanAssertions<T> assertions, params ReadOnlySpan<T> expected);
-```
-
-### Type Parameters {id="type-parameters-mrkwatkins-assertions-sequenceequalextensions-notsequenceequal-1(mrkwatkins-assertions-readonlyspanassertions((-0))-system-readonlyspan((-0)))"}
-
-| Name | Description |
-| ---- | ----------- |
-| T |  |
-
-## Parameters {id="parameters-mrkwatkins-assertions-sequenceequalextensions-notsequenceequal-1(mrkwatkins-assertions-readonlyspanassertions((-0))-system-readonlyspan((-0)))"}
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| assertions | [ReadOnlySpanAssertions&lt;T&gt;](MrKWatkins.Assertions.ReadOnlySpanAssertions-1.md) |  |
-| expected | [ReadOnlySpan&lt;T&gt;](https://learn.microsoft.com/en-gb/dotnet/api/System.ReadOnlySpan-1) |  |
-
-## Returns {id="returns-mrkwatkins-assertions-sequenceequalextensions-notsequenceequal-1(mrkwatkins-assertions-readonlyspanassertions((-0))-system-readonlyspan((-0)))"}
-
-[ReadOnlySpanAssertionsChain&lt;T&gt;](MrKWatkins.Assertions.ReadOnlySpanAssertionsChain-1.md)
-## NotSequenceEqual&lt;T&gt;(ReadOnlySpanAssertions&lt;T&gt;, IReadOnlyList&lt;T&gt;) {id="mrkwatkins-assertions-sequenceequalextensions-notsequenceequal-1(mrkwatkins-assertions-readonlyspanassertions((-0))-system-collections-generic-ireadonlylist((-0)))"}
-
-```c#
-public static ReadOnlySpanAssertionsChain<T> NotSequenceEqual<T>(this ReadOnlySpanAssertions<T> assertions, params IReadOnlyList<T> expected);
-```
-
-### Type Parameters {id="type-parameters-mrkwatkins-assertions-sequenceequalextensions-notsequenceequal-1(mrkwatkins-assertions-readonlyspanassertions((-0))-system-collections-generic-ireadonlylist((-0)))"}
-
-| Name | Description |
-| ---- | ----------- |
-| T |  |
-
-## Parameters {id="parameters-mrkwatkins-assertions-sequenceequalextensions-notsequenceequal-1(mrkwatkins-assertions-readonlyspanassertions((-0))-system-collections-generic-ireadonlylist((-0)))"}
-
-| Name | Type | Description |
-| ---- | ---- | ----------- |
-| assertions | [ReadOnlySpanAssertions&lt;T&gt;](MrKWatkins.Assertions.ReadOnlySpanAssertions-1.md) |  |
-| expected | [IReadOnlyList&lt;T&gt;](https://learn.microsoft.com/en-gb/dotnet/api/System.Collections.Generic.IReadOnlyList-1) |  |
-
-## Returns {id="returns-mrkwatkins-assertions-sequenceequalextensions-notsequenceequal-1(mrkwatkins-assertions-readonlyspanassertions((-0))-system-collections-generic-ireadonlylist((-0)))"}
-
-[ReadOnlySpanAssertionsChain&lt;T&gt;](MrKWatkins.Assertions.ReadOnlySpanAssertionsChain-1.md)
 ## NotSequenceEqual&lt;TList, T&gt;(ReadOnlyListAssertions&lt;TList, T&gt;, IReadOnlyList&lt;T&gt;) {id="mrkwatkins-assertions-sequenceequalextensions-notsequenceequal-2(mrkwatkins-assertions-readonlylistassertions((-0-1))-system-collections-generic-ireadonlylist((-1)))"}
 
 ```c#

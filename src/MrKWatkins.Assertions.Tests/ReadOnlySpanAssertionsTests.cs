@@ -129,14 +129,14 @@ public sealed class ReadOnlySpanAssertionsTests
     }
 
     [Test]
-    public async Task SequenceEqual_IReadOnlyList()
+    public async Task SequenceEqual_IEnumerable()
     {
         await Assert.That(() =>
         {
             ReadOnlySpan<byte> value = [];
             IReadOnlyList<byte> differentLength = [1];
             value.Should().SequenceEqual(differentLength);
-        }).Throws<AssertionException>().WithMessage("Value [] should sequence equal [1] but it has 0 elements rather than the expected 1.");
+        }).Throws<AssertionException>().WithMessage("Value [] should sequence equal [1, ...] but it has 0 elements rather than the expected 1.");
 
         await Assert.That(() =>
         {
@@ -150,14 +150,28 @@ public sealed class ReadOnlySpanAssertionsTests
             ReadOnlySpan<byte> value = [1, 2, 3];
             IReadOnlyList<byte> differentLength = [1, 2, 3, 4];
             value.Should().SequenceEqual(differentLength);
-        }).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should sequence equal [1, 2, 3, 4] but it has 3 elements rather than the expected 4.");
+        }).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should sequence equal [1, 2, ...] but it has 3 elements rather than the expected 4.");
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<byte> value = [1, 2, 3, 4, 5];
+            IReadOnlyList<byte> differentElements = [1, 2, 3, 5, 5];
+            value.Should().SequenceEqual(differentElements);
+        }).Throws<AssertionException>().WithMessage("Value [1, 2, 3, *4*, ...] should sequence equal [1, 2, 3, *5*, ...] but it differs at index 3.");
 
         await Assert.That(() =>
         {
             ReadOnlySpan<byte> value = [1, 2, 3];
             IReadOnlyList<byte> differentElements = [1, 3, 4];
             value.Should().SequenceEqual(differentElements);
-        }).Throws<AssertionException>().WithMessage("Value [1, *2*, 3] should sequence equal [1, *3*, 4] but it differs at index 1.");
+        }).Throws<AssertionException>().WithMessage("Value [1, *2*, ...] should sequence equal [1, *3*, ...] but it differs at index 1.");
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<byte> value = [];
+            IReadOnlyList<byte> sequenceEqual = [];
+            value.Should().SequenceEqual(sequenceEqual);
+        }).ThrowsNothing();
 
         await Assert.That(() =>
         {
@@ -168,7 +182,7 @@ public sealed class ReadOnlySpanAssertionsTests
     }
 
     [Test]
-    public async Task SequenceEqual_IReadOnlyList_Chain_Value()
+    public async Task SequenceEqual_IEnumerable_Chain_Value()
     {
         ReadOnlySpan<byte> value = [1, 2, 3];
         IReadOnlyList<byte> sequenceEqual = [1, 2, 3];
@@ -178,7 +192,7 @@ public sealed class ReadOnlySpanAssertionsTests
     }
 
     [Test]
-    public async Task SequenceEqual_IReadOnlyList_Chain_And_Value()
+    public async Task SequenceEqual_IEnumerable_Chain_And_Value()
     {
         ReadOnlySpan<byte> value = [1, 2, 3];
         IReadOnlyList<byte> sequenceEqual = [1, 2, 3];
@@ -220,6 +234,13 @@ public sealed class ReadOnlySpanAssertionsTests
 
         await Assert.That(() =>
         {
+            ReadOnlySpan<byte> value = [];
+            ReadOnlySpan<byte> sequenceEqual = [];
+            value.Should().NotSequenceEqual(sequenceEqual);
+        }).Throws<AssertionException>().WithMessage("Value should not sequence equal [].");
+
+        await Assert.That(() =>
+        {
             ReadOnlySpan<byte> value = [1, 2, 3];
             ReadOnlySpan<byte> sequenceEqual = [1, 2, 3];
             value.Should().NotSequenceEqual(sequenceEqual);
@@ -247,7 +268,7 @@ public sealed class ReadOnlySpanAssertionsTests
     }
 
     [Test]
-    public async Task NotSequenceEqual_IReadOnlyList()
+    public async Task NotSequenceEqual_IEnumerable()
     {
         await Assert.That(() =>
         {
@@ -286,7 +307,7 @@ public sealed class ReadOnlySpanAssertionsTests
     }
 
     [Test]
-    public async Task NotSequenceEqual_IReadOnlyList_Chain_Value()
+    public async Task NotSequenceEqual_IEnumerable_Chain_Value()
     {
         ReadOnlySpan<byte> value = [1, 2, 3];
         IReadOnlyList<byte> notSequenceEqual = [1, 2];
@@ -296,7 +317,7 @@ public sealed class ReadOnlySpanAssertionsTests
     }
 
     [Test]
-    public async Task NotSequenceEqual_IReadOnlyList_Chain_And_Value()
+    public async Task NotSequenceEqual_IEnumerable_Chain_And_Value()
     {
         ReadOnlySpan<byte> value = [1, 2, 3];
         IReadOnlyList<byte> notSequenceEqual = [1, 2];

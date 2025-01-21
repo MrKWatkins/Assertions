@@ -148,6 +148,8 @@
         <toc-element toc-title="Methods">
           <toc-element toc-title="BeEmpty" topic="MrKWatkins.Assertions.ReadOnlySpanAssertions-1.BeEmpty.md" />
           <toc-element toc-title="NotBeEmpty" topic="MrKWatkins.Assertions.ReadOnlySpanAssertions-1.NotBeEmpty.md" />
+          <toc-element toc-title="NotSequenceEqual" topic="MrKWatkins.Assertions.ReadOnlySpanAssertions-1.NotSequenceEqual.md" />
+          <toc-element toc-title="SequenceEqual" topic="MrKWatkins.Assertions.ReadOnlySpanAssertions-1.SequenceEqual.md" />
         </toc-element>
       </toc-element>
       <toc-element toc-title="ReadOnlySpanAssertionsChain&lt;TItem&gt;">

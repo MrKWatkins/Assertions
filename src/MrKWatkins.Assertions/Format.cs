@@ -79,8 +79,11 @@ internal static class Format
     internal static string Value<T>(IEnumerable<T> value)
     {
         var formatted = new StringBuilder().Append('[');
-        AppendValues(formatted, value.Take(ItemsToShowInSequence));
-        formatted.Append(", ...]");
+        if (AppendValues(formatted, value.Take(ItemsToShowInSequence)))
+        {
+            formatted.Append(", ...");
+        }
+        formatted.Append(']');
         return formatted.ToString();
     }
 
@@ -238,12 +241,12 @@ internal static class Format
         }
     }
 
-    private static void AppendValues<T>(StringBuilder formatted, IEnumerable<T> values)
+    private static bool AppendValues<T>(StringBuilder formatted, IEnumerable<T> values)
     {
         using var enumerator = values.GetEnumerator();
         if (!enumerator.MoveNext())
         {
-            return;
+            return false;
         }
 
         formatted.Append(Value(enumerator.Current));
@@ -252,6 +255,8 @@ internal static class Format
             formatted.Append(", ");
             formatted.Append(Value(enumerator.Current));
         }
+
+        return true;
     }
 
     private static void AppendValues<T>(StringBuilder formatted, ReadOnlySpan<T> values, int highlightIndex)
