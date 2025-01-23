@@ -17,7 +17,7 @@ public class EnumerableAssertions<T> : ObjectAssertions<IEnumerable<T>>
         var index = 0;
         foreach (var item in Value)
         {
-            Verify.That(predicate(item), "Value should only contain items that satisfy the predicate {0} but the item {1} at index {2} does not.", predicateExpression, item, index);
+            Verify.That(predicate(item), $"Value should only contain items that satisfy the predicate {predicateExpression:L} but the item {item} at index {index} does not.");
             index++;
         }
 

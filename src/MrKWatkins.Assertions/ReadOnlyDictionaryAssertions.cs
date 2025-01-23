@@ -11,7 +11,7 @@ public sealed class ReadOnlyDictionaryAssertions<TDictionary, TKey, TValue> : Ob
     public ReadOnlyDictionaryAssertionsChain<TDictionary, TKey, TValue> ContainKey(TKey key)
     {
         NotBeNull();
-        Verify.That(Value.ContainsKey(key), "Value should contain key {0}.", key);
+        Verify.That(Value.ContainsKey(key), $"Value should contain key {key}.");
 
         return new ReadOnlyDictionaryAssertionsChain<TDictionary, TKey, TValue>(this);
     }
@@ -19,7 +19,7 @@ public sealed class ReadOnlyDictionaryAssertions<TDictionary, TKey, TValue> : Ob
     public ReadOnlyDictionaryAssertionsChain<TDictionary, TKey, TValue> NotContainKey(TKey key)
     {
         NotBeNull();
-        Verify.That(!Value.ContainsKey(key), "Value should not contain key {0}.", key);
+        Verify.That(!Value.ContainsKey(key), $"Value should not contain key {key}.");
 
         return new ReadOnlyDictionaryAssertionsChain<TDictionary, TKey, TValue>(this);
     }

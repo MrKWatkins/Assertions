@@ -46,17 +46,45 @@
           <toc-element toc-title="NotHaveCount" topic="MrKWatkins.Assertions.CountExtensions.NotHaveCount.md" />
         </toc-element>
       </toc-element>
+      <toc-element toc-title="EnumerableAssertions&lt;T&gt;">
+        <toc-element toc-title="EnumerableAssertions&lt;T&gt;" topic="MrKWatkins.Assertions.EnumerableAssertions-1.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.EnumerableAssertions-1.-ctor.md" />
+        <toc-element toc-title="Methods">
+          <toc-element toc-title="OnlyContain" topic="MrKWatkins.Assertions.EnumerableAssertions-1.OnlyContain.md" />
+        </toc-element>
+      </toc-element>
+      <toc-element toc-title="EnumerableAssertionsChain&lt;T&gt;">
+        <toc-element toc-title="EnumerableAssertionsChain&lt;T&gt;" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-1.md" />
+        <toc-element toc-title="Properties">
+          <toc-element toc-title="And" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-1.And.md" />
+          <toc-element toc-title="Value" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-1.Value.md" />
+        </toc-element>
+      </toc-element>
+      <toc-element toc-title="EnumerableExtensions">
+        <toc-element toc-title="EnumerableExtensions" topic="MrKWatkins.Assertions.EnumerableExtensions.md" />
+      </toc-element>
       <toc-element toc-title="ExceptionExtensions">
         <toc-element toc-title="ExceptionExtensions" topic="MrKWatkins.Assertions.ExceptionExtensions.md" />
         <toc-element toc-title="Methods">
+          <toc-element toc-title="HaveActualValue" topic="MrKWatkins.Assertions.ExceptionExtensions.HaveActualValue.md" />
           <toc-element toc-title="HaveInnerException" topic="MrKWatkins.Assertions.ExceptionExtensions.HaveInnerException.md" />
           <toc-element toc-title="HaveMessage" topic="MrKWatkins.Assertions.ExceptionExtensions.HaveMessage.md" />
           <toc-element toc-title="HaveMessageStartingWith" topic="MrKWatkins.Assertions.ExceptionExtensions.HaveMessageStartingWith.md" />
           <toc-element toc-title="HaveParamName" topic="MrKWatkins.Assertions.ExceptionExtensions.HaveParamName.md" />
+          <toc-element toc-title="NotHaveActualValue" topic="MrKWatkins.Assertions.ExceptionExtensions.NotHaveActualValue.md" />
           <toc-element toc-title="NotHaveInnerException" topic="MrKWatkins.Assertions.ExceptionExtensions.NotHaveInnerException.md" />
           <toc-element toc-title="NotHaveMessage" topic="MrKWatkins.Assertions.ExceptionExtensions.NotHaveMessage.md" />
           <toc-element toc-title="NotHaveMessageStartingWith" topic="MrKWatkins.Assertions.ExceptionExtensions.NotHaveMessageStartingWith.md" />
           <toc-element toc-title="NotHaveParamName" topic="MrKWatkins.Assertions.ExceptionExtensions.NotHaveParamName.md" />
+        </toc-element>
+      </toc-element>
+      <toc-element toc-title="FormatInterpolatedStringHandler">
+        <toc-element toc-title="FormatInterpolatedStringHandler" topic="MrKWatkins.Assertions.FormatInterpolatedStringHandler.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.FormatInterpolatedStringHandler.-ctor.md" />
+        <toc-element toc-title="Methods">
+          <toc-element toc-title="AppendFormatted" topic="MrKWatkins.Assertions.FormatInterpolatedStringHandler.AppendFormatted.md" />
+          <toc-element toc-title="AppendLiteral" topic="MrKWatkins.Assertions.FormatInterpolatedStringHandler.AppendLiteral.md" />
+          <toc-element toc-title="ToString" topic="MrKWatkins.Assertions.FormatInterpolatedStringHandler.ToString.md" />
         </toc-element>
       </toc-element>
       <toc-element toc-title="IntegerFormat" topic="MrKWatkins.Assertions.IntegerFormat.md" />

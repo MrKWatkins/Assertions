@@ -14,7 +14,7 @@ public class ObjectAssertions<T>
 
     public void BeNull()
     {
-        Verify.That(Value is null, "Value should be null but was {0}.", Value);
+        Verify.That(Value is null, $"Value should be null but was {Value}.");
     }
 
     public ObjectAssertionsChain<T> NotBeNull()
@@ -28,11 +28,11 @@ public class ObjectAssertions<T>
     {
         if (Value is null)
         {
-            Verify.That(expected is null, "Value should equal {0} but was null.", expected);
+            Verify.That(expected is null, $"Value should equal {expected} but was null.");
         }
         else
         {
-            Verify.That(EqualityComparer<T>.Default.Equals(Value, expected), "Value should equal {0} but was {1}.", expected, Value);
+            Verify.That(EqualityComparer<T>.Default.Equals(Value, expected), $"Value should equal {expected} but was {Value}.");
         }
 
         return new ObjectAssertionsChain<T>(this);
@@ -46,7 +46,7 @@ public class ObjectAssertions<T>
         }
         else
         {
-            Verify.That(!EqualityComparer<T>.Default.Equals(Value, expected), "Value should not equal {0}.", expected);
+            Verify.That(!EqualityComparer<T>.Default.Equals(Value, expected), $"Value should not equal {expected}.");
         }
 
         return new ObjectAssertionsChain<T>(this);
@@ -54,14 +54,14 @@ public class ObjectAssertions<T>
 
     public ObjectAssertionsChain<T> BeTheSameInstanceAs(T? expected)
     {
-        Verify.That(ReferenceEquals(Value, expected), "Value should be the same instance as {0} but was {1}.", expected, Value);
+        Verify.That(ReferenceEquals(Value, expected), $"Value should be the same instance as {expected} but was {Value}.");
 
         return new ObjectAssertionsChain<T>(this);
     }
 
     public ObjectAssertionsChain<T> NotBeTheSameInstanceAs(T? expected)
     {
-        Verify.That(!ReferenceEquals(Value, expected), "Value should not be the same instance as {0}.", expected);
+        Verify.That(!ReferenceEquals(Value, expected), $"Value should not be the same instance as {expected}.");
 
         return new ObjectAssertionsChain<T>(this);
     }
@@ -72,7 +72,7 @@ public class ObjectAssertions<T>
         Verify.That(Value is not null, "Value should not be null.");
 
         var type = Value!.GetType();
-        Verify.That(type.IsAssignableTo(typeof(TOther)), "Value should be of type {0} but was of type {1}.", typeof(TOther), type);
+        Verify.That(type.IsAssignableTo(typeof(TOther)), $"Value should be of type {typeof(TOther)} but was of type {type}.");
 
         return new ObjectAssertionsChain<TOther>(new ObjectAssertions<TOther>((TOther)(object)Value));
     }
@@ -83,7 +83,7 @@ public class ObjectAssertions<T>
         Verify.That(Value is not null, "Value should not be null.");
 
         var type = Value!.GetType();
-        Verify.That(!type.IsAssignableTo(typeof(TOther)), "Value should not be of type {0}.", type);
+        Verify.That(!type.IsAssignableTo(typeof(TOther)), $"Value should not be of type {type}.");
 
         return new ObjectAssertionsChain<T>(this);
     }

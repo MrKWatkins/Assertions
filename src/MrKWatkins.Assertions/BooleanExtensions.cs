@@ -11,7 +11,7 @@ public static class BooleanExtensions
 
     public static ObjectAssertionsChain<bool?> BeTrue(this ObjectAssertions<bool?> assertions)
     {
-        Verify.That(assertions.Value.HasValue && assertions.Value.Value, "Value should be true but was {0}.", assertions.Value);
+        Verify.That(assertions.Value.HasValue && assertions.Value.Value, $"Value should be true but was {assertions.Value}.");
 
         return new ObjectAssertionsChain<bool?>(assertions);
     }
@@ -39,7 +39,7 @@ public static class BooleanExtensions
 
     public static ObjectAssertionsChain<bool?> BeFalse(this ObjectAssertions<bool?> assertions)
     {
-        Verify.That(assertions.Value.HasValue && !assertions.Value.Value, "Value should be false but was {0}.", assertions.Value);
+        Verify.That(assertions.Value.HasValue && !assertions.Value.Value, $"Value should be false but was {assertions.Value}.");
 
         return new ObjectAssertionsChain<bool?>(assertions);
     }

@@ -6,6 +6,9 @@ using System.Text;
 
 namespace MrKWatkins.Assertions;
 
+// TODO: Use format string for plurals and a/an.
+// TODO: Tidy up and rationalise methods.
+// TODO: Use more if possible.
 internal static class Format
 {
     private static readonly FrozenSet<char> Vowels = new[] { 'a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U' }.ToFrozenSet();
@@ -15,44 +18,126 @@ internal static class Format
     [Pure]
     internal static string PrefixWithAOrAn(string value) => Vowels.Contains(value[0]) ? $"an {value}" : $"a {value}";
 
-    [Pure]
-    internal static string Value<T>(T? value)
-        where T : struct
+    internal static string Value(object? value)
     {
-        if (value.HasValue)
-        {
-            return Value(value.Value);
-        }
-        return "null";
+        var message = new StringBuilder();
+        Append(message, value);
+        return message.ToString();
     }
 
-    [Pure]
-    internal static string Value(object? value)
+    internal static void Append(StringBuilder message, object? value)
     {
         if (value is null)
         {
-            return "null";
+            message.Append("null");
+            return;
         }
 
-        return value switch
+        switch (value)
         {
-            bool boolValue => boolValue ? "true" : "false",
-            char charValue => char.IsControl(charValue) ? $"'\\u{(ushort)charValue:X4}'" : $"'{charValue}'",
-            string stringValue => $"\"{stringValue}\"",
-            Type typeValue => typeValue.Name,
-            Exception exceptionValue => $"{exceptionValue.GetType().Name} with message \"{exceptionValue.Message}\"",
-            byte byteValue => Value(byteValue, 1),
-            sbyte sbyteValue => Value(sbyteValue, 1),
-            ushort ushortValue => Value(ushortValue, 2),
-            short shortValue => Value(shortValue, 2),
-            int intValue => Value(intValue, 4),
-            uint uintValue => Value(uintValue, 4),
-            long longValue => Value(longValue, 8),
-            ulong ulongValue => Value(ulongValue, 8),
-            Int128 int128Value => Value(int128Value, 16),
-            UInt128 uint128Value => Value(uint128Value, 16),
-            _ => value.ToString()!
-        };
+            case bool boolValue:
+                message.Append(boolValue ? "true" : "false");
+                return;
+
+            case char charValue:
+                Append(message, charValue);
+                return;
+
+            case string stringValue:
+                Append(message, stringValue);
+                return;
+
+            case Type typeValue:
+                message.Append(typeValue.Name);
+                return;
+
+            case Exception exceptionValue:
+                Append(message, exceptionValue);
+                return;
+
+            case byte byteValue:
+                Append(message, byteValue, 1);
+                return;
+
+            case sbyte sbyteValue:
+                Append(message, sbyteValue, 1);
+                return;
+
+            case ushort ushortValue:
+                Append(message, ushortValue, 2);
+                return;
+
+            case short shortValue:
+                Append(message, shortValue, 2);
+                return;
+
+            case int intValue:
+                Append(message, intValue, 4);
+                return;
+
+            case uint uintValue:
+                Append(message, uintValue, 4);
+                return;
+
+            case long longValue:
+                Append(message, longValue, 8);
+                return;
+
+            case ulong ulongValue:
+                Append(message, ulongValue, 8);
+                return;
+
+            case Int128 int128Value:
+                Append(message, int128Value, 16);
+                return;
+
+            case UInt128 uint128Value:
+                Append(message, uint128Value, 16);
+                return;
+
+            default:
+                message.Append(value);
+                return;
+        }
+    }
+
+    private static void Append(StringBuilder message, string value)
+    {
+        message.Append('\"');
+        message.Append(value);
+        message.Append('\"');
+    }
+
+    private static void Append(StringBuilder message, char value)
+    {
+        message.Append('\'');
+        if (char.IsControl(value))
+        {
+            message.Append("\\u");
+            message.Append(((ushort)value).ToString("X4"));
+        }
+        else
+        {
+            message.Append(value);
+        }
+        message.Append('\'');
+    }
+
+    private static void Append(StringBuilder message, Exception value)
+    {
+        message.Append(value.GetType().Name);
+        message.Append(" with message \"");
+        message.Append(value.Message);
+        message.Append('\"');
+    }
+
+    private static void Append<T>(StringBuilder message, IBinaryInteger<T> value, int? byteSize)
+        where T : IBinaryInteger<T>?
+    {
+        var (prefix, format) = FormattingScope.Current?.GetIntegerFormat<T>(byteSize) ?? ("", "");
+
+        message.Append(prefix);
+        message.Append(value.ToString(format, null));
     }
 
     [Pure]
@@ -61,19 +146,19 @@ internal static class Format
     [Pure]
     internal static string Value<T>(ReadOnlySpan<T> value)
     {
-        var formatted = new StringBuilder().Append('[');
+        var message = new StringBuilder().Append('[');
         if (value.Length <= MaximumItemsToShow)
         {
-            AppendValues(formatted, value);
+            AppendValues(message, value);
         }
         else
         {
-            AppendValues(formatted, value[..ItemsToShowInSequence]);
-            formatted.Append(", ... ");
-            AppendValues(formatted, value[^ItemsToShowInSequence..]);
+            AppendValues(message, value[..ItemsToShowInSequence]);
+            message.Append(", ... ");
+            AppendValues(message, value[^ItemsToShowInSequence..]);
         }
-        formatted.Append(']');
-        return formatted.ToString();
+        message.Append(']');
+        return message.ToString();
     }
     [Pure]
     internal static string Value<T>(Span<T> value, int highlightIndex) => Value((ReadOnlySpan<T>)value, highlightIndex);
@@ -81,32 +166,32 @@ internal static class Format
     [Pure]
     internal static string Value<T>(ReadOnlySpan<T> value, int highlightIndex)
     {
-        var formatted = new StringBuilder().Append('[');
+        var message = new StringBuilder().Append('[');
         if (value.Length <= MaximumItemsToShow)
         {
-            AppendValues(formatted, value, highlightIndex);
+            AppendValues(message, value, highlightIndex);
         }
         else
         {
             var startIndex = highlightIndex - ItemsToShowInSequence;
             if (startIndex > 0)
             {
-                formatted.Append("... ");
+                message.Append("... ");
             }
             else
             {
                 startIndex = 0;
             }
 
-            AppendValues(formatted, value.Slice(startIndex, highlightIndex - startIndex));
+            AppendValues(message, value.Slice(startIndex, highlightIndex - startIndex));
             if (highlightIndex > 0)
             {
-                formatted.Append(", ");
+                message.Append(", ");
             }
 
-            formatted.Append('*');
-            formatted.Append(Value(value[highlightIndex]));
-            formatted.Append('*');
+            message.Append('*');
+            Append(message, value[highlightIndex]);
+            message.Append('*');
 
             var endIndex = highlightIndex + ItemsToShowInSequence;
             if (endIndex >= value.Length - 1)
@@ -116,19 +201,19 @@ internal static class Format
 
             if (highlightIndex < value.Length - 1)
             {
-                formatted.Append(", ");
+                message.Append(", ");
             }
 
-            AppendValues(formatted, value.Slice(highlightIndex + 1, endIndex - highlightIndex));
+            AppendValues(message, value.Slice(highlightIndex + 1, endIndex - highlightIndex));
 
             if (endIndex < value.Length - 1)
             {
-                formatted.Append(", ...");
+                message.Append(", ...");
             }
         }
 
-        formatted.Append(']');
-        return formatted.ToString();
+        message.Append(']');
+        return message.ToString();
     }
 
     [Pure]
@@ -137,79 +222,100 @@ internal static class Format
     [Pure]
     internal static string Enumerable<T>(IEnumerable<T> value)
     {
+        var message = new StringBuilder();
+        AppendEnumerable(message, value);
+        return message.ToString();
+    }
+
+    internal static void AppendEnumerable<T>(StringBuilder message, IEnumerable<T> value)
+    {
         if (value is IReadOnlyCollection<T> collection)
         {
-            return Collection(collection);
+            AppendCollection(message, collection);
+            return;
         }
 
-        var formatted = new StringBuilder().Append('[');
-        if (AppendValues(formatted, value.Take(ItemsToShowInSequence)))
+        message.Append('[');
+        if (AppendValues(message, value.Take(ItemsToShowInSequence)))
         {
-            formatted.Append(", ...");
+            message.Append(", ...");
         }
-        formatted.Append(']');
-        return formatted.ToString();
+        message.Append(']');
     }
 
     [Pure]
     [OverloadResolutionPriority(1)]
     internal static string Collection(ICollection value, bool openEnded = false)
     {
-        var formatted = new StringBuilder().Append('[');
+        var message = new StringBuilder();
+        AppendCollection(message, value, openEnded);
+        return message.ToString();
+    }
+
+    [OverloadResolutionPriority(1)]
+    internal static void AppendCollection(StringBuilder message, ICollection value, bool openEnded = false)
+    {
+        message.Append('[');
         if (value.Count <= MaximumItemsToShow)
         {
-            AppendValues(formatted, value.OfType<object>());
+            AppendValues(message, value.OfType<object>());
         }
         else
         {
-            AppendValues(formatted, value.OfType<object>().Take(ItemsToShowInSequence));
-            formatted.Append(", ... ");
-            AppendValues(formatted, value.OfType<object>().TakeLast(ItemsToShowInSequence));
+            AppendValues(message, value.OfType<object>().Take(ItemsToShowInSequence));
+            message.Append(", ... ");
+            AppendValues(message, value.OfType<object>().TakeLast(ItemsToShowInSequence));
         }
 
         if (openEnded)
         {
-            formatted.Append(", ...");
+            message.Append(", ...");
         }
-        formatted.Append(']');
-        return formatted.ToString();
+        message.Append(']');
     }
 
     [Pure]
     [OverloadResolutionPriority(1)]
     internal static string Collection<T>(IReadOnlyCollection<T> value, bool openEnded = false)
     {
-        var formatted = new StringBuilder().Append('[');
+        var message = new StringBuilder();
+        AppendCollection(message, value, openEnded);
+        return message.ToString();
+    }
+
+    [OverloadResolutionPriority(1)]
+    internal static void AppendCollection<T>(StringBuilder message, IReadOnlyCollection<T> value, bool openEnded = false)
+    {
+        message.Append('[');
         if (value.Count <= MaximumItemsToShow)
         {
-            AppendValues(formatted, value);
+            AppendValues(message, value);
         }
         else
         {
-            AppendValues(formatted, value.Take(ItemsToShowInSequence));
-            formatted.Append(", ... ");
-            AppendValues(formatted, value.TakeLast(ItemsToShowInSequence));
+            AppendValues(message, value.Take(ItemsToShowInSequence));
+            message.Append(", ... ");
+            AppendValues(message, value.TakeLast(ItemsToShowInSequence));
         }
 
         if (openEnded)
         {
-            formatted.Append(", ...");
+            message.Append(", ...");
         }
-        formatted.Append(']');
-        return formatted.ToString();
+        message.Append(']');
     }
 
     [Pure]
     internal static string Collection<T>(IReadOnlyCollection<T> value, int highlightIndex, bool openEnded = false)
     {
-        var formatted = new StringBuilder().Append('[');
+        var message = new StringBuilder().Append('[');
         if (value.Count <= MaximumItemsToShow)
         {
-            AppendValues(formatted, value, highlightIndex);
+            AppendValues(message, value, highlightIndex);
 
             if (openEnded)
             {
-                formatted.Append(", ...");
+                message.Append(", ...");
             }
         }
         else
@@ -217,22 +323,22 @@ internal static class Format
             var startIndex = highlightIndex - ItemsToShowInSequence;
             if (startIndex > 0)
             {
-                formatted.Append("... ");
+                message.Append("... ");
             }
             else
             {
                 startIndex = 0;
             }
 
-            AppendValues(formatted, value.Skip(startIndex).Take(highlightIndex - startIndex));
+            AppendValues(message, value.Skip(startIndex).Take(highlightIndex - startIndex));
             if (highlightIndex > 0)
             {
-                formatted.Append(", ");
+                message.Append(", ");
             }
 
-            formatted.Append('*');
-            formatted.Append(Value(value.Skip(highlightIndex).First()));
-            formatted.Append('*');
+            message.Append('*');
+            Append(message, value.Skip(highlightIndex).First());
+            message.Append('*');
 
             var endIndex = highlightIndex + ItemsToShowInSequence;
             if (endIndex >= value.Count - 1)
@@ -242,22 +348,22 @@ internal static class Format
 
             if (highlightIndex < value.Count - 1)
             {
-                formatted.Append(", ");
+                message.Append(", ");
             }
 
-            AppendValues(formatted, value.Skip(highlightIndex + 1).Take(endIndex - highlightIndex));
+            AppendValues(message, value.Skip(highlightIndex + 1).Take(endIndex - highlightIndex));
 
             if (openEnded || endIndex < value.Count - 1)
             {
-                formatted.Append(", ...");
+                message.Append(", ...");
             }
         }
 
-        formatted.Append(']');
-        return formatted.ToString();
+        message.Append(']');
+        return message.ToString();
     }
 
-    private static void AppendValues<T>(StringBuilder formatted, ReadOnlySpan<T> values)
+    private static void AppendValues<T>(StringBuilder message, ReadOnlySpan<T> values)
     {
         var enumerator = values.GetEnumerator();
         if (!enumerator.MoveNext())
@@ -265,15 +371,15 @@ internal static class Format
             return;
         }
 
-        formatted.Append(Value(enumerator.Current));
+        Append(message, enumerator.Current);
         while (enumerator.MoveNext())
         {
-            formatted.Append(", ");
-            formatted.Append(Value(enumerator.Current));
+            message.Append(", ");
+            Append(message, enumerator.Current);
         }
     }
 
-    private static bool AppendValues<T>(StringBuilder formatted, IEnumerable<T> values)
+    private static bool AppendValues<T>(StringBuilder message, IEnumerable<T> values)
     {
         using var enumerator = values.GetEnumerator();
         if (!enumerator.MoveNext())
@@ -281,64 +387,55 @@ internal static class Format
             return false;
         }
 
-        formatted.Append(Value(enumerator.Current));
+        Append(message, enumerator.Current);
         while (enumerator.MoveNext())
         {
-            formatted.Append(", ");
-            formatted.Append(Value(enumerator.Current));
+            message.Append(", ");
+            Append(message, enumerator.Current);
         }
 
         return true;
     }
 
-    private static void AppendValues<T>(StringBuilder formatted, ReadOnlySpan<T> values, int highlightIndex)
+    private static void AppendValues<T>(StringBuilder message, ReadOnlySpan<T> values, int highlightIndex)
     {
         for (var f = 0; f < values.Length; f++)
         {
             if (f == highlightIndex)
             {
-                formatted.Append('*');
+                message.Append('*');
             }
-            formatted.Append(Value(values[f]));
+            Append(message, values[f]);
             if (f == highlightIndex)
             {
-                formatted.Append('*');
+                message.Append('*');
             }
             if (f < values.Length - 1)
             {
-                formatted.Append(", ");
+                message.Append(", ");
             }
         }
     }
 
-    private static void AppendValues<T>(StringBuilder formatted, IReadOnlyCollection<T> values, int highlightIndex)
+    private static void AppendValues<T>(StringBuilder message, IReadOnlyCollection<T> values, int highlightIndex)
     {
         var index = 0;
         foreach (var value in values)
         {
             if (index > 0)
             {
-                formatted.Append(", ");
+                message.Append(", ");
             }
             if (index == highlightIndex)
             {
-                formatted.Append('*');
+                message.Append('*');
             }
-            formatted.Append(Value(value));
+            Append(message, value);
             if (index == highlightIndex)
             {
-                formatted.Append('*');
+                message.Append('*');
             }
             index++;
         }
-    }
-
-    [Pure]
-    private static string Value<T>(IBinaryInteger<T> value, int? byteSize)
-        where T : IBinaryInteger<T>?
-    {
-        var (prefix, format) = FormattingScope.Current?.GetIntegerFormat<T>(byteSize) ?? ("", null);
-
-        return prefix + value.ToString(format, null);
     }
 }

@@ -12,7 +12,7 @@ public readonly ref struct ReadOnlySpanAssertions<T>
 
     public ReadOnlySpanAssertionsChain<T> BeEmpty()
     {
-        Verify.That(Value.IsEmpty, "Value should be empty but contained {0} elements.", Value.Length);
+        Verify.That(Value.IsEmpty, $"Value should be empty but contained {Value.Length} elements.");
 
         return new ReadOnlySpanAssertionsChain<T>(this);
     }

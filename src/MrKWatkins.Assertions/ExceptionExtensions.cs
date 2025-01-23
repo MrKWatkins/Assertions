@@ -6,7 +6,7 @@ public static class ExceptionExtensions
         where TException : Exception
     {
         assertions.NotBeNull();
-        Verify.That(assertions.Value.Message == expected, "Value should have Message {0} but was {1}.", expected, assertions.Value.Message);
+        Verify.That(assertions.Value.Message == expected, $"Value should have Message {expected} but was {assertions.Value.Message}.");
 
         return new ObjectAssertionsChain<TException>(assertions);
     }
@@ -15,7 +15,7 @@ public static class ExceptionExtensions
         where TException : Exception
     {
         assertions.NotBeNull();
-        Verify.That(assertions.Value.Message != expected, "Value should not have Message {0}.", assertions.Value.Message);
+        Verify.That(assertions.Value.Message != expected, $"Value should not have Message {assertions.Value.Message}.");
 
         return new ObjectAssertionsChain<TException>(assertions);
     }
@@ -24,7 +24,7 @@ public static class ExceptionExtensions
         where TException : Exception
     {
         assertions.NotBeNull();
-        Verify.That(assertions.Value.Message.StartsWith(expected, StringComparison.InvariantCulture), "Value should have Message starting with {0} but was {1}.", expected, assertions.Value.Message);
+        Verify.That(assertions.Value.Message.StartsWith(expected, StringComparison.InvariantCulture), $"Value should have Message starting with {expected} but was {assertions.Value.Message}.");
 
         return new ObjectAssertionsChain<TException>(assertions);
     }
@@ -33,7 +33,7 @@ public static class ExceptionExtensions
         where TException : Exception
     {
         assertions.NotBeNull();
-        Verify.That(!assertions.Value.Message.StartsWith(expected, StringComparison.InvariantCulture), "Value should not have Message starting with {0} but was {1}.", expected, assertions.Value.Message);
+        Verify.That(!assertions.Value.Message.StartsWith(expected, StringComparison.InvariantCulture), $"Value should not have Message starting with {expected} but was {assertions.Value.Message}.");
 
         return new ObjectAssertionsChain<TException>(assertions);
     }
@@ -42,7 +42,7 @@ public static class ExceptionExtensions
         where TException : ArgumentException
     {
         assertions.NotBeNull();
-        Verify.That(assertions.Value.ParamName == expected, "Value should have ParamName {0} but was {1}.", expected, assertions.Value.ParamName);
+        Verify.That(assertions.Value.ParamName == expected, $"Value should have ParamName {expected} but was {assertions.Value.ParamName}.");
 
         return new ObjectAssertionsChain<TException>(assertions);
     }
@@ -51,7 +51,7 @@ public static class ExceptionExtensions
         where TException : ArgumentException
     {
         assertions.NotBeNull();
-        Verify.That(assertions.Value.ParamName != expected, "Value should not have ParamName {0}.", assertions.Value.ParamName);
+        Verify.That(assertions.Value.ParamName != expected, $"Value should not have ParamName {assertions.Value.ParamName}.");
 
         return new ObjectAssertionsChain<TException>(assertions);
     }
@@ -60,7 +60,7 @@ public static class ExceptionExtensions
         where TException : ArgumentOutOfRangeException
     {
         assertions.NotBeNull();
-        Verify.That(Equals(assertions.Value.ActualValue, expected), "Value should have ActualValue {0} but was {1}.", expected, assertions.Value.ActualValue);
+        Verify.That(Equals(assertions.Value.ActualValue, expected), $"Value should have ActualValue {expected} but was {assertions.Value.ActualValue}.");
 
         return new ObjectAssertionsChain<TException>(assertions);
     }
@@ -69,7 +69,7 @@ public static class ExceptionExtensions
         where TException : ArgumentOutOfRangeException
     {
         assertions.NotBeNull();
-        Verify.That(!Equals(assertions.Value.ActualValue, expected), "Value should not have ActualValue {0}.", assertions.Value.ActualValue);
+        Verify.That(!Equals(assertions.Value.ActualValue, expected), $"Value should not have ActualValue {assertions.Value.ActualValue}.");
 
         return new ObjectAssertionsChain<TException>(assertions);
     }
@@ -78,7 +78,7 @@ public static class ExceptionExtensions
         where TException : Exception
     {
         assertions.NotBeNull();
-        Verify.That(ReferenceEquals(assertions.Value.InnerException, expected), "Value should have InnerException {0} but was {1}.", expected, assertions.Value.InnerException);
+        Verify.That(ReferenceEquals(assertions.Value.InnerException, expected), $"Value should have InnerException {expected} but was {assertions.Value.InnerException}.");
 
         return new ObjectAssertionsChain<TException>(assertions);
     }
@@ -87,7 +87,7 @@ public static class ExceptionExtensions
         where TException : Exception
     {
         assertions.NotBeNull();
-        Verify.That(!ReferenceEquals(assertions.Value.InnerException, expected), "Value should not have InnerException {0}.", assertions.Value.InnerException);
+        Verify.That(!ReferenceEquals(assertions.Value.InnerException, expected), $"Value should not have InnerException {assertions.Value.InnerException}.");
 
         return new ObjectAssertionsChain<TException>(assertions);
     }

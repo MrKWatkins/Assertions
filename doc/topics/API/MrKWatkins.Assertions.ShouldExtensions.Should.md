@@ -4,6 +4,7 @@
 | Name | Description |
 | ---- | ----------- |
 | [Should&lt;T&gt;(T)](MrKWatkins.Assertions.ShouldExtensions.Should.md#mrkwatkins-assertions-shouldextensions-should-1(-0)) |  |
+| [Should&lt;T&gt;(IEnumerable&lt;T&gt;)](MrKWatkins.Assertions.ShouldExtensions.Should.md#mrkwatkins-assertions-shouldextensions-should-1(system-collections-generic-ienumerable((-0)))) |  |
 | [Should&lt;TKey, TValue&gt;(IReadOnlyDictionary&lt;TKey, TValue&gt;)](MrKWatkins.Assertions.ShouldExtensions.Should.md#mrkwatkins-assertions-shouldextensions-should-2(system-collections-generic-ireadonlydictionary((-0-1)))) |  |
 | [Should&lt;TKey, TValue&gt;(Dictionary&lt;TKey, TValue&gt;)](MrKWatkins.Assertions.ShouldExtensions.Should.md#mrkwatkins-assertions-shouldextensions-should-2(system-collections-generic-dictionary((-0-1)))) |  |
 | [Should&lt;T&gt;(ReadOnlySpan&lt;T&gt;)](MrKWatkins.Assertions.ShouldExtensions.Should.md#mrkwatkins-assertions-shouldextensions-should-1(system-readonlyspan((-0)))) |  |
@@ -30,6 +31,27 @@ public static ObjectAssertions<T> Should<T>(this T? value);
 ## Returns {id="returns-mrkwatkins-assertions-shouldextensions-should-1(-0)"}
 
 [ObjectAssertions&lt;T&gt;](MrKWatkins.Assertions.ObjectAssertions-1.md)
+## Should&lt;T&gt;(IEnumerable&lt;T&gt;) {id="mrkwatkins-assertions-shouldextensions-should-1(system-collections-generic-ienumerable((-0)))"}
+
+```c#
+public static EnumerableAssertions<T> Should<T>(this IEnumerable<T>? value);
+```
+
+### Type Parameters {id="type-parameters-mrkwatkins-assertions-shouldextensions-should-1(system-collections-generic-ienumerable((-0)))"}
+
+| Name | Description |
+| ---- | ----------- |
+| T |  |
+
+## Parameters {id="parameters-mrkwatkins-assertions-shouldextensions-should-1(system-collections-generic-ienumerable((-0)))"}
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [IEnumerable&lt;T&gt;](https://learn.microsoft.com/en-gb/dotnet/api/System.Collections.Generic.IEnumerable-1) |  |
+
+## Returns {id="returns-mrkwatkins-assertions-shouldextensions-should-1(system-collections-generic-ienumerable((-0)))"}
+
+[EnumerableAssertions&lt;T&gt;](MrKWatkins.Assertions.EnumerableAssertions-1.md)
 ## Should&lt;TKey, TValue&gt;(IReadOnlyDictionary&lt;TKey, TValue&gt;) {id="mrkwatkins-assertions-shouldextensions-should-2(system-collections-generic-ireadonlydictionary((-0-1)))"}
 
 ```c#

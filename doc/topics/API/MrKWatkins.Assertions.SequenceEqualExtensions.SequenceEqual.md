@@ -3,7 +3,7 @@
 
 ```c#
 public static ObjectAssertionsChain<TEnumerable> SequenceEqual<TEnumerable, T>(this ObjectAssertions<TEnumerable> assertions, params IEnumerable<T> expected)
-   where TEnumerable : IEnumerable<T>;
+   where TEnumerable : IEnumerable;
 ```
 
 ### Type Parameters

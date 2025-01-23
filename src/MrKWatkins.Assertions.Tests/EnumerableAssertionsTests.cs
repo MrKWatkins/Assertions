@@ -17,7 +17,7 @@ public sealed class EnumerableAssertionsTests
         var value = new List<int> { 1, 2, 3 };
 
         await Assert.That(() => value.Should().OnlyContain(x => x != 2)).Throws<AssertionException>()
-            .WithMessage("Value should only contain items that satisfy the predicate \"x => x != 2\" but the item 2 at index 1 does not.");
+            .WithMessage("Value should only contain items that satisfy the predicate x => x != 2 but the item 2 at index 1 does not.");
 
         await Assert.That(() => value.Should().OnlyContain(x => x < 5)).ThrowsNothing();
     }

@@ -15,7 +15,7 @@ public static class CountExtensions
 
         if (assertions.Value is ICollection collection)
         {
-            Verify.That(collection.Count == 0, "Value should be empty but has {0} items.", collection.Count);
+            Verify.That(collection.Count == 0, $"Value should be empty but has {collection.Count} items.");
         }
         else
         {
@@ -66,7 +66,7 @@ public static class CountExtensions
         var type = assertions.Value.GetType();
         var actualCount = CountAccessors.GetOrAdd(type, CreateCountAccessor)(assertions.Value);
 
-        Verify.That(actualCount == expectedCount, "Value should have a count of {0} but has a count of {1}.", expectedCount, actualCount);
+        Verify.That(actualCount == expectedCount, $"Value should have a count of {expectedCount} but has a count of {actualCount}.");
 
         return new ObjectAssertionsChain<T>(assertions);
     }
@@ -79,7 +79,7 @@ public static class CountExtensions
         var type = assertions.Value.GetType();
         var actualCount = CountAccessors.GetOrAdd(type, CreateCountAccessor)(assertions.Value);
 
-        Verify.That(actualCount != expectedCount, "Value should not have a count of {0}.", expectedCount);
+        Verify.That(actualCount != expectedCount, $"Value should not have a count of {expectedCount}.");
 
         return new ObjectAssertionsChain<T>(assertions);
     }
