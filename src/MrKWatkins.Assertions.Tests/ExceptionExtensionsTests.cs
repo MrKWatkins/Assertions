@@ -166,6 +166,60 @@ public sealed class ExceptionExtensionsTests
     }
 
     [Test]
+    public async Task HaveActualValue()
+    {
+        ArgumentOutOfRangeException? nullException = null;
+        var exception = new ArgumentOutOfRangeException("Test Param", 5, "Test Message");
+
+        await Assert.That(() => nullException.Should().HaveActualValue(5)).Throws<AssertionException>()
+            .WithMessage("Value should not be null.");
+
+        await Assert.That(() => exception.Should().HaveActualValue(5)).ThrowsNothing();
+
+        await Assert.That(() => exception.Should().HaveActualValue(4)).Throws<AssertionException>()
+            .WithMessage("Value should have ActualValue 4 but was 5.");
+    }
+
+    [Test]
+    public async Task HaveActualValue_Chain()
+    {
+        var exception = new ArgumentOutOfRangeException("Test Param", 5, "Test Message");
+
+        var chain = exception.Should().HaveActualValue(5);
+        await Assert.That(chain.Value).IsEqualTo(exception);
+
+        var and = chain.And;
+        await Assert.That(and.Value).IsEqualTo(exception);
+    }
+
+    [Test]
+    public async Task NotHaveActualValue()
+    {
+        ArgumentOutOfRangeException? nullException = null;
+        var exception = new ArgumentOutOfRangeException("Test Param", 5, "Test Message");
+
+        await Assert.That(() => nullException.Should().NotHaveActualValue("Test")).Throws<AssertionException>()
+            .WithMessage("Value should not be null.");
+
+        await Assert.That(() => exception.Should().NotHaveActualValue(4)).ThrowsNothing();
+
+        await Assert.That(() => exception.Should().NotHaveActualValue(5)).Throws<AssertionException>()
+            .WithMessage("Value should not have ActualValue 5.");
+    }
+
+    [Test]
+    public async Task NotHaveActualValue_Chain()
+    {
+        var exception = new ArgumentOutOfRangeException("Test Param", 5, "Test Message");
+
+        var chain = exception.Should().NotHaveActualValue(4);
+        await Assert.That(chain.Value).IsEqualTo(exception);
+
+        var and = chain.And;
+        await Assert.That(and.Value).IsEqualTo(exception);
+    }
+
+    [Test]
     public async Task HaveInnerException()
     {
         ArgumentException? nullException = null;

@@ -56,6 +56,24 @@ public static class ExceptionExtensions
         return new ObjectAssertionsChain<TException>(assertions);
     }
 
+    public static ObjectAssertionsChain<TException> HaveActualValue<TException>(this ObjectAssertions<TException> assertions, object expected)
+        where TException : ArgumentOutOfRangeException
+    {
+        assertions.NotBeNull();
+        Verify.That(Equals(assertions.Value.ActualValue, expected), "Value should have ActualValue {0} but was {1}.", expected, assertions.Value.ActualValue);
+
+        return new ObjectAssertionsChain<TException>(assertions);
+    }
+
+    public static ObjectAssertionsChain<TException> NotHaveActualValue<TException>(this ObjectAssertions<TException> assertions, object expected)
+        where TException : ArgumentOutOfRangeException
+    {
+        assertions.NotBeNull();
+        Verify.That(!Equals(assertions.Value.ActualValue, expected), "Value should not have ActualValue {0}.", assertions.Value.ActualValue);
+
+        return new ObjectAssertionsChain<TException>(assertions);
+    }
+
     public static ObjectAssertionsChain<TException> HaveInnerException<TException>(this ObjectAssertions<TException> assertions, Exception expected)
         where TException : Exception
     {
