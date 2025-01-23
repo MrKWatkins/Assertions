@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Frozen;
 using System.Numerics;
 using System.Runtime.CompilerServices;
@@ -26,7 +27,7 @@ internal static class Format
     }
 
     [Pure]
-    internal static string Value<T>(T value)
+    internal static string Value(object? value)
     {
         if (value is null)
         {
@@ -131,6 +132,9 @@ internal static class Format
     }
 
     [Pure]
+    internal static string Enumerable(IEnumerable value) => value is ICollection collection ? Collection(collection) : Enumerable(value.OfType<object>());
+
+    [Pure]
     internal static string Enumerable<T>(IEnumerable<T> value)
     {
         if (value is IReadOnlyCollection<T> collection)
@@ -140,6 +144,30 @@ internal static class Format
 
         var formatted = new StringBuilder().Append('[');
         if (AppendValues(formatted, value.Take(ItemsToShowInSequence)))
+        {
+            formatted.Append(", ...");
+        }
+        formatted.Append(']');
+        return formatted.ToString();
+    }
+
+    [Pure]
+    [OverloadResolutionPriority(1)]
+    internal static string Collection(ICollection value, bool openEnded = false)
+    {
+        var formatted = new StringBuilder().Append('[');
+        if (value.Count <= MaximumItemsToShow)
+        {
+            AppendValues(formatted, value.OfType<object>());
+        }
+        else
+        {
+            AppendValues(formatted, value.OfType<object>().Take(ItemsToShowInSequence));
+            formatted.Append(", ... ");
+            AppendValues(formatted, value.OfType<object>().TakeLast(ItemsToShowInSequence));
+        }
+
+        if (openEnded)
         {
             formatted.Append(", ...");
         }

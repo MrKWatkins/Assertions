@@ -51,6 +51,14 @@ public sealed class SequenceEqualExtensionsTests
     }
 
     [Test]
+    public async Task SequenceEqual_SubType()
+    {
+        var value = new List<object> { "A", "B", "C" };
+
+        await Assert.That(() => value.Should().SequenceEqual("A", "B", "C")).ThrowsNothing();
+    }
+
+    [Test]
     public async Task SequenceEqual_Chain()
     {
         var value = new List<int> { 1, 2, 3 };
