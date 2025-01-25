@@ -2,6 +2,7 @@ using System.Collections;
 
 namespace MrKWatkins.Assertions;
 
+// TODO: Interpret one string as [string] rather than [char]. IEnumerable<T> overloads, with higher priority for params T[]. Try a U[] where U : T again.
 [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
 public static class SequenceEqualExtensions
 {
