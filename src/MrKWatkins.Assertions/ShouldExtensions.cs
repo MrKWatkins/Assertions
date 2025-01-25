@@ -9,7 +9,7 @@ public static class ShouldExtensions
 
     [Pure]
     [OverloadResolutionPriority(1)]
-    public static EnumerableAssertions<T> Should<T>(this IEnumerable<T>? value) => new(value);
+    public static EnumerableAssertions<IEnumerable<T>, T> Should<T>(this IEnumerable<T>? value) => new(value);
 
     [Pure]
     [OverloadResolutionPriority(2)]

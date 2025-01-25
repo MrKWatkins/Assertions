@@ -3,14 +3,15 @@ using System.Runtime.CompilerServices;
 namespace MrKWatkins.Assertions;
 
 [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract")]
-public class EnumerableAssertions<T> : ObjectAssertions<IEnumerable<T>>
+public class EnumerableAssertions<TEnumerable, T> : ObjectAssertions<TEnumerable>
+    where TEnumerable : IEnumerable<T>
 {
-    protected internal EnumerableAssertions([NoEnumeration] IEnumerable<T>? value)
+    protected internal EnumerableAssertions([NoEnumeration] TEnumerable? value)
         : base(value)
     {
     }
 
-    public EnumerableAssertionsChain<T> OnlyContain([InstantHandle] Func<T, bool> predicate, [CallerArgumentExpression(nameof(predicate))] string? predicateExpression = null)
+    public EnumerableAssertionsChain<TEnumerable, T> OnlyContain([InstantHandle] Func<T, bool> predicate, [CallerArgumentExpression(nameof(predicate))] string? predicateExpression = null)
     {
         NotBeNull();
 
@@ -21,6 +22,76 @@ public class EnumerableAssertions<T> : ObjectAssertions<IEnumerable<T>>
             index++;
         }
 
-        return new EnumerableAssertionsChain<T>(this);
+        return new EnumerableAssertionsChain<TEnumerable, T>(this);
+    }
+
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
+    public EnumerableAssertionsChain<TEnumerable, T> SequenceEqual([InstantHandle] params IEnumerable<T> expected)
+    {
+        NotBeNull();
+
+        if (Value.TryGetCount(out var actualCount) &&
+            expected.TryGetCount(out var expectedCount) &&
+            actualCount != expectedCount)
+        {
+            throw Verify.CreateException(
+                $"Value {Format.Enumerable(Value)} should sequence equal {Format.Enumerable(expected)} but it has {actualCount} element{(actualCount == 1 ? "" : "s")} rather than the expected {expectedCount}.");
+        }
+
+        var actualList = new List<object?>();
+        var expectedList = new List<T>();
+
+        using var actualEnumerator = Value.GetEnumerator();
+        using var expectedEnumerator = expected.GetEnumerator();
+
+        while (true)
+        {
+            if (actualEnumerator.MoveNext())
+            {
+                actualList.Add(actualEnumerator.Current);
+            }
+            else
+            {
+                break;
+            }
+
+            if (expectedEnumerator.MoveNext())
+            {
+                expectedList.Add(expectedEnumerator.Current);
+            }
+            else
+            {
+                throw Verify.CreateException(
+                    $"Value {Format.Enumerable(Value)} should sequence equal {Format.Collection(expectedList)} but it has more elements than the expected {expectedList.Count}.");
+            }
+
+            if (!Equals(actualEnumerator.Current, expectedEnumerator.Current))
+            {
+                var index = actualList.Count - 1;
+                throw Verify.CreateException(
+                    $"Value {Format.Collection(actualList, index, true)} should sequence equal {Format.Collection(expectedList, index, true)} but it differs at index {index}.");
+            }
+        }
+
+        if (expectedEnumerator.MoveNext())
+        {
+            throw Verify.CreateException(
+                $"Value {Format.Enumerable(Value)} should sequence equal {Format.Enumerable(expected)} but it has less elements ({actualList.Count}) than expected.");
+        }
+
+        return new EnumerableAssertionsChain<TEnumerable, T>(this);
+    }
+
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
+    public EnumerableAssertionsChain<TEnumerable, T> NotSequenceEqual(params IEnumerable<T> expected)
+    {
+        NotBeNull();
+
+        if (Value.SequenceEqual(expected))
+        {
+            throw Verify.CreateException($"Value should not sequence equal {Format.Enumerable(expected)}.");
+        }
+
+        return new EnumerableAssertionsChain<TEnumerable, T>(this);
     }
 }

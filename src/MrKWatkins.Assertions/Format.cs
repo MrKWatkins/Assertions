@@ -244,7 +244,6 @@ internal static class Format
     }
 
     [Pure]
-    [OverloadResolutionPriority(1)]
     internal static string Collection(ICollection value, bool openEnded = false)
     {
         var message = new StringBuilder();
@@ -252,7 +251,6 @@ internal static class Format
         return message.ToString();
     }
 
-    [OverloadResolutionPriority(1)]
     internal static void AppendCollection(StringBuilder message, ICollection value, bool openEnded = false)
     {
         message.Append('[');

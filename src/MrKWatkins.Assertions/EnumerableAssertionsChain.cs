@@ -1,13 +1,14 @@
 namespace MrKWatkins.Assertions;
 
-public readonly struct EnumerableAssertionsChain<T>
+public readonly struct EnumerableAssertionsChain<TEnumerable, T>
+    where TEnumerable : IEnumerable<T>
 {
-    internal EnumerableAssertionsChain(EnumerableAssertions<T> enumerableAssertions)
+    internal EnumerableAssertionsChain(EnumerableAssertions<TEnumerable, T> enumerableAssertions)
     {
         And = enumerableAssertions;
     }
 
-    public EnumerableAssertions<T> And { get; }
+    public EnumerableAssertions<TEnumerable, T> And { get; }
 
-    public IEnumerable<T> Value => And.Value;
+    public TEnumerable Value => And.Value;
 }
