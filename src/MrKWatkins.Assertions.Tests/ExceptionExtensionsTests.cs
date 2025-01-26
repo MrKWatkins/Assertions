@@ -259,24 +259,21 @@ public sealed class ExceptionExtensionsTests
         var inner = new InvalidOperationException("Inner");
         var exception = new NotSupportedException("Message", inner);
 
-        var other = new InvalidOperationException("Other");
-
-        await Assert.That(() => nullException.Should().NotHaveInnerException(inner)).Throws<AssertionException>()
+        await Assert.That(() => nullException.Should().NotHaveInnerException()).Throws<AssertionException>()
             .WithMessage("Value should not be null.");
 
-        await Assert.That(() => exception.Should().NotHaveInnerException(inner)).Throws<AssertionException>()
-            .WithMessage("Value should not have InnerException InvalidOperationException with message \"Inner\".");
+        await Assert.That(() => exception.Should().NotHaveInnerException()).Throws<AssertionException>()
+            .WithMessage("Value should not have an InnerException but has InvalidOperationException with message \"Inner\".");
 
-        await Assert.That(() => exception.Should().NotHaveInnerException(other)).ThrowsNothing();
+        await Assert.That(() => inner.Should().NotHaveInnerException()).ThrowsNothing();
     }
 
     [Test]
     public async Task NotHaveInnerException_Chain()
     {
-        var other = new InvalidOperationException("Other");
         var exception = new NotSupportedException("Message");
 
-        var chain = exception.Should().NotHaveInnerException(other);
+        var chain = exception.Should().NotHaveInnerException();
         await Assert.That(chain.Value).IsEqualTo(exception);
 
         var and = chain.And;

@@ -34,6 +34,62 @@ public sealed class ActionAssertions
         return new ActionAssertionsChain<TException>(thrown);
     }
 
+    public ActionAssertionsChain<TException> Throw<TException>(string expectedMessage)
+        where TException : Exception
+    {
+        var chain = Throw<TException>();
+
+        chain.That.Should().HaveMessage(expectedMessage);
+
+        return chain;
+    }
+
+    public ActionAssertionsChain<TException> Throw<TException>(string expectedMessage, Exception? expectedInnerException)
+        where TException : Exception
+    {
+        var chain = Throw<TException>();
+
+        chain.That.Should().HaveMessage(expectedMessage);
+        if (expectedInnerException != null)
+        {
+            chain.That.Should().HaveInnerException(expectedInnerException);
+        }
+        else
+        {
+            chain.That.Should().NotHaveInnerException();
+        }
+
+        return chain;
+    }
+
+    public ActionAssertionsChain<TException> Throw<TException>(TException expected)
+        where TException : Exception
+    {
+        var chain = Throw<TException>();
+
+        chain.Exception.Should().BeTheSameInstanceAs(expected);
+
+        return chain;
+    }
+
+    public ActionAssertionsChain<ArgumentException> ThrowArgumentException(string expectedMessage, string expectedParamName)
+    {
+        var chain = Throw<ArgumentException>();
+
+        chain.Exception.Should().HaveMessageStartingWith(expectedMessage).And.HaveParamName(expectedParamName);
+
+        return chain;
+    }
+
+    public ActionAssertionsChain<ArgumentOutOfRangeException> ThrowArgumentOutOfRangeException(string expectedMessage, string expectedParamName, object expectedActualValue)
+    {
+        var chain = Throw<ArgumentOutOfRangeException>();
+
+        chain.Exception.Should().HaveMessageStartingWith(expectedMessage).And.HaveParamName(expectedParamName).And.HaveActualValue(expectedActualValue);
+
+        return chain;
+    }
+
     public void NotThrow()
     {
         try

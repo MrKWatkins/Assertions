@@ -38,8 +38,9 @@ public class EnumerableAssertions<TEnumerable, T> : ObjectAssertions<TEnumerable
                 $"Value {Format.Enumerable(Value)} should sequence equal {Format.Enumerable(expected)} but it has {actualCount} element{(actualCount == 1 ? "" : "s")} rather than the expected {expectedCount}.");
         }
 
-        var actualList = new List<object?>();
+        var actualList = new List<T>();
         var expectedList = new List<T>();
+        var equalityComparer = EqualityComparer<T>.Default;
 
         using var actualEnumerator = Value.GetEnumerator();
         using var expectedEnumerator = expected.GetEnumerator();
@@ -65,7 +66,7 @@ public class EnumerableAssertions<TEnumerable, T> : ObjectAssertions<TEnumerable
                     $"Value {Format.Enumerable(Value)} should sequence equal {Format.Collection(expectedList)} but it has more elements than the expected {expectedList.Count}.");
             }
 
-            if (!Equals(actualEnumerator.Current, expectedEnumerator.Current))
+            if (!equalityComparer.Equals(actualEnumerator.Current, expectedEnumerator.Current))
             {
                 var index = actualList.Count - 1;
                 throw Verify.CreateException(

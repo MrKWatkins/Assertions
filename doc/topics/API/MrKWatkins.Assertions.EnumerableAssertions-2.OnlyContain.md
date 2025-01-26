@@ -1,8 +1,8 @@
-# EnumerableAssertions&lt;T&gt;.OnlyContain Method
+# EnumerableAssertions&lt;TEnumerable, T&gt;.OnlyContain Method
 ## Definition
 
 ```c#
-public EnumerableAssertionsChain<T> OnlyContain(Func<T, bool> predicate, string? predicateExpression = null);
+public EnumerableAssertionsChain<TEnumerable, T> OnlyContain(Func<T, bool> predicate, string? predicateExpression = null);
 ```
 
 ## Parameters
@@ -14,4 +14,4 @@ public EnumerableAssertionsChain<T> OnlyContain(Func<T, bool> predicate, string?
 
 ## Returns
 
-[EnumerableAssertionsChain&lt;T&gt;](MrKWatkins.Assertions.EnumerableAssertionsChain-1.md)
+[EnumerableAssertionsChain&lt;TEnumerable, T&gt;](MrKWatkins.Assertions.EnumerableAssertionsChain-2.md)

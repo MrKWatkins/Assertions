@@ -34,7 +34,7 @@ public static ObjectAssertions<T> Should<T>(this T? value);
 ## Should&lt;T&gt;(IEnumerable&lt;T&gt;) {id="mrkwatkins-assertions-shouldextensions-should-1(system-collections-generic-ienumerable((-0)))"}
 
 ```c#
-public static EnumerableAssertions<T> Should<T>(this IEnumerable<T>? value);
+public static EnumerableAssertions<IEnumerable<T>, T> Should<T>(this IEnumerable<T>? value);
 ```
 
 ### Type Parameters {id="type-parameters-mrkwatkins-assertions-shouldextensions-should-1(system-collections-generic-ienumerable((-0)))"}
@@ -51,7 +51,7 @@ public static EnumerableAssertions<T> Should<T>(this IEnumerable<T>? value);
 
 ## Returns {id="returns-mrkwatkins-assertions-shouldextensions-should-1(system-collections-generic-ienumerable((-0)))"}
 
-[EnumerableAssertions&lt;T&gt;](MrKWatkins.Assertions.EnumerableAssertions-1.md)
+[EnumerableAssertions&lt;IEnumerable&lt;T&gt;, T&gt;](MrKWatkins.Assertions.EnumerableAssertions-2.md)
 ## Should&lt;TKey, TValue&gt;(IReadOnlyDictionary&lt;TKey, TValue&gt;) {id="mrkwatkins-assertions-shouldextensions-should-2(system-collections-generic-ireadonlydictionary((-0-1)))"}
 
 ```c#

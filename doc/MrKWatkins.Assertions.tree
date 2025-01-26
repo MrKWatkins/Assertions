@@ -9,6 +9,8 @@
         <toc-element toc-title="Methods">
           <toc-element toc-title="NotThrow" topic="MrKWatkins.Assertions.ActionAssertions.NotThrow.md" />
           <toc-element toc-title="Throw" topic="MrKWatkins.Assertions.ActionAssertions.Throw.md" />
+          <toc-element toc-title="ThrowArgumentException" topic="MrKWatkins.Assertions.ActionAssertions.ThrowArgumentException.md" />
+          <toc-element toc-title="ThrowArgumentOutOfRangeException" topic="MrKWatkins.Assertions.ActionAssertions.ThrowArgumentOutOfRangeException.md" />
         </toc-element>
       </toc-element>
       <toc-element toc-title="ActionAssertionsChain&lt;TException&gt;">
@@ -46,18 +48,20 @@
           <toc-element toc-title="NotHaveCount" topic="MrKWatkins.Assertions.CountExtensions.NotHaveCount.md" />
         </toc-element>
       </toc-element>
-      <toc-element toc-title="EnumerableAssertions&lt;T&gt;">
-        <toc-element toc-title="EnumerableAssertions&lt;T&gt;" topic="MrKWatkins.Assertions.EnumerableAssertions-1.md" />
-        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.EnumerableAssertions-1.-ctor.md" />
+      <toc-element toc-title="EnumerableAssertions&lt;TEnumerable, T&gt;">
+        <toc-element toc-title="EnumerableAssertions&lt;TEnumerable, T&gt;" topic="MrKWatkins.Assertions.EnumerableAssertions-2.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.EnumerableAssertions-2.-ctor.md" />
         <toc-element toc-title="Methods">
-          <toc-element toc-title="OnlyContain" topic="MrKWatkins.Assertions.EnumerableAssertions-1.OnlyContain.md" />
+          <toc-element toc-title="NotSequenceEqual" topic="MrKWatkins.Assertions.EnumerableAssertions-2.NotSequenceEqual.md" />
+          <toc-element toc-title="OnlyContain" topic="MrKWatkins.Assertions.EnumerableAssertions-2.OnlyContain.md" />
+          <toc-element toc-title="SequenceEqual" topic="MrKWatkins.Assertions.EnumerableAssertions-2.SequenceEqual.md" />
         </toc-element>
       </toc-element>
-      <toc-element toc-title="EnumerableAssertionsChain&lt;T&gt;">
-        <toc-element toc-title="EnumerableAssertionsChain&lt;T&gt;" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-1.md" />
+      <toc-element toc-title="EnumerableAssertionsChain&lt;TEnumerable, T&gt;">
+        <toc-element toc-title="EnumerableAssertionsChain&lt;TEnumerable, T&gt;" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-2.md" />
         <toc-element toc-title="Properties">
-          <toc-element toc-title="And" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-1.And.md" />
-          <toc-element toc-title="Value" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-1.Value.md" />
+          <toc-element toc-title="And" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-2.And.md" />
+          <toc-element toc-title="Value" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-2.Value.md" />
         </toc-element>
       </toc-element>
       <toc-element toc-title="EnumerableExtensions">
@@ -164,13 +168,6 @@
         <toc-element toc-title="Properties">
           <toc-element toc-title="And" topic="MrKWatkins.Assertions.ReadOnlySpanAssertionsChain-1.And.md" />
           <toc-element toc-title="Value" topic="MrKWatkins.Assertions.ReadOnlySpanAssertionsChain-1.Value.md" />
-        </toc-element>
-      </toc-element>
-      <toc-element toc-title="SequenceEqualExtensions">
-        <toc-element toc-title="SequenceEqualExtensions" topic="MrKWatkins.Assertions.SequenceEqualExtensions.md" />
-        <toc-element toc-title="Methods">
-          <toc-element toc-title="NotSequenceEqual" topic="MrKWatkins.Assertions.SequenceEqualExtensions.NotSequenceEqual.md" />
-          <toc-element toc-title="SequenceEqual" topic="MrKWatkins.Assertions.SequenceEqualExtensions.SequenceEqual.md" />
         </toc-element>
       </toc-element>
       <toc-element toc-title="ShouldExtensions">

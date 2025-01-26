@@ -2,7 +2,7 @@
 ## Definition
 
 ```c#
-public static ObjectAssertionsChain<TException> NotHaveInnerException<TException>(this ObjectAssertions<TException> assertions, Exception expected)
+public static ObjectAssertionsChain<TException> NotHaveInnerException<TException>(this ObjectAssertions<TException> assertions)
    where TException : Exception;
 ```
 
@@ -17,7 +17,6 @@ public static ObjectAssertionsChain<TException> NotHaveInnerException<TException
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | assertions | [ObjectAssertions&lt;TException&gt;](MrKWatkins.Assertions.ObjectAssertions-1.md) |  |
-| expected | [Exception](https://learn.microsoft.com/en-gb/dotnet/api/System.Exception) |  |
 
 ## Returns
 
