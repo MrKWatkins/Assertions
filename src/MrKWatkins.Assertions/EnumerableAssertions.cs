@@ -25,8 +25,18 @@ public class EnumerableAssertions<TEnumerable, T> : ObjectAssertions<TEnumerable
         return new EnumerableAssertionsChain<TEnumerable, T>(this);
     }
 
+    public EnumerableAssertionsChain<TEnumerable, T> ContainSingle([InstantHandle] Func<T, bool> predicate, [CallerArgumentExpression(nameof(predicate))] string? predicateExpression = null)
+    {
+        NotBeNull();
+
+        var count = Value.Where(predicate).Count();
+        Verify.That(count == 1, $"Value should only contain a single item that satisfies the predicate {predicateExpression:L} but it contains {count} items.");
+
+        return new EnumerableAssertionsChain<TEnumerable, T>(this);
+    }
+
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-    public EnumerableAssertionsChain<TEnumerable, T> SequenceEqual([InstantHandle] params IEnumerable<T> expected)
+    public EnumerableAssertionsChain<TEnumerable, T> SequenceEqual([InstantHandle] params IEnumerable<T?> expected)
     {
         NotBeNull();
 
@@ -39,7 +49,7 @@ public class EnumerableAssertions<TEnumerable, T> : ObjectAssertions<TEnumerable
         }
 
         var actualList = new List<T>();
-        var expectedList = new List<T>();
+        var expectedList = new List<T?>();
         var equalityComparer = EqualityComparer<T>.Default;
 
         using var actualEnumerator = Value.GetEnumerator();

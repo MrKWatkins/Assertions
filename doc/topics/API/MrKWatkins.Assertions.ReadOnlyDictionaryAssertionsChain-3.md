@@ -14,6 +14,12 @@ public sealed struct ReadOnlyDictionaryAssertionsChain<TDictionary, TKey, TValue
 | TKey |  |
 | TValue |  |
 
+## Constructors
+
+| Name | Description |
+| ---- | ----------- |
+| [ReadOnlyDictionaryAssertionsChain(ReadOnlyDictionaryAssertions&lt;TDictionary, TKey, TValue&gt;)](MrKWatkins.Assertions.ReadOnlyDictionaryAssertionsChain-3.-ctor.md) |  |
+
 ## Properties
 
 | Name | Description |

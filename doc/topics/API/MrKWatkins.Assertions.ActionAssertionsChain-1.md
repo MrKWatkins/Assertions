@@ -12,6 +12,12 @@ public sealed struct ActionAssertionsChain<TException>
 | ---- | ----------- |
 | TException |  |
 
+## Constructors
+
+| Name | Description |
+| ---- | ----------- |
+| [ActionAssertionsChain(TException)](MrKWatkins.Assertions.ActionAssertionsChain-1.-ctor.md) |  |
+
 ## Properties
 
 | Name | Description |

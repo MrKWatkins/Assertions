@@ -22,6 +22,10 @@ public sealed class FluentTests
             new object[] { "One" }.Should().SequenceEqual("One");
             new object[] { "One", "Two", "Three" }.Should().SequenceEqual("One", "Two", "Three");
 
+            // Should be able to use null values.
+            new string?[] { null }.Should().SequenceEqual((string?)null);
+            new[] { null, "Two", "Three" }.Should().SequenceEqual(null, "Two", "Three");
+
             // Should work with non-generic IEnumerable.
             ((IEnumerable)new object[] { "One" }).Should().SequenceEqual("One");
             ((IEnumerable)new object[] { "One", "Two", "Three" }).Should().SequenceEqual("One", "Two", "Three");

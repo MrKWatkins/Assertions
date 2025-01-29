@@ -1,14 +1,9 @@
 namespace MrKWatkins.Assertions;
 
-public readonly struct ActionAssertionsChain<TException>
+public readonly struct ActionAssertionsChain<TException>(TException exception)
     where TException : Exception
 {
-    internal ActionAssertionsChain(TException exception)
-    {
-        Exception = exception;
-    }
-
-    public TException Exception { get; }
+    public TException Exception { get; } = exception;
 
     public TException That => Exception;
 }

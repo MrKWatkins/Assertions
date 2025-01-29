@@ -13,6 +13,12 @@ public sealed struct EnumerableAssertionsChain<TEnumerable, T>
 | TEnumerable |  |
 | T |  |
 
+## Constructors
+
+| Name | Description |
+| ---- | ----------- |
+| [EnumerableAssertionsChain(EnumerableAssertions&lt;TEnumerable, T&gt;)](MrKWatkins.Assertions.EnumerableAssertionsChain-2.-ctor.md) |  |
+
 ## Properties
 
 | Name | Description |

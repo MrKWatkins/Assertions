@@ -23,6 +23,7 @@ public class EnumerableAssertions<TEnumerable, T> : ObjectAssertions<TEnumerable
 
 | Name | Description |
 | ---- | ----------- |
+| [ContainSingle(Func&lt;T, Boolean&gt;, String)](MrKWatkins.Assertions.EnumerableAssertions-2.ContainSingle.md) |  |
 | [NotSequenceEqual(IEnumerable&lt;T&gt;)](MrKWatkins.Assertions.EnumerableAssertions-2.NotSequenceEqual.md) |  |
 | [OnlyContain(Func&lt;T, Boolean&gt;, String)](MrKWatkins.Assertions.EnumerableAssertions-2.OnlyContain.md) |  |
 | [SequenceEqual(IEnumerable&lt;T&gt;)](MrKWatkins.Assertions.EnumerableAssertions-2.SequenceEqual.md) |  |

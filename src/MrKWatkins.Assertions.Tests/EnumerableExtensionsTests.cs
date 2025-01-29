@@ -29,7 +29,7 @@ public sealed class EnumerableExtensionsTests
     {
         IEnumerable value = new List<int> { 1, 2, 3 };
 
-        var chain = value.Should().SequenceEqual(1 ,2, 3);
+        var chain = value.Should().SequenceEqual(1, 2, 3);
         // https://github.com/thomhurst/TUnit/issues/1718
         await Assert.That(ReferenceEquals(chain.Value, value)).IsEqualTo(true);
         await Assert.That(ReferenceEquals(chain.And.Value, value)).IsEqualTo(true);
@@ -59,7 +59,7 @@ public sealed class EnumerableExtensionsTests
     {
         IEnumerable value = new List<int> { 1, 2, 3 };
 
-        var chain = value.Should().NotSequenceEqual(1 ,2);
+        var chain = value.Should().NotSequenceEqual(1, 2);
         // https://github.com/thomhurst/TUnit/issues/1718
         await Assert.That(ReferenceEquals(chain.Value, value)).IsEqualTo(true);
         await Assert.That(ReferenceEquals(chain.And.Value, value)).IsEqualTo(true);

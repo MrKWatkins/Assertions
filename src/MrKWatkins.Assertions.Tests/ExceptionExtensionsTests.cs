@@ -231,6 +231,38 @@ public sealed class ExceptionExtensionsTests
 
         var other = new InvalidOperationException("Other");
 
+        await Assert.That(() => nullException.Should().HaveInnerException()).Throws<AssertionException>()
+            .WithMessage("Value should not be null.");
+
+        await Assert.That(() => exception.Should().HaveInnerException()).ThrowsNothing();
+
+        await Assert.That(() => other.Should().HaveInnerException()).Throws<AssertionException>()
+            .WithMessage("Value should have an InnerException.");
+    }
+
+    [Test]
+    public async Task HaveInnerException_Chain()
+    {
+        var inner = new InvalidOperationException("Inner");
+        var exception = new NotSupportedException("Message", inner);
+
+        var chain = exception.Should().HaveInnerException();
+        await Assert.That(chain.Value).IsEqualTo(exception);
+
+        var and = chain.And;
+        await Assert.That(and.Value).IsEqualTo(exception);
+    }
+
+    [Test]
+    public async Task HaveInnerException_Exception()
+    {
+        ArgumentException? nullException = null;
+
+        var inner = new InvalidOperationException("Inner");
+        var exception = new NotSupportedException("Message", inner);
+
+        var other = new InvalidOperationException("Other");
+
         await Assert.That(() => nullException.Should().HaveInnerException(inner)).Throws<AssertionException>()
             .WithMessage("Value should not be null.");
 
@@ -241,7 +273,7 @@ public sealed class ExceptionExtensionsTests
     }
 
     [Test]
-    public async Task HaveInnerException_Chain()
+    public async Task HaveInnerException_Exception_Chain()
     {
         var inner = new InvalidOperationException("Inner");
         var exception = new NotSupportedException("Message", inner);

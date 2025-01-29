@@ -13,12 +13,11 @@ Instead of making a new package they simply upgraded the version number and chan
 upgrade packages would then upgrade them, and potentially leave you open to licencing costs. And yes, of course you should check your upgrades, blah blah, but I would
 counter that with you shouldn't change licences on projects like that! Start a new package. Or something else. Whatever. Be better.
 
-Anyway, it annoyed me enough that I thought I'd have a crack at my own version for a challenge, and see if I can fix a few irritations I have with FluentAssertions
+Anyway, it annoyed me enough that I thought I'd have a crack at my own version for the challenge, and see if I can fix a few irritations I have with FluentAssertions
 on the way, such as:
 
 * No Span support.
 * Default ordering is not strict.
-* Various other little things.
 
 As such this is purely designed for use in my other projects. If you want to use it, go for it, but don't expect me to fix bugs or add features anytime soon.
 

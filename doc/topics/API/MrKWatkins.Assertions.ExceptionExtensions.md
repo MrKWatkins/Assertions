@@ -10,7 +10,8 @@ public static class ExceptionExtensions
 | Name | Description |
 | ---- | ----------- |
 | [HaveActualValue&lt;TException&gt;(ObjectAssertions&lt;TException&gt;, Object)](MrKWatkins.Assertions.ExceptionExtensions.HaveActualValue.md) |  |
-| [HaveInnerException&lt;TException&gt;(ObjectAssertions&lt;TException&gt;, Exception)](MrKWatkins.Assertions.ExceptionExtensions.HaveInnerException.md) |  |
+| [HaveInnerException&lt;TException&gt;(ObjectAssertions&lt;TException&gt;)](MrKWatkins.Assertions.ExceptionExtensions.HaveInnerException.md#mrkwatkins-assertions-exceptionextensions-haveinnerexception-1(mrkwatkins-assertions-objectassertions((-0)))) |  |
+| [HaveInnerException&lt;TException&gt;(ObjectAssertions&lt;TException&gt;, Exception)](MrKWatkins.Assertions.ExceptionExtensions.HaveInnerException.md#mrkwatkins-assertions-exceptionextensions-haveinnerexception-1(mrkwatkins-assertions-objectassertions((-0))-system-exception)) |  |
 | [HaveMessage&lt;TException&gt;(ObjectAssertions&lt;TException&gt;, String)](MrKWatkins.Assertions.ExceptionExtensions.HaveMessage.md) |  |
 | [HaveMessageStartingWith&lt;TException&gt;(ObjectAssertions&lt;TException&gt;, String)](MrKWatkins.Assertions.ExceptionExtensions.HaveMessageStartingWith.md) |  |
 | [HaveParamName&lt;TException&gt;(ObjectAssertions&lt;TException&gt;, String)](MrKWatkins.Assertions.ExceptionExtensions.HaveParamName.md) |  |

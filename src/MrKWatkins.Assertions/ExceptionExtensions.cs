@@ -74,6 +74,15 @@ public static class ExceptionExtensions
         return new ObjectAssertionsChain<TException>(assertions);
     }
 
+    public static ObjectAssertionsChain<TException> HaveInnerException<TException>(this ObjectAssertions<TException> assertions)
+        where TException : Exception
+    {
+        assertions.NotBeNull();
+        Verify.That(assertions.Value.InnerException is not null, "Value should have an InnerException.");
+
+        return new ObjectAssertionsChain<TException>(assertions);
+    }
+
     public static ObjectAssertionsChain<TException> HaveInnerException<TException>(this ObjectAssertions<TException> assertions, Exception expected)
         where TException : Exception
     {

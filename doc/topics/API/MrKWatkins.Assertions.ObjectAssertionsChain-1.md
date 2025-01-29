@@ -11,6 +11,12 @@ public sealed struct ObjectAssertionsChain<T>
 | ---- | ----------- |
 | T |  |
 
+## Constructors
+
+| Name | Description |
+| ---- | ----------- |
+| [ObjectAssertionsChain(ObjectAssertions&lt;T&gt;)](MrKWatkins.Assertions.ObjectAssertionsChain-1.-ctor.md) |  |
+
 ## Properties
 
 | Name | Description |

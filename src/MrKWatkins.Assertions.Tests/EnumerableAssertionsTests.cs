@@ -35,6 +35,39 @@ public sealed class EnumerableAssertionsTests
     }
 
     [Test]
+    public async Task ContainSingle_Null()
+    {
+        IEnumerable<int> nullEnumerable = null!;
+
+        await Assert.That(() => nullEnumerable.Should().ContainSingle(x => x != 2)).Throws<AssertionException>()
+            .WithMessage("Value should not be null.");
+    }
+
+    [Test]
+    public async Task ContainSingle()
+    {
+        var value = new List<int> { 1, 2, 3 };
+
+        await Assert.That(() => value.Should().ContainSingle(x => x == 5)).Throws<AssertionException>()
+            .WithMessage("Value should only contain a single item that satisfies the predicate x => x == 5 but it contains 0 items.");
+
+        await Assert.That(() => value.Should().ContainSingle(x => x != 2)).Throws<AssertionException>()
+            .WithMessage("Value should only contain a single item that satisfies the predicate x => x != 2 but it contains 2 items.");
+
+        await Assert.That(() => value.Should().ContainSingle(x => x == 2)).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task ContainSingle_Chain()
+    {
+        var value = new List<int> { 1, 2, 3 };
+
+        var chain = value.Should().ContainSingle(x => x == 1);
+        await Assert.That(chain.Value).IsEqualTo(value);
+        await Assert.That(chain.And.Value).IsEqualTo(value);
+    }
+
+    [Test]
     public async Task SequenceEqual_Null()
     {
         IEnumerable<int> nullEnumerable = null!;

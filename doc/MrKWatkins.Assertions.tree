@@ -15,6 +15,7 @@
       </toc-element>
       <toc-element toc-title="ActionAssertionsChain&lt;TException&gt;">
         <toc-element toc-title="ActionAssertionsChain&lt;TException&gt;" topic="MrKWatkins.Assertions.ActionAssertionsChain-1.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.ActionAssertionsChain-1.-ctor.md" />
         <toc-element toc-title="Properties">
           <toc-element toc-title="Exception" topic="MrKWatkins.Assertions.ActionAssertionsChain-1.Exception.md" />
           <toc-element toc-title="That" topic="MrKWatkins.Assertions.ActionAssertionsChain-1.That.md" />
@@ -52,6 +53,7 @@
         <toc-element toc-title="EnumerableAssertions&lt;TEnumerable, T&gt;" topic="MrKWatkins.Assertions.EnumerableAssertions-2.md" />
         <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.EnumerableAssertions-2.-ctor.md" />
         <toc-element toc-title="Methods">
+          <toc-element toc-title="ContainSingle" topic="MrKWatkins.Assertions.EnumerableAssertions-2.ContainSingle.md" />
           <toc-element toc-title="NotSequenceEqual" topic="MrKWatkins.Assertions.EnumerableAssertions-2.NotSequenceEqual.md" />
           <toc-element toc-title="OnlyContain" topic="MrKWatkins.Assertions.EnumerableAssertions-2.OnlyContain.md" />
           <toc-element toc-title="SequenceEqual" topic="MrKWatkins.Assertions.EnumerableAssertions-2.SequenceEqual.md" />
@@ -59,6 +61,7 @@
       </toc-element>
       <toc-element toc-title="EnumerableAssertionsChain&lt;TEnumerable, T&gt;">
         <toc-element toc-title="EnumerableAssertionsChain&lt;TEnumerable, T&gt;" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-2.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-2.-ctor.md" />
         <toc-element toc-title="Properties">
           <toc-element toc-title="And" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-2.And.md" />
           <toc-element toc-title="Value" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-2.Value.md" />
@@ -66,6 +69,10 @@
       </toc-element>
       <toc-element toc-title="EnumerableExtensions">
         <toc-element toc-title="EnumerableExtensions" topic="MrKWatkins.Assertions.EnumerableExtensions.md" />
+        <toc-element toc-title="Methods">
+          <toc-element toc-title="NotSequenceEqual" topic="MrKWatkins.Assertions.EnumerableExtensions.NotSequenceEqual.md" />
+          <toc-element toc-title="SequenceEqual" topic="MrKWatkins.Assertions.EnumerableExtensions.SequenceEqual.md" />
+        </toc-element>
       </toc-element>
       <toc-element toc-title="ExceptionExtensions">
         <toc-element toc-title="ExceptionExtensions" topic="MrKWatkins.Assertions.ExceptionExtensions.md" />
@@ -132,6 +139,7 @@
       </toc-element>
       <toc-element toc-title="ObjectAssertionsChain&lt;T&gt;">
         <toc-element toc-title="ObjectAssertionsChain&lt;T&gt;" topic="MrKWatkins.Assertions.ObjectAssertionsChain-1.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.ObjectAssertionsChain-1.-ctor.md" />
         <toc-element toc-title="Properties">
           <toc-element toc-title="And" topic="MrKWatkins.Assertions.ObjectAssertionsChain-1.And.md" />
           <toc-element toc-title="Value" topic="MrKWatkins.Assertions.ObjectAssertionsChain-1.Value.md" />
@@ -146,6 +154,7 @@
       </toc-element>
       <toc-element toc-title="ReadOnlyDictionaryAssertionsChain&lt;TDictionary, TKey, TValue&gt;">
         <toc-element toc-title="ReadOnlyDictionaryAssertionsChain&lt;TDictionary, TKey, TValue&gt;" topic="MrKWatkins.Assertions.ReadOnlyDictionaryAssertionsChain-3.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.ReadOnlyDictionaryAssertionsChain-3.-ctor.md" />
         <toc-element toc-title="Properties">
           <toc-element toc-title="And" topic="MrKWatkins.Assertions.ReadOnlyDictionaryAssertionsChain-3.And.md" />
           <toc-element toc-title="Value" topic="MrKWatkins.Assertions.ReadOnlyDictionaryAssertionsChain-3.Value.md" />
@@ -165,6 +174,7 @@
       </toc-element>
       <toc-element toc-title="ReadOnlySpanAssertionsChain&lt;TItem&gt;">
         <toc-element toc-title="ReadOnlySpanAssertionsChain&lt;TItem&gt;" topic="MrKWatkins.Assertions.ReadOnlySpanAssertionsChain-1.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.ReadOnlySpanAssertionsChain-1.-ctor.md" />
         <toc-element toc-title="Properties">
           <toc-element toc-title="And" topic="MrKWatkins.Assertions.ReadOnlySpanAssertionsChain-1.And.md" />
           <toc-element toc-title="Value" topic="MrKWatkins.Assertions.ReadOnlySpanAssertionsChain-1.Value.md" />

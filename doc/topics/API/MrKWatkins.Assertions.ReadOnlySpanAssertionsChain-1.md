@@ -11,6 +11,12 @@ public sealed struct ReadOnlySpanAssertionsChain<TItem>
 | ---- | ----------- |
 | TItem |  |
 
+## Constructors
+
+| Name | Description |
+| ---- | ----------- |
+| [ReadOnlySpanAssertionsChain(ReadOnlySpanAssertions&lt;TItem&gt;)](MrKWatkins.Assertions.ReadOnlySpanAssertionsChain-1.-ctor.md) |  |
+
 ## Properties
 
 | Name | Description |
