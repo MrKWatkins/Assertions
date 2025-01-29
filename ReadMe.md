@@ -9,9 +9,9 @@
 ## Why?
 
 FluentAssertions recently moved to a paid licence model with version 8.0. Whilst I don't have a particular problem with that I am slightly annoyed by how they did it.
-Instead of making a new repository they simply upgraded the version number and changed licence. Which means any processes you might have in place to automatically
+Instead of making a new package they simply upgraded the version number and changed licence. Which means any processes you might have in place to automatically
 upgrade packages would then upgrade them, and potentially leave you open to licencing costs. And yes, of course you should check your upgrades, blah blah, but I would
-counter that with you shouldn't change licences on projects like that! Start a new repo. Or something else. Whatever. Be better.
+counter that with you shouldn't change licences on projects like that! Start a new package. Or something else. Whatever. Be better.
 
 Anyway, it annoyed me enough that I thought I'd have a crack at my own version for a challenge, and see if I can fix a few irritations I have with FluentAssertions
 on the way, such as:

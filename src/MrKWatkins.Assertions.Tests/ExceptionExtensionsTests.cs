@@ -1,3 +1,5 @@
+using TUnit.Assertions.AssertConditions.Throws;
+
 namespace MrKWatkins.Assertions.Tests;
 
 [SuppressMessage("ReSharper", "NotResolvedInText")]
