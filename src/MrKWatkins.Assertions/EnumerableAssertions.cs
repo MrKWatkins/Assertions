@@ -3,14 +3,9 @@ using System.Runtime.CompilerServices;
 namespace MrKWatkins.Assertions;
 
 [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract")]
-public class EnumerableAssertions<TEnumerable, T> : ObjectAssertions<TEnumerable>
+public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? value) : ObjectAssertions<TEnumerable>(value)
     where TEnumerable : IEnumerable<T>
 {
-    protected internal EnumerableAssertions([NoEnumeration] TEnumerable? value)
-        : base(value)
-    {
-    }
-
     public EnumerableAssertionsChain<TEnumerable, T> OnlyContain([InstantHandle] Func<T, bool> predicate, [CallerArgumentExpression(nameof(predicate))] string? predicateExpression = null)
     {
         NotBeNull();

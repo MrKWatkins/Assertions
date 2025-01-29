@@ -1,13 +1,8 @@
 namespace MrKWatkins.Assertions;
 
-public sealed class ExceptionAssertions<T> : ObjectAssertions<T>
+public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value)
     where T : Exception
 {
-    internal ExceptionAssertions(T? value)
-        : base(value)
-    {
-    }
-
     public ExceptionAssertionsChain<T> HaveMessage(string expected)
     {
         NotBeNull();

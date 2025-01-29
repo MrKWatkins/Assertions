@@ -217,9 +217,6 @@ internal static class Format
     }
 
     [Pure]
-    internal static string Enumerable(IEnumerable value) => value is ICollection collection ? Collection(collection) : Enumerable(value.OfType<object>());
-
-    [Pure]
     internal static string Enumerable<T>(IEnumerable<T> value)
     {
         var message = new StringBuilder();
@@ -244,14 +241,14 @@ internal static class Format
     }
 
     [Pure]
-    internal static string Collection(ICollection value, bool openEnded = false)
+    private static string Collection(ICollection value, bool openEnded = false)
     {
         var message = new StringBuilder();
         AppendCollection(message, value, openEnded);
         return message.ToString();
     }
 
-    internal static void AppendCollection(StringBuilder message, ICollection value, bool openEnded = false)
+    private static void AppendCollection(StringBuilder message, ICollection value, bool openEnded = false)
     {
         message.Append('[');
         if (value.Count <= MaximumItemsToShow)
@@ -282,7 +279,7 @@ internal static class Format
     }
 
     [OverloadResolutionPriority(1)]
-    internal static void AppendCollection<T>(StringBuilder message, IReadOnlyCollection<T> value, bool openEnded = false)
+    private static void AppendCollection<T>(StringBuilder message, IReadOnlyCollection<T> value, bool openEnded = false)
     {
         message.Append('[');
         if (value.Count <= MaximumItemsToShow)

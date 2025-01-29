@@ -1,13 +1,8 @@
 namespace MrKWatkins.Assertions;
 
-public sealed class ReadOnlyDictionaryAssertions<TDictionary, TKey, TValue> : ObjectAssertions<TDictionary>
+public sealed class ReadOnlyDictionaryAssertions<TDictionary, TKey, TValue>([NoEnumeration] TDictionary value) : ObjectAssertions<TDictionary>(value)
     where TDictionary : IReadOnlyDictionary<TKey, TValue>
 {
-    internal ReadOnlyDictionaryAssertions([NoEnumeration] TDictionary value)
-        : base(value)
-    {
-    }
-
     public ReadOnlyDictionaryAssertionsChain<TDictionary, TKey, TValue> ContainKey(TKey key)
     {
         NotBeNull();

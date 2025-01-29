@@ -2,14 +2,14 @@ using System.Linq.Expressions;
 
 namespace MrKWatkins.Assertions;
 
-internal static class Verify
+public static class Verify
 {
     private static readonly Func<string, Exception?, Exception> ExceptionConstructor = BuildExceptionConstructor();
 
     [Pure]
     internal static Exception CreateException(string message, Exception? innerException = null) => ExceptionConstructor(message, innerException);
 
-    internal static void That([DoesNotReturnIf(true)] bool condition, string exceptionMessage)
+    public static void That([DoesNotReturnIf(true)] bool condition, string exceptionMessage)
     {
         if (!condition)
         {
@@ -17,7 +17,7 @@ internal static class Verify
         }
     }
 
-    internal static void That([DoesNotReturnIf(true)] bool condition, FormatInterpolatedStringHandler message)
+    public static void That([DoesNotReturnIf(true)] bool condition, FormatInterpolatedStringHandler message)
     {
         if (!condition)
         {

@@ -56,7 +56,6 @@ public sealed class ExtensionsTests
         public void CopyTo(Array array, int index) => throw new NotSupportedException();
         public bool IsSynchronized => throw new NotSupportedException();
         public object SyncRoot => throw new NotSupportedException();
-        public bool IsReadOnly => throw new NotSupportedException();
         public IEnumerator GetEnumerator() => throw new NotSupportedException();
     }
 

@@ -1,14 +1,9 @@
 namespace MrKWatkins.Assertions;
 
 [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-public readonly ref struct ReadOnlySpanAssertions<T>
+public readonly ref struct ReadOnlySpanAssertions<T>(ReadOnlySpan<T> value)
 {
-    internal ReadOnlySpanAssertions(ReadOnlySpan<T> value)
-    {
-        Value = value;
-    }
-
-    public ReadOnlySpan<T> Value { get; }
+    public ReadOnlySpan<T> Value { get; } = value;
 
     public ReadOnlySpanAssertionsChain<T> BeEmpty()
     {

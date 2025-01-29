@@ -3,14 +3,9 @@ using System.ComponentModel;
 namespace MrKWatkins.Assertions;
 
 [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract")]
-public class ObjectAssertions<T>
+public class ObjectAssertions<T>(T? value)
 {
-    protected internal ObjectAssertions(T? value)
-    {
-        Value = value!;
-    }
-
-    public T Value { get; }
+    public T Value { get; } = value!;
 
     public void BeNull()
     {

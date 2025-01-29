@@ -1,14 +1,7 @@
 namespace MrKWatkins.Assertions;
 
-public sealed class ActionAssertions
+public sealed class ActionAssertions(Action action)
 {
-    private readonly Action action;
-
-    internal ActionAssertions(Action action)
-    {
-        this.action = action;
-    }
-
     public ActionAssertionsChain<TException> Throw<TException>()
         where TException : Exception
     {
