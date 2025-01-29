@@ -12,6 +12,12 @@ public sealed class ExceptionAssertions<T> : ObjectAssertions<T>
 | ---- | ----------- |
 | T |  |
 
+## Constructors
+
+| Name | Description |
+| ---- | ----------- |
+| [ExceptionAssertions(T)](MrKWatkins.Assertions.ExceptionAssertions-1.-ctor.md) |  |
+
 ## Methods
 
 | Name | Description |

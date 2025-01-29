@@ -14,6 +14,12 @@ public sealed class ReadOnlyDictionaryAssertions<TDictionary, TKey, TValue> : Ob
 | TKey |  |
 | TValue |  |
 
+## Constructors
+
+| Name | Description |
+| ---- | ----------- |
+| [ReadOnlyDictionaryAssertions(TDictionary)](MrKWatkins.Assertions.ReadOnlyDictionaryAssertions-3.-ctor.md) |  |
+
 ## Methods
 
 | Name | Description |

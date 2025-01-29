@@ -5,6 +5,12 @@
 public sealed class ActionAssertions
 ```
 
+## Constructors
+
+| Name | Description |
+| ---- | ----------- |
+| [ActionAssertions(Action)](MrKWatkins.Assertions.ActionAssertions.-ctor.md) |  |
+
 ## Methods
 
 | Name | Description |

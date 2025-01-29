@@ -1,7 +1,7 @@
 # EnumerableAssertions&lt;TEnumerable, T&gt; Constructors
 
 ```c#
-protected internal EnumerableAssertions(TEnumerable? value);
+public EnumerableAssertions(TEnumerable? value);
 ```
 
 ## Parameters

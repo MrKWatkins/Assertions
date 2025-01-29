@@ -81,16 +81,16 @@ public sealed class BooleanExtensionsTests
     [Test]
     public async Task BeFalse_Boolean()
     {
-        await Assert.That(() => true.Should().BeFalse()).ThrowsNothing();
-        await Assert.That(() => false.Should().BeFalse()).Throws<AssertionException>().WithMessage("Value should be false but was true.");
+        await Assert.That(() => false.Should().BeFalse()).ThrowsNothing();
+        await Assert.That(() => true.Should().BeFalse()).Throws<AssertionException>().WithMessage("Value should be false but was true.");
     }
 
     [Test]
     public async Task BeFalse_Boolean_Chain()
     {
-        var chain = true.Should().BeFalse();
-        await Assert.That(chain.Value).IsEqualTo(true);
-        await Assert.That(chain.And.Value).IsEqualTo(true);
+        var chain = false.Should().BeFalse();
+        await Assert.That(chain.Value).IsEqualTo(false);
+        await Assert.That(chain.And.Value).IsEqualTo(false);
     }
 
     [Test]

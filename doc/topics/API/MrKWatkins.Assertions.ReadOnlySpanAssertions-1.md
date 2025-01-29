@@ -11,6 +11,12 @@ public sealed struct ReadOnlySpanAssertions<T>
 | ---- | ----------- |
 | T |  |
 
+## Constructors
+
+| Name | Description |
+| ---- | ----------- |
+| [ReadOnlySpanAssertions(ReadOnlySpan&lt;T&gt;)](MrKWatkins.Assertions.ReadOnlySpanAssertions-1.-ctor.md) |  |
+
 ## Properties
 
 | Name | Description |

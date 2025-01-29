@@ -6,6 +6,7 @@
     <toc-element toc-title="MrKWatkins.Assertions">
       <toc-element toc-title="ActionAssertions">
         <toc-element toc-title="ActionAssertions" topic="MrKWatkins.Assertions.ActionAssertions.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.ActionAssertions.-ctor.md" />
         <toc-element toc-title="Methods">
           <toc-element toc-title="NotThrow" topic="MrKWatkins.Assertions.ActionAssertions.NotThrow.md" />
           <toc-element toc-title="Throw" topic="MrKWatkins.Assertions.ActionAssertions.Throw.md" />
@@ -67,15 +68,9 @@
           <toc-element toc-title="Value" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-2.Value.md" />
         </toc-element>
       </toc-element>
-      <toc-element toc-title="EnumerableExtensions">
-        <toc-element toc-title="EnumerableExtensions" topic="MrKWatkins.Assertions.EnumerableExtensions.md" />
-        <toc-element toc-title="Methods">
-          <toc-element toc-title="NotSequenceEqual" topic="MrKWatkins.Assertions.EnumerableExtensions.NotSequenceEqual.md" />
-          <toc-element toc-title="SequenceEqual" topic="MrKWatkins.Assertions.EnumerableExtensions.SequenceEqual.md" />
-        </toc-element>
-      </toc-element>
       <toc-element toc-title="ExceptionAssertions&lt;T&gt;">
         <toc-element toc-title="ExceptionAssertions&lt;T&gt;" topic="MrKWatkins.Assertions.ExceptionAssertions-1.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.ExceptionAssertions-1.-ctor.md" />
         <toc-element toc-title="Methods">
           <toc-element toc-title="HaveInnerException" topic="MrKWatkins.Assertions.ExceptionAssertions-1.HaveInnerException.md" />
           <toc-element toc-title="HaveMessage" topic="MrKWatkins.Assertions.ExceptionAssertions-1.HaveMessage.md" />
@@ -168,6 +163,7 @@
       </toc-element>
       <toc-element toc-title="ReadOnlyDictionaryAssertions&lt;TDictionary, TKey, TValue&gt;">
         <toc-element toc-title="ReadOnlyDictionaryAssertions&lt;TDictionary, TKey, TValue&gt;" topic="MrKWatkins.Assertions.ReadOnlyDictionaryAssertions-3.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.ReadOnlyDictionaryAssertions-3.-ctor.md" />
         <toc-element toc-title="Methods">
           <toc-element toc-title="ContainKey" topic="MrKWatkins.Assertions.ReadOnlyDictionaryAssertions-3.ContainKey.md" />
           <toc-element toc-title="NotContainKey" topic="MrKWatkins.Assertions.ReadOnlyDictionaryAssertions-3.NotContainKey.md" />
@@ -183,6 +179,7 @@
       </toc-element>
       <toc-element toc-title="ReadOnlySpanAssertions&lt;T&gt;">
         <toc-element toc-title="ReadOnlySpanAssertions&lt;T&gt;" topic="MrKWatkins.Assertions.ReadOnlySpanAssertions-1.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.ReadOnlySpanAssertions-1.-ctor.md" />
         <toc-element toc-title="Properties">
           <toc-element toc-title="Value" topic="MrKWatkins.Assertions.ReadOnlySpanAssertions-1.Value.md" />
         </toc-element>
@@ -205,6 +202,12 @@
         <toc-element toc-title="ShouldExtensions" topic="MrKWatkins.Assertions.ShouldExtensions.md" />
         <toc-element toc-title="Methods">
           <toc-element toc-title="Should" topic="MrKWatkins.Assertions.ShouldExtensions.Should.md" />
+        </toc-element>
+      </toc-element>
+      <toc-element toc-title="Verify">
+        <toc-element toc-title="Verify" topic="MrKWatkins.Assertions.Verify.md" />
+        <toc-element toc-title="Methods">
+          <toc-element toc-title="That" topic="MrKWatkins.Assertions.Verify.That.md" />
         </toc-element>
       </toc-element>
       <toc-element toc-title="With">

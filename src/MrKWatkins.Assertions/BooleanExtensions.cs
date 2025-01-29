@@ -32,7 +32,7 @@ public static class BooleanExtensions
 
     public static ObjectAssertionsChain<bool> BeFalse(this ObjectAssertions<bool> assertions)
     {
-        Verify.That(assertions.Value, "Value should be false but was true.");
+        Verify.That(!assertions.Value, "Value should be false but was true.");
 
         return new ObjectAssertionsChain<bool>(assertions);
     }

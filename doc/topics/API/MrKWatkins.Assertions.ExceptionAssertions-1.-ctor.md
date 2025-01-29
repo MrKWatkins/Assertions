@@ -1,7 +1,7 @@
-# ObjectAssertions&lt;T&gt; Constructors
+# ExceptionAssertions&lt;T&gt; Constructors
 
 ```c#
-public ObjectAssertions(T? value);
+public ExceptionAssertions(T? value);
 ```
 
 ## Parameters
