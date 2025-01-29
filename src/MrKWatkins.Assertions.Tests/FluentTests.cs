@@ -1,3 +1,4 @@
+using System.Collections;
 using TUnit.Assertions.AssertConditions.Throws;
 
 namespace MrKWatkins.Assertions.Tests;
@@ -20,6 +21,10 @@ public sealed class FluentTests
             // Should be able to use an enumeration of a subtype.
             new object[] { "One" }.Should().SequenceEqual("One");
             new object[] { "One", "Two", "Three" }.Should().SequenceEqual("One", "Two", "Three");
+
+            // Should work with non-generic IEnumerable.
+            ((IEnumerable)new object[] { "One" }).Should().SequenceEqual("One");
+            ((IEnumerable)new object[] { "One", "Two", "Three" }).Should().SequenceEqual("One", "Two", "Three");
         }).ThrowsNothing();
     }
 
