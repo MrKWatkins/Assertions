@@ -25,14 +25,14 @@ public class EnumerableAssertions<TEnumerable, T> : ObjectAssertions<TEnumerable
         return new EnumerableAssertionsChain<TEnumerable, T>(this);
     }
 
-    public EnumerableAssertionsChain<TEnumerable, T> ContainSingle([InstantHandle] Func<T, bool> predicate, [CallerArgumentExpression(nameof(predicate))] string? predicateExpression = null)
+    public ObjectAssertionsChain<T> ContainSingle([InstantHandle] Func<T, bool> predicate, [CallerArgumentExpression(nameof(predicate))] string? predicateExpression = null)
     {
         NotBeNull();
 
-        var count = Value.Where(predicate).Count();
-        Verify.That(count == 1, $"Value should only contain a single item that satisfies the predicate {predicateExpression:L} but it contains {count} items.");
+        var matching = Value.Where(predicate).ToList();
+        Verify.That(matching.Count == 1, $"Value should only contain a single item that satisfies the predicate {predicateExpression:L} but it contains {matching.Count} items.");
 
-        return new EnumerableAssertionsChain<TEnumerable, T>(this);
+        return new ObjectAssertionsChain<T>(new ObjectAssertions<T>(matching[0]));
     }
 
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]

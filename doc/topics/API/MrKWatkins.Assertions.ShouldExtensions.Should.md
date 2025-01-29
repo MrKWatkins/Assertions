@@ -4,6 +4,9 @@
 | Name | Description |
 | ---- | ----------- |
 | [Should&lt;T&gt;(T)](MrKWatkins.Assertions.ShouldExtensions.Should.md#mrkwatkins-assertions-shouldextensions-should-1(-0)) |  |
+| [Should(Exception)](MrKWatkins.Assertions.ShouldExtensions.Should.md#mrkwatkins-assertions-shouldextensions-should(system-exception)) |  |
+| [Should(ArgumentException)](MrKWatkins.Assertions.ShouldExtensions.Should.md#mrkwatkins-assertions-shouldextensions-should(system-argumentexception)) |  |
+| [Should(ArgumentOutOfRangeException)](MrKWatkins.Assertions.ShouldExtensions.Should.md#mrkwatkins-assertions-shouldextensions-should(system-argumentoutofrangeexception)) |  |
 | [Should&lt;T&gt;(IEnumerable&lt;T&gt;)](MrKWatkins.Assertions.ShouldExtensions.Should.md#mrkwatkins-assertions-shouldextensions-should-1(system-collections-generic-ienumerable((-0)))) |  |
 | [Should&lt;TKey, TValue&gt;(IReadOnlyDictionary&lt;TKey, TValue&gt;)](MrKWatkins.Assertions.ShouldExtensions.Should.md#mrkwatkins-assertions-shouldextensions-should-2(system-collections-generic-ireadonlydictionary((-0-1)))) |  |
 | [Should&lt;TKey, TValue&gt;(Dictionary&lt;TKey, TValue&gt;)](MrKWatkins.Assertions.ShouldExtensions.Should.md#mrkwatkins-assertions-shouldextensions-should-2(system-collections-generic-dictionary((-0-1)))) |  |
@@ -31,6 +34,51 @@ public static ObjectAssertions<T> Should<T>(this T? value);
 ## Returns {id="returns-mrkwatkins-assertions-shouldextensions-should-1(-0)"}
 
 [ObjectAssertions&lt;T&gt;](MrKWatkins.Assertions.ObjectAssertions-1.md)
+## Should(Exception) {id="mrkwatkins-assertions-shouldextensions-should(system-exception)"}
+
+```c#
+public static ExceptionAssertions<Exception> Should(this Exception? value);
+```
+
+## Parameters {id="parameters-mrkwatkins-assertions-shouldextensions-should(system-exception)"}
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [Exception](https://learn.microsoft.com/en-gb/dotnet/api/System.Exception) |  |
+
+## Returns {id="returns-mrkwatkins-assertions-shouldextensions-should(system-exception)"}
+
+[ExceptionAssertions&lt;Exception&gt;](MrKWatkins.Assertions.ExceptionAssertions-1.md)
+## Should(ArgumentException) {id="mrkwatkins-assertions-shouldextensions-should(system-argumentexception)"}
+
+```c#
+public static ExceptionAssertions<ArgumentException> Should(this ArgumentException? value);
+```
+
+## Parameters {id="parameters-mrkwatkins-assertions-shouldextensions-should(system-argumentexception)"}
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [ArgumentException](https://learn.microsoft.com/en-gb/dotnet/api/System.ArgumentException) |  |
+
+## Returns {id="returns-mrkwatkins-assertions-shouldextensions-should(system-argumentexception)"}
+
+[ExceptionAssertions&lt;ArgumentException&gt;](MrKWatkins.Assertions.ExceptionAssertions-1.md)
+## Should(ArgumentOutOfRangeException) {id="mrkwatkins-assertions-shouldextensions-should(system-argumentoutofrangeexception)"}
+
+```c#
+public static ExceptionAssertions<ArgumentOutOfRangeException> Should(this ArgumentOutOfRangeException? value);
+```
+
+## Parameters {id="parameters-mrkwatkins-assertions-shouldextensions-should(system-argumentoutofrangeexception)"}
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [ArgumentOutOfRangeException](https://learn.microsoft.com/en-gb/dotnet/api/System.ArgumentOutOfRangeException) |  |
+
+## Returns {id="returns-mrkwatkins-assertions-shouldextensions-should(system-argumentoutofrangeexception)"}
+
+[ExceptionAssertions&lt;ArgumentOutOfRangeException&gt;](MrKWatkins.Assertions.ExceptionAssertions-1.md)
 ## Should&lt;T&gt;(IEnumerable&lt;T&gt;) {id="mrkwatkins-assertions-shouldextensions-should-1(system-collections-generic-ienumerable((-0)))"}
 
 ```c#

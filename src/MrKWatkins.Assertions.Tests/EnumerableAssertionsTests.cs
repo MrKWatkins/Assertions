@@ -62,9 +62,10 @@ public sealed class EnumerableAssertionsTests
     {
         var value = new List<int> { 1, 2, 3 };
 
-        var chain = value.Should().ContainSingle(x => x == 1);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        var chain = value.Should().ContainSingle(x => x == 3);
+        await Assert.That(chain.That).IsEqualTo(3);
+        await Assert.That(chain.Value).IsEqualTo(3);
+        await Assert.That(chain.And.Value).IsEqualTo(3);
     }
 
     [Test]

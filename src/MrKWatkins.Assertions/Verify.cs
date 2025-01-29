@@ -9,7 +9,7 @@ internal static class Verify
     [Pure]
     internal static Exception CreateException(string message, Exception? innerException = null) => ExceptionConstructor(message, innerException);
 
-    internal static void That(bool condition, string exceptionMessage)
+    internal static void That([DoesNotReturnIf(true)] bool condition, string exceptionMessage)
     {
         if (!condition)
         {
@@ -17,7 +17,7 @@ internal static class Verify
         }
     }
 
-    internal static void That(bool condition, FormatInterpolatedStringHandler message)
+    internal static void That([DoesNotReturnIf(true)] bool condition, FormatInterpolatedStringHandler message)
     {
         if (!condition)
         {

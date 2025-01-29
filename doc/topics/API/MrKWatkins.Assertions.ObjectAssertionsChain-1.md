@@ -22,5 +22,6 @@ public sealed struct ObjectAssertionsChain<T>
 | Name | Description |
 | ---- | ----------- |
 | [And](MrKWatkins.Assertions.ObjectAssertionsChain-1.And.md) |  |
+| [That](MrKWatkins.Assertions.ObjectAssertionsChain-1.That.md) |  |
 | [Value](MrKWatkins.Assertions.ObjectAssertionsChain-1.Value.md) |  |
 

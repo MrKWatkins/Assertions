@@ -9,6 +9,18 @@ public static class ShouldExtensions
 
     [Pure]
     [OverloadResolutionPriority(1)]
+    public static ExceptionAssertions<Exception> Should(this Exception? value) => new(value);
+
+    [Pure]
+    [OverloadResolutionPriority(2)]
+    public static ExceptionAssertions<ArgumentException> Should(this ArgumentException? value) => new(value);
+
+    [Pure]
+    [OverloadResolutionPriority(3)]
+    public static ExceptionAssertions<ArgumentOutOfRangeException> Should(this ArgumentOutOfRangeException? value) => new(value);
+
+    [Pure]
+    [OverloadResolutionPriority(1)]
     public static EnumerableAssertions<IEnumerable<T>, T> Should<T>(this IEnumerable<T>? value) => new(value);
 
     [Pure]

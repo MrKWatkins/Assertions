@@ -2,7 +2,7 @@
 ## Definition
 
 ```c#
-public EnumerableAssertionsChain<TEnumerable, T> ContainSingle(Func<T, bool> predicate, string? predicateExpression = null);
+public ObjectAssertionsChain<T> ContainSingle(Func<T, bool> predicate, string? predicateExpression = null);
 ```
 
 ## Parameters
@@ -14,4 +14,4 @@ public EnumerableAssertionsChain<TEnumerable, T> ContainSingle(Func<T, bool> pre
 
 ## Returns
 
-[EnumerableAssertionsChain&lt;TEnumerable, T&gt;](MrKWatkins.Assertions.EnumerableAssertionsChain-2.md)
+[ObjectAssertionsChain&lt;T&gt;](MrKWatkins.Assertions.ObjectAssertionsChain-1.md)

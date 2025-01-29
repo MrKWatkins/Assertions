@@ -33,13 +33,29 @@ public sealed class FluentTests
     }
 
     [Test]
-    public async Task Exceptions()
+    public async Task ContainsSingle()
     {
-        var testException = new InvalidOperationException("Test");
         await Assert.That(() =>
         {
-            AssertThat.Invoking(() => throw testException).Should().Throw<InvalidOperationException>()
-                .That.Should().HaveMessage("Test").And.NotHaveInnerException();
+            new[] { "One", "Two", "Three" }.Should().ContainSingle(x => x.Length == 5).That.Should().Equal("Three");
+        }).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task Exceptions()
+    {
+        var inner = new InvalidOperationException("Inner");
+        var outer = new NotSupportedException("Outer", inner);
+        await Assert.That(() =>
+        {
+            AssertThat.Invoking(() => throw inner).Should().Throw<InvalidOperationException>()
+                .That.Should()
+                .HaveMessage("Inner").And
+                .NotHaveInnerException();
+
+            AssertThat.Invoking(() => throw outer).Should().Throw<NotSupportedException>()
+                .That.Should().HaveMessage("Outer").And.HaveInnerException<InvalidOperationException>()
+                .That.Should().HaveMessage("Inner");
         }).ThrowsNothing();
     }
 }
