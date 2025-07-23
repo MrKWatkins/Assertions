@@ -8,12 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="JetBrains.Annotations" PrivateAssets="All"/>
+        <PackageReference Include="JetBrains.Annotations" PrivateAssets="All" />
 
-        <Using Include="System.Diagnostics.CodeAnalysis"/>
-        <Using Include="System.Diagnostics.Contracts"/>
-        <Using Include="System.Diagnostics.Contracts.PureAttribute" Alias="PureAttribute"/>
-        <Using Include="JetBrains.Annotations"/>
+        <Using Include="System.Diagnostics.CodeAnalysis" />
+        <Using Include="System.Diagnostics.Contracts" />
+        <Using Include="System.Diagnostics.Contracts.PureAttribute" Alias="PureAttribute" />
+        <Using Include="JetBrains.Annotations" />
     </ItemGroup>
 
     <ItemGroup Condition="!$(MSBuildProjectName.EndsWith('Tests'))">
@@ -24,9 +24,9 @@
 
     <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
         <PackageReference Include="TUnit" />
-        <Using Include="TUnit.Core"/>
-        <Using Include="TUnit.Assertions"/>
-        <Using Include="TUnit.Assertions.Extensions"/>
+        <Using Include="TUnit.Core" />
+        <Using Include="TUnit.Assertions" />
+        <Using Include="TUnit.Assertions.Extensions" />
     </ItemGroup>
 
     <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
