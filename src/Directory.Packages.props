@@ -5,10 +5,10 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="JetBrains.Annotations" Version="2024.3.0" />
+    <PackageVersion Include="JetBrains.Annotations" Version="2025.2.0" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="17.14.2" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="1.6.3" />
-    <PackageVersion Include="TUnit" Version="0.19.64" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="1.8.0" />
+    <PackageVersion Include="TUnit" Version="0.50.0" />
   </ItemGroup>
 </Project>
