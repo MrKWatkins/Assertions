@@ -32,6 +32,24 @@
           <toc-element toc-title="Invoking" topic="MrKWatkins.Assertions.AssertThat.Invoking.md" />
         </toc-element>
       </toc-element>
+      <toc-element toc-title="BooleanAssertions">
+        <toc-element toc-title="BooleanAssertions" topic="MrKWatkins.Assertions.BooleanAssertions.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.BooleanAssertions.-ctor.md" />
+        <toc-element toc-title="Methods">
+          <toc-element toc-title="BeFalse" topic="MrKWatkins.Assertions.BooleanAssertions.BeFalse.md" />
+          <toc-element toc-title="BeTrue" topic="MrKWatkins.Assertions.BooleanAssertions.BeTrue.md" />
+          <toc-element toc-title="NotBeFalse" topic="MrKWatkins.Assertions.BooleanAssertions.NotBeFalse.md" />
+          <toc-element toc-title="NotBeTrue" topic="MrKWatkins.Assertions.BooleanAssertions.NotBeTrue.md" />
+        </toc-element>
+      </toc-element>
+      <toc-element toc-title="BooleanAssertionsChain">
+        <toc-element toc-title="BooleanAssertionsChain" topic="MrKWatkins.Assertions.BooleanAssertionsChain.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.BooleanAssertionsChain.-ctor.md" />
+        <toc-element toc-title="Properties">
+          <toc-element toc-title="And" topic="MrKWatkins.Assertions.BooleanAssertionsChain.And.md" />
+          <toc-element toc-title="Value" topic="MrKWatkins.Assertions.BooleanAssertionsChain.Value.md" />
+        </toc-element>
+      </toc-element>
       <toc-element toc-title="BooleanExtensions">
         <toc-element toc-title="BooleanExtensions" topic="MrKWatkins.Assertions.BooleanExtensions.md" />
         <toc-element toc-title="Methods">

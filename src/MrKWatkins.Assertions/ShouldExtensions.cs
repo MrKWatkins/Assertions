@@ -18,6 +18,15 @@ public static class ShouldExtensions
     public static ObjectAssertions<T> Should<T>(this T? value) => new(value);
 
     /// <summary>
+    /// Begins a fluent assertion on the specified boolean value.
+    /// </summary>
+    /// <param name="value">The boolean value to assert on.</param>
+    /// <returns>A <see cref="BooleanAssertions" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(1)]
+    public static BooleanAssertions Should(this bool value) => new(value);
+
+    /// <summary>
     /// Begins a fluent assertion on the specified string value.
     /// </summary>
     /// <param name="value">The string value to assert on.</param>
