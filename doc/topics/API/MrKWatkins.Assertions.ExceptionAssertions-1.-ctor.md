@@ -1,5 +1,7 @@
 # ExceptionAssertions&lt;T&gt; Constructors
 
+Provides assertions for exception values.
+
 ```c#
 public ExceptionAssertions(T? value);
 ```
@@ -8,5 +10,5 @@ public ExceptionAssertions(T? value);
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| value | T |  |
+| value | T | The exception to assert on. |
 

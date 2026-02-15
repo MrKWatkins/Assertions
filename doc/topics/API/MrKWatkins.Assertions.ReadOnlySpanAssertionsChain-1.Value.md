@@ -1,6 +1,8 @@
 # ReadOnlySpanAssertionsChain&lt;TItem&gt;.Value Property
 ## Definition
 
+Gets the span value being asserted on.
+
 ```c#
 public ReadOnlySpan<TItem> Value { get; }
 ```

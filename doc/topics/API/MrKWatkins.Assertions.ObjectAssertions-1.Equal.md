@@ -1,6 +1,8 @@
 # ObjectAssertions&lt;T&gt;.Equal Method
 ## Definition
 
+Asserts that the value is equal to the expected value using the default equality comparer.
+
 ```c#
 public ObjectAssertionsChain<T> Equal(T? expected);
 ```
@@ -9,8 +11,10 @@ public ObjectAssertionsChain<T> Equal(T? expected);
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| expected | T |  |
+| expected | T | The expected value. |
 
 ## Returns
 
 [ObjectAssertionsChain&lt;T&gt;](MrKWatkins.Assertions.ObjectAssertionsChain-1.md)
+
+An [ObjectAssertionsChain&lt;T&gt;](MrKWatkins.Assertions.ObjectAssertionsChain-1.md) for chaining further assertions.

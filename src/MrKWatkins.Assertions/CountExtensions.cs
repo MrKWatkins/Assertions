@@ -4,10 +4,19 @@ using System.Linq.Expressions;
 
 namespace MrKWatkins.Assertions;
 
+/// <summary>
+/// Extension methods that provide count-related assertions for enumerables.
+/// </summary>
 public static class CountExtensions
 {
     private static readonly ConcurrentDictionary<Type, Func<IEnumerable, int>> CountAccessors = new();
 
+    /// <summary>
+    /// Asserts that the enumerable is empty.
+    /// </summary>
+    /// <typeparam name="T">The type of the enumerable.</typeparam>
+    /// <param name="assertions">The assertions object.</param>
+    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
     public static ObjectAssertionsChain<T> BeEmpty<T>(this ObjectAssertions<T> assertions)
         where T : IEnumerable
     {
@@ -33,6 +42,12 @@ public static class CountExtensions
         return new ObjectAssertionsChain<T>(assertions);
     }
 
+    /// <summary>
+    /// Asserts that the enumerable is not empty.
+    /// </summary>
+    /// <typeparam name="T">The type of the enumerable.</typeparam>
+    /// <param name="assertions">The assertions object.</param>
+    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
     public static ObjectAssertionsChain<T> NotBeEmpty<T>(this ObjectAssertions<T> assertions)
         where T : IEnumerable
     {
@@ -58,6 +73,13 @@ public static class CountExtensions
         return new ObjectAssertionsChain<T>(assertions);
     }
 
+    /// <summary>
+    /// Asserts that the enumerable has the specified number of elements.
+    /// </summary>
+    /// <typeparam name="T">The type of the enumerable.</typeparam>
+    /// <param name="assertions">The assertions object.</param>
+    /// <param name="expectedCount">The expected number of elements.</param>
+    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
     public static ObjectAssertionsChain<T> HaveCount<T>(this ObjectAssertions<T> assertions, int expectedCount)
         where T : IEnumerable
     {
@@ -71,6 +93,13 @@ public static class CountExtensions
         return new ObjectAssertionsChain<T>(assertions);
     }
 
+    /// <summary>
+    /// Asserts that the enumerable does not have the specified number of elements.
+    /// </summary>
+    /// <typeparam name="T">The type of the enumerable.</typeparam>
+    /// <param name="assertions">The assertions object.</param>
+    /// <param name="expectedCount">The number of elements that is not expected.</param>
+    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
     public static ObjectAssertionsChain<T> NotHaveCount<T>(this ObjectAssertions<T> assertions, int expectedCount)
         where T : IEnumerable
     {

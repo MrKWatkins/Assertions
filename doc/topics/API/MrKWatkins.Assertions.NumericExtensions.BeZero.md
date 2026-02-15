@@ -1,6 +1,8 @@
 # NumericExtensions.BeZero Method
 ## Definition
 
+Asserts that the numeric value is zero.
+
 ```c#
 public static ObjectAssertionsChain<T> BeZero<T>(this ObjectAssertions<T> assertions)
    where T : INumberBase<T>;
@@ -10,14 +12,16 @@ public static ObjectAssertionsChain<T> BeZero<T>(this ObjectAssertions<T> assert
 
 | Name | Description |
 | ---- | ----------- |
-| T |  |
+| T | The numeric type. |
 
 ## Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| assertions | [ObjectAssertions&lt;T&gt;](MrKWatkins.Assertions.ObjectAssertions-1.md) |  |
+| assertions | [ObjectAssertions&lt;T&gt;](MrKWatkins.Assertions.ObjectAssertions-1.md) | The assertions object. |
 
 ## Returns
 
 [ObjectAssertionsChain&lt;T&gt;](MrKWatkins.Assertions.ObjectAssertionsChain-1.md)
+
+An [ObjectAssertionsChain&lt;T&gt;](MrKWatkins.Assertions.ObjectAssertionsChain-1.md) for chaining further assertions.

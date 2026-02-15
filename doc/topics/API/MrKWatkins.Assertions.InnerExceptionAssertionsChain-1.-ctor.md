@@ -1,5 +1,7 @@
 # InnerExceptionAssertionsChain&lt;TException&gt; Constructors
 
+Enables further assertions on an inner exception after a successful inner exception assertion.
+
 ```c#
 public InnerExceptionAssertionsChain(TException exception);
 ```
@@ -8,5 +10,5 @@ public InnerExceptionAssertionsChain(TException exception);
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| exception | TException |  |
+| exception | TException | The inner exception. |
 

@@ -2,6 +2,9 @@ using System.Linq.Expressions;
 
 namespace MrKWatkins.Assertions;
 
+/// <summary>
+/// Provides direct verification methods for asserting conditions.
+/// </summary>
 public static class Verify
 {
     private static readonly Func<string, Exception?, Exception> ExceptionConstructor = BuildExceptionConstructor();
@@ -9,6 +12,11 @@ public static class Verify
     [Pure]
     internal static Exception CreateException(string message, Exception? innerException = null) => ExceptionConstructor(message, innerException);
 
+    /// <summary>
+    /// Verifies that the specified condition is <see langword="false" />, throwing an assertion exception if it is <see langword="true" />.
+    /// </summary>
+    /// <param name="condition">The condition to verify. The assertion fails if this is <see langword="true" />.</param>
+    /// <param name="exceptionMessage">The message for the assertion exception if the condition is <see langword="true" />.</param>
     public static void That([DoesNotReturnIf(true)] bool condition, string exceptionMessage)
     {
         if (!condition)
@@ -17,6 +25,11 @@ public static class Verify
         }
     }
 
+    /// <summary>
+    /// Verifies that the specified condition is <see langword="false" />, throwing an assertion exception if it is <see langword="true" />.
+    /// </summary>
+    /// <param name="condition">The condition to verify. The assertion fails if this is <see langword="true" />.</param>
+    /// <param name="message">The interpolated message for the assertion exception if the condition is <see langword="true" />.</param>
     public static void That([DoesNotReturnIf(true)] bool condition, FormatInterpolatedStringHandler message)
     {
         if (!condition)

@@ -1,10 +1,22 @@
 namespace MrKWatkins.Assertions;
 
+/// <summary>
+/// Provides assertions for read-only span values with zero-allocation support.
+/// </summary>
+/// <typeparam name="T">The type of elements in the span.</typeparam>
+/// <param name="value">The span to assert on.</param>
 [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
 public readonly ref struct ReadOnlySpanAssertions<T>(ReadOnlySpan<T> value)
 {
+    /// <summary>
+    /// Gets the span value being asserted on.
+    /// </summary>
     public ReadOnlySpan<T> Value { get; } = value;
 
+    /// <summary>
+    /// Asserts that the span is empty.
+    /// </summary>
+    /// <returns>A <see cref="ReadOnlySpanAssertionsChain{TItem}" /> for chaining further assertions.</returns>
     public ReadOnlySpanAssertionsChain<T> BeEmpty()
     {
         Verify.That(Value.IsEmpty, $"Value should be empty but contained {Value.Length} elements.");
@@ -12,6 +24,10 @@ public readonly ref struct ReadOnlySpanAssertions<T>(ReadOnlySpan<T> value)
         return new ReadOnlySpanAssertionsChain<T>(this);
     }
 
+    /// <summary>
+    /// Asserts that the span is not empty.
+    /// </summary>
+    /// <returns>A <see cref="ReadOnlySpanAssertionsChain{TItem}" /> for chaining further assertions.</returns>
     public ReadOnlySpanAssertionsChain<T> NotBeEmpty()
     {
         Verify.That(!Value.IsEmpty, "Value should not be empty.");
@@ -19,6 +35,11 @@ public readonly ref struct ReadOnlySpanAssertions<T>(ReadOnlySpan<T> value)
         return new ReadOnlySpanAssertionsChain<T>(this);
     }
 
+    /// <summary>
+    /// Asserts that the span is sequence equal to the expected elements.
+    /// </summary>
+    /// <param name="expected">The expected elements.</param>
+    /// <returns>A <see cref="ReadOnlySpanAssertionsChain{TItem}" /> for chaining further assertions.</returns>
     public ReadOnlySpanAssertionsChain<T> SequenceEqual(params ReadOnlySpan<T> expected)
     {
         var equalityComparer = EqualityComparer<T>.Default;
@@ -42,6 +63,11 @@ public readonly ref struct ReadOnlySpanAssertions<T>(ReadOnlySpan<T> value)
         return new ReadOnlySpanAssertionsChain<T>(this);
     }
 
+    /// <summary>
+    /// Asserts that the span is not sequence equal to the expected elements.
+    /// </summary>
+    /// <param name="expected">The elements the span should not be sequence equal to.</param>
+    /// <returns>A <see cref="ReadOnlySpanAssertionsChain{TItem}" /> for chaining further assertions.</returns>
     public ReadOnlySpanAssertionsChain<T> NotSequenceEqual(params ReadOnlySpan<T> expected)
     {
         if (Value.SequenceEqual(expected))
@@ -52,6 +78,11 @@ public readonly ref struct ReadOnlySpanAssertions<T>(ReadOnlySpan<T> value)
         return new ReadOnlySpanAssertionsChain<T>(this);
     }
 
+    /// <summary>
+    /// Asserts that the span is sequence equal to the expected enumerable elements.
+    /// </summary>
+    /// <param name="expected">The expected elements.</param>
+    /// <returns>A <see cref="ReadOnlySpanAssertionsChain{TItem}" /> for chaining further assertions.</returns>
     public ReadOnlySpanAssertionsChain<T> SequenceEqual([InstantHandle] IEnumerable<T> expected)
     {
         var equalityComparer = EqualityComparer<T>.Default;
@@ -102,6 +133,11 @@ public readonly ref struct ReadOnlySpanAssertions<T>(ReadOnlySpan<T> value)
         return new ReadOnlySpanAssertionsChain<T>(this);
     }
 
+    /// <summary>
+    /// Asserts that the span is not sequence equal to the expected enumerable elements.
+    /// </summary>
+    /// <param name="expected">The elements the span should not be sequence equal to.</param>
+    /// <returns>A <see cref="ReadOnlySpanAssertionsChain{TItem}" /> for chaining further assertions.</returns>
     public ReadOnlySpanAssertionsChain<T> NotSequenceEqual([InstantHandle] IEnumerable<T> expected)
     {
         var equalityComparer = EqualityComparer<T>.Default;

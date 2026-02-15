@@ -1,6 +1,8 @@
 # ExceptionExtensions.NotHaveActualValue Method
 ## Definition
 
+Asserts that the [ArgumentOutOfRangeException](https://learn.microsoft.com/en-gb/dotnet/api/System.ArgumentOutOfRangeException) does not have the specified actual value.
+
 ```c#
 public static ObjectAssertionsChain<TException> NotHaveActualValue<TException>(this ObjectAssertions<TException> assertions, object expected)
    where TException : ArgumentOutOfRangeException;
@@ -10,15 +12,17 @@ public static ObjectAssertionsChain<TException> NotHaveActualValue<TException>(t
 
 | Name | Description |
 | ---- | ----------- |
-| TException |  |
+| TException | The type of the exception. |
 
 ## Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| assertions | [ObjectAssertions&lt;TException&gt;](MrKWatkins.Assertions.ObjectAssertions-1.md) |  |
-| expected | [Object](https://learn.microsoft.com/en-gb/dotnet/api/System.Object) |  |
+| assertions | [ObjectAssertions&lt;TException&gt;](MrKWatkins.Assertions.ObjectAssertions-1.md) | The assertions object. |
+| expected | [Object](https://learn.microsoft.com/en-gb/dotnet/api/System.Object) | The actual value that is not expected. |
 
 ## Returns
 
 [ObjectAssertionsChain&lt;TException&gt;](MrKWatkins.Assertions.ObjectAssertionsChain-1.md)
+
+An [ObjectAssertionsChain&lt;T&gt;](MrKWatkins.Assertions.ObjectAssertionsChain-1.md) for chaining further assertions.

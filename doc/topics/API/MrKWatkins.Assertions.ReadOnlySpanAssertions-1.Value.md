@@ -1,6 +1,8 @@
 # ReadOnlySpanAssertions&lt;T&gt;.Value Property
 ## Definition
 
+Gets the span value being asserted on.
+
 ```c#
 public ReadOnlySpan<T> Value { get; }
 ```

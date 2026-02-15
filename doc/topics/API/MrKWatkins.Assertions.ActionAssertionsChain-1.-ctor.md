@@ -1,5 +1,7 @@
 # ActionAssertionsChain&lt;TException&gt; Constructors
 
+Enables access to an exception thrown by an action after a successful throw assertion.
+
 ```c#
 public ActionAssertionsChain(TException exception);
 ```
@@ -8,5 +10,5 @@ public ActionAssertionsChain(TException exception);
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| exception | TException |  |
+| exception | TException | The exception that was thrown. |
 

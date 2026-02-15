@@ -68,6 +68,13 @@
           <toc-element toc-title="Value" topic="MrKWatkins.Assertions.EnumerableAssertionsChain-2.Value.md" />
         </toc-element>
       </toc-element>
+      <toc-element toc-title="EnumerableExtensions">
+        <toc-element toc-title="EnumerableExtensions" topic="MrKWatkins.Assertions.EnumerableExtensions.md" />
+        <toc-element toc-title="Methods">
+          <toc-element toc-title="NotSequenceEqual" topic="MrKWatkins.Assertions.EnumerableExtensions.NotSequenceEqual.md" />
+          <toc-element toc-title="SequenceEqual" topic="MrKWatkins.Assertions.EnumerableExtensions.SequenceEqual.md" />
+        </toc-element>
+      </toc-element>
       <toc-element toc-title="ExceptionAssertions&lt;T&gt;">
         <toc-element toc-title="ExceptionAssertions&lt;T&gt;" topic="MrKWatkins.Assertions.ExceptionAssertions-1.md" />
         <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.ExceptionAssertions-1.-ctor.md" />
@@ -202,6 +209,36 @@
         <toc-element toc-title="ShouldExtensions" topic="MrKWatkins.Assertions.ShouldExtensions.md" />
         <toc-element toc-title="Methods">
           <toc-element toc-title="Should" topic="MrKWatkins.Assertions.ShouldExtensions.Should.md" />
+        </toc-element>
+      </toc-element>
+      <toc-element toc-title="StringAssertions">
+        <toc-element toc-title="StringAssertions" topic="MrKWatkins.Assertions.StringAssertions.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.StringAssertions.-ctor.md" />
+        <toc-element toc-title="Methods">
+          <toc-element toc-title="BeEmpty" topic="MrKWatkins.Assertions.StringAssertions.BeEmpty.md" />
+          <toc-element toc-title="BeNullOrEmpty" topic="MrKWatkins.Assertions.StringAssertions.BeNullOrEmpty.md" />
+          <toc-element toc-title="BeNullOrWhiteSpace" topic="MrKWatkins.Assertions.StringAssertions.BeNullOrWhiteSpace.md" />
+          <toc-element toc-title="Contain" topic="MrKWatkins.Assertions.StringAssertions.Contain.md" />
+          <toc-element toc-title="EndWith" topic="MrKWatkins.Assertions.StringAssertions.EndWith.md" />
+          <toc-element toc-title="HaveLength" topic="MrKWatkins.Assertions.StringAssertions.HaveLength.md" />
+          <toc-element toc-title="Match" topic="MrKWatkins.Assertions.StringAssertions.Match.md" />
+          <toc-element toc-title="NotBeEmpty" topic="MrKWatkins.Assertions.StringAssertions.NotBeEmpty.md" />
+          <toc-element toc-title="NotBeNullOrEmpty" topic="MrKWatkins.Assertions.StringAssertions.NotBeNullOrEmpty.md" />
+          <toc-element toc-title="NotBeNullOrWhiteSpace" topic="MrKWatkins.Assertions.StringAssertions.NotBeNullOrWhiteSpace.md" />
+          <toc-element toc-title="NotContain" topic="MrKWatkins.Assertions.StringAssertions.NotContain.md" />
+          <toc-element toc-title="NotEndWith" topic="MrKWatkins.Assertions.StringAssertions.NotEndWith.md" />
+          <toc-element toc-title="NotHaveLength" topic="MrKWatkins.Assertions.StringAssertions.NotHaveLength.md" />
+          <toc-element toc-title="NotMatch" topic="MrKWatkins.Assertions.StringAssertions.NotMatch.md" />
+          <toc-element toc-title="NotStartWith" topic="MrKWatkins.Assertions.StringAssertions.NotStartWith.md" />
+          <toc-element toc-title="StartWith" topic="MrKWatkins.Assertions.StringAssertions.StartWith.md" />
+        </toc-element>
+      </toc-element>
+      <toc-element toc-title="StringAssertionsChain">
+        <toc-element toc-title="StringAssertionsChain" topic="MrKWatkins.Assertions.StringAssertionsChain.md" />
+        <toc-element toc-title="Constructors" topic="MrKWatkins.Assertions.StringAssertionsChain.-ctor.md" />
+        <toc-element toc-title="Properties">
+          <toc-element toc-title="And" topic="MrKWatkins.Assertions.StringAssertionsChain.And.md" />
+          <toc-element toc-title="Value" topic="MrKWatkins.Assertions.StringAssertionsChain.Value.md" />
         </toc-element>
       </toc-element>
       <toc-element toc-title="Verify">

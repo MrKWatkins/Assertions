@@ -1,5 +1,7 @@
 # ObjectAssertions&lt;T&gt; Constructors
 
+Provides assertions for any object value.
+
 ```c#
 public ObjectAssertions(T? value);
 ```
@@ -8,5 +10,5 @@ public ObjectAssertions(T? value);
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| value | T |  |
+| value | T | The value to assert on. |
 

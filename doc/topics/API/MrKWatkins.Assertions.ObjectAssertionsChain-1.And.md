@@ -1,6 +1,8 @@
 # ObjectAssertionsChain&lt;T&gt;.And Property
 ## Definition
 
+Gets the assertions object for chaining further assertions.
+
 ```c#
 public ObjectAssertions<T> And { get; }
 ```

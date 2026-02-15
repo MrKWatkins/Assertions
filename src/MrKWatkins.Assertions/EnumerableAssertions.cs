@@ -2,10 +2,22 @@ using System.Runtime.CompilerServices;
 
 namespace MrKWatkins.Assertions;
 
+/// <summary>
+/// Provides assertions for enumerable values.
+/// </summary>
+/// <typeparam name="TEnumerable">The type of the enumerable being asserted on.</typeparam>
+/// <typeparam name="T">The type of elements in the enumerable.</typeparam>
+/// <param name="value">The enumerable value to assert on.</param>
 [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract")]
 public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? value) : ObjectAssertions<TEnumerable>(value)
     where TEnumerable : IEnumerable<T>
 {
+    /// <summary>
+    /// Asserts that all items in the enumerable satisfy the specified predicate.
+    /// </summary>
+    /// <param name="predicate">The predicate that all items must satisfy.</param>
+    /// <param name="predicateExpression">The expression text of the predicate, captured automatically.</param>
+    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
     public EnumerableAssertionsChain<TEnumerable, T> OnlyContain([InstantHandle] Func<T, bool> predicate, [CallerArgumentExpression(nameof(predicate))] string? predicateExpression = null)
     {
         NotBeNull();
@@ -20,6 +32,12 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
         return new EnumerableAssertionsChain<TEnumerable, T>(this);
     }
 
+    /// <summary>
+    /// Asserts that the enumerable contains exactly one item that satisfies the specified predicate.
+    /// </summary>
+    /// <param name="predicate">The predicate to match.</param>
+    /// <param name="predicateExpression">The expression text of the predicate, captured automatically.</param>
+    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for the single matching item.</returns>
     public ObjectAssertionsChain<T> ContainSingle([InstantHandle] Func<T, bool> predicate, [CallerArgumentExpression(nameof(predicate))] string? predicateExpression = null)
     {
         NotBeNull();
@@ -30,6 +48,11 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
         return new ObjectAssertionsChain<T>(new ObjectAssertions<T>(matching[0]));
     }
 
+    /// <summary>
+    /// Asserts that the enumerable is sequence equal to the expected elements.
+    /// </summary>
+    /// <param name="expected">The expected elements.</param>
+    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public EnumerableAssertionsChain<TEnumerable, T> SequenceEqual([InstantHandle] params IEnumerable<T?> expected)
     {
@@ -88,6 +111,11 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
         return new EnumerableAssertionsChain<TEnumerable, T>(this);
     }
 
+    /// <summary>
+    /// Asserts that the enumerable is not sequence equal to the expected elements.
+    /// </summary>
+    /// <param name="expected">The elements the enumerable should not be sequence equal to.</param>
+    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public EnumerableAssertionsChain<TEnumerable, T> NotSequenceEqual(params IEnumerable<T> expected)
     {

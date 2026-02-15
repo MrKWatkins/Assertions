@@ -1,6 +1,8 @@
 # EnumerableAssertionsChain&lt;TEnumerable, T&gt;.And Property
 ## Definition
 
+Gets the assertions object for chaining further assertions.
+
 ```c#
 public EnumerableAssertions<TEnumerable, T> And { get; }
 ```

@@ -1,5 +1,7 @@
 # EnumerableAssertions&lt;TEnumerable, T&gt; Constructors
 
+Provides assertions for enumerable values.
+
 ```c#
 public EnumerableAssertions(TEnumerable? value);
 ```
@@ -8,5 +10,5 @@ public EnumerableAssertions(TEnumerable? value);
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| value | TEnumerable |  |
+| value | TEnumerable | The enumerable value to assert on. |
 

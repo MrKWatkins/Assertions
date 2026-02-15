@@ -1,5 +1,7 @@
 # ExceptionAssertionsChain&lt;T&gt; Constructors
 
+Enables chaining of assertions on an exception value after a successful assertion.
+
 ```c#
 public ExceptionAssertionsChain(ExceptionAssertions<T> exceptionAssertions);
 ```
@@ -8,5 +10,5 @@ public ExceptionAssertionsChain(ExceptionAssertions<T> exceptionAssertions);
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| exceptionAssertions | [ExceptionAssertions&lt;T&gt;](MrKWatkins.Assertions.ExceptionAssertions-1.md) |  |
+| exceptionAssertions | [ExceptionAssertions&lt;T&gt;](MrKWatkins.Assertions.ExceptionAssertions-1.md) | The assertions object to chain from. |
 

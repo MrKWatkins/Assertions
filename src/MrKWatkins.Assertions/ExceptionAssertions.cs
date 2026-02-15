@@ -1,8 +1,18 @@
 namespace MrKWatkins.Assertions;
 
+/// <summary>
+/// Provides assertions for exception values.
+/// </summary>
+/// <typeparam name="T">The type of the exception being asserted on.</typeparam>
+/// <param name="value">The exception to assert on.</param>
 public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value)
     where T : Exception
 {
+    /// <summary>
+    /// Asserts that the exception has the specified message.
+    /// </summary>
+    /// <param name="expected">The expected message.</param>
+    /// <returns>An <see cref="ExceptionAssertionsChain{T}" /> for chaining further assertions.</returns>
     public ExceptionAssertionsChain<T> HaveMessage(string expected)
     {
         NotBeNull();
@@ -11,6 +21,11 @@ public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value
         return new ExceptionAssertionsChain<T>(this);
     }
 
+    /// <summary>
+    /// Asserts that the exception does not have the specified message.
+    /// </summary>
+    /// <param name="expected">The message that is not expected.</param>
+    /// <returns>An <see cref="ExceptionAssertionsChain{T}" /> for chaining further assertions.</returns>
     public ExceptionAssertionsChain<T> NotHaveMessage(string expected)
     {
         NotBeNull();
@@ -19,6 +34,11 @@ public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value
         return new ExceptionAssertionsChain<T>(this);
     }
 
+    /// <summary>
+    /// Asserts that the exception message starts with the specified string.
+    /// </summary>
+    /// <param name="expected">The expected message prefix.</param>
+    /// <returns>An <see cref="ExceptionAssertionsChain{T}" /> for chaining further assertions.</returns>
     public ExceptionAssertionsChain<T> HaveMessageStartingWith(string expected)
     {
         NotBeNull();
@@ -27,6 +47,11 @@ public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value
         return new ExceptionAssertionsChain<T>(this);
     }
 
+    /// <summary>
+    /// Asserts that the exception message does not start with the specified string.
+    /// </summary>
+    /// <param name="expected">The message prefix that is not expected.</param>
+    /// <returns>An <see cref="ExceptionAssertionsChain{T}" /> for chaining further assertions.</returns>
     public ExceptionAssertionsChain<T> NotHaveMessageStartingWith(string expected)
     {
         NotBeNull();
@@ -35,6 +60,11 @@ public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value
         return new ExceptionAssertionsChain<T>(this);
     }
 
+    /// <summary>
+    /// Asserts that the exception has an inner exception of the specified type.
+    /// </summary>
+    /// <typeparam name="TException">The expected inner exception type.</typeparam>
+    /// <returns>An <see cref="InnerExceptionAssertionsChain{TException}" /> for asserting on the inner exception.</returns>
     public InnerExceptionAssertionsChain<TException> HaveInnerException<TException>()
         where TException : Exception
     {
@@ -45,6 +75,12 @@ public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value
         return new InnerExceptionAssertionsChain<TException>((TException)Value.InnerException!);
     }
 
+    /// <summary>
+    /// Asserts that the exception has the exact specified inner exception instance.
+    /// </summary>
+    /// <typeparam name="TException">The expected inner exception type.</typeparam>
+    /// <param name="expected">The expected inner exception instance.</param>
+    /// <returns>An <see cref="InnerExceptionAssertionsChain{TException}" /> for asserting on the inner exception.</returns>
     public InnerExceptionAssertionsChain<TException> HaveInnerException<TException>(TException expected)
         where TException : Exception
     {
@@ -54,6 +90,10 @@ public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value
         return new InnerExceptionAssertionsChain<TException>((TException)Value.InnerException!);
     }
 
+    /// <summary>
+    /// Asserts that the exception does not have an inner exception.
+    /// </summary>
+    /// <returns>An <see cref="ExceptionAssertionsChain{T}" /> for chaining further assertions.</returns>
     public ExceptionAssertionsChain<T> NotHaveInnerException()
     {
         NotBeNull();
