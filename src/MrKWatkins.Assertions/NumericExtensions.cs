@@ -31,7 +31,7 @@ public static class NumericExtensions
         catch (OverflowException)
         {
             Verify.That(false, $"Value should equal {expected} but the expected value cannot be represented as {typeof(T).Name} (overflow).");
-            return default; // Unreachable, but needed for compiler
+            return default!; // Unreachable - Verify.That(false) always throws
         }
 
         Verify.That(EqualityComparer<T>.Default.Equals(assertions.Value, expectedAsT), $"Value should equal {expected} but was {assertions.Value}.");
