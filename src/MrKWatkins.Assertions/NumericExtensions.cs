@@ -15,11 +15,25 @@ public static class NumericExtensions
     /// <param name="assertions">The assertions object.</param>
     /// <param name="expected">The expected value.</param>
     /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
+    /// <remarks>
+    /// If the expected value cannot be represented in type <typeparamref name="T"/> (e.g., comparing a <c>byte</c> with <c>300</c>),
+    /// an <see cref="OverflowException"/> will be thrown with a descriptive message.
+    /// </remarks>
     public static ObjectAssertionsChain<T> Equal<T, TOther>(this ObjectAssertions<T> assertions, TOther expected)
         where T : struct, INumberBase<T>
         where TOther : struct, INumberBase<TOther>
     {
-        var expectedAsT = T.CreateChecked(expected);
+        T expectedAsT;
+        try
+        {
+            expectedAsT = T.CreateChecked(expected);
+        }
+        catch (OverflowException)
+        {
+            Verify.That(false, $"Value should equal {expected} but the expected value cannot be represented as {typeof(T).Name} (overflow).");
+            throw; // Unreachable, but needed for compiler
+        }
+
         Verify.That(EqualityComparer<T>.Default.Equals(assertions.Value, expectedAsT), $"Value should equal {expected} but was {assertions.Value}.");
 
         return new ObjectAssertionsChain<T>(assertions);
@@ -33,11 +47,25 @@ public static class NumericExtensions
     /// <param name="assertions">The assertions object.</param>
     /// <param name="expected">The value that is not expected.</param>
     /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
+    /// <remarks>
+    /// If the expected value cannot be represented in type <typeparamref name="T"/> (e.g., comparing a <c>byte</c> with <c>300</c>),
+    /// an <see cref="OverflowException"/> will be thrown with a descriptive message.
+    /// </remarks>
     public static ObjectAssertionsChain<T> NotEqual<T, TOther>(this ObjectAssertions<T> assertions, TOther expected)
         where T : struct, INumberBase<T>
         where TOther : struct, INumberBase<TOther>
     {
-        var expectedAsT = T.CreateChecked(expected);
+        T expectedAsT;
+        try
+        {
+            expectedAsT = T.CreateChecked(expected);
+        }
+        catch (OverflowException)
+        {
+            // If the expected value can't be represented in T, then the value can't equal it
+            return new ObjectAssertionsChain<T>(assertions);
+        }
+
         Verify.That(!EqualityComparer<T>.Default.Equals(assertions.Value, expectedAsT), $"Value should not equal {expected}.");
 
         return new ObjectAssertionsChain<T>(assertions);

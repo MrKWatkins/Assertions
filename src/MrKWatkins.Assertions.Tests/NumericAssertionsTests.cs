@@ -102,6 +102,26 @@ public sealed class NumericAssertionsTests
     }
 
     [Test]
+    public async Task Equal_Overflow()
+    {
+        const byte byteValue = 42;
+
+        // Test that overflow is handled with a descriptive error message
+        await Assert.That(() => byteValue.Should().Equal(300))
+            .Throws<AssertionException>()
+            .WithMessage("Value should equal 300 but the expected value cannot be represented as \"Byte\" (overflow).");
+    }
+
+    [Test]
+    public async Task NotEqual_Overflow()
+    {
+        const byte byteValue = 42;
+
+        // If the expected value can't be represented in the type, the values can't be equal
+        await Assert.That(() => byteValue.Should().NotEqual(300)).ThrowsNothing();
+    }
+
+    [Test]
     public async Task BeZero()
     {
         const int positive = 1;
