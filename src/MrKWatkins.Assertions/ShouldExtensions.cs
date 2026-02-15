@@ -107,116 +107,89 @@ public static class ShouldExtensions
     /// Begins a fluent assertion on the specified byte value.
     /// </summary>
     /// <param name="value">The byte value to assert on.</param>
-    /// <returns>A <see cref="NumericAssertions{T}" /> for the value.</returns>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
     [Pure]
     [OverloadResolutionPriority(10)]
-    public static NumericAssertions<byte> Should(this byte value) => new(value);
+    public static IntegerAssertions<byte> Should(this byte value) => new(value);
 
     /// <summary>
     /// Begins a fluent assertion on the specified sbyte value.
     /// </summary>
     /// <param name="value">The sbyte value to assert on.</param>
-    /// <returns>A <see cref="NumericAssertions{T}" /> for the value.</returns>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
     [Pure]
     [OverloadResolutionPriority(10)]
-    public static NumericAssertions<sbyte> Should(this sbyte value) => new(value);
+    public static IntegerAssertions<sbyte> Should(this sbyte value) => new(value);
 
     /// <summary>
     /// Begins a fluent assertion on the specified short value.
     /// </summary>
     /// <param name="value">The short value to assert on.</param>
-    /// <returns>A <see cref="NumericAssertions{T}" /> for the value.</returns>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
     [Pure]
     [OverloadResolutionPriority(10)]
-    public static NumericAssertions<short> Should(this short value) => new(value);
+    public static IntegerAssertions<short> Should(this short value) => new(value);
 
     /// <summary>
     /// Begins a fluent assertion on the specified ushort value.
     /// </summary>
     /// <param name="value">The ushort value to assert on.</param>
-    /// <returns>A <see cref="NumericAssertions{T}" /> for the value.</returns>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
     [Pure]
     [OverloadResolutionPriority(10)]
-    public static NumericAssertions<ushort> Should(this ushort value) => new(value);
+    public static IntegerAssertions<ushort> Should(this ushort value) => new(value);
 
     /// <summary>
     /// Begins a fluent assertion on the specified int value.
     /// </summary>
     /// <param name="value">The int value to assert on.</param>
-    /// <returns>A <see cref="NumericAssertions{T}" /> for the value.</returns>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
     [Pure]
     [OverloadResolutionPriority(10)]
-    public static NumericAssertions<int> Should(this int value) => new(value);
+    public static IntegerAssertions<int> Should(this int value) => new(value);
 
     /// <summary>
     /// Begins a fluent assertion on the specified uint value.
     /// </summary>
     /// <param name="value">The uint value to assert on.</param>
-    /// <returns>A <see cref="NumericAssertions{T}" /> for the value.</returns>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
     [Pure]
     [OverloadResolutionPriority(10)]
-    public static NumericAssertions<uint> Should(this uint value) => new(value);
+    public static IntegerAssertions<uint> Should(this uint value) => new(value);
 
     /// <summary>
     /// Begins a fluent assertion on the specified long value.
     /// </summary>
     /// <param name="value">The long value to assert on.</param>
-    /// <returns>A <see cref="NumericAssertions{T}" /> for the value.</returns>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
     [Pure]
     [OverloadResolutionPriority(10)]
-    public static NumericAssertions<long> Should(this long value) => new(value);
+    public static IntegerAssertions<long> Should(this long value) => new(value);
 
     /// <summary>
     /// Begins a fluent assertion on the specified ulong value.
     /// </summary>
     /// <param name="value">The ulong value to assert on.</param>
-    /// <returns>A <see cref="NumericAssertions{T}" /> for the value.</returns>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
     [Pure]
     [OverloadResolutionPriority(10)]
-    public static NumericAssertions<ulong> Should(this ulong value) => new(value);
-
-    /// <summary>
-    /// Begins a fluent assertion on the specified float value.
-    /// </summary>
-    /// <param name="value">The float value to assert on.</param>
-    /// <returns>A <see cref="NumericAssertions{T}" /> for the value.</returns>
-    [Pure]
-    [OverloadResolutionPriority(10)]
-    public static NumericAssertions<float> Should(this float value) => new(value);
-
-    /// <summary>
-    /// Begins a fluent assertion on the specified double value.
-    /// </summary>
-    /// <param name="value">The double value to assert on.</param>
-    /// <returns>A <see cref="NumericAssertions{T}" /> for the value.</returns>
-    [Pure]
-    [OverloadResolutionPriority(10)]
-    public static NumericAssertions<double> Should(this double value) => new(value);
-
-    /// <summary>
-    /// Begins a fluent assertion on the specified decimal value.
-    /// </summary>
-    /// <param name="value">The decimal value to assert on.</param>
-    /// <returns>A <see cref="NumericAssertions{T}" /> for the value.</returns>
-    [Pure]
-    [OverloadResolutionPriority(10)]
-    public static NumericAssertions<decimal> Should(this decimal value) => new(value);
+    public static IntegerAssertions<ulong> Should(this ulong value) => new(value);
 
     /// <summary>
     /// Begins a fluent assertion on the specified nint value.
     /// </summary>
     /// <param name="value">The nint value to assert on.</param>
-    /// <returns>A <see cref="NumericAssertions{T}" /> for the value.</returns>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
     [Pure]
     [OverloadResolutionPriority(10)]
-    public static NumericAssertions<nint> Should(this nint value) => new(value);
+    public static IntegerAssertions<nint> Should(this nint value) => new(value);
 
     /// <summary>
     /// Begins a fluent assertion on the specified nuint value.
     /// </summary>
     /// <param name="value">The nuint value to assert on.</param>
-    /// <returns>A <see cref="NumericAssertions{T}" /> for the value.</returns>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
     [Pure]
     [OverloadResolutionPriority(10)]
-    public static NumericAssertions<nuint> Should(this nuint value) => new(value);
+    public static IntegerAssertions<nuint> Should(this nuint value) => new(value);
 }

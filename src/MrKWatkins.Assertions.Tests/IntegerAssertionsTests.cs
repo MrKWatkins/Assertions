@@ -1,6 +1,6 @@
 namespace MrKWatkins.Assertions.Tests;
 
-public sealed class NumericAssertionsTests
+public sealed class IntegerAssertionsTests
 {
     [Test]
     public async Task Equal_SameType()
@@ -33,17 +33,6 @@ public sealed class NumericAssertionsTests
         await Assert.That(() => byteValue.Should().Equal(43)).Throws<AssertionException>().WithMessage("Value should equal 43 but was 42.");
         await Assert.That(() => shortValue.Should().Equal(0)).Throws<AssertionException>().WithMessage("Value should equal 0 but was 42.");
         await Assert.That(() => longValue.Should().Equal(100)).Throws<AssertionException>().WithMessage("Value should equal 100 but was 42.");
-    }
-
-    [Test]
-    public async Task Equal_FloatingPoint()
-    {
-        const float floatValue = 3.14f;
-        const double doubleValue = 3.14;
-
-        await Assert.That(() => floatValue.Should().Equal(3.14f)).ThrowsNothing();
-        await Assert.That(() => doubleValue.Should().Equal(3.14)).ThrowsNothing();
-        await Assert.That(() => floatValue.Should().Equal(3.15f)).Throws<AssertionException>();
     }
 
     [Test]
