@@ -17,7 +17,7 @@ public static class NumericExtensions
     /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
     /// <remarks>
     /// If the expected value cannot be represented in type <typeparamref name="T"/> (e.g., comparing a <c>byte</c> with <c>300</c>),
-    /// an <see cref="OverflowException"/> will be thrown with a descriptive message.
+    /// an <see cref="AssertionException"/> will be thrown with a descriptive message indicating the overflow.
     /// </remarks>
     public static ObjectAssertionsChain<T> Equal<T, TOther>(this ObjectAssertions<T> assertions, TOther expected)
         where T : struct, INumberBase<T>
@@ -31,7 +31,7 @@ public static class NumericExtensions
         catch (OverflowException)
         {
             Verify.That(false, $"Value should equal {expected} but the expected value cannot be represented as {typeof(T).Name} (overflow).");
-            throw; // Unreachable, but needed for compiler
+            return default; // Unreachable, but needed for compiler
         }
 
         Verify.That(EqualityComparer<T>.Default.Equals(assertions.Value, expectedAsT), $"Value should equal {expected} but was {assertions.Value}.");
@@ -49,7 +49,7 @@ public static class NumericExtensions
     /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
     /// <remarks>
     /// If the expected value cannot be represented in type <typeparamref name="T"/> (e.g., comparing a <c>byte</c> with <c>300</c>),
-    /// an <see cref="OverflowException"/> will be thrown with a descriptive message.
+    /// the assertion succeeds because the value cannot equal something that cannot be represented in its type.
     /// </remarks>
     public static ObjectAssertionsChain<T> NotEqual<T, TOther>(this ObjectAssertions<T> assertions, TOther expected)
         where T : struct, INumberBase<T>
