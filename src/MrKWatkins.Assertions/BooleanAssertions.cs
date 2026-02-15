@@ -23,7 +23,7 @@ public sealed class BooleanAssertions(bool value) : ObjectAssertions<bool>(value
     /// <returns>A <see cref="BooleanAssertionsChain" /> for chaining further assertions.</returns>
     public BooleanAssertionsChain NotBeTrue()
     {
-        Verify.That(!Value, "Value should not be true but was false.");
+        Verify.That(!Value, "Value should not be true.");
 
         return new BooleanAssertionsChain(this);
     }

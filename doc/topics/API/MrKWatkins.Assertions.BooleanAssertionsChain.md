@@ -4,7 +4,7 @@
 Enables chaining of assertions on a boolean value after a successful assertion.
 
 ```c#
-public sealed struct BooleanAssertionsChain
+public readonly struct BooleanAssertionsChain
 ```
 
 ## Constructors
