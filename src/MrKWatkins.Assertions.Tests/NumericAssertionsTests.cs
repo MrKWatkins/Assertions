@@ -246,7 +246,7 @@ public sealed class NumericAssertionsTests
     {
         const int value = 42;
 
-        // NumericAssertions should inherit from ObjectAssertions
+        // Numeric extension methods work alongside ObjectAssertions methods
         await Assert.That(() => value.Should().NotBeNull()).ThrowsNothing();
         await Assert.That(() => value.Should().Equal(42)).ThrowsNothing();
         await Assert.That(() => value.Should().NotEqual(43)).ThrowsNothing();
