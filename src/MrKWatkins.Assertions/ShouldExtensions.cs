@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace MrKWatkins.Assertions;
@@ -101,4 +102,94 @@ public static class ShouldExtensions
     /// <returns>An <see cref="ActionAssertions" /> for the action.</returns>
     [Pure]
     public static ActionAssertions Should([InstantHandle] this Action value) => new(value);
+
+    /// <summary>
+    /// Begins a fluent assertion on the specified byte value.
+    /// </summary>
+    /// <param name="value">The byte value to assert on.</param>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static IntegerAssertions<byte> Should(this byte value) => new(value);
+
+    /// <summary>
+    /// Begins a fluent assertion on the specified sbyte value.
+    /// </summary>
+    /// <param name="value">The sbyte value to assert on.</param>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static IntegerAssertions<sbyte> Should(this sbyte value) => new(value);
+
+    /// <summary>
+    /// Begins a fluent assertion on the specified short value.
+    /// </summary>
+    /// <param name="value">The short value to assert on.</param>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static IntegerAssertions<short> Should(this short value) => new(value);
+
+    /// <summary>
+    /// Begins a fluent assertion on the specified ushort value.
+    /// </summary>
+    /// <param name="value">The ushort value to assert on.</param>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static IntegerAssertions<ushort> Should(this ushort value) => new(value);
+
+    /// <summary>
+    /// Begins a fluent assertion on the specified int value.
+    /// </summary>
+    /// <param name="value">The int value to assert on.</param>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static IntegerAssertions<int> Should(this int value) => new(value);
+
+    /// <summary>
+    /// Begins a fluent assertion on the specified uint value.
+    /// </summary>
+    /// <param name="value">The uint value to assert on.</param>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static IntegerAssertions<uint> Should(this uint value) => new(value);
+
+    /// <summary>
+    /// Begins a fluent assertion on the specified long value.
+    /// </summary>
+    /// <param name="value">The long value to assert on.</param>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static IntegerAssertions<long> Should(this long value) => new(value);
+
+    /// <summary>
+    /// Begins a fluent assertion on the specified ulong value.
+    /// </summary>
+    /// <param name="value">The ulong value to assert on.</param>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static IntegerAssertions<ulong> Should(this ulong value) => new(value);
+
+    /// <summary>
+    /// Begins a fluent assertion on the specified nint value.
+    /// </summary>
+    /// <param name="value">The nint value to assert on.</param>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static IntegerAssertions<nint> Should(this nint value) => new(value);
+
+    /// <summary>
+    /// Begins a fluent assertion on the specified nuint value.
+    /// </summary>
+    /// <param name="value">The nuint value to assert on.</param>
+    /// <returns>An <see cref="IntegerAssertions{T}" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static IntegerAssertions<nuint> Should(this nuint value) => new(value);
 }
