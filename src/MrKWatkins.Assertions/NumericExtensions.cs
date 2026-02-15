@@ -8,13 +8,49 @@ namespace MrKWatkins.Assertions;
 public static class NumericExtensions
 {
     /// <summary>
+    /// Asserts that the numeric value is equal to the expected value. Supports comparing numeric values of different types.
+    /// </summary>
+    /// <typeparam name="T">The numeric type.</typeparam>
+    /// <typeparam name="TOther">The type of the expected value.</typeparam>
+    /// <param name="assertions">The assertions object.</param>
+    /// <param name="expected">The expected value.</param>
+    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public static ObjectAssertionsChain<T> Equal<T, TOther>(this ObjectAssertions<T> assertions, TOther expected)
+        where T : struct, INumberBase<T>
+        where TOther : struct, INumberBase<TOther>
+    {
+        var expectedAsT = T.CreateChecked(expected);
+        Verify.That(EqualityComparer<T>.Default.Equals(assertions.Value, expectedAsT), $"Value should equal {expected} but was {assertions.Value}.");
+
+        return new ObjectAssertionsChain<T>(assertions);
+    }
+
+    /// <summary>
+    /// Asserts that the numeric value is not equal to the expected value. Supports comparing numeric values of different types.
+    /// </summary>
+    /// <typeparam name="T">The numeric type.</typeparam>
+    /// <typeparam name="TOther">The type of the expected value.</typeparam>
+    /// <param name="assertions">The assertions object.</param>
+    /// <param name="expected">The value that is not expected.</param>
+    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public static ObjectAssertionsChain<T> NotEqual<T, TOther>(this ObjectAssertions<T> assertions, TOther expected)
+        where T : struct, INumberBase<T>
+        where TOther : struct, INumberBase<TOther>
+    {
+        var expectedAsT = T.CreateChecked(expected);
+        Verify.That(!EqualityComparer<T>.Default.Equals(assertions.Value, expectedAsT), $"Value should not equal {expected}.");
+
+        return new ObjectAssertionsChain<T>(assertions);
+    }
+
+    /// <summary>
     /// Asserts that the numeric value is zero.
     /// </summary>
     /// <typeparam name="T">The numeric type.</typeparam>
     /// <param name="assertions">The assertions object.</param>
     /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
     public static ObjectAssertionsChain<T> BeZero<T>(this ObjectAssertions<T> assertions)
-        where T : INumberBase<T>
+        where T : struct, INumberBase<T>
     {
         Verify.That(T.IsZero(assertions.Value), $"Value should be {T.Zero} but was {assertions.Value}.");
 
@@ -28,7 +64,7 @@ public static class NumericExtensions
     /// <param name="assertions">The assertions object.</param>
     /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
     public static ObjectAssertionsChain<T> NotBeZero<T>(this ObjectAssertions<T> assertions)
-        where T : INumberBase<T>
+        where T : struct, INumberBase<T>
     {
         Verify.That(!T.IsZero(assertions.Value), $"Value should not be {T.Zero}.");
 
@@ -42,7 +78,7 @@ public static class NumericExtensions
     /// <param name="assertions">The assertions object.</param>
     /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
     public static ObjectAssertionsChain<T> BeNegative<T>(this ObjectAssertions<T> assertions)
-        where T : INumberBase<T>
+        where T : struct, INumberBase<T>
     {
         Verify.That(T.IsNegative(assertions.Value), $"Value should be negative but was {assertions.Value}.");
 
@@ -56,7 +92,7 @@ public static class NumericExtensions
     /// <param name="assertions">The assertions object.</param>
     /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
     public static ObjectAssertionsChain<T> NotBeNegative<T>(this ObjectAssertions<T> assertions)
-        where T : INumberBase<T>
+        where T : struct, INumberBase<T>
     {
         Verify.That(!T.IsNegative(assertions.Value), $"Value should not be negative but was {assertions.Value}.");
 
@@ -70,7 +106,7 @@ public static class NumericExtensions
     /// <param name="assertions">The assertions object.</param>
     /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
     public static ObjectAssertionsChain<T> BePositive<T>(this ObjectAssertions<T> assertions)
-        where T : INumberBase<T>
+        where T : struct, INumberBase<T>
     {
         Verify.That(T.IsPositive(assertions.Value), $"Value should be positive but was {assertions.Value}.");
 
@@ -84,7 +120,7 @@ public static class NumericExtensions
     /// <param name="assertions">The assertions object.</param>
     /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
     public static ObjectAssertionsChain<T> NotBePositive<T>(this ObjectAssertions<T> assertions)
-        where T : INumberBase<T>
+        where T : struct, INumberBase<T>
     {
         Verify.That(!T.IsPositive(assertions.Value), $"Value should not be positive but was {assertions.Value}.");
 
