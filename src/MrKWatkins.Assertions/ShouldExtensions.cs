@@ -100,5 +100,5 @@ public static class ShouldExtensions
     /// <param name="value">The action to assert on.</param>
     /// <returns>An <see cref="ActionAssertions" /> for the action.</returns>
     [Pure]
-    public static ActionAssertions Should(this Action value) => new(value);
+    public static ActionAssertions Should([InstantHandle] this Action value) => new(value);
 }

@@ -11,7 +11,7 @@ public static class AssertThat
     /// <param name="action">The action to test.</param>
     /// <returns>The action, for use with <see cref="ShouldExtensions.Should(Action)" />.</returns>
     [Pure]
-    public static Action Invoking(Action action) => action;
+    public static Action Invoking([InstantHandle] Action action) => action;
 
     /// <summary>
     /// Wraps a function as an action for assertion testing, discarding the return value.
@@ -20,5 +20,5 @@ public static class AssertThat
     /// <param name="action">The function to test.</param>
     /// <returns>An action that invokes the function, for use with <see cref="ShouldExtensions.Should(Action)" />.</returns>
     [Pure]
-    public static Action Invoking<TResult>(Func<TResult> action) => () => action();
+    public static Action Invoking<TResult>([InstantHandle] Func<TResult> action) => () => action();
 }
