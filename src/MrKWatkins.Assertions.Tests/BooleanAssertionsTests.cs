@@ -20,7 +20,7 @@ public sealed class BooleanAssertionsTests
     [Test]
     public async Task NotBeTrue()
     {
-        await Assert.That(() => true.Should().NotBeTrue()).Throws<AssertionException>().WithMessage("Value should not be true but was false.");
+        await Assert.That(() => true.Should().NotBeTrue()).Throws<AssertionException>().WithMessage("Value should not be true.");
         await Assert.That(() => false.Should().NotBeTrue()).ThrowsNothing();
     }
 
