@@ -25,13 +25,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrKWatkins.Assertions", "Mr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrKWatkins.Assertions.Tests", "MrKWatkins.Assertions.Tests\MrKWatkins.Assertions.Tests.csproj", "{6D8463B0-5631-43AE-A9FB-6BB2BD34D2C3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "actions", "actions", "{12E452E0-7DBE-46E6-B8FE-2874BDA97605}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{24A69FA6-D008-4B14-A7DC-5D5BB6EDDCA7}"
-	ProjectSection(SolutionItems) = preProject
-		..\.github\actions\build\action.yml = ..\.github\actions\build\action.yml
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,7 +47,5 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{2CD5FA32-1F2F-440F-8959-92CCB344D822} = {EC54CE10-77DB-4F1D-9EA4-EFAA3497A36D}
 		{00684DA7-BE37-4859-A73B-7DD6D23B9DD8} = {2CD5FA32-1F2F-440F-8959-92CCB344D822}
-		{12E452E0-7DBE-46E6-B8FE-2874BDA97605} = {2CD5FA32-1F2F-440F-8959-92CCB344D822}
-		{24A69FA6-D008-4B14-A7DC-5D5BB6EDDCA7} = {12E452E0-7DBE-46E6-B8FE-2874BDA97605}
 	EndGlobalSection
 EndGlobal

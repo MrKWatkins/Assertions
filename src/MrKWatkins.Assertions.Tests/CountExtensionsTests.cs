@@ -1,5 +1,4 @@
 using System.Collections;
-using TUnit.Assertions.AssertConditions.Throws;
 
 namespace MrKWatkins.Assertions.Tests;
 

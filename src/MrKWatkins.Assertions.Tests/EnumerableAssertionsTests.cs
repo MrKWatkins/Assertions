@@ -1,5 +1,3 @@
-using TUnit.Assertions.AssertConditions.Throws;
-
 namespace MrKWatkins.Assertions.Tests;
 
 public sealed class EnumerableAssertionsTests

@@ -9,6 +9,10 @@ public static class ShouldExtensions
 
     [Pure]
     [OverloadResolutionPriority(1)]
+    public static StringAssertions Should(this string? value) => new(value);
+
+    [Pure]
+    [OverloadResolutionPriority(1)]
     public static ExceptionAssertions<Exception> Should(this Exception? value) => new(value);
 
     [Pure]

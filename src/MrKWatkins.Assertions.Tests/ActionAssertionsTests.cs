@@ -1,5 +1,3 @@
-using TUnit.Assertions.AssertConditions.Throws;
-
 namespace MrKWatkins.Assertions.Tests;
 
 [SuppressMessage("ReSharper", "NotResolvedInText")]
@@ -234,8 +232,7 @@ public sealed class ActionAssertionsTests
         await Assert.That(() => doesNotThrow.Should().NotThrow()).ThrowsNothing();
         var actualException = await Assert.That(() => throws.Should().NotThrow())
             .Throws<AssertionException>()
-            .WithMessage("Function should not throw but threw an InvalidOperationException with message \"Test\".")
-            .WithInnerException();
+            .WithMessage("Function should not throw but threw an InvalidOperationException with message \"Test\".");
         await Assert.That(actualException!.InnerException).IsSameReferenceAs(exception);
     }
 }
