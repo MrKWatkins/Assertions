@@ -168,4 +168,33 @@ public sealed class EnumerableAssertionsTests
         await Assert.That(chain.Value).IsEqualTo(value);
         await Assert.That(chain.And.Value).IsEqualTo(value);
     }
+
+    [Test]
+    public async Task Contain_Null()
+    {
+        IEnumerable<int> nullEnumerable = null!;
+
+        await Assert.That(() => nullEnumerable.Should().Contain(1)).Throws<AssertionException>()
+            .WithMessage("Value should not be null.");
+    }
+
+    [Test]
+    public async Task Contain()
+    {
+        var value = new List<int> { 1, 2, 3 };
+
+        await Assert.That(() => value.Should().Contain(2)).ThrowsNothing();
+        await Assert.That(() => value.Should().Contain(5)).Throws<AssertionException>()
+            .WithMessage("Value should contain 5 but did not.");
+    }
+
+    [Test]
+    public async Task Contain_Chain()
+    {
+        var value = new List<int> { 1, 2, 3 };
+
+        var chain = value.Should().Contain(2);
+        await Assert.That(chain.Value).IsEqualTo(value);
+        await Assert.That(chain.And.Value).IsEqualTo(value);
+    }
 }

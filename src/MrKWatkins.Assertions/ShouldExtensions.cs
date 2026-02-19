@@ -201,4 +201,22 @@ public static class ShouldExtensions
     [Pure]
     [OverloadResolutionPriority(10)]
     public static IntegerAssertions<nuint> Should(this nuint value) => new(value);
+
+    /// <summary>
+    /// Begins a fluent assertion on the specified float value.
+    /// </summary>
+    /// <param name="value">The float value to assert on.</param>
+    /// <returns>A <see cref="FloatingPointAssertions{T}" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static FloatingPointAssertions<float> Should(this float value) => new(value);
+
+    /// <summary>
+    /// Begins a fluent assertion on the specified double value.
+    /// </summary>
+    /// <param name="value">The double value to assert on.</param>
+    /// <returns>A <see cref="FloatingPointAssertions{T}" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static FloatingPointAssertions<double> Should(this double value) => new(value);
 }
