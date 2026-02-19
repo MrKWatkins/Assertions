@@ -270,4 +270,84 @@ public sealed class IntegerAssertionsTests
         await Assert.That(() => value.Should().BePositive().And.NotEqual(0)).ThrowsNothing();
         await Assert.That(() => value.Should().NotBeZero().And.Equal(42)).ThrowsNothing();
     }
+
+    [Test]
+    public async Task BeLessThan()
+    {
+        const int value = 5;
+
+        await Assert.That(() => value.Should().BeLessThan(10)).ThrowsNothing();
+        await Assert.That(() => value.Should().BeLessThan(5)).Throws<AssertionException>().WithMessage("Value should be less than 5 but was 5.");
+        await Assert.That(() => value.Should().BeLessThan(1)).Throws<AssertionException>().WithMessage("Value should be less than 1 but was 5.");
+    }
+
+    [Test]
+    public async Task BeLessThan_Chain()
+    {
+        const int value = 5;
+
+        var chain = value.Should().BeLessThan(10);
+        await Assert.That(chain.Value).IsEqualTo(value);
+        await Assert.That(chain.And.Value).IsEqualTo(value);
+    }
+
+    [Test]
+    public async Task BeLessThanOrEqualTo()
+    {
+        const int value = 5;
+
+        await Assert.That(() => value.Should().BeLessThanOrEqualTo(10)).ThrowsNothing();
+        await Assert.That(() => value.Should().BeLessThanOrEqualTo(5)).ThrowsNothing();
+        await Assert.That(() => value.Should().BeLessThanOrEqualTo(1)).Throws<AssertionException>().WithMessage("Value should be less than or equal to 1 but was 5.");
+    }
+
+    [Test]
+    public async Task BeLessThanOrEqualTo_Chain()
+    {
+        const int value = 5;
+
+        var chain = value.Should().BeLessThanOrEqualTo(5);
+        await Assert.That(chain.Value).IsEqualTo(value);
+        await Assert.That(chain.And.Value).IsEqualTo(value);
+    }
+
+    [Test]
+    public async Task BeGreaterThan()
+    {
+        const int value = 5;
+
+        await Assert.That(() => value.Should().BeGreaterThan(1)).ThrowsNothing();
+        await Assert.That(() => value.Should().BeGreaterThan(5)).Throws<AssertionException>().WithMessage("Value should be greater than 5 but was 5.");
+        await Assert.That(() => value.Should().BeGreaterThan(10)).Throws<AssertionException>().WithMessage("Value should be greater than 10 but was 5.");
+    }
+
+    [Test]
+    public async Task BeGreaterThan_Chain()
+    {
+        const int value = 5;
+
+        var chain = value.Should().BeGreaterThan(1);
+        await Assert.That(chain.Value).IsEqualTo(value);
+        await Assert.That(chain.And.Value).IsEqualTo(value);
+    }
+
+    [Test]
+    public async Task BeGreaterThanOrEqualTo()
+    {
+        const int value = 5;
+
+        await Assert.That(() => value.Should().BeGreaterThanOrEqualTo(1)).ThrowsNothing();
+        await Assert.That(() => value.Should().BeGreaterThanOrEqualTo(5)).ThrowsNothing();
+        await Assert.That(() => value.Should().BeGreaterThanOrEqualTo(10)).Throws<AssertionException>().WithMessage("Value should be greater than or equal to 10 but was 5.");
+    }
+
+    [Test]
+    public async Task BeGreaterThanOrEqualTo_Chain()
+    {
+        const int value = 5;
+
+        var chain = value.Should().BeGreaterThanOrEqualTo(5);
+        await Assert.That(chain.Value).IsEqualTo(value);
+        await Assert.That(chain.And.Value).IsEqualTo(value);
+    }
 }

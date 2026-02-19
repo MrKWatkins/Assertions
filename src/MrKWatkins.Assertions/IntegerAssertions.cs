@@ -133,4 +133,52 @@ public sealed class IntegerAssertions<T>(T value) : ObjectAssertions<T>(value)
 
         return new IntegerAssertionsChain<T>(this);
     }
+
+    /// <summary>
+    /// Asserts that the integer value is less than the expected value.
+    /// </summary>
+    /// <param name="expected">The value the integer should be less than.</param>
+    /// <returns>An <see cref="IntegerAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public IntegerAssertionsChain<T> BeLessThan(T expected)
+    {
+        Verify.That(Value < expected, $"Value should be less than {expected} but was {Value}.");
+
+        return new IntegerAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the integer value is less than or equal to the expected value.
+    /// </summary>
+    /// <param name="expected">The value the integer should be less than or equal to.</param>
+    /// <returns>An <see cref="IntegerAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public IntegerAssertionsChain<T> BeLessThanOrEqualTo(T expected)
+    {
+        Verify.That(Value <= expected, $"Value should be less than or equal to {expected} but was {Value}.");
+
+        return new IntegerAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the integer value is greater than the expected value.
+    /// </summary>
+    /// <param name="expected">The value the integer should be greater than.</param>
+    /// <returns>An <see cref="IntegerAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public IntegerAssertionsChain<T> BeGreaterThan(T expected)
+    {
+        Verify.That(Value > expected, $"Value should be greater than {expected} but was {Value}.");
+
+        return new IntegerAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the integer value is greater than or equal to the expected value.
+    /// </summary>
+    /// <param name="expected">The value the integer should be greater than or equal to.</param>
+    /// <returns>An <see cref="IntegerAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public IntegerAssertionsChain<T> BeGreaterThanOrEqualTo(T expected)
+    {
+        Verify.That(Value >= expected, $"Value should be greater than or equal to {expected} but was {Value}.");
+
+        return new IntegerAssertionsChain<T>(this);
+    }
 }

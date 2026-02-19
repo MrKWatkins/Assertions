@@ -128,4 +128,18 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
 
         return new EnumerableAssertionsChain<TEnumerable, T>(this);
     }
+
+    /// <summary>
+    /// Asserts that the enumerable contains the specified item.
+    /// </summary>
+    /// <param name="expected">The item that should be present in the enumerable.</param>
+    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
+    public EnumerableAssertionsChain<TEnumerable, T> Contain(T expected)
+    {
+        NotBeNull();
+
+        Verify.That(Value.Contains(expected), $"Value should contain {expected} but did not.");
+
+        return new EnumerableAssertionsChain<TEnumerable, T>(this);
+    }
 }
