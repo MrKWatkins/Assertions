@@ -27,10 +27,11 @@ public sealed class FloatingPointAssertions<T>(T value) : ObjectAssertions<T>(va
     /// Asserts that the floating-point value is less than the expected value.
     /// </summary>
     /// <param name="expected">The value the floating-point number should be less than.</param>
+    /// <param name="precision">The precision to use for the comparison.</param>
     /// <returns>A <see cref="FloatingPointAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public FloatingPointAssertionsChain<T> BeLessThan(T expected)
+    public FloatingPointAssertionsChain<T> BeLessThan(T expected, T precision)
     {
-        Verify.That(Value < expected, $"Value should be less than {expected} but was {Value}.");
+        Verify.That(Value < expected - precision, $"Value should be less than {expected} (±{precision}) but was {Value}.");
 
         return new FloatingPointAssertionsChain<T>(this);
     }
@@ -39,10 +40,11 @@ public sealed class FloatingPointAssertions<T>(T value) : ObjectAssertions<T>(va
     /// Asserts that the floating-point value is less than or equal to the expected value.
     /// </summary>
     /// <param name="expected">The value the floating-point number should be less than or equal to.</param>
+    /// <param name="precision">The precision to use for the comparison.</param>
     /// <returns>A <see cref="FloatingPointAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public FloatingPointAssertionsChain<T> BeLessThanOrEqualTo(T expected)
+    public FloatingPointAssertionsChain<T> BeLessThanOrEqualTo(T expected, T precision)
     {
-        Verify.That(Value <= expected, $"Value should be less than or equal to {expected} but was {Value}.");
+        Verify.That(Value <= expected + precision, $"Value should be less than or equal to {expected} (±{precision}) but was {Value}.");
 
         return new FloatingPointAssertionsChain<T>(this);
     }
@@ -51,10 +53,11 @@ public sealed class FloatingPointAssertions<T>(T value) : ObjectAssertions<T>(va
     /// Asserts that the floating-point value is greater than the expected value.
     /// </summary>
     /// <param name="expected">The value the floating-point number should be greater than.</param>
+    /// <param name="precision">The precision to use for the comparison.</param>
     /// <returns>A <see cref="FloatingPointAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public FloatingPointAssertionsChain<T> BeGreaterThan(T expected)
+    public FloatingPointAssertionsChain<T> BeGreaterThan(T expected, T precision)
     {
-        Verify.That(Value > expected, $"Value should be greater than {expected} but was {Value}.");
+        Verify.That(Value > expected + precision, $"Value should be greater than {expected} (±{precision}) but was {Value}.");
 
         return new FloatingPointAssertionsChain<T>(this);
     }
@@ -63,10 +66,11 @@ public sealed class FloatingPointAssertions<T>(T value) : ObjectAssertions<T>(va
     /// Asserts that the floating-point value is greater than or equal to the expected value.
     /// </summary>
     /// <param name="expected">The value the floating-point number should be greater than or equal to.</param>
+    /// <param name="precision">The precision to use for the comparison.</param>
     /// <returns>A <see cref="FloatingPointAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public FloatingPointAssertionsChain<T> BeGreaterThanOrEqualTo(T expected)
+    public FloatingPointAssertionsChain<T> BeGreaterThanOrEqualTo(T expected, T precision)
     {
-        Verify.That(Value >= expected, $"Value should be greater than or equal to {expected} but was {Value}.");
+        Verify.That(Value >= expected - precision, $"Value should be greater than or equal to {expected} (±{precision}) but was {Value}.");
 
         return new FloatingPointAssertionsChain<T>(this);
     }
