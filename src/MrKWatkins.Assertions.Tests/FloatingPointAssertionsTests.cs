@@ -40,11 +40,11 @@ public sealed class FloatingPointAssertionsTests
     {
         const double value = 5.0;
 
-        await Assert.That(() => value.Should().BeLessThan(10.0)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeLessThan(5.0)).Throws<AssertionException>()
-            .WithMessage("Value should be less than 5 but was 5.");
-        await Assert.That(() => value.Should().BeLessThan(1.0)).Throws<AssertionException>()
-            .WithMessage("Value should be less than 1 but was 5.");
+        await Assert.That(() => value.Should().BeLessThan(10.0, 0.001)).ThrowsNothing();
+        await Assert.That(() => value.Should().BeLessThan(5.0, 0.001)).Throws<AssertionException>()
+            .WithMessage("Value should be less than 5 (±0.001) but was 5.");
+        await Assert.That(() => value.Should().BeLessThan(1.0, 0.001)).Throws<AssertionException>()
+            .WithMessage("Value should be less than 1 (±0.001) but was 5.");
     }
 
     [Test]
@@ -52,7 +52,7 @@ public sealed class FloatingPointAssertionsTests
     {
         const double value = 5.0;
 
-        var chain = value.Should().BeLessThan(10.0);
+        var chain = value.Should().BeLessThan(10.0, 0.001);
         await Assert.That(chain.Value).IsEqualTo(value);
         await Assert.That(chain.And.Value).IsEqualTo(value);
     }
@@ -62,10 +62,10 @@ public sealed class FloatingPointAssertionsTests
     {
         const double value = 5.0;
 
-        await Assert.That(() => value.Should().BeLessThanOrEqualTo(10.0)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeLessThanOrEqualTo(5.0)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeLessThanOrEqualTo(1.0)).Throws<AssertionException>()
-            .WithMessage("Value should be less than or equal to 1 but was 5.");
+        await Assert.That(() => value.Should().BeLessThanOrEqualTo(10.0, 0.001)).ThrowsNothing();
+        await Assert.That(() => value.Should().BeLessThanOrEqualTo(5.0, 0.001)).ThrowsNothing();
+        await Assert.That(() => value.Should().BeLessThanOrEqualTo(1.0, 0.001)).Throws<AssertionException>()
+            .WithMessage("Value should be less than or equal to 1 (±0.001) but was 5.");
     }
 
     [Test]
@@ -73,7 +73,7 @@ public sealed class FloatingPointAssertionsTests
     {
         const double value = 5.0;
 
-        var chain = value.Should().BeLessThanOrEqualTo(5.0);
+        var chain = value.Should().BeLessThanOrEqualTo(5.0, 0.001);
         await Assert.That(chain.Value).IsEqualTo(value);
         await Assert.That(chain.And.Value).IsEqualTo(value);
     }
@@ -83,11 +83,11 @@ public sealed class FloatingPointAssertionsTests
     {
         const double value = 5.0;
 
-        await Assert.That(() => value.Should().BeGreaterThan(1.0)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeGreaterThan(5.0)).Throws<AssertionException>()
-            .WithMessage("Value should be greater than 5 but was 5.");
-        await Assert.That(() => value.Should().BeGreaterThan(10.0)).Throws<AssertionException>()
-            .WithMessage("Value should be greater than 10 but was 5.");
+        await Assert.That(() => value.Should().BeGreaterThan(1.0, 0.001)).ThrowsNothing();
+        await Assert.That(() => value.Should().BeGreaterThan(5.0, 0.001)).Throws<AssertionException>()
+            .WithMessage("Value should be greater than 5 (±0.001) but was 5.");
+        await Assert.That(() => value.Should().BeGreaterThan(10.0, 0.001)).Throws<AssertionException>()
+            .WithMessage("Value should be greater than 10 (±0.001) but was 5.");
     }
 
     [Test]
@@ -95,7 +95,7 @@ public sealed class FloatingPointAssertionsTests
     {
         const double value = 5.0;
 
-        var chain = value.Should().BeGreaterThan(1.0);
+        var chain = value.Should().BeGreaterThan(1.0, 0.001);
         await Assert.That(chain.Value).IsEqualTo(value);
         await Assert.That(chain.And.Value).IsEqualTo(value);
     }
@@ -105,10 +105,10 @@ public sealed class FloatingPointAssertionsTests
     {
         const double value = 5.0;
 
-        await Assert.That(() => value.Should().BeGreaterThanOrEqualTo(1.0)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeGreaterThanOrEqualTo(5.0)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeGreaterThanOrEqualTo(10.0)).Throws<AssertionException>()
-            .WithMessage("Value should be greater than or equal to 10 but was 5.");
+        await Assert.That(() => value.Should().BeGreaterThanOrEqualTo(1.0, 0.001)).ThrowsNothing();
+        await Assert.That(() => value.Should().BeGreaterThanOrEqualTo(5.0, 0.001)).ThrowsNothing();
+        await Assert.That(() => value.Should().BeGreaterThanOrEqualTo(10.0, 0.001)).Throws<AssertionException>()
+            .WithMessage("Value should be greater than or equal to 10 (±0.001) but was 5.");
     }
 
     [Test]
@@ -116,7 +116,7 @@ public sealed class FloatingPointAssertionsTests
     {
         const double value = 5.0;
 
-        var chain = value.Should().BeGreaterThanOrEqualTo(5.0);
+        var chain = value.Should().BeGreaterThanOrEqualTo(5.0, 0.001);
         await Assert.That(chain.Value).IsEqualTo(value);
         await Assert.That(chain.And.Value).IsEqualTo(value);
     }

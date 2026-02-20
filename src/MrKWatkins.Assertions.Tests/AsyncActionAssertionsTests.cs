@@ -6,18 +6,26 @@ public sealed class AsyncActionAssertionsTests
     public async Task ThrowAsync()
     {
         Func<Task> doesNotThrow = () => Task.CompletedTask;
+        Func<Task> doesNotThrowAsync = async () => await Task.Yield();
 
         var exception = new InvalidOperationException("Test");
         Func<Task> throws = () => throw exception;
+        Func<Task> throwsAsync = async () => { await Task.Yield(); throw exception; };
 
         Func<Task> throwsWrongException = () => throw new NotSupportedException("Wrong");
+        Func<Task> throwsWrongExceptionAsync = async () => { await Task.Yield(); throw new NotSupportedException("Wrong"); };
 
         await Assert.That(() => throws.Should().ThrowAsync<InvalidOperationException>()).ThrowsNothing();
+        await Assert.That(() => throwsAsync.Should().ThrowAsync<InvalidOperationException>()).ThrowsNothing();
 
         await Assert.That(() => doesNotThrow.Should().ThrowAsync<InvalidOperationException>())
             .Throws<AssertionException>().WithMessage("Function should throw an InvalidOperationException.");
+        await Assert.That(() => doesNotThrowAsync.Should().ThrowAsync<InvalidOperationException>())
+            .Throws<AssertionException>().WithMessage("Function should throw an InvalidOperationException.");
 
         await Assert.That(() => throwsWrongException.Should().ThrowAsync<InvalidOperationException>())
+            .Throws<AssertionException>().WithMessage("Function should throw an InvalidOperationException but threw a NotSupportedException with message \"Wrong\".");
+        await Assert.That(() => throwsWrongExceptionAsync.Should().ThrowAsync<InvalidOperationException>())
             .Throws<AssertionException>().WithMessage("Function should throw an InvalidOperationException but threw a NotSupportedException with message \"Wrong\".");
     }
 
@@ -26,9 +34,13 @@ public sealed class AsyncActionAssertionsTests
     {
         var exception = new InvalidOperationException("Test");
         Func<Task> throws = () => throw exception;
+        Func<Task> throwsAsync = async () => { await Task.Yield(); throw exception; };
 
         var chain = await throws.Should().ThrowAsync<InvalidOperationException>().ConfigureAwait(false);
+        await Assert.That(chain.Exception).IsSameReferenceAs(exception);
+        await Assert.That(chain.That).IsSameReferenceAs(exception);
 
+        chain = await throwsAsync.Should().ThrowAsync<InvalidOperationException>().ConfigureAwait(false);
         await Assert.That(chain.Exception).IsSameReferenceAs(exception);
         await Assert.That(chain.That).IsSameReferenceAs(exception);
     }
@@ -37,21 +49,31 @@ public sealed class AsyncActionAssertionsTests
     public async Task ThrowAsync_String()
     {
         Func<Task> doesNotThrow = () => Task.CompletedTask;
+        Func<Task> doesNotThrowAsync = async () => await Task.Yield();
 
         var exception = new InvalidOperationException("Test");
         Func<Task> throws = () => throw exception;
+        Func<Task> throwsAsync = async () => { await Task.Yield(); throw exception; };
 
         Func<Task> throwsWrongException = () => throw new NotSupportedException("Wrong");
+        Func<Task> throwsWrongExceptionAsync = async () => { await Task.Yield(); throw new NotSupportedException("Wrong"); };
 
         await Assert.That(() => throws.Should().ThrowAsync<InvalidOperationException>("Test")).ThrowsNothing();
+        await Assert.That(() => throwsAsync.Should().ThrowAsync<InvalidOperationException>("Test")).ThrowsNothing();
 
         await Assert.That(() => throws.Should().ThrowAsync<InvalidOperationException>("Wrong Message"))
+            .Throws<AssertionException>().WithMessage("Value should have Message \"Wrong Message\" but was \"Test\".");
+        await Assert.That(() => throwsAsync.Should().ThrowAsync<InvalidOperationException>("Wrong Message"))
             .Throws<AssertionException>().WithMessage("Value should have Message \"Wrong Message\" but was \"Test\".");
 
         await Assert.That(() => doesNotThrow.Should().ThrowAsync<InvalidOperationException>("Test"))
             .Throws<AssertionException>().WithMessage("Function should throw an InvalidOperationException.");
+        await Assert.That(() => doesNotThrowAsync.Should().ThrowAsync<InvalidOperationException>("Test"))
+            .Throws<AssertionException>().WithMessage("Function should throw an InvalidOperationException.");
 
         await Assert.That(() => throwsWrongException.Should().ThrowAsync<InvalidOperationException>("Test"))
+            .Throws<AssertionException>().WithMessage("Function should throw an InvalidOperationException but threw a NotSupportedException with message \"Wrong\".");
+        await Assert.That(() => throwsWrongExceptionAsync.Should().ThrowAsync<InvalidOperationException>("Test"))
             .Throws<AssertionException>().WithMessage("Function should throw an InvalidOperationException but threw a NotSupportedException with message \"Wrong\".");
     }
 
@@ -60,9 +82,13 @@ public sealed class AsyncActionAssertionsTests
     {
         var exception = new InvalidOperationException("Test");
         Func<Task> throws = () => throw exception;
+        Func<Task> throwsAsync = async () => { await Task.Yield(); throw exception; };
 
         var chain = await throws.Should().ThrowAsync<InvalidOperationException>("Test").ConfigureAwait(false);
+        await Assert.That(chain.Exception).IsSameReferenceAs(exception);
+        await Assert.That(chain.That).IsSameReferenceAs(exception);
 
+        chain = await throwsAsync.Should().ThrowAsync<InvalidOperationException>("Test").ConfigureAwait(false);
         await Assert.That(chain.Exception).IsSameReferenceAs(exception);
         await Assert.That(chain.That).IsSameReferenceAs(exception);
     }
@@ -71,38 +97,24 @@ public sealed class AsyncActionAssertionsTests
     public async Task NotThrowAsync()
     {
         Func<Task> doesNotThrow = () => Task.CompletedTask;
+        Func<Task> doesNotThrowAsync = async () => await Task.Yield();
 
         var exception = new InvalidOperationException("Test");
         Func<Task> throws = () => throw exception;
+        Func<Task> throwsAsync = async () => { await Task.Yield(); throw exception; };
 
         await Assert.That(() => doesNotThrow.Should().NotThrowAsync()).ThrowsNothing();
+        await Assert.That(() => doesNotThrowAsync.Should().NotThrowAsync()).ThrowsNothing();
 
         var actualException = await Assert.That(() => throws.Should().NotThrowAsync())
             .Throws<AssertionException>()
             .WithMessage("Function should not throw but threw an InvalidOperationException with message \"Test\".");
         await Assert.That(actualException!.InnerException).IsSameReferenceAs(exception);
-    }
 
-    [Test]
-    public async Task ThrowAsync_ActuallyAsync()
-    {
-        var exception = new InvalidOperationException("AsyncTest");
-        Func<Task> throwsAsync = async () =>
-        {
-            await Task.Yield();
-            throw exception;
-        };
-
-        var chain = await throwsAsync.Should().ThrowAsync<InvalidOperationException>("AsyncTest").ConfigureAwait(false);
-        await Assert.That(chain.Exception).IsSameReferenceAs(exception);
-    }
-
-    [Test]
-    public async Task NotThrowAsync_ActuallyAsync()
-    {
-        Func<Task> doesNotThrow = async () => await Task.Yield();
-
-        await Assert.That(() => doesNotThrow.Should().NotThrowAsync()).ThrowsNothing();
+        actualException = await Assert.That(() => throwsAsync.Should().NotThrowAsync())
+            .Throws<AssertionException>()
+            .WithMessage("Function should not throw but threw an InvalidOperationException with message \"Test\".");
+        await Assert.That(actualException!.InnerException).IsSameReferenceAs(exception);
     }
 
     [Test]
