@@ -113,6 +113,14 @@ public static class ShouldExtensions
     public static ActionAssertions Should([InstantHandle] this Action value) => new(value);
 
     /// <summary>
+    /// Begins a fluent assertion on the specified async action.
+    /// </summary>
+    /// <param name="value">The async action to assert on.</param>
+    /// <returns>An <see cref="AsyncActionAssertions" /> for the async action.</returns>
+    [Pure]
+    public static AsyncActionAssertions Should([InstantHandle] this Func<Task> value) => new(value);
+
+    /// <summary>
     /// Begins a fluent assertion on the specified byte value.
     /// </summary>
     /// <param name="value">The byte value to assert on.</param>
