@@ -133,6 +133,44 @@ public sealed class EnumerableAssertionsTests
     }
 
     [Test]
+    public async Task SequenceEqual_Comparer()
+    {
+        var value = new List<string> { "a", "b", "c" };
+
+        await Assert.That(() => value.Should().SequenceEqual(new List<string> { "A", "B", "D" }, StringComparer.OrdinalIgnoreCase)).Throws<AssertionException>();
+        await Assert.That(() => value.Should().SequenceEqual(new List<string> { "A", "B", "C" }, StringComparer.OrdinalIgnoreCase)).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task SequenceEqual_Comparer_Chain()
+    {
+        var value = new List<string> { "a", "b", "c" };
+
+        var chain = value.Should().SequenceEqual(new List<string> { "A", "B", "C" }, StringComparer.OrdinalIgnoreCase);
+        await Assert.That(chain.Value).IsEqualTo(value);
+        await Assert.That(chain.And.Value).IsEqualTo(value);
+    }
+
+    [Test]
+    public async Task SequenceEqual_Predicate()
+    {
+        var value = new List<string> { "a", "b", "c" };
+
+        await Assert.That(() => value.Should().SequenceEqual(new List<string> { "A", "B", "D" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).Throws<AssertionException>();
+        await Assert.That(() => value.Should().SequenceEqual(new List<string> { "A", "B", "C" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task SequenceEqual_Predicate_Chain()
+    {
+        var value = new List<string> { "a", "b", "c" };
+
+        var chain = value.Should().SequenceEqual(new List<string> { "A", "B", "C" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
+        await Assert.That(chain.Value).IsEqualTo(value);
+        await Assert.That(chain.And.Value).IsEqualTo(value);
+    }
+
+    [Test]
     public async Task NotSequenceEqual_Null()
     {
         IEnumerable<int> nullEnumerable = null!;
@@ -165,6 +203,46 @@ public sealed class EnumerableAssertionsTests
         var value = new List<int> { 1, 2, 3 };
 
         var chain = value.Should().SequenceEqual(value);
+        await Assert.That(chain.Value).IsEqualTo(value);
+        await Assert.That(chain.And.Value).IsEqualTo(value);
+    }
+
+    [Test]
+    public async Task NotSequenceEqual_Comparer()
+    {
+        var value = new List<string> { "a", "b", "c" };
+
+        await Assert.That(() => value.Should().NotSequenceEqual(new List<string> { "A", "B", "C" }, StringComparer.OrdinalIgnoreCase)).Throws<AssertionException>()
+            .WithMessage("Value should not sequence equal [\"A\", \"B\", \"C\"].");
+        await Assert.That(() => value.Should().NotSequenceEqual(new List<string> { "A", "B", "D" }, StringComparer.OrdinalIgnoreCase)).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task NotSequenceEqual_Comparer_Chain()
+    {
+        var value = new List<string> { "a", "b", "c" };
+
+        var chain = value.Should().NotSequenceEqual(new List<string> { "x", "y", "z" }, StringComparer.OrdinalIgnoreCase);
+        await Assert.That(chain.Value).IsEqualTo(value);
+        await Assert.That(chain.And.Value).IsEqualTo(value);
+    }
+
+    [Test]
+    public async Task NotSequenceEqual_Predicate()
+    {
+        var value = new List<string> { "a", "b", "c" };
+
+        await Assert.That(() => value.Should().NotSequenceEqual(new List<string> { "A", "B", "C" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).Throws<AssertionException>()
+            .WithMessage("Value should not sequence equal [\"A\", \"B\", \"C\"].");
+        await Assert.That(() => value.Should().NotSequenceEqual(new List<string> { "A", "B", "D" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task NotSequenceEqual_Predicate_Chain()
+    {
+        var value = new List<string> { "a", "b", "c" };
+
+        var chain = value.Should().NotSequenceEqual(new List<string> { "x", "y", "z" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
         await Assert.That(chain.Value).IsEqualTo(value);
         await Assert.That(chain.And.Value).IsEqualTo(value);
     }

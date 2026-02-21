@@ -64,6 +64,62 @@ public readonly ref struct ReadOnlySpanAssertions<T>(ReadOnlySpan<T> value)
     }
 
     /// <summary>
+    /// Asserts that the span is sequence equal to the expected elements using the specified equality comparer.
+    /// </summary>
+    /// <param name="expected">The expected elements.</param>
+    /// <param name="comparer">The equality comparer to use for element comparison.</param>
+    /// <returns>A <see cref="ReadOnlySpanAssertionsChain{TItem}" /> for chaining further assertions.</returns>
+    public ReadOnlySpanAssertionsChain<T> SequenceEqual(ReadOnlySpan<T> expected, IEqualityComparer<T> comparer)
+    {
+        if (Value.Length != expected.Length)
+        {
+            throw Verify.CreateException(
+                $"Value {Format.Value(Value)} should sequence equal {Format.Value(expected)} but it has {Value.Length} element{(Value.Length == 1 ? "" : "s")} rather than the expected {expected.Length}.");
+        }
+
+        for (var f = 0; f < Value.Length; f++)
+        {
+            var actualItem = Value[f];
+            var expectedItem = expected[f];
+            if (!comparer.Equals(actualItem, expectedItem))
+            {
+                throw Verify.CreateException(
+                    $"Value {Format.Value(Value, f)} should sequence equal {Format.Value(expected, f)} but it differs at index {f}.");
+            }
+        }
+
+        return new ReadOnlySpanAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the span is sequence equal to the expected elements using the specified predicate.
+    /// </summary>
+    /// <param name="expected">The expected elements.</param>
+    /// <param name="predicate">The predicate to use for element comparison.</param>
+    /// <returns>A <see cref="ReadOnlySpanAssertionsChain{TItem}" /> for chaining further assertions.</returns>
+    public ReadOnlySpanAssertionsChain<T> SequenceEqual(ReadOnlySpan<T> expected, Func<T?, T?, bool> predicate)
+    {
+        if (Value.Length != expected.Length)
+        {
+            throw Verify.CreateException(
+                $"Value {Format.Value(Value)} should sequence equal {Format.Value(expected)} but it has {Value.Length} element{(Value.Length == 1 ? "" : "s")} rather than the expected {expected.Length}.");
+        }
+
+        for (var f = 0; f < Value.Length; f++)
+        {
+            var actualItem = Value[f];
+            var expectedItem = expected[f];
+            if (!predicate(actualItem, expectedItem))
+            {
+                throw Verify.CreateException(
+                    $"Value {Format.Value(Value, f)} should sequence equal {Format.Value(expected, f)} but it differs at index {f}.");
+            }
+        }
+
+        return new ReadOnlySpanAssertionsChain<T>(this);
+    }
+
+    /// <summary>
     /// Asserts that the span is not sequence equal to the expected elements.
     /// </summary>
     /// <param name="expected">The elements the span should not be sequence equal to.</param>
@@ -79,13 +135,82 @@ public readonly ref struct ReadOnlySpanAssertions<T>(ReadOnlySpan<T> value)
     }
 
     /// <summary>
+    /// Asserts that the span is not sequence equal to the expected elements using the specified equality comparer.
+    /// </summary>
+    /// <param name="expected">The elements the span should not be sequence equal to.</param>
+    /// <param name="comparer">The equality comparer to use for element comparison.</param>
+    /// <returns>A <see cref="ReadOnlySpanAssertionsChain{TItem}" /> for chaining further assertions.</returns>
+    public ReadOnlySpanAssertionsChain<T> NotSequenceEqual(ReadOnlySpan<T> expected, IEqualityComparer<T> comparer)
+    {
+        if (Value.Length != expected.Length)
+        {
+            return new ReadOnlySpanAssertionsChain<T>(this);
+        }
+
+        for (var f = 0; f < Value.Length; f++)
+        {
+            if (!comparer.Equals(Value[f], expected[f]))
+            {
+                return new ReadOnlySpanAssertionsChain<T>(this);
+            }
+        }
+
+        throw Verify.CreateException($"Value should not sequence equal {Format.Value(expected)}.");
+    }
+
+    /// <summary>
+    /// Asserts that the span is not sequence equal to the expected elements using the specified predicate.
+    /// </summary>
+    /// <param name="expected">The elements the span should not be sequence equal to.</param>
+    /// <param name="predicate">The predicate to use for element comparison.</param>
+    /// <returns>A <see cref="ReadOnlySpanAssertionsChain{TItem}" /> for chaining further assertions.</returns>
+    public ReadOnlySpanAssertionsChain<T> NotSequenceEqual(ReadOnlySpan<T> expected, Func<T?, T?, bool> predicate)
+    {
+        if (Value.Length != expected.Length)
+        {
+            return new ReadOnlySpanAssertionsChain<T>(this);
+        }
+
+        for (var f = 0; f < Value.Length; f++)
+        {
+            if (!predicate(Value[f], expected[f]))
+            {
+                return new ReadOnlySpanAssertionsChain<T>(this);
+            }
+        }
+
+        throw Verify.CreateException($"Value should not sequence equal {Format.Value(expected)}.");
+    }
+
+    /// <summary>
     /// Asserts that the span is sequence equal to the expected enumerable elements.
     /// </summary>
     /// <param name="expected">The expected elements.</param>
     /// <returns>A <see cref="ReadOnlySpanAssertionsChain{TItem}" /> for chaining further assertions.</returns>
-    public ReadOnlySpanAssertionsChain<T> SequenceEqual([InstantHandle] IEnumerable<T> expected)
+    public ReadOnlySpanAssertionsChain<T> SequenceEqual([InstantHandle] IEnumerable<T> expected) =>
+        SequenceEqualEnumerableCore(expected, EqualityComparer<T>.Default.Equals);
+
+    /// <summary>
+    /// Asserts that the span is sequence equal to the expected enumerable elements using the specified equality comparer.
+    /// </summary>
+    /// <param name="expected">The expected elements.</param>
+    /// <param name="comparer">The equality comparer to use for element comparison.</param>
+    /// <returns>A <see cref="ReadOnlySpanAssertionsChain{TItem}" /> for chaining further assertions.</returns>
+    public ReadOnlySpanAssertionsChain<T> SequenceEqual([InstantHandle] IEnumerable<T> expected, IEqualityComparer<T> comparer) =>
+        SequenceEqualEnumerableCore(expected, comparer.Equals);
+
+    /// <summary>
+    /// Asserts that the span is sequence equal to the expected enumerable elements using the specified predicate.
+    /// </summary>
+    /// <param name="expected">The expected elements.</param>
+    /// <param name="predicate">The predicate to use for element comparison.</param>
+    /// <returns>A <see cref="ReadOnlySpanAssertionsChain{TItem}" /> for chaining further assertions.</returns>
+    public ReadOnlySpanAssertionsChain<T> SequenceEqual([InstantHandle] IEnumerable<T> expected, Func<T?, T?, bool> predicate) =>
+        SequenceEqualEnumerableCore(expected, predicate);
+
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
+    private ReadOnlySpanAssertionsChain<T> SequenceEqualEnumerableCore(IEnumerable<T> expected, Func<T?, T?, bool> equals)
     {
-        var equalityComparer = EqualityComparer<T>.Default;
         if (expected.TryGetCount(out var expectedCount) && Value.Length != expectedCount)
         {
             throw Verify.CreateException(
@@ -115,7 +240,7 @@ public readonly ref struct ReadOnlySpanAssertions<T>(ReadOnlySpan<T> value)
                     $"Value {Format.Value(Value)} should sequence equal {Format.Enumerable(expected)} but it has more elements than the expected {expectedList.Count}.");
             }
 
-            if (!equalityComparer.Equals(actualEnumerator.Current, expectedEnumerator.Current))
+            if (!equals(actualEnumerator.Current, expectedEnumerator.Current))
             {
                 throw Verify.CreateException(
                     $"Value {Format.Value(Value, index)} should sequence equal {Format.Collection(expectedList, index, true)} but it differs at index {index}.");
@@ -138,9 +263,30 @@ public readonly ref struct ReadOnlySpanAssertions<T>(ReadOnlySpan<T> value)
     /// </summary>
     /// <param name="expected">The elements the span should not be sequence equal to.</param>
     /// <returns>A <see cref="ReadOnlySpanAssertionsChain{TItem}" /> for chaining further assertions.</returns>
-    public ReadOnlySpanAssertionsChain<T> NotSequenceEqual([InstantHandle] IEnumerable<T> expected)
+    public ReadOnlySpanAssertionsChain<T> NotSequenceEqual([InstantHandle] IEnumerable<T> expected) =>
+        NotSequenceEqualEnumerableCore(expected, EqualityComparer<T>.Default.Equals);
+
+    /// <summary>
+    /// Asserts that the span is not sequence equal to the expected enumerable elements using the specified equality comparer.
+    /// </summary>
+    /// <param name="expected">The elements the span should not be sequence equal to.</param>
+    /// <param name="comparer">The equality comparer to use for element comparison.</param>
+    /// <returns>A <see cref="ReadOnlySpanAssertionsChain{TItem}" /> for chaining further assertions.</returns>
+    public ReadOnlySpanAssertionsChain<T> NotSequenceEqual([InstantHandle] IEnumerable<T> expected, IEqualityComparer<T> comparer) =>
+        NotSequenceEqualEnumerableCore(expected, comparer.Equals);
+
+    /// <summary>
+    /// Asserts that the span is not sequence equal to the expected enumerable elements using the specified predicate.
+    /// </summary>
+    /// <param name="expected">The elements the span should not be sequence equal to.</param>
+    /// <param name="predicate">The predicate to use for element comparison.</param>
+    /// <returns>A <see cref="ReadOnlySpanAssertionsChain{TItem}" /> for chaining further assertions.</returns>
+    public ReadOnlySpanAssertionsChain<T> NotSequenceEqual([InstantHandle] IEnumerable<T> expected, Func<T?, T?, bool> predicate) =>
+        NotSequenceEqualEnumerableCore(expected, predicate);
+
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
+    private ReadOnlySpanAssertionsChain<T> NotSequenceEqualEnumerableCore(IEnumerable<T> expected, Func<T?, T?, bool> equals)
     {
-        var equalityComparer = EqualityComparer<T>.Default;
         if (expected.TryGetCount(out var expectedCount) && Value.Length != expectedCount)
         {
             return new ReadOnlySpanAssertionsChain<T>(this);
@@ -170,7 +316,7 @@ public readonly ref struct ReadOnlySpanAssertions<T>(ReadOnlySpan<T> value)
                 return new ReadOnlySpanAssertionsChain<T>(this);
             }
 
-            if (!equalityComparer.Equals(actualEnumerator.Current, expectedEnumerator.Current))
+            if (!equals(actualEnumerator.Current, expectedEnumerator.Current))
             {
                 // Items not equal, not sequence equal.
                 return new ReadOnlySpanAssertionsChain<T>(this);

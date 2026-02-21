@@ -54,6 +54,46 @@ public class ObjectAssertions<T>(T? value)
     }
 
     /// <summary>
+    /// Asserts that the value is equal to the expected value using the specified equality comparer.
+    /// </summary>
+    /// <param name="expected">The expected value.</param>
+    /// <param name="comparer">The equality comparer to use for the comparison.</param>
+    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public ObjectAssertionsChain<T> Equal(T? expected, IEqualityComparer<T> comparer)
+    {
+        if (Value is null)
+        {
+            Verify.That(expected is null, $"Value should equal {expected} but was null.");
+        }
+        else
+        {
+            Verify.That(comparer.Equals(Value, expected), $"Value should equal {expected} but was {Value}.");
+        }
+
+        return new ObjectAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the value is equal to the expected value using the specified predicate.
+    /// </summary>
+    /// <param name="expected">The expected value.</param>
+    /// <param name="predicate">The predicate to use for the comparison.</param>
+    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public ObjectAssertionsChain<T> Equal(T? expected, Func<T?, T?, bool> predicate)
+    {
+        if (Value is null)
+        {
+            Verify.That(predicate(Value, expected), $"Value should equal {expected} but was null.");
+        }
+        else
+        {
+            Verify.That(predicate(Value, expected), $"Value should equal {expected} but was {Value}.");
+        }
+
+        return new ObjectAssertionsChain<T>(this);
+    }
+
+    /// <summary>
     /// Asserts that the value is not equal to the expected value using the default equality comparer.
     /// </summary>
     /// <param name="expected">The value that is not expected.</param>
@@ -68,6 +108,39 @@ public class ObjectAssertions<T>(T? value)
         {
             Verify.That(!EqualityComparer<T>.Default.Equals(Value, expected), $"Value should not equal {expected}.");
         }
+
+        return new ObjectAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the value is not equal to the expected value using the specified equality comparer.
+    /// </summary>
+    /// <param name="expected">The value that is not expected.</param>
+    /// <param name="comparer">The equality comparer to use for the comparison.</param>
+    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public ObjectAssertionsChain<T> NotEqual(T? expected, IEqualityComparer<T> comparer)
+    {
+        if (Value is null)
+        {
+            Verify.That(expected is not null, "Value should not equal null.");
+        }
+        else
+        {
+            Verify.That(!comparer.Equals(Value, expected), $"Value should not equal {expected}.");
+        }
+
+        return new ObjectAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the value is not equal to the expected value using the specified predicate.
+    /// </summary>
+    /// <param name="expected">The value that is not expected.</param>
+    /// <param name="predicate">The predicate to use for the comparison.</param>
+    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public ObjectAssertionsChain<T> NotEqual(T? expected, Func<T?, T?, bool> predicate)
+    {
+        Verify.That(!predicate(Value, expected), $"Value should not equal {expected}.");
 
         return new ObjectAssertionsChain<T>(this);
     }

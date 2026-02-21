@@ -54,7 +54,31 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
     /// <param name="expected">The expected elements.</param>
     /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-    public EnumerableAssertionsChain<TEnumerable, T> SequenceEqual([InstantHandle] params IEnumerable<T?> expected)
+    public EnumerableAssertionsChain<TEnumerable, T> SequenceEqual([InstantHandle] params IEnumerable<T?> expected) =>
+        SequenceEqualCore(expected, EqualityComparer<T>.Default.Equals);
+
+    /// <summary>
+    /// Asserts that the enumerable is sequence equal to the expected elements using the specified equality comparer.
+    /// </summary>
+    /// <param name="expected">The expected elements.</param>
+    /// <param name="comparer">The equality comparer to use for element comparison.</param>
+    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
+    public EnumerableAssertionsChain<TEnumerable, T> SequenceEqual([InstantHandle] IEnumerable<T?> expected, IEqualityComparer<T> comparer) =>
+        SequenceEqualCore(expected, comparer.Equals);
+
+    /// <summary>
+    /// Asserts that the enumerable is sequence equal to the expected elements using the specified predicate.
+    /// </summary>
+    /// <param name="expected">The expected elements.</param>
+    /// <param name="predicate">The predicate to use for element comparison.</param>
+    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
+    public EnumerableAssertionsChain<TEnumerable, T> SequenceEqual([InstantHandle] IEnumerable<T?> expected, Func<T?, T?, bool> predicate) =>
+        SequenceEqualCore(expected, predicate);
+
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
+    private EnumerableAssertionsChain<TEnumerable, T> SequenceEqualCore(IEnumerable<T?> expected, Func<T?, T?, bool> equals)
     {
         NotBeNull();
 
@@ -68,7 +92,6 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
 
         var actualList = new List<T>();
         var expectedList = new List<T?>();
-        var equalityComparer = EqualityComparer<T>.Default;
 
         using var actualEnumerator = Value.GetEnumerator();
         using var expectedEnumerator = expected.GetEnumerator();
@@ -94,7 +117,7 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
                     $"Value {Format.Enumerable(Value)} should sequence equal {Format.Collection(expectedList)} but it has more elements than the expected {expectedList.Count}.");
             }
 
-            if (!equalityComparer.Equals(actualEnumerator.Current, expectedEnumerator.Current))
+            if (!equals(actualEnumerator.Current, expectedEnumerator.Current))
             {
                 var index = actualList.Count - 1;
                 throw Verify.CreateException(
@@ -127,6 +150,63 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
         }
 
         return new EnumerableAssertionsChain<TEnumerable, T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the enumerable is not sequence equal to the expected elements using the specified equality comparer.
+    /// </summary>
+    /// <param name="expected">The elements the enumerable should not be sequence equal to.</param>
+    /// <param name="comparer">The equality comparer to use for element comparison.</param>
+    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
+    public EnumerableAssertionsChain<TEnumerable, T> NotSequenceEqual(IEnumerable<T> expected, IEqualityComparer<T> comparer)
+    {
+        NotBeNull();
+
+        if (Value.SequenceEqual(expected, comparer))
+        {
+            throw Verify.CreateException($"Value should not sequence equal {Format.Enumerable(expected)}.");
+        }
+
+        return new EnumerableAssertionsChain<TEnumerable, T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the enumerable is not sequence equal to the expected elements using the specified predicate.
+    /// </summary>
+    /// <param name="expected">The elements the enumerable should not be sequence equal to.</param>
+    /// <param name="predicate">The predicate to use for element comparison.</param>
+    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
+    public EnumerableAssertionsChain<TEnumerable, T> NotSequenceEqual(IEnumerable<T> expected, Func<T?, T?, bool> predicate)
+    {
+        NotBeNull();
+
+        using var actualEnumerator = Value.GetEnumerator();
+        using var expectedEnumerator = expected.GetEnumerator();
+
+        while (true)
+        {
+            var actualHasNext = actualEnumerator.MoveNext();
+            var expectedHasNext = expectedEnumerator.MoveNext();
+
+            if (!actualHasNext && !expectedHasNext)
+            {
+                break;
+            }
+
+            if (!actualHasNext || !expectedHasNext)
+            {
+                return new EnumerableAssertionsChain<TEnumerable, T>(this);
+            }
+
+            if (!predicate(actualEnumerator.Current, expectedEnumerator.Current))
+            {
+                return new EnumerableAssertionsChain<TEnumerable, T>(this);
+            }
+        }
+
+        throw Verify.CreateException($"Value should not sequence equal {Format.Enumerable(expected)}.");
     }
 
     /// <summary>
