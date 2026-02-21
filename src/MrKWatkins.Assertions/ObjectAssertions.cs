@@ -140,14 +140,7 @@ public class ObjectAssertions<T>(T? value)
     /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
     public ObjectAssertionsChain<T> NotEqual(T? expected, Func<T?, T?, bool> predicate)
     {
-        if (Value is null)
-        {
-            Verify.That(!predicate(Value, expected), "Value should not equal null.");
-        }
-        else
-        {
-            Verify.That(!predicate(Value, expected), $"Value should not equal {expected}.");
-        }
+        Verify.That(!predicate(Value, expected), $"Value should not equal {expected}.");
 
         return new ObjectAssertionsChain<T>(this);
     }
