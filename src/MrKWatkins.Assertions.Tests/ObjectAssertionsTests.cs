@@ -113,6 +113,72 @@ public sealed class ObjectAssertionsTests
     }
 
     [Test]
+    public async Task Equal_Comparer_Null()
+    {
+        string? nullValue = null;
+        const string nonNullValue = "Not Null";
+
+        await Assert.That(() => nullValue.Should().Equal(nonNullValue, StringComparer.OrdinalIgnoreCase)).Throws<AssertionException>().WithMessage("Value should equal \"Not Null\" but was null.");
+        await Assert.That(() => nullValue.Should().Equal(nullValue, StringComparer.OrdinalIgnoreCase)).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task Equal_Comparer()
+    {
+        const string value = "Test";
+        const string sameValueDifferentCase = "test";
+        const string otherValue = "Not Test";
+
+        await Assert.That(() => value.Should().Equal(otherValue, StringComparer.OrdinalIgnoreCase)).Throws<AssertionException>().WithMessage("Value should equal \"Not Test\" but was \"Test\".");
+        await Assert.That(() => value.Should().Equal(sameValueDifferentCase, StringComparer.OrdinalIgnoreCase)).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task Equal_Comparer_Chain()
+    {
+        const string value = "Test";
+
+        var chain = value.Should().Equal("test", StringComparer.OrdinalIgnoreCase);
+        await Assert.That(chain.Value).IsEqualTo(value);
+
+        var and = chain.And;
+        await Assert.That(and.Value).IsEqualTo(value);
+    }
+
+    [Test]
+    public async Task Equal_Predicate_Null()
+    {
+        string? nullValue = null;
+        const string nonNullValue = "Not Null";
+
+        await Assert.That(() => nullValue.Should().Equal(nonNullValue, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).Throws<AssertionException>().WithMessage("Value should equal \"Not Null\" but was null.");
+        await Assert.That(() => nullValue.Should().Equal(nullValue, (a, b) => a is null && b is null)).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task Equal_Predicate()
+    {
+        const string value = "Test";
+        const string sameValueDifferentCase = "test";
+        const string otherValue = "Not Test";
+
+        await Assert.That(() => value.Should().Equal(otherValue, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).Throws<AssertionException>().WithMessage("Value should equal \"Not Test\" but was \"Test\".");
+        await Assert.That(() => value.Should().Equal(sameValueDifferentCase, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task Equal_Predicate_Chain()
+    {
+        const string value = "Test";
+
+        var chain = value.Should().Equal("test", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
+        await Assert.That(chain.Value).IsEqualTo(value);
+
+        var and = chain.And;
+        await Assert.That(and.Value).IsEqualTo(value);
+    }
+
+    [Test]
     public async Task NotEqual_Null()
     {
         string? nullValue = null;
@@ -139,6 +205,74 @@ public sealed class ObjectAssertionsTests
         const string otherValue = "Not Test";
 
         var chain = value.Should().NotEqual(otherValue);
+        await Assert.That(chain.Value).IsEqualTo(value);
+
+        var and = chain.And;
+        await Assert.That(and.Value).IsEqualTo(value);
+    }
+
+    [Test]
+    public async Task NotEqual_Comparer_Null()
+    {
+        string? nullValue = null;
+        const string nonNullValue = "Not Null";
+
+        await Assert.That(() => nullValue.Should().NotEqual(nonNullValue, StringComparer.OrdinalIgnoreCase)).ThrowsNothing();
+        await Assert.That(() => nullValue.Should().NotEqual(nullValue, StringComparer.OrdinalIgnoreCase)).Throws<AssertionException>().WithMessage("Value should not equal null.");
+    }
+
+    [Test]
+    public async Task NotEqual_Comparer()
+    {
+        const string value = "Test";
+        const string sameValueDifferentCase = "test";
+        const string otherValue = "Not Test";
+
+        await Assert.That(() => value.Should().NotEqual(otherValue, StringComparer.OrdinalIgnoreCase)).ThrowsNothing();
+        await Assert.That(() => value.Should().NotEqual(sameValueDifferentCase, StringComparer.OrdinalIgnoreCase)).Throws<AssertionException>().WithMessage("Value should not equal \"test\".");
+    }
+
+    [Test]
+    public async Task NotEqual_Comparer_Chain()
+    {
+        const string value = "Test";
+        const string otherValue = "Not Test";
+
+        var chain = value.Should().NotEqual(otherValue, StringComparer.OrdinalIgnoreCase);
+        await Assert.That(chain.Value).IsEqualTo(value);
+
+        var and = chain.And;
+        await Assert.That(and.Value).IsEqualTo(value);
+    }
+
+    [Test]
+    public async Task NotEqual_Predicate_Null()
+    {
+        string? nullValue = null;
+        const string nonNullValue = "Not Null";
+
+        await Assert.That(() => nullValue.Should().NotEqual(nonNullValue, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).ThrowsNothing();
+        await Assert.That(() => nullValue.Should().NotEqual(nullValue, (a, b) => a is null && b is null)).Throws<AssertionException>().WithMessage("Value should not equal null.");
+    }
+
+    [Test]
+    public async Task NotEqual_Predicate()
+    {
+        const string value = "Test";
+        const string sameValueDifferentCase = "test";
+        const string otherValue = "Not Test";
+
+        await Assert.That(() => value.Should().NotEqual(otherValue, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).ThrowsNothing();
+        await Assert.That(() => value.Should().NotEqual(sameValueDifferentCase, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).Throws<AssertionException>().WithMessage("Value should not equal \"test\".");
+    }
+
+    [Test]
+    public async Task NotEqual_Predicate_Chain()
+    {
+        const string value = "Test";
+        const string otherValue = "Not Test";
+
+        var chain = value.Should().NotEqual(otherValue, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
         await Assert.That(chain.Value).IsEqualTo(value);
 
         var and = chain.And;

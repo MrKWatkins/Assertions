@@ -129,6 +129,42 @@ public sealed class ReadOnlySpanAssertionsTests
     }
 
     [Test]
+    public async Task SequenceEqual_Comparer()
+    {
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b", "c"];
+            ReadOnlySpan<string> different = ["A", "B", "D"];
+            value.Should().SequenceEqual(different, StringComparer.OrdinalIgnoreCase);
+        }).Throws<AssertionException>();
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b", "c"];
+            ReadOnlySpan<string> same = ["A", "B", "C"];
+            value.Should().SequenceEqual(same, StringComparer.OrdinalIgnoreCase);
+        }).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task SequenceEqual_Predicate()
+    {
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b", "c"];
+            ReadOnlySpan<string> different = ["A", "B", "D"];
+            value.Should().SequenceEqual(different, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
+        }).Throws<AssertionException>();
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b", "c"];
+            ReadOnlySpan<string> same = ["A", "B", "C"];
+            value.Should().SequenceEqual(same, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
+        }).ThrowsNothing();
+    }
+
+    [Test]
     public async Task SequenceEqual_IEnumerable()
     {
         await Assert.That(() =>
@@ -243,6 +279,42 @@ public sealed class ReadOnlySpanAssertionsTests
     }
 
     [Test]
+    public async Task SequenceEqual_IEnumerable_Comparer()
+    {
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b", "c"];
+            IReadOnlyList<string> different = ["A", "B", "D"];
+            value.Should().SequenceEqual(different, StringComparer.OrdinalIgnoreCase);
+        }).Throws<AssertionException>();
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b", "c"];
+            IReadOnlyList<string> same = ["A", "B", "C"];
+            value.Should().SequenceEqual(same, StringComparer.OrdinalIgnoreCase);
+        }).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task SequenceEqual_IEnumerable_Predicate()
+    {
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b", "c"];
+            IReadOnlyList<string> different = ["A", "B", "D"];
+            value.Should().SequenceEqual(different, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
+        }).Throws<AssertionException>();
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b", "c"];
+            IReadOnlyList<string> same = ["A", "B", "C"];
+            value.Should().SequenceEqual(same, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
+        }).ThrowsNothing();
+    }
+
+    [Test]
     public async Task NotSequenceEqual()
     {
         await Assert.That(() =>
@@ -309,6 +381,42 @@ public sealed class ReadOnlySpanAssertionsTests
     }
 
     [Test]
+    public async Task NotSequenceEqual_Comparer()
+    {
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b", "c"];
+            ReadOnlySpan<string> same = ["A", "B", "C"];
+            value.Should().NotSequenceEqual(same, StringComparer.OrdinalIgnoreCase);
+        }).Throws<AssertionException>();
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b", "c"];
+            ReadOnlySpan<string> different = ["A", "B", "D"];
+            value.Should().NotSequenceEqual(different, StringComparer.OrdinalIgnoreCase);
+        }).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task NotSequenceEqual_Predicate()
+    {
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b", "c"];
+            ReadOnlySpan<string> same = ["A", "B", "C"];
+            value.Should().NotSequenceEqual(same, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
+        }).Throws<AssertionException>();
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b", "c"];
+            ReadOnlySpan<string> different = ["A", "B", "D"];
+            value.Should().NotSequenceEqual(different, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
+        }).ThrowsNothing();
+    }
+
+    [Test]
     public async Task NotSequenceEqual_IEnumerable()
     {
         await Assert.That(() =>
@@ -365,5 +473,41 @@ public sealed class ReadOnlySpanAssertionsTests
 
         var and = value.Should().NotSequenceEqual(notSequenceEqual).And;
         await Assert.That(and.Value == value).IsTrue();
+    }
+
+    [Test]
+    public async Task NotSequenceEqual_IEnumerable_Comparer()
+    {
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b", "c"];
+            IReadOnlyList<string> same = ["A", "B", "C"];
+            value.Should().NotSequenceEqual(same, StringComparer.OrdinalIgnoreCase);
+        }).Throws<AssertionException>();
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b", "c"];
+            IReadOnlyList<string> different = ["A", "B", "D"];
+            value.Should().NotSequenceEqual(different, StringComparer.OrdinalIgnoreCase);
+        }).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task NotSequenceEqual_IEnumerable_Predicate()
+    {
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b", "c"];
+            IReadOnlyList<string> same = ["A", "B", "C"];
+            value.Should().NotSequenceEqual(same, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
+        }).Throws<AssertionException>();
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b", "c"];
+            IReadOnlyList<string> different = ["A", "B", "D"];
+            value.Should().NotSequenceEqual(different, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
+        }).ThrowsNothing();
     }
 }
