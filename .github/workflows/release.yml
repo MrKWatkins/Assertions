@@ -8,15 +8,10 @@ on:
         required: true
         type: string
 
-permissions:
-  checks: write
-  contents: write
-  id-token: write
-  pages: write
-
 jobs:
   Release:
     name: Release ${{ inputs.version }}
+    permissions: write-all
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ github.token }}
@@ -32,9 +27,27 @@ jobs:
           nuget-api-key: ${{ secrets.NUGET_API_KEY }}
           version: ${{ inputs.version }}
 
-      - name: Deploy Documentation
-        uses: MrKWatkins/writerside-build@main
+      - name: Build
+        uses: MrKWatkins/dotnet-build@main
         with:
-          instance: MrKWatkins.Assertions
-          deploy: true
-          version: ${{ inputs.version }}
+          name: MrKWatkins.Assertions
+          directory: src
+
+      - name: Restore .NET tools
+        run: dotnet tool restore
+
+      - name: Install Sesharp
+        run: dotnet tool install MrKWatkins.Sesharp.Tool
+
+      - name: Make API Docs Directory
+        run: mkdir doc/docs/API
+        
+      - name: Generate API Docs
+        run: dotnet sesharp src/MrKWatkins.Assertions/bin/Release/net10.0/MrKWatkins.Assertions.dll doc/docs/API
+
+      - name: Deploy docs
+        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CONFIG_FILE: doc/mkdocs.yml
+          REQUIREMENTS: doc/requirements.txt

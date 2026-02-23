@@ -20,8 +20,8 @@ public sealed class BooleanExtensionsTests
         bool? nullableTrue = true;
 
         var chain = nullableTrue.Should().BeTrue();
-        await Assert.That(chain.Value).IsEqualTo(true);
-        await Assert.That(chain.And.Value).IsEqualTo(true);
+        await Assert.That(chain.Value).IsTrue();
+        await Assert.That(chain.And.Value).IsTrue();
     }
 
     [Test]
@@ -42,8 +42,8 @@ public sealed class BooleanExtensionsTests
         bool? nullableFalse = false;
 
         var chain = nullableFalse.Should().NotBeTrue();
-        await Assert.That(chain.Value).IsEqualTo(false);
-        await Assert.That(chain.And.Value).IsEqualTo(false);
+        await Assert.That(chain.Value).IsFalse();
+        await Assert.That(chain.And.Value).IsFalse();
     }
 
     [Test]
@@ -64,8 +64,8 @@ public sealed class BooleanExtensionsTests
         bool? nullableFalse = false;
 
         var chain = nullableFalse.Should().BeFalse();
-        await Assert.That(chain.Value).IsEqualTo(false);
-        await Assert.That(chain.And.Value).IsEqualTo(false);
+        await Assert.That(chain.Value).IsFalse();
+        await Assert.That(chain.And.Value).IsFalse();
     }
 
     [Test]
@@ -86,7 +86,7 @@ public sealed class BooleanExtensionsTests
         bool? nullableFalse = true;
 
         var chain = nullableFalse.Should().NotBeFalse();
-        await Assert.That(chain.Value).IsEqualTo(true);
-        await Assert.That(chain.And.Value).IsEqualTo(true);
+        await Assert.That(chain.Value).IsTrue();
+        await Assert.That(chain.And.Value).IsTrue();
     }
 }

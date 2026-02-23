@@ -24,8 +24,3 @@ jobs:
         with:
           name: MrKWatkins.Assertions
           directory: src
-
-      - name: Build Documentation
-        uses: MrKWatkins/writerside-build@main
-        with:
-          instance: MrKWatkins.Assertions

@@ -1,27 +1,203 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="46b2ea17-129a-4ff2-93b4-01854b0312ab" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../.editorconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/doc.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/.idea/.idea.Assertions/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/.idea/.idea.Assertions/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/.idea/.idea.Assertions/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/.idea/.idea.Assertions/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/.idea/.idea.Assertions/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/MrKWatkins.Assertions.Tests/AssertionExceptionTests.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/MrKWatkins.Assertions/AssertionException.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.github/workflows/build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../.github/workflows/build.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.github/workflows/release.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../.github/workflows/release.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MrKWatkins.Assertions.tree" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/c.list" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cfg/buildprofiles.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ActionAssertions.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ActionAssertions.NotThrow.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ActionAssertions.Throw.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ActionAssertions.ThrowArgumentException.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ActionAssertions.ThrowArgumentOutOfRangeException.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ActionAssertions.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ActionAssertionsChain-1.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ActionAssertionsChain-1.Exception.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ActionAssertionsChain-1.That.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ActionAssertionsChain-1.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.AssertThat.Invoking.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.AssertThat.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.AssertionException.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.AssertionException.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.BooleanAssertions.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.BooleanAssertions.BeFalse.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.BooleanAssertions.BeTrue.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.BooleanAssertions.NotBeFalse.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.BooleanAssertions.NotBeTrue.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.BooleanAssertions.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.BooleanAssertionsChain.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.BooleanAssertionsChain.And.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.BooleanAssertionsChain.Value.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.BooleanAssertionsChain.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.BooleanExtensions.BeFalse.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.BooleanExtensions.BeTrue.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.BooleanExtensions.NotBeFalse.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.BooleanExtensions.NotBeTrue.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.BooleanExtensions.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.CountExtensions.BeEmpty.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.CountExtensions.HaveCount.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.CountExtensions.NotBeEmpty.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.CountExtensions.NotHaveCount.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.CountExtensions.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.EnumerableAssertions-2.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.EnumerableAssertions-2.ContainSingle.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.EnumerableAssertions-2.NotSequenceEqual.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.EnumerableAssertions-2.OnlyContain.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.EnumerableAssertions-2.SequenceEqual.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.EnumerableAssertions-2.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.EnumerableAssertionsChain-2.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.EnumerableAssertionsChain-2.And.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.EnumerableAssertionsChain-2.Value.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.EnumerableAssertionsChain-2.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.EnumerableExtensions.NotSequenceEqual.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.EnumerableExtensions.SequenceEqual.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.EnumerableExtensions.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionAssertions-1.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionAssertions-1.HaveInnerException.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionAssertions-1.HaveMessage.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionAssertions-1.HaveMessageStartingWith.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionAssertions-1.NotHaveInnerException.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionAssertions-1.NotHaveMessage.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionAssertions-1.NotHaveMessageStartingWith.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionAssertions-1.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionAssertionsChain-1.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionAssertionsChain-1.And.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionAssertionsChain-1.Value.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionAssertionsChain-1.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionExtensions.HaveActualValue.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionExtensions.HaveParamName.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionExtensions.NotHaveActualValue.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionExtensions.NotHaveParamName.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ExceptionExtensions.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.FormatInterpolatedStringHandler.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.FormatInterpolatedStringHandler.AppendFormatted.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.FormatInterpolatedStringHandler.AppendLiteral.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.FormatInterpolatedStringHandler.ToString.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.FormatInterpolatedStringHandler.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.InnerExceptionAssertionsChain-1.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.InnerExceptionAssertionsChain-1.That.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.InnerExceptionAssertionsChain-1.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.IntegerFormat.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.InvokingExtensions.Invoking.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.InvokingExtensions.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.NumericExtensions.BeNegative.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.NumericExtensions.BePositive.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.NumericExtensions.BeZero.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.NumericExtensions.NotBeNegative.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.NumericExtensions.NotBePositive.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.NumericExtensions.NotBeZero.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.NumericExtensions.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertions-1.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertions-1.BeNull.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertions-1.BeOfType.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertions-1.BeTheSameInstanceAs.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertions-1.Equal.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertions-1.Equals.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertions-1.GetHashCode.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertions-1.GetType.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertions-1.NotBeNull.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertions-1.NotBeOfType.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertions-1.NotBeTheSameInstanceAs.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertions-1.NotEqual.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertions-1.ToString.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertions-1.Value.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertions-1.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertionsChain-1.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertionsChain-1.And.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertionsChain-1.That.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertionsChain-1.Value.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ObjectAssertionsChain-1.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlyDictionaryAssertions-3.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlyDictionaryAssertions-3.ContainKey.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlyDictionaryAssertions-3.NotContainKey.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlyDictionaryAssertions-3.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlyDictionaryAssertionsChain-3.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlyDictionaryAssertionsChain-3.And.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlyDictionaryAssertionsChain-3.Value.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlyDictionaryAssertionsChain-3.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlySpanAssertions-1.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlySpanAssertions-1.BeEmpty.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlySpanAssertions-1.NotBeEmpty.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlySpanAssertions-1.NotSequenceEqual.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlySpanAssertions-1.SequenceEqual.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlySpanAssertions-1.Value.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlySpanAssertions-1.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlySpanAssertionsChain-1.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlySpanAssertionsChain-1.And.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlySpanAssertionsChain-1.Value.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ReadOnlySpanAssertionsChain-1.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ShouldExtensions.Should.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.ShouldExtensions.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.BeEmpty.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.BeNullOrEmpty.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.BeNullOrWhiteSpace.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.Contain.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.EndWith.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.HaveLength.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.Match.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.NotBeEmpty.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.NotBeNullOrEmpty.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.NotBeNullOrWhiteSpace.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.NotContain.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.NotEndWith.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.NotHaveLength.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.NotMatch.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.NotStartWith.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.StartWith.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertions.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertionsChain.-ctor.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertionsChain.And.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertionsChain.Value.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.StringAssertionsChain.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.Verify.That.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.Verify.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.With.IntegerFormat.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/API/MrKWatkins.Assertions.With.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/topics/MrKWatkins.Assertions.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/v.list" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/writerside.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/Directory.Packages.props" beforeDir="false" afterPath="$PROJECT_DIR$/../src/Directory.Packages.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/MrKWatkins.Assertions.Tests/BooleanAssertionsTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../src/MrKWatkins.Assertions.Tests/BooleanAssertionsTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/MrKWatkins.Assertions.Tests/BooleanExtensionsTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../src/MrKWatkins.Assertions.Tests/BooleanExtensionsTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/MrKWatkins.Assertions.Tests/EnumerableExtensionsTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../src/MrKWatkins.Assertions.Tests/EnumerableExtensionsTests.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_/mnt/Development/Assertions/doc" value="2rgCm7TDONCQTCvI60vXPikvwt2" />
+    </persistenceIdMap>
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="34208" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;MrKWatkins&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:MrKWatkins/Assertions.git&quot;,
+    &quot;accountId&quot;: &quot;8846085a-548b-4f92-a10e-b53750613234&quot;
+  }
+}</component>
   <component name="InstanceColorv3">
     <option name="map">
       <map>
@@ -55,29 +231,86 @@
       </map>
     </option>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2rgCm7TDONCQTCvI60vXPikvwt2" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/mrkwatkins/Development/Assertions/doc"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Shell Script.Generate API.executor&quot;: &quot;Run&quot;,
+    &quot;Shell Script.Serve.executor&quot;: &quot;Run&quot;,
+    &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/mnt/Development/Assertions/doc&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": [
-      "/home/mrkwatkins/Development/Assertions/doc/topics/API/MrKWatkins.Assertions.AssertionException.md",
-      "/home/mrkwatkins/Development/Assertions/doc/topics/MrKWatkins.Assertions.md"
+  &quot;keyToStringList&quot;: {
+    &quot;stardust.markdown.MarkdownSplitEditorSuppressor:keyList&quot;: [
+      &quot;/home/mrkwatkins/Development/Assertions/doc/topics/API/MrKWatkins.Assertions.AssertionException.md&quot;,
+      &quot;/home/mrkwatkins/Development/Assertions/doc/topics/MrKWatkins.Assertions.md&quot;
     ]
   }
-}]]></component>
+}</component>
+  <component name="RunManager" selected="Shell Script.Serve">
+    <list>
+      <item itemvalue="Shell Script.Build" />
+      <item itemvalue="Shell Script.Generate API" />
+      <item itemvalue="Shell Script.Serve" />
+    </list>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PY-253.31033.139" />
+        <option value="bundled-python-sdk-2653e85de345-6d6dccd035ac-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.31033.139" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="46b2ea17-129a-4ff2-93b4-01854b0312ab" name="Changes" comment="" />
+      <created>1771706222336</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1771706222336</updated>
+      <workItem from="1771706225405" duration="3699000" />
+      <workItem from="1771884192304" duration="32000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
 </project>

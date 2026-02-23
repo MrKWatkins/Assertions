@@ -13,8 +13,8 @@ public sealed class BooleanAssertionsTests
     public async Task BeTrue_Chain()
     {
         var chain = true.Should().BeTrue();
-        await Assert.That(chain.Value).IsEqualTo(true);
-        await Assert.That(chain.And.Value).IsEqualTo(true);
+        await Assert.That(chain.Value).IsTrue();
+        await Assert.That(chain.And.Value).IsTrue();
     }
 
     [Test]
@@ -28,8 +28,8 @@ public sealed class BooleanAssertionsTests
     public async Task NotBeTrue_Chain()
     {
         var chain = false.Should().NotBeTrue();
-        await Assert.That(chain.Value).IsEqualTo(false);
-        await Assert.That(chain.And.Value).IsEqualTo(false);
+        await Assert.That(chain.Value).IsFalse();
+        await Assert.That(chain.And.Value).IsFalse();
     }
 
     [Test]
@@ -43,8 +43,8 @@ public sealed class BooleanAssertionsTests
     public async Task BeFalse_Chain()
     {
         var chain = false.Should().BeFalse();
-        await Assert.That(chain.Value).IsEqualTo(false);
-        await Assert.That(chain.And.Value).IsEqualTo(false);
+        await Assert.That(chain.Value).IsFalse();
+        await Assert.That(chain.And.Value).IsFalse();
     }
 
     [Test]
@@ -58,8 +58,8 @@ public sealed class BooleanAssertionsTests
     public async Task NotBeFalse_Chain()
     {
         var chain = true.Should().NotBeFalse();
-        await Assert.That(chain.Value).IsEqualTo(true);
-        await Assert.That(chain.And.Value).IsEqualTo(true);
+        await Assert.That(chain.Value).IsTrue();
+        await Assert.That(chain.And.Value).IsTrue();
     }
 
     [Test]
