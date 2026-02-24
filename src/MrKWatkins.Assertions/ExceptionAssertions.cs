@@ -12,11 +12,12 @@ public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value
     /// Asserts that the exception has the specified message.
     /// </summary>
     /// <param name="expected">The expected message.</param>
+    /// <param name="comparison">The <see cref="StringComparison" /> to use. Defaults to <see cref="StringComparison.InvariantCulture" />.</param>
     /// <returns>An <see cref="ExceptionAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public ExceptionAssertionsChain<T> HaveMessage(string expected)
+    public ExceptionAssertionsChain<T> HaveMessage(string expected, StringComparison comparison = StringComparison.InvariantCulture)
     {
         NotBeNull();
-        Verify.That(Value.Message == expected, $"Value should have Message {expected} but was {Value.Message}.");
+        Verify.That(string.Equals(Value.Message, expected, comparison), $"Value should have Message {expected}{FormatComparison(comparison):L} but was {Value.Message}.");
 
         return new ExceptionAssertionsChain<T>(this);
     }
@@ -25,11 +26,12 @@ public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value
     /// Asserts that the exception does not have the specified message.
     /// </summary>
     /// <param name="expected">The message that is not expected.</param>
+    /// <param name="comparison">The <see cref="StringComparison" /> to use. Defaults to <see cref="StringComparison.InvariantCulture" />.</param>
     /// <returns>An <see cref="ExceptionAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public ExceptionAssertionsChain<T> NotHaveMessage(string expected)
+    public ExceptionAssertionsChain<T> NotHaveMessage(string expected, StringComparison comparison = StringComparison.InvariantCulture)
     {
         NotBeNull();
-        Verify.That(Value.Message != expected, $"Value should not have Message {Value.Message}.");
+        Verify.That(!string.Equals(Value.Message, expected, comparison), $"Value should not have Message {Value.Message}{FormatComparison(comparison):L}.");
 
         return new ExceptionAssertionsChain<T>(this);
     }
@@ -38,11 +40,12 @@ public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value
     /// Asserts that the exception message starts with the specified string.
     /// </summary>
     /// <param name="expected">The expected message prefix.</param>
+    /// <param name="comparison">The <see cref="StringComparison" /> to use. Defaults to <see cref="StringComparison.InvariantCulture" />.</param>
     /// <returns>An <see cref="ExceptionAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public ExceptionAssertionsChain<T> HaveMessageStartingWith(string expected)
+    public ExceptionAssertionsChain<T> HaveMessageStartingWith(string expected, StringComparison comparison = StringComparison.InvariantCulture)
     {
         NotBeNull();
-        Verify.That(Value.Message.StartsWith(expected, StringComparison.InvariantCulture), $"Value should have Message starting with {expected} but was {Value.Message}.");
+        Verify.That(Value.Message.StartsWith(expected, comparison), $"Value should have Message starting with {expected}{FormatComparison(comparison):L} but was {Value.Message}.");
 
         return new ExceptionAssertionsChain<T>(this);
     }
@@ -51,11 +54,12 @@ public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value
     /// Asserts that the exception message does not start with the specified string.
     /// </summary>
     /// <param name="expected">The message prefix that is not expected.</param>
+    /// <param name="comparison">The <see cref="StringComparison" /> to use. Defaults to <see cref="StringComparison.InvariantCulture" />.</param>
     /// <returns>An <see cref="ExceptionAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public ExceptionAssertionsChain<T> NotHaveMessageStartingWith(string expected)
+    public ExceptionAssertionsChain<T> NotHaveMessageStartingWith(string expected, StringComparison comparison = StringComparison.InvariantCulture)
     {
         NotBeNull();
-        Verify.That(!Value.Message.StartsWith(expected, StringComparison.InvariantCulture), $"Value should not have Message starting with {expected} but was {Value.Message}.");
+        Verify.That(!Value.Message.StartsWith(expected, comparison), $"Value should not have Message starting with {expected}{FormatComparison(comparison):L} but was {Value.Message}.");
 
         return new ExceptionAssertionsChain<T>(this);
     }
@@ -101,4 +105,8 @@ public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value
 
         return new ExceptionAssertionsChain<T>(this);
     }
+
+    [Pure]
+    private static string FormatComparison(StringComparison comparison) =>
+        comparison == StringComparison.InvariantCulture ? "" : $" (using {comparison})";
 }

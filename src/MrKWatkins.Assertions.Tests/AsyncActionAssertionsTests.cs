@@ -1,19 +1,20 @@
 namespace MrKWatkins.Assertions.Tests;
 
+[SuppressMessage("ReSharper", "NotResolvedInText")]
 public sealed class AsyncActionAssertionsTests
 {
     [Test]
     public async Task ThrowAsync()
     {
-        Func<Task> doesNotThrow = () => Task.CompletedTask;
-        Func<Task> doesNotThrowAsync = async () => await Task.Yield();
+        var doesNotThrow = () => Task.CompletedTask;
+        var doesNotThrowAsync = async () => await Task.Yield();
 
         var exception = new InvalidOperationException("Test");
         Func<Task> throws = () => throw exception;
-        Func<Task> throwsAsync = async () => { await Task.Yield(); throw exception; };
+        var throwsAsync = async () => { await Task.Yield(); throw exception; };
 
         Func<Task> throwsWrongException = () => throw new NotSupportedException("Wrong");
-        Func<Task> throwsWrongExceptionAsync = async () => { await Task.Yield(); throw new NotSupportedException("Wrong"); };
+        var throwsWrongExceptionAsync = async () => { await Task.Yield(); throw new NotSupportedException("Wrong"); };
 
         await Assert.That(() => throws.Should().ThrowAsync<InvalidOperationException>()).ThrowsNothing();
         await Assert.That(() => throwsAsync.Should().ThrowAsync<InvalidOperationException>()).ThrowsNothing();
@@ -34,7 +35,7 @@ public sealed class AsyncActionAssertionsTests
     {
         var exception = new InvalidOperationException("Test");
         Func<Task> throws = () => throw exception;
-        Func<Task> throwsAsync = async () => { await Task.Yield(); throw exception; };
+        var throwsAsync = async () => { await Task.Yield(); throw exception; };
 
         var chain = await throws.Should().ThrowAsync<InvalidOperationException>().ConfigureAwait(false);
         await Assert.That(chain.Exception).IsSameReferenceAs(exception);
@@ -48,15 +49,15 @@ public sealed class AsyncActionAssertionsTests
     [Test]
     public async Task ThrowAsync_String()
     {
-        Func<Task> doesNotThrow = () => Task.CompletedTask;
-        Func<Task> doesNotThrowAsync = async () => await Task.Yield();
+        var doesNotThrow = () => Task.CompletedTask;
+        var doesNotThrowAsync = async () => await Task.Yield();
 
         var exception = new InvalidOperationException("Test");
         Func<Task> throws = () => throw exception;
-        Func<Task> throwsAsync = async () => { await Task.Yield(); throw exception; };
+        var throwsAsync = async () => { await Task.Yield(); throw exception; };
 
         Func<Task> throwsWrongException = () => throw new NotSupportedException("Wrong");
-        Func<Task> throwsWrongExceptionAsync = async () => { await Task.Yield(); throw new NotSupportedException("Wrong"); };
+        var throwsWrongExceptionAsync = async () => { await Task.Yield(); throw new NotSupportedException("Wrong"); };
 
         await Assert.That(() => throws.Should().ThrowAsync<InvalidOperationException>("Test")).ThrowsNothing();
         await Assert.That(() => throwsAsync.Should().ThrowAsync<InvalidOperationException>("Test")).ThrowsNothing();
@@ -82,7 +83,7 @@ public sealed class AsyncActionAssertionsTests
     {
         var exception = new InvalidOperationException("Test");
         Func<Task> throws = () => throw exception;
-        Func<Task> throwsAsync = async () => { await Task.Yield(); throw exception; };
+        var throwsAsync = async () => { await Task.Yield(); throw exception; };
 
         var chain = await throws.Should().ThrowAsync<InvalidOperationException>("Test").ConfigureAwait(false);
         await Assert.That(chain.Exception).IsSameReferenceAs(exception);
@@ -96,12 +97,12 @@ public sealed class AsyncActionAssertionsTests
     [Test]
     public async Task NotThrowAsync()
     {
-        Func<Task> doesNotThrow = () => Task.CompletedTask;
-        Func<Task> doesNotThrowAsync = async () => await Task.Yield();
+        var doesNotThrow = () => Task.CompletedTask;
+        var doesNotThrowAsync = async () => await Task.Yield();
 
         var exception = new InvalidOperationException("Test");
         Func<Task> throws = () => throw exception;
-        Func<Task> throwsAsync = async () => { await Task.Yield(); throw exception; };
+        var throwsAsync = async () => { await Task.Yield(); throw exception; };
 
         await Assert.That(() => doesNotThrow.Should().NotThrowAsync()).ThrowsNothing();
         await Assert.That(() => doesNotThrowAsync.Should().NotThrowAsync()).ThrowsNothing();
@@ -136,6 +137,107 @@ public sealed class AsyncActionAssertionsTests
 
         await Assert.That(() => value.Awaiting(v => v.ThrowWithReturnAsync()).Should().ThrowAsync<InvalidOperationException>())
             .ThrowsNothing();
+    }
+
+    [Test]
+    public async Task ThrowAsync_String_Exception()
+    {
+        var exception = new InvalidOperationException("Test");
+        Func<Task> throws = () => throw exception;
+
+        var innerException = new InvalidOperationException("Inner");
+        var exceptionWithInner = new NotSupportedException("HasInner", innerException);
+        Func<Task> throwsWithInner = () => throw exceptionWithInner;
+
+        await Assert.That(() => throws.Should().ThrowAsync<InvalidOperationException>("Test", null)).ThrowsNothing();
+        await Assert.That(() => throwsWithInner.Should().ThrowAsync<NotSupportedException>("HasInner", innerException)).ThrowsNothing();
+
+        await Assert.That(() => throws.Should().ThrowAsync<InvalidOperationException>("Test", innerException))
+            .Throws<AssertionException>().WithMessage("Value should have InnerException InvalidOperationException with message \"Inner\" but was null.");
+
+        await Assert.That(() => throwsWithInner.Should().ThrowAsync<NotSupportedException>("HasInner", null))
+            .Throws<AssertionException>().WithMessage("Value should not have an InnerException but has InvalidOperationException with message \"Inner\".");
+    }
+
+    [Test]
+    public async Task ThrowAsync_String_Exception_Chain()
+    {
+        var exception = new InvalidOperationException("Test");
+        Func<Task> throws = () => throw exception;
+
+        var chain = await throws.Should().ThrowAsync<InvalidOperationException>("Test", null).ConfigureAwait(false);
+        await Assert.That(chain.Exception).IsSameReferenceAs(exception);
+        await Assert.That(chain.That).IsSameReferenceAs(exception);
+    }
+
+    [Test]
+    public async Task ThrowAsync_Exception()
+    {
+        var exception = new InvalidOperationException("Test");
+        Func<Task> throws = () => throw exception;
+
+        var otherException = new InvalidOperationException("Other");
+
+        await Assert.That(() => throws.Should().ThrowAsync(exception)).ThrowsNothing();
+
+        await Assert.That(() => throws.Should().ThrowAsync(otherException))
+            .Throws<AssertionException>().WithMessage("Value should be the same instance as InvalidOperationException with message \"Other\" but was InvalidOperationException with message \"Test\".");
+    }
+
+    [Test]
+    public async Task ThrowAsync_Exception_Chain()
+    {
+        var exception = new InvalidOperationException("Test");
+        Func<Task> throws = () => throw exception;
+
+        var chain = await throws.Should().ThrowAsync(exception).ConfigureAwait(false);
+        await Assert.That(chain.Exception).IsSameReferenceAs(exception);
+        await Assert.That(chain.That).IsSameReferenceAs(exception);
+    }
+
+    [Test]
+    public async Task ThrowArgumentExceptionAsync()
+    {
+        var exception = new ArgumentException("TestMessage", "TestParam");
+        Func<Task> throws = () => throw exception;
+
+        Func<Task> throwsWrongException = () => throw new NotSupportedException("Wrong");
+
+        await Assert.That(() => throws.Should().ThrowArgumentExceptionAsync("TestMessage", "TestParam")).ThrowsNothing();
+
+        await Assert.That(() => throwsWrongException.Should().ThrowArgumentExceptionAsync("TestMessage", "TestParam"))
+            .Throws<AssertionException>().WithMessage("Function should throw an ArgumentException but threw a NotSupportedException with message \"Wrong\".");
+    }
+
+    [Test]
+    public async Task ThrowArgumentExceptionAsync_Chain()
+    {
+        var exception = new ArgumentException("TestMessage", "TestParam");
+        Func<Task> throws = () => throw exception;
+
+        var chain = await throws.Should().ThrowArgumentExceptionAsync("TestMessage", "TestParam").ConfigureAwait(false);
+        await Assert.That(chain.Exception).IsSameReferenceAs(exception);
+        await Assert.That(chain.That).IsSameReferenceAs(exception);
+    }
+
+    [Test]
+    public async Task ThrowArgumentOutOfRangeExceptionAsync()
+    {
+        var exception = new ArgumentOutOfRangeException("TestParam", 42, "TestMessage");
+        Func<Task> throws = () => throw exception;
+
+        await Assert.That(() => throws.Should().ThrowArgumentOutOfRangeExceptionAsync("TestMessage", "TestParam", 42)).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task ThrowArgumentOutOfRangeExceptionAsync_Chain()
+    {
+        var exception = new ArgumentOutOfRangeException("TestParam", 42, "TestMessage");
+        Func<Task> throws = () => throw exception;
+
+        var chain = await throws.Should().ThrowArgumentOutOfRangeExceptionAsync("TestMessage", "TestParam", 42).ConfigureAwait(false);
+        await Assert.That(chain.Exception).IsSameReferenceAs(exception);
+        await Assert.That(chain.That).IsSameReferenceAs(exception);
     }
 
     private sealed class TestClass

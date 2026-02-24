@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Frozen;
 using System.Numerics;
 using System.Runtime.CompilerServices;
@@ -241,35 +240,6 @@ internal static class Format
     }
 
     [Pure]
-    private static string Collection(ICollection value, bool openEnded = false)
-    {
-        var message = new StringBuilder();
-        AppendCollection(message, value, openEnded);
-        return message.ToString();
-    }
-
-    private static void AppendCollection(StringBuilder message, ICollection value, bool openEnded = false)
-    {
-        message.Append('[');
-        if (value.Count <= MaximumItemsToShow)
-        {
-            AppendValues(message, value.OfType<object>());
-        }
-        else
-        {
-            AppendValues(message, value.OfType<object>().Take(ItemsToShowInSequence));
-            message.Append(", ... ");
-            AppendValues(message, value.OfType<object>().TakeLast(ItemsToShowInSequence));
-        }
-
-        if (openEnded)
-        {
-            message.Append(", ...");
-        }
-        message.Append(']');
-    }
-
-    [Pure]
     [OverloadResolutionPriority(1)]
     internal static string Collection<T>(IReadOnlyCollection<T> value, bool openEnded = false)
     {
@@ -360,7 +330,7 @@ internal static class Format
 
     private static void AppendValues<T>(StringBuilder message, ReadOnlySpan<T> values)
     {
-        var enumerator = values.GetEnumerator();
+        using var enumerator = values.GetEnumerator();
         if (!enumerator.MoveNext())
         {
             return;

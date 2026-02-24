@@ -140,6 +140,13 @@ public sealed class ReadOnlySpanAssertionsTests
 
         await Assert.That(() =>
         {
+            ReadOnlySpan<string> value = ["a", "b"];
+            ReadOnlySpan<string> differentLength = ["A", "B", "C"];
+            value.Should().SequenceEqual(differentLength, StringComparer.OrdinalIgnoreCase);
+        }).Throws<AssertionException>().WithMessage("Value [\"a\", \"b\"] should sequence equal [\"A\", \"B\", \"C\"] but it has 2 elements rather than the expected 3.");
+
+        await Assert.That(() =>
+        {
             ReadOnlySpan<string> value = ["a", "b", "c"];
             ReadOnlySpan<string> same = ["A", "B", "C"];
             value.Should().SequenceEqual(same, StringComparer.OrdinalIgnoreCase);
@@ -158,6 +165,13 @@ public sealed class ReadOnlySpanAssertionsTests
 
         await Assert.That(() =>
         {
+            ReadOnlySpan<string> value = ["a", "b"];
+            ReadOnlySpan<string> differentLength = ["A", "B", "C"];
+            value.Should().SequenceEqual(differentLength, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
+        }).Throws<AssertionException>().WithMessage("Value [\"a\", \"b\"] should sequence equal [\"A\", \"B\", \"C\"] but it has 2 elements rather than the expected 3.");
+
+        await Assert.That(() =>
+        {
             ReadOnlySpan<string> value = ["a", "b", "c"];
             ReadOnlySpan<string> same = ["A", "B", "C"];
             value.Should().SequenceEqual(same, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
@@ -172,7 +186,7 @@ public sealed class ReadOnlySpanAssertionsTests
             ReadOnlySpan<byte> value = [];
             var differentLength = CreateEnumerable(1);
             value.Should().SequenceEqual(differentLength);
-        }).Throws<AssertionException>().WithMessage("Value [] should sequence equal [1, ...] but it has less elements (0) than expected.");
+        }).Throws<AssertionException>().WithMessage("Value [] should sequence equal [1, ...] but it has fewer elements (0) than expected.");
 
         await Assert.That(() =>
         {
@@ -186,7 +200,14 @@ public sealed class ReadOnlySpanAssertionsTests
             ReadOnlySpan<byte> value = [1, 2, 3];
             var differentLength = CreateEnumerable(1, 2, 3, 4);
             value.Should().SequenceEqual(differentLength);
-        }).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should sequence equal [1, 2, ...] but it has less elements (3) than expected.");
+        }).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should sequence equal [1, 2, ...] but it has fewer elements (3) than expected.");
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<byte> value = [1, 2, 3, 4];
+            var differentLength = CreateEnumerable(1, 2, 3);
+            value.Should().SequenceEqual(differentLength);
+        }).Throws<AssertionException>().WithMessage("Value [1, 2, 3, 4] should sequence equal [1, 2, ...] but it has more elements than the expected 3.");
 
         await Assert.That(() =>
         {
@@ -396,6 +417,13 @@ public sealed class ReadOnlySpanAssertionsTests
             ReadOnlySpan<string> different = ["A", "B", "D"];
             value.Should().NotSequenceEqual(different, StringComparer.OrdinalIgnoreCase);
         }).ThrowsNothing();
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b"];
+            ReadOnlySpan<string> differentLength = ["A", "B", "C"];
+            value.Should().NotSequenceEqual(differentLength, StringComparer.OrdinalIgnoreCase);
+        }).ThrowsNothing();
     }
 
     [Test]
@@ -413,6 +441,13 @@ public sealed class ReadOnlySpanAssertionsTests
             ReadOnlySpan<string> value = ["a", "b", "c"];
             ReadOnlySpan<string> different = ["A", "B", "D"];
             value.Should().NotSequenceEqual(different, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
+        }).ThrowsNothing();
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<string> value = ["a", "b"];
+            ReadOnlySpan<string> differentLength = ["A", "B", "C"];
+            value.Should().NotSequenceEqual(differentLength, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
         }).ThrowsNothing();
     }
 
@@ -453,6 +488,34 @@ public sealed class ReadOnlySpanAssertionsTests
             IReadOnlyList<byte> sequenceEqual = [1, 2, 3];
             value.Should().NotSequenceEqual(sequenceEqual);
         }).Throws<AssertionException>().WithMessage("Value should not sequence equal [1, 2, 3].");
+    }
+
+    [Test]
+    public async Task NotSequenceEqual_IEnumerable_NonCollection()
+    {
+        // Test with lazy enumerables (no known count) to exercise the loop-based length checks
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<byte> value = [];
+            var moreElements = CreateEnumerable(1, 2, 3);
+            value.Should().NotSequenceEqual(moreElements);
+        }).ThrowsNothing();
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<byte> value = [1, 2, 3];
+            var fewerElements = CreateEnumerable(1, 2);
+            value.Should().NotSequenceEqual(fewerElements);
+        }).ThrowsNothing();
+
+        await Assert.That(() =>
+        {
+            ReadOnlySpan<byte> value = [1, 2, 3];
+            var sameElements = CreateEnumerable(1, 2, 3);
+            value.Should().NotSequenceEqual(sameElements);
+        }).Throws<AssertionException>().WithMessage("Value should not sequence equal [1, 2, ...].");
+
+        static IEnumerable<byte> CreateEnumerable(params byte[] values) => values.Select(b => b);
     }
 
     [Test]

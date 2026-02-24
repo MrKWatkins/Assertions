@@ -219,7 +219,7 @@ public readonly ref struct ReadOnlySpanAssertions<T>(ReadOnlySpan<T> value)
 
         var expectedList = new List<T>();
 
-        var actualEnumerator = Value.GetEnumerator();
+        using var actualEnumerator = Value.GetEnumerator();
         using var expectedEnumerator = expected.GetEnumerator();
 
         var index = 0;
@@ -252,7 +252,7 @@ public readonly ref struct ReadOnlySpanAssertions<T>(ReadOnlySpan<T> value)
         if (expectedEnumerator.MoveNext())
         {
             throw Verify.CreateException(
-                $"Value {Format.Value(Value)} should sequence equal {Format.Enumerable(expected)} but it has less elements ({Value.Length}) than expected.");
+                $"Value {Format.Value(Value)} should sequence equal {Format.Enumerable(expected)} but it has fewer elements ({Value.Length}) than expected.");
         }
 
         return new ReadOnlySpanAssertionsChain<T>(this);
@@ -292,7 +292,7 @@ public readonly ref struct ReadOnlySpanAssertions<T>(ReadOnlySpan<T> value)
             return new ReadOnlySpanAssertionsChain<T>(this);
         }
 
-        var actualEnumerator = Value.GetEnumerator();
+        using var actualEnumerator = Value.GetEnumerator();
         using var expectedEnumerator = expected.GetEnumerator();
 
         while (true)
@@ -323,6 +323,6 @@ public readonly ref struct ReadOnlySpanAssertions<T>(ReadOnlySpan<T> value)
             }
         }
 
-        throw Verify.CreateException($"Value should not sequence equal {Format.Value(Value)}.");
+        throw Verify.CreateException($"Value should not sequence equal {Format.Enumerable(expected)}.");
     }
 }

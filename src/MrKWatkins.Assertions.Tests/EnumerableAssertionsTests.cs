@@ -77,9 +77,9 @@ public sealed class EnumerableAssertionsTests
 
     [Test]
     [Arguments(new int[0], true, new[] { 1, 2, 3 }, true, "Value [] should sequence equal [1, 2, 3] but it has 0 elements rather than the expected 3.")]
-    [Arguments(new int[0], true, new[] { 1, 2, 3 }, false, "Value [] should sequence equal [1, 2, ...] but it has less elements (0) than expected.")]
+    [Arguments(new int[0], true, new[] { 1, 2, 3 }, false, "Value [] should sequence equal [1, 2, ...] but it has fewer elements (0) than expected.")]
     [Arguments(new int[0], false, new[] { 1, 2, 3 }, true, "Value [] should sequence equal [1, 2, 3] but it has 0 elements rather than the expected 3.")]
-    [Arguments(new int[0], false, new[] { 1, 2, 3 }, false, "Value [] should sequence equal [1, 2, ...] but it has less elements (0) than expected.")]
+    [Arguments(new int[0], false, new[] { 1, 2, 3 }, false, "Value [] should sequence equal [1, 2, ...] but it has fewer elements (0) than expected.")]
     [Arguments(new[] { 1 }, true, new int[0], true, "Value [1] should sequence equal [] but it has 1 element rather than the expected 0.")]
     [Arguments(new[] { 1, 2, 3 }, true, new int[0], false, "Value [1, 2, 3] should sequence equal [] but it has 3 elements rather than the expected 0.")]
     [Arguments(new[] { 1, 2, 3 }, false, new int[0], true, "Value [1, 2, ...] should sequence equal [] but it has more elements than the expected 0.")]
@@ -235,6 +235,8 @@ public sealed class EnumerableAssertionsTests
         await Assert.That(() => value.Should().NotSequenceEqual(new List<string> { "A", "B", "C" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).Throws<AssertionException>()
             .WithMessage("Value should not sequence equal [\"A\", \"B\", \"C\"].");
         await Assert.That(() => value.Should().NotSequenceEqual(new List<string> { "A", "B", "D" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).ThrowsNothing();
+        await Assert.That(() => value.Should().NotSequenceEqual(new List<string> { "A", "B" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).ThrowsNothing();
+        await Assert.That(() => value.Should().NotSequenceEqual(new List<string> { "A", "B", "C", "D" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).ThrowsNothing();
     }
 
     [Test]
@@ -274,5 +276,149 @@ public sealed class EnumerableAssertionsTests
         var chain = value.Should().Contain(2);
         await Assert.That(chain.Value).IsEqualTo(value);
         await Assert.That(chain.And.Value).IsEqualTo(value);
+    }
+
+    [Test]
+    public async Task Contain_Comparer()
+    {
+        var value = new List<string> { "a", "b", "c" };
+
+        await Assert.That(() => value.Should().Contain("A", StringComparer.OrdinalIgnoreCase)).ThrowsNothing();
+        await Assert.That(() => value.Should().Contain("D", StringComparer.OrdinalIgnoreCase)).Throws<AssertionException>()
+            .WithMessage("Value should contain \"D\" but did not.");
+    }
+
+    [Test]
+    public async Task Contain_Comparer_Chain()
+    {
+        var value = new List<string> { "a", "b", "c" };
+
+        var chain = value.Should().Contain("A", StringComparer.OrdinalIgnoreCase);
+        await Assert.That(chain.Value).IsEqualTo(value);
+        await Assert.That(chain.And.Value).IsEqualTo(value);
+    }
+
+    [Test]
+    public async Task Contain_Predicate()
+    {
+        var value = new List<string> { "a", "b", "c" };
+
+        await Assert.That(() => value.Should().Contain("A", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).ThrowsNothing();
+        await Assert.That(() => value.Should().Contain("D", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).Throws<AssertionException>()
+            .WithMessage("Value should contain \"D\" but did not.");
+    }
+
+    [Test]
+    public async Task Contain_Predicate_Chain()
+    {
+        var value = new List<string> { "a", "b", "c" };
+
+        var chain = value.Should().Contain("A", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
+        await Assert.That(chain.Value).IsEqualTo(value);
+        await Assert.That(chain.And.Value).IsEqualTo(value);
+    }
+
+    [Test]
+    public async Task NotContain_Null()
+    {
+        IEnumerable<int> nullEnumerable = null!;
+
+        await Assert.That(() => nullEnumerable.Should().NotContain(1)).Throws<AssertionException>()
+            .WithMessage("Value should not be null.");
+    }
+
+    [Test]
+    public async Task NotContain()
+    {
+        var value = new List<int> { 1, 2, 3 };
+
+        await Assert.That(() => value.Should().NotContain(5)).ThrowsNothing();
+        await Assert.That(() => value.Should().NotContain(2)).Throws<AssertionException>()
+            .WithMessage("Value should not contain 2.");
+    }
+
+    [Test]
+    public async Task NotContain_Chain()
+    {
+        var value = new List<int> { 1, 2, 3 };
+
+        var chain = value.Should().NotContain(5);
+        await Assert.That(chain.Value).IsEqualTo(value);
+        await Assert.That(chain.And.Value).IsEqualTo(value);
+    }
+
+    [Test]
+    public async Task NotContain_Comparer()
+    {
+        var value = new List<string> { "a", "b", "c" };
+
+        await Assert.That(() => value.Should().NotContain("D", StringComparer.OrdinalIgnoreCase)).ThrowsNothing();
+        await Assert.That(() => value.Should().NotContain("A", StringComparer.OrdinalIgnoreCase)).Throws<AssertionException>()
+            .WithMessage("Value should not contain \"A\".");
+    }
+
+    [Test]
+    public async Task NotContain_Comparer_Chain()
+    {
+        var value = new List<string> { "a", "b", "c" };
+
+        var chain = value.Should().NotContain("D", StringComparer.OrdinalIgnoreCase);
+        await Assert.That(chain.Value).IsEqualTo(value);
+        await Assert.That(chain.And.Value).IsEqualTo(value);
+    }
+
+    [Test]
+    public async Task NotContain_Predicate()
+    {
+        var value = new List<string> { "a", "b", "c" };
+
+        await Assert.That(() => value.Should().NotContain("D", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).ThrowsNothing();
+        await Assert.That(() => value.Should().NotContain("A", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).Throws<AssertionException>()
+            .WithMessage("Value should not contain \"A\".");
+    }
+
+    [Test]
+    public async Task NotContain_Predicate_Chain()
+    {
+        var value = new List<string> { "a", "b", "c" };
+
+        var chain = value.Should().NotContain("D", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
+        await Assert.That(chain.Value).IsEqualTo(value);
+        await Assert.That(chain.And.Value).IsEqualTo(value);
+    }
+
+    [Test]
+    public async Task ContainSingle_NoArg_Null()
+    {
+        IEnumerable<int> nullEnumerable = null!;
+
+        await Assert.That(() => nullEnumerable.Should().ContainSingle()).Throws<AssertionException>()
+            .WithMessage("Value should not be null.");
+    }
+
+    [Test]
+    public async Task ContainSingle_NoArg()
+    {
+        // ReSharper disable once CollectionNeverUpdated.Local
+        var empty = new List<int>();
+        var single = new List<int> { 42 };
+        var multiple = new List<int> { 1, 2, 3 };
+
+        await Assert.That(() => empty.Should().ContainSingle()).Throws<AssertionException>()
+            .WithMessage("Value should contain a single item but was empty.");
+        await Assert.That(() => multiple.Should().ContainSingle()).Throws<AssertionException>()
+            .WithMessage("Value should contain a single item but contains more than one item.");
+        await Assert.That(() => single.Should().ContainSingle()).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task ContainSingle_NoArg_Chain()
+    {
+        var single = new List<int> { 42 };
+
+        var chain = single.Should().ContainSingle();
+        await Assert.That(chain.That).IsEqualTo(42);
+        await Assert.That(chain.Value).IsEqualTo(42);
+        await Assert.That(chain.And.Value).IsEqualTo(42);
     }
 }

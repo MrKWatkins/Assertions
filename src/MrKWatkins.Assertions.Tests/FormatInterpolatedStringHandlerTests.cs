@@ -31,6 +31,24 @@ public sealed class FormatInterpolatedStringHandlerTests
             .WithMessageMatching("Unknown format \"X\".*");
     }
 
+    [Test]
+    public async Task Format_Enumerable()
+    {
+        IEnumerable<int> items = new List<int> { 1, 2, 3 };
+        var actual = DoFormat($"Items: {items}");
+
+        await Assert.That(actual).IsEqualTo("Items: [1, 2, 3]");
+    }
+
+    [Test]
+    public async Task Format_Value_Format_NullString()
+    {
+        string? nullValue = null;
+        var actual = DoFormat($"before{nullValue:L}after");
+
+        await Assert.That(actual).IsEqualTo("beforeafter");
+    }
+
     [Pure]
     private static string DoFormat(FormatInterpolatedStringHandler format) => format.ToString();
 }

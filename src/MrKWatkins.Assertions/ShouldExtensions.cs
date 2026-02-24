@@ -1,4 +1,3 @@
-using System.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace MrKWatkins.Assertions;
@@ -94,6 +93,15 @@ public static class ShouldExtensions
     [OverloadResolutionPriority(2)]
     public static ReadOnlyDictionaryAssertions<Dictionary<TKey, TValue>, TKey, TValue> Should<TKey, TValue>([NoEnumeration] this Dictionary<TKey, TValue> value)
         where TKey : notnull => new(value);
+
+    /// <summary>
+    /// Begins a fluent assertion on the specified span.
+    /// </summary>
+    /// <typeparam name="T">The type of elements in the span.</typeparam>
+    /// <param name="value">The span to assert on.</param>
+    /// <returns>A <see cref="ReadOnlySpanAssertions{T}" /> for the span.</returns>
+    [Pure]
+    public static ReadOnlySpanAssertions<T> Should<T>([NoEnumeration] this Span<T> value) => new(value);
 
     /// <summary>
     /// Begins a fluent assertion on the specified read-only span.
@@ -211,6 +219,15 @@ public static class ShouldExtensions
     public static IntegerAssertions<nuint> Should(this nuint value) => new(value);
 
     /// <summary>
+    /// Begins a fluent assertion on the specified decimal value.
+    /// </summary>
+    /// <param name="value">The decimal value to assert on.</param>
+    /// <returns>A <see cref="DecimalAssertions" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static DecimalAssertions Should(this decimal value) => new(value);
+
+    /// <summary>
     /// Begins a fluent assertion on the specified float value.
     /// </summary>
     /// <param name="value">The float value to assert on.</param>
@@ -227,4 +244,13 @@ public static class ShouldExtensions
     [Pure]
     [OverloadResolutionPriority(10)]
     public static FloatingPointAssertions<double> Should(this double value) => new(value);
+
+    /// <summary>
+    /// Begins a fluent assertion on the specified <see cref="Half" /> value.
+    /// </summary>
+    /// <param name="value">The <see cref="Half" /> value to assert on.</param>
+    /// <returns>A <see cref="FloatingPointAssertions{T}" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static FloatingPointAssertions<Half> Should(this Half value) => new(value);
 }

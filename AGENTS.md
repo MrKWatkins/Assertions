@@ -58,3 +58,11 @@ dotnet test src/MrKWatkins.Assertions.Tests --filter "FullyQualifiedName~TestMet
 - **Centralized package management:** versions in `src/Directory.Packages.props`, no version overrides allowed
 - **Editor:** 4-space indents, LF line endings, max 200 char line length
 - **Documentation:** XML comments on public API, Markdown for the API is automatically generated
+
+## Documentation
+
+- Documentation is generated using MKDocs and is found in the `doc` folder.
+- Documentation in `doc/docs/API` is generated from the assembly using the sesharp tool from the root of the repository: `sesharp MrKWatkins.Assertions/bin/Release/net10.0/MrKWatkins.Assertions.dll doc/docs/API`
+- Documentation in the root of `doc/docs` is handwritten.
+- Handwritten documentation should link to the generated API documentation and Microsoft's API docs (https://learn.microsoft.com/en-us/dotnet/api/) for types, members, etc.
+- ReadMe.md gives a brief summary of the project, the reasons why and licence information. It is included in the NuGet package.

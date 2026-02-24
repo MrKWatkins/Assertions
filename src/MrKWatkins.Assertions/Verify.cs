@@ -13,11 +13,11 @@ public static class Verify
     internal static Exception CreateException(string message, Exception? innerException = null) => ExceptionConstructor(message, innerException);
 
     /// <summary>
-    /// Verifies that the specified condition is <see langword="false" />, throwing an assertion exception if it is <see langword="true" />.
+    /// Verifies that the specified condition is <see langword="true" />, throwing an assertion exception if it is <see langword="false" />.
     /// </summary>
-    /// <param name="condition">The condition to verify. The assertion fails if this is <see langword="true" />.</param>
-    /// <param name="exceptionMessage">The message for the assertion exception if the condition is <see langword="true" />.</param>
-    public static void That([DoesNotReturnIf(true)] bool condition, string exceptionMessage)
+    /// <param name="condition">The condition to verify. The assertion fails if this is <see langword="false" />.</param>
+    /// <param name="exceptionMessage">The message for the assertion exception if the condition is <see langword="false" />.</param>
+    public static void That([DoesNotReturnIf(false)] bool condition, string exceptionMessage)
     {
         if (!condition)
         {
@@ -26,11 +26,11 @@ public static class Verify
     }
 
     /// <summary>
-    /// Verifies that the specified condition is <see langword="false" />, throwing an assertion exception if it is <see langword="true" />.
+    /// Verifies that the specified condition is <see langword="true" />, throwing an assertion exception if it is <see langword="false" />.
     /// </summary>
-    /// <param name="condition">The condition to verify. The assertion fails if this is <see langword="true" />.</param>
-    /// <param name="message">The interpolated message for the assertion exception if the condition is <see langword="true" />.</param>
-    public static void That([DoesNotReturnIf(true)] bool condition, FormatInterpolatedStringHandler message)
+    /// <param name="condition">The condition to verify. The assertion fails if this is <see langword="false" />.</param>
+    /// <param name="message">The interpolated message for the assertion exception if the condition is <see langword="false" />.</param>
+    public static void That([DoesNotReturnIf(false)] bool condition, FormatInterpolatedStringHandler message)
     {
         if (!condition)
         {

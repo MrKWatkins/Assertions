@@ -74,4 +74,136 @@ public sealed class FloatingPointAssertions<T>(T value) : ObjectAssertions<T>(va
 
         return new FloatingPointAssertionsChain<T>(this);
     }
+
+    /// <summary>
+    /// Asserts that the floating-point value is zero.
+    /// </summary>
+    /// <returns>A <see cref="FloatingPointAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public FloatingPointAssertionsChain<T> BeZero()
+    {
+        Verify.That(T.IsZero(Value), $"Value should be zero but was {Value}.");
+
+        return new FloatingPointAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the floating-point value is not zero.
+    /// </summary>
+    /// <returns>A <see cref="FloatingPointAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public FloatingPointAssertionsChain<T> NotBeZero()
+    {
+        Verify.That(!T.IsZero(Value), "Value should not be zero.");
+
+        return new FloatingPointAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the floating-point value is negative.
+    /// </summary>
+    /// <returns>A <see cref="FloatingPointAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public FloatingPointAssertionsChain<T> BeNegative()
+    {
+        Verify.That(T.IsNegative(Value), $"Value should be negative but was {Value}.");
+
+        return new FloatingPointAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the floating-point value is not negative.
+    /// </summary>
+    /// <returns>A <see cref="FloatingPointAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public FloatingPointAssertionsChain<T> NotBeNegative()
+    {
+        Verify.That(!T.IsNegative(Value), $"Value should not be negative but was {Value}.");
+
+        return new FloatingPointAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the floating-point value is positive.
+    /// </summary>
+    /// <returns>A <see cref="FloatingPointAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public FloatingPointAssertionsChain<T> BePositive()
+    {
+        Verify.That(T.IsPositive(Value), $"Value should be positive but was {Value}.");
+
+        return new FloatingPointAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the floating-point value is not positive.
+    /// </summary>
+    /// <returns>A <see cref="FloatingPointAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public FloatingPointAssertionsChain<T> NotBePositive()
+    {
+        Verify.That(!T.IsPositive(Value), $"Value should not be positive but was {Value}.");
+
+        return new FloatingPointAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the floating-point value is <see cref="double.NaN" /> (not a number).
+    /// </summary>
+    /// <returns>A <see cref="FloatingPointAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public FloatingPointAssertionsChain<T> BeNaN()
+    {
+        Verify.That(T.IsNaN(Value), $"Value should be NaN but was {Value}.");
+
+        return new FloatingPointAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the floating-point value is not <see cref="double.NaN" /> (not a number).
+    /// </summary>
+    /// <returns>A <see cref="FloatingPointAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public FloatingPointAssertionsChain<T> NotBeNaN()
+    {
+        Verify.That(!T.IsNaN(Value), "Value should not be NaN.");
+
+        return new FloatingPointAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the floating-point value is positive or negative infinity.
+    /// </summary>
+    /// <returns>A <see cref="FloatingPointAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public FloatingPointAssertionsChain<T> BeInfinity()
+    {
+        Verify.That(T.IsInfinity(Value), $"Value should be infinity but was {Value}.");
+
+        return new FloatingPointAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the floating-point value is not positive or negative infinity.
+    /// </summary>
+    /// <returns>A <see cref="FloatingPointAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public FloatingPointAssertionsChain<T> NotBeInfinity()
+    {
+        Verify.That(!T.IsInfinity(Value), "Value should not be infinity.");
+
+        return new FloatingPointAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the floating-point value is positive infinity.
+    /// </summary>
+    /// <returns>A <see cref="FloatingPointAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public FloatingPointAssertionsChain<T> BePositiveInfinity()
+    {
+        Verify.That(T.IsPositiveInfinity(Value), $"Value should be positive infinity but was {Value}.");
+
+        return new FloatingPointAssertionsChain<T>(this);
+    }
+
+    /// <summary>
+    /// Asserts that the floating-point value is negative infinity.
+    /// </summary>
+    /// <returns>A <see cref="FloatingPointAssertionsChain{T}" /> for chaining further assertions.</returns>
+    public FloatingPointAssertionsChain<T> BeNegativeInfinity()
+    {
+        Verify.That(T.IsNegativeInfinity(Value), $"Value should be negative infinity but was {Value}.");
+
+        return new FloatingPointAssertionsChain<T>(this);
+    }
 }

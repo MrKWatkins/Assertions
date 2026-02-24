@@ -9,12 +9,15 @@ internal sealed class FormattingScope : IDisposable
     internal static FormattingScope? Current => AsyncLocal.Value;
 
     [MustUseReturnValue]
-    internal static FormattingScope GetCurrentOrNew() => Current ?? new FormattingScope();
+    internal static FormattingScope GetCurrentOrNew() => new(Current);
 
-    private IntegerFormat integerFormat = IntegerFormat.Decimal;
+    private readonly FormattingScope? previous;
+    private IntegerFormat integerFormat;
 
-    private FormattingScope()
+    private FormattingScope(FormattingScope? previous)
     {
+        this.previous = previous;
+        integerFormat = previous?.integerFormat ?? IntegerFormat.Decimal;
         AsyncLocal.Value = this;
     }
 
@@ -35,5 +38,5 @@ internal sealed class FormattingScope : IDisposable
             _ => ("", "")
         };
 
-    public void Dispose() => AsyncLocal.Value = null;
+    public void Dispose() => AsyncLocal.Value = previous;
 }

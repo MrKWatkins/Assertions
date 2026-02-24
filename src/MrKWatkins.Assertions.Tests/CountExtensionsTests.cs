@@ -115,6 +115,28 @@ public sealed class CountExtensionsTests
         await Assert.That(and.Value).IsEqualTo(value);
     }
 
+    [Test]
+    public async Task BeEmpty_NonCollection()
+    {
+        var notEmptyEnumerable = System.Linq.Enumerable.Range(0, 3).Select(x => x);
+        var emptyEnumerable = System.Linq.Enumerable.Range(0, 0).Select(x => x);
+
+        await Assert.That(() => notEmptyEnumerable.Should().BeEmpty()).Throws<AssertionException>()
+            .WithMessage("Value should be empty.");
+        await Assert.That(() => emptyEnumerable.Should().BeEmpty()).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task NotBeEmpty_NonCollection()
+    {
+        var notEmptyEnumerable = System.Linq.Enumerable.Range(0, 3).Select(x => x);
+        var emptyEnumerable = System.Linq.Enumerable.Range(0, 0).Select(x => x);
+
+        await Assert.That(() => notEmptyEnumerable.Should().NotBeEmpty()).ThrowsNothing();
+        await Assert.That(() => emptyEnumerable.Should().NotBeEmpty()).Throws<AssertionException>()
+            .WithMessage("Value should not be empty.");
+    }
+
     private sealed class Enumerable(int count) : IEnumerable
     {
         public IEnumerator GetEnumerator() => System.Linq.Enumerable.Range(0, count).GetEnumerator();
