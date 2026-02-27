@@ -65,7 +65,7 @@ span.Should().SequenceEqual(expected, EqualityComparer<int>.Default);
 
 ## Chaining
 
-Chainable methods return a [`ReadOnlySpanAssertionsChain<T>`](API/MrKWatkins.Assertions/ReadOnlySpanAssertionsChain-T/index.md):
+Chainable methods return a [`ReadOnlySpanAssertionsChain<T>`](API/MrKWatkins.Assertions/ReadOnlySpanAssertionsChain-TItem/index.md):
 
 ```csharp
 Span<int> span = [1, 2, 3];
