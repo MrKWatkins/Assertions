@@ -41,6 +41,16 @@ public sealed class FluentTests
     }
 
     [Test]
+    public async Task AllBeOfType()
+    {
+        await Assert.That(() =>
+        {
+            // Chain should continue with the more specific type.
+            new object[] { "One", "Two", "Three" }.Should().AllBeOfType<string>().And.OnlyContain(x => x.Length >= 3);
+        }).ThrowsNothing();
+    }
+
+    [Test]
     public async Task Exceptions()
     {
         var inner = new InvalidOperationException("Inner");

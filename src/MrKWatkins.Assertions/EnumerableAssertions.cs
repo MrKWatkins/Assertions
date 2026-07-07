@@ -13,6 +13,40 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
     where TEnumerable : IEnumerable<T>
 {
     /// <summary>
+    /// Asserts that all items in the enumerable are of the specified type.
+    /// </summary>
+    /// <typeparam name="TOther">The expected type.</typeparam>
+    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, TOther}" /> for chaining further assertions.</returns>
+    public EnumerableAssertionsChain<IReadOnlyList<TOther>, TOther> AllBeOfType<TOther>()
+        where TOther : T
+    {
+        NotBeNull();
+
+        var typed = new List<TOther>();
+        var indices = new List<int>();
+        var index = 0;
+        foreach (var item in Value)
+        {
+            if (item is TOther typedItem)
+            {
+                typed.Add(typedItem);
+            }
+            else
+            {
+                indices.Add(index);
+            }
+            index++;
+        }
+
+        return indices.Count switch
+        {
+            1 => throw Verify.CreateException($"Value should only contain items of type {typeof(TOther).Name} but the item at index {indices[0]} is not."),
+            > 1 => throw Verify.CreateException($"Value should only contain items of type {typeof(TOther).Name} but the items at indices {string.Join(", ", indices)} are not."),
+            _ => new EnumerableAssertionsChain<IReadOnlyList<TOther>, TOther>(new EnumerableAssertions<IReadOnlyList<TOther>, TOther>(typed))
+        };
+    }
+
+    /// <summary>
     /// Asserts that all items in the enumerable satisfy the specified predicate.
     /// </summary>
     /// <param name="predicate">The predicate that all items must satisfy.</param>

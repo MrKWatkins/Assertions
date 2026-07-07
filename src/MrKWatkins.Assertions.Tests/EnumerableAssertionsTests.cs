@@ -3,6 +3,39 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class EnumerableAssertionsTests
 {
     [Test]
+    public async Task AllBeOfType_Null()
+    {
+        IEnumerable<object> nullEnumerable = null!;
+
+        await Assert.That(() => nullEnumerable.Should().AllBeOfType<string>()).Throws<AssertionException>()
+            .WithMessage("Value should not be null.");
+    }
+
+    [Test]
+    public async Task AllBeOfType()
+    {
+        var value = new List<object> { "one", 2, "three" };
+
+        await Assert.That(() => value.Should().AllBeOfType<string>()).Throws<AssertionException>()
+            .WithMessage("Value should only contain items of type String but the item at index 1 is not.");
+
+        await Assert.That(() => value.Should().AllBeOfType<int>()).Throws<AssertionException>()
+            .WithMessage("Value should only contain items of type Int32 but the items at indices 0, 2 are not.");
+
+        await Assert.That(() => value.Should().AllBeOfType<object>()).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task AllBeOfType_Chain()
+    {
+        var value = new List<object> { "one", "two", "three" };
+
+        var chain = value.Should().AllBeOfType<string>();
+        await Assert.That(chain.Value).IsEquivalentTo(["one", "two", "three"]);
+        await Assert.That(chain.And.Value).IsEquivalentTo(["one", "two", "three"]);
+    }
+
+    [Test]
     public async Task OnlyContain_Null()
     {
         IEnumerable<int> nullEnumerable = null!;
