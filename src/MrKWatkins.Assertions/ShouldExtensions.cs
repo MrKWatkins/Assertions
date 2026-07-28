@@ -95,6 +95,26 @@ public static class ShouldExtensions
         where TKey : notnull => new(value);
 
     /// <summary>
+    /// Begins a fluent assertion on the specified read-only set.
+    /// </summary>
+    /// <typeparam name="T">The type of elements in the set.</typeparam>
+    /// <param name="value">The set to assert on.</param>
+    /// <returns>A <see cref="ReadOnlySetAssertions{TSet, T}" /> for the set.</returns>
+    [Pure]
+    [OverloadResolutionPriority(2)]
+    public static ReadOnlySetAssertions<IReadOnlySet<T>, T> Should<T>([NoEnumeration] this IReadOnlySet<T> value) => new(value);
+
+    /// <summary>
+    /// Begins a fluent assertion on the specified hash set.
+    /// </summary>
+    /// <typeparam name="T">The type of elements in the set.</typeparam>
+    /// <param name="value">The set to assert on.</param>
+    /// <returns>A <see cref="ReadOnlySetAssertions{TSet, T}" /> for the set.</returns>
+    [Pure]
+    [OverloadResolutionPriority(2)]
+    public static ReadOnlySetAssertions<HashSet<T>, T> Should<T>([NoEnumeration] this HashSet<T> value) => new(value);
+
+    /// <summary>
     /// Begins a fluent assertion on the specified span.
     /// </summary>
     /// <typeparam name="T">The type of elements in the span.</typeparam>

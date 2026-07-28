@@ -32,6 +32,7 @@ dotnet test src/MrKWatkins.Assertions.Tests --filter "FullyQualifiedName~TestMet
 - `ObjectAssertions<T>` — base: null checks, equality, type checking
 - `StringAssertions` — Contain, NotContain
 - `EnumerableAssertions<TEnumerable, T>` — SequenceEqual, OnlyContain, ContainSingle
+- `ReadOnlySetAssertions<TSet, T>` — extends `EnumerableAssertions`: SetEquals, IsSupersetOf, IsSubsetOf
 - `ReadOnlyDictionaryAssertions<TDict, TKey, TValue>` — dictionary assertions
 - `ReadOnlySpanAssertions<T>` — span assertions (ref struct, zero-allocation)
 - `ExceptionAssertions<T>` — HaveMessage, HaveInnerException
