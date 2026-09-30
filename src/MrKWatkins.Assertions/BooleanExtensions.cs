@@ -9,47 +9,47 @@ public static class BooleanExtensions
     /// Asserts that the nullable boolean value is <see langword="true" />.
     /// </summary>
     /// <param name="assertions">The assertions object.</param>
-    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public static ObjectAssertionsChain<bool?> BeTrue(this ObjectAssertions<bool?> assertions)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public static AssertionsChain<ObjectAssertions<bool?>, bool?> BeTrue(this ObjectAssertions<bool?> assertions)
     {
         Verify.That(assertions.Value.HasValue && assertions.Value.Value, $"Value should be true but was {assertions.Value}.");
 
-        return new ObjectAssertionsChain<bool?>(assertions);
+        return assertions.Chain();
     }
 
     /// <summary>
     /// Asserts that the nullable boolean value is not <see langword="true" />.
     /// </summary>
     /// <param name="assertions">The assertions object.</param>
-    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public static ObjectAssertionsChain<bool?> NotBeTrue(this ObjectAssertions<bool?> assertions)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public static AssertionsChain<ObjectAssertions<bool?>, bool?> NotBeTrue(this ObjectAssertions<bool?> assertions)
     {
         Verify.That(!assertions.Value.HasValue || !assertions.Value.Value, "Value should not be true.");
 
-        return new ObjectAssertionsChain<bool?>(assertions);
+        return assertions.Chain();
     }
 
     /// <summary>
     /// Asserts that the nullable boolean value is <see langword="false" />.
     /// </summary>
     /// <param name="assertions">The assertions object.</param>
-    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public static ObjectAssertionsChain<bool?> BeFalse(this ObjectAssertions<bool?> assertions)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public static AssertionsChain<ObjectAssertions<bool?>, bool?> BeFalse(this ObjectAssertions<bool?> assertions)
     {
         Verify.That(assertions.Value.HasValue && !assertions.Value.Value, $"Value should be false but was {assertions.Value}.");
 
-        return new ObjectAssertionsChain<bool?>(assertions);
+        return assertions.Chain();
     }
 
     /// <summary>
     /// Asserts that the nullable boolean value is not <see langword="false" />.
     /// </summary>
     /// <param name="assertions">The assertions object.</param>
-    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public static ObjectAssertionsChain<bool?> NotBeFalse(this ObjectAssertions<bool?> assertions)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public static AssertionsChain<ObjectAssertions<bool?>, bool?> NotBeFalse(this ObjectAssertions<bool?> assertions)
     {
         Verify.That(!assertions.Value.HasValue || assertions.Value.Value, "Value should not be false.");
 
-        return new ObjectAssertionsChain<bool?>(assertions);
+        return assertions.Chain();
     }
 }

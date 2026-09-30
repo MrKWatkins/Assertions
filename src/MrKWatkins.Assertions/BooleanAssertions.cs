@@ -4,49 +4,49 @@ namespace MrKWatkins.Assertions;
 /// Provides assertions for boolean values.
 /// </summary>
 /// <param name="value">The boolean value to assert on.</param>
-public sealed class BooleanAssertions(bool value) : ObjectAssertions<bool>(value)
+public sealed class BooleanAssertions(bool value) : ObjectAssertions<BooleanAssertions, bool>(value)
 {
     /// <summary>
     /// Asserts that the boolean value is <see langword="true" />.
     /// </summary>
-    /// <returns>A <see cref="BooleanAssertionsChain" /> for chaining further assertions.</returns>
-    public BooleanAssertionsChain BeTrue()
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<BooleanAssertions, bool> BeTrue()
     {
         Verify.That(Value, "Value should be true but was false.");
 
-        return new BooleanAssertionsChain(this);
+        return Chain();
     }
 
     /// <summary>
     /// Asserts that the boolean value is not <see langword="true" />.
     /// </summary>
-    /// <returns>A <see cref="BooleanAssertionsChain" /> for chaining further assertions.</returns>
-    public BooleanAssertionsChain NotBeTrue()
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<BooleanAssertions, bool> NotBeTrue()
     {
         Verify.That(!Value, "Value should not be true.");
 
-        return new BooleanAssertionsChain(this);
+        return Chain();
     }
 
     /// <summary>
     /// Asserts that the boolean value is <see langword="false" />.
     /// </summary>
-    /// <returns>A <see cref="BooleanAssertionsChain" /> for chaining further assertions.</returns>
-    public BooleanAssertionsChain BeFalse()
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<BooleanAssertions, bool> BeFalse()
     {
         Verify.That(!Value, "Value should be false but was true.");
 
-        return new BooleanAssertionsChain(this);
+        return Chain();
     }
 
     /// <summary>
     /// Asserts that the boolean value is not <see langword="false" />.
     /// </summary>
-    /// <returns>A <see cref="BooleanAssertionsChain" /> for chaining further assertions.</returns>
-    public BooleanAssertionsChain NotBeFalse()
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<BooleanAssertions, bool> NotBeFalse()
     {
         Verify.That(Value, "Value should not be false.");
 
-        return new BooleanAssertionsChain(this);
+        return Chain();
     }
 }

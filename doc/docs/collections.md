@@ -26,7 +26,7 @@ actual.Should().SequenceEqual(expected,
     (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
 ```
 
-See [`SequenceEqual`](API/MrKWatkins.Assertions/EnumerableAssertions-TEnumerable-T/SequenceEqual.md) and [`NotSequenceEqual`](API/MrKWatkins.Assertions/EnumerableAssertions-TEnumerable-T/NotSequenceEqual.md).
+See [`SequenceEqual`](API/MrKWatkins.Assertions/EnumerableAssertions-TSelf-TEnumerable-T/SequenceEqual.md) and [`NotSequenceEqual`](API/MrKWatkins.Assertions/EnumerableAssertions-TSelf-TEnumerable-T/NotSequenceEqual.md).
 
 ## Contains
 
@@ -46,11 +46,11 @@ items.Should().Contain("hello", StringComparer.OrdinalIgnoreCase);
 items.Should().Contain("hello", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
 ```
 
-See [`Contain`](API/MrKWatkins.Assertions/EnumerableAssertions-TEnumerable-T/Contain.md) and [`NotContain`](API/MrKWatkins.Assertions/EnumerableAssertions-TEnumerable-T/NotContain.md).
+See [`Contain`](API/MrKWatkins.Assertions/EnumerableAssertions-TSelf-TEnumerable-T/Contain.md) and [`NotContain`](API/MrKWatkins.Assertions/EnumerableAssertions-TSelf-TEnumerable-T/NotContain.md).
 
 ## Single Item
 
-Assert that the collection contains exactly one element using [`ContainSingle`](API/MrKWatkins.Assertions/EnumerableAssertions-TEnumerable-T/ContainSingle.md):
+Assert that the collection contains exactly one element using [`ContainSingle`](API/MrKWatkins.Assertions/EnumerableAssertions-TSelf-TEnumerable-T/ContainSingle.md):
 
 ```csharp
 var single = new[] { 42 };
@@ -71,7 +71,7 @@ var numbers = new[] { 2, 4, 6 };
 numbers.Should().OnlyContain(x => x % 2 == 0);
 ```
 
-The error message includes the predicate expression text and the first failing item's index. See [`OnlyContain`](API/MrKWatkins.Assertions/EnumerableAssertions-TEnumerable-T/OnlyContain.md).
+The error message includes the predicate expression text and the first failing item's index. See [`OnlyContain`](API/MrKWatkins.Assertions/EnumerableAssertions-TSelf-TEnumerable-T/OnlyContain.md).
 
 ## Count
 
@@ -103,7 +103,7 @@ legacy.Should().NotSequenceEqual(4, 5, 6);
 
 ## Chaining
 
-Chainable methods return an [`EnumerableAssertionsChain<TEnumerable, T>`](API/MrKWatkins.Assertions/EnumerableAssertionsChain-TEnumerable-T/index.md):
+Chainable methods return an [`AssertionsChain<TAssertions, T>`](API/MrKWatkins.Assertions/AssertionsChain-TAssertions-T/index.md):
 
 ```csharp
 new[] { 1, 2, 3 }

@@ -67,7 +67,7 @@ Case-insensitive comparison:
 
 ## Chaining
 
-Chainable methods return a [`StringAssertionsChain`](API/MrKWatkins.Assertions/StringAssertionsChain/index.md):
+Chainable methods return an [`AssertionsChain<TAssertions, T>`](API/MrKWatkins.Assertions/AssertionsChain-TAssertions-T/index.md):
 
 ```csharp
 "Hello, World!"

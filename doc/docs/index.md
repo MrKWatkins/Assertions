@@ -47,7 +47,7 @@ numbers.Should().Contain(2);
 
 ## Chaining
 
-Most assertions return a chain object that lets you keep asserting on the same value:
+Most assertions return an [`AssertionsChain<TAssertions, T>`](API/MrKWatkins.Assertions/AssertionsChain-TAssertions-T/index.md) that lets you keep asserting on the same value. `.And` returns the most specific assertions for the value, even after a general assertion such as `NotBeNull` or `Equal`:
 
 ```csharp
 "hello world"

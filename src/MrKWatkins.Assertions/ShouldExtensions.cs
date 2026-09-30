@@ -257,6 +257,24 @@ public static class ShouldExtensions
     public static TimeSpanAssertions Should(this TimeSpan value) => new(value);
 
     /// <summary>
+    /// Begins a fluent assertion on the specified <see cref="DateTimeOffset" /> value.
+    /// </summary>
+    /// <param name="value">The <see cref="DateTimeOffset" /> value to assert on.</param>
+    /// <returns>A <see cref="DateTimeOffsetAssertions" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static DateTimeOffsetAssertions Should(this DateTimeOffset value) => new(value);
+
+    /// <summary>
+    /// Begins a fluent assertion on the specified <see cref="DateOnly" /> value.
+    /// </summary>
+    /// <param name="value">The <see cref="DateOnly" /> value to assert on.</param>
+    /// <returns>A <see cref="DateOnlyAssertions" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static DateOnlyAssertions Should(this DateOnly value) => new(value);
+
+    /// <summary>
     /// Begins a fluent assertion on the specified float value.
     /// </summary>
     /// <param name="value">The float value to assert on.</param>

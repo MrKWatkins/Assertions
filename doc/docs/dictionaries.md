@@ -19,7 +19,7 @@ See [`ContainKey`](API/MrKWatkins.Assertions/ReadOnlyDictionaryAssertions-TDicti
 
 ## Chaining
 
-Chainable methods return a [`ReadOnlyDictionaryAssertionsChain<TDictionary, TKey, TValue>`](API/MrKWatkins.Assertions/ReadOnlyDictionaryAssertionsChain-TDictionary-TKey-TValue/index.md):
+Chainable methods return an [`AssertionsChain<TAssertions, T>`](API/MrKWatkins.Assertions/AssertionsChain-TAssertions-T/index.md):
 
 ```csharp
 dict.Should()

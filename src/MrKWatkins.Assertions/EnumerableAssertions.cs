@@ -3,21 +3,23 @@ using System.Runtime.CompilerServices;
 namespace MrKWatkins.Assertions;
 
 /// <summary>
-/// Provides assertions for enumerable values.
+/// Base class for assertions on enumerable values.
 /// </summary>
+/// <typeparam name="TSelf">The type of the derived assertions class, returned from <see cref="AssertionsChain{TAssertions, T}.And" /> to allow chaining.</typeparam>
 /// <typeparam name="TEnumerable">The type of the enumerable being asserted on.</typeparam>
 /// <typeparam name="T">The type of elements in the enumerable.</typeparam>
 /// <param name="value">The enumerable value to assert on.</param>
 [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract")]
-public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? value) : ObjectAssertions<TEnumerable>(value)
+public abstract class EnumerableAssertions<TSelf, TEnumerable, T>([NoEnumeration] TEnumerable? value) : ObjectAssertions<TSelf, TEnumerable>(value)
+    where TSelf : EnumerableAssertions<TSelf, TEnumerable, T>
     where TEnumerable : IEnumerable<T>
 {
     /// <summary>
     /// Asserts that all items in the enumerable are of the specified type.
     /// </summary>
     /// <typeparam name="TOther">The expected type.</typeparam>
-    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, TOther}" /> for chaining further assertions.</returns>
-    public EnumerableAssertionsChain<IReadOnlyList<TOther>, TOther> AllBeOfType<TOther>()
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<EnumerableAssertions<IReadOnlyList<TOther>, TOther>, IReadOnlyList<TOther>> AllBeOfType<TOther>()
         where TOther : T
     {
         NotBeNull();
@@ -42,7 +44,7 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
         {
             1 => throw Verify.CreateException($"Value should only contain items of type {typeof(TOther).Name} but the item at index {indices[0]} is not."),
             > 1 => throw Verify.CreateException($"Value should only contain items of type {typeof(TOther).Name} but the items at indices {string.Join(", ", indices)} are not."),
-            _ => new EnumerableAssertionsChain<IReadOnlyList<TOther>, TOther>(new EnumerableAssertions<IReadOnlyList<TOther>, TOther>(typed))
+            _ => new AssertionsChain<EnumerableAssertions<IReadOnlyList<TOther>, TOther>, IReadOnlyList<TOther>>(new EnumerableAssertions<IReadOnlyList<TOther>, TOther>(typed))
         };
     }
 
@@ -51,8 +53,8 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
     /// </summary>
     /// <param name="predicate">The predicate that all items must satisfy.</param>
     /// <param name="predicateExpression">The expression text of the predicate, captured automatically.</param>
-    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
-    public EnumerableAssertionsChain<TEnumerable, T> OnlyContain([InstantHandle] Func<T, bool> predicate, [CallerArgumentExpression(nameof(predicate))] string? predicateExpression = null)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<TSelf, TEnumerable> OnlyContain([InstantHandle] Func<T, bool> predicate, [CallerArgumentExpression(nameof(predicate))] string? predicateExpression = null)
     {
         NotBeNull();
 
@@ -63,14 +65,14 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
             index++;
         }
 
-        return new EnumerableAssertionsChain<TEnumerable, T>(this);
+        return Chain();
     }
 
     /// <summary>
     /// Asserts that the enumerable contains exactly one item.
     /// </summary>
-    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for the single item.</returns>
-    public ObjectAssertionsChain<T> ContainSingle()
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for the single item.</returns>
+    public AssertionsChain<ObjectAssertions<T>, T> ContainSingle()
     {
         NotBeNull();
 
@@ -88,7 +90,7 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
             throw Verify.CreateException("Value should contain a single item but contains more than one item.");
         }
 
-        return new ObjectAssertionsChain<T>(new ObjectAssertions<T>(item));
+        return new AssertionsChain<ObjectAssertions<T>, T>(new ObjectAssertions<T>(item));
     }
 
     /// <summary>
@@ -96,24 +98,24 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
     /// </summary>
     /// <param name="predicate">The predicate to match.</param>
     /// <param name="predicateExpression">The expression text of the predicate, captured automatically.</param>
-    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for the single matching item.</returns>
-    public ObjectAssertionsChain<T> ContainSingle([InstantHandle] Func<T, bool> predicate, [CallerArgumentExpression(nameof(predicate))] string? predicateExpression = null)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for the single matching item.</returns>
+    public AssertionsChain<ObjectAssertions<T>, T> ContainSingle([InstantHandle] Func<T, bool> predicate, [CallerArgumentExpression(nameof(predicate))] string? predicateExpression = null)
     {
         NotBeNull();
 
         var matching = Value.Where(predicate).ToList();
         Verify.That(matching.Count == 1, $"Value should only contain a single item that satisfies the predicate {predicateExpression:L} but it contains {matching.Count} items.");
 
-        return new ObjectAssertionsChain<T>(new ObjectAssertions<T>(matching[0]));
+        return new AssertionsChain<ObjectAssertions<T>, T>(new ObjectAssertions<T>(matching[0]));
     }
 
     /// <summary>
     /// Asserts that the enumerable is sequence equal to the expected elements.
     /// </summary>
     /// <param name="expected">The expected elements.</param>
-    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-    public EnumerableAssertionsChain<TEnumerable, T> SequenceEqual([InstantHandle] params IEnumerable<T?> expected) =>
+    public AssertionsChain<TSelf, TEnumerable> SequenceEqual([InstantHandle] params IEnumerable<T?> expected) =>
         SequenceEqualCore(expected, EqualityComparer<T>.Default.Equals);
 
     /// <summary>
@@ -121,9 +123,9 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
     /// </summary>
     /// <param name="expected">The expected elements.</param>
     /// <param name="comparer">The equality comparer to use for element comparison.</param>
-    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-    public EnumerableAssertionsChain<TEnumerable, T> SequenceEqual([InstantHandle] IEnumerable<T?> expected, IEqualityComparer<T> comparer) =>
+    public AssertionsChain<TSelf, TEnumerable> SequenceEqual([InstantHandle] IEnumerable<T?> expected, IEqualityComparer<T> comparer) =>
         SequenceEqualCore(expected, comparer.Equals);
 
     /// <summary>
@@ -131,13 +133,13 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
     /// </summary>
     /// <param name="expected">The expected elements.</param>
     /// <param name="predicate">The predicate to use for element comparison.</param>
-    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-    public EnumerableAssertionsChain<TEnumerable, T> SequenceEqual([InstantHandle] IEnumerable<T?> expected, Func<T?, T?, bool> predicate) =>
+    public AssertionsChain<TSelf, TEnumerable> SequenceEqual([InstantHandle] IEnumerable<T?> expected, Func<T?, T?, bool> predicate) =>
         SequenceEqualCore(expected, predicate);
 
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-    private EnumerableAssertionsChain<TEnumerable, T> SequenceEqualCore(IEnumerable<T?> expected, Func<T?, T?, bool> equals)
+    private AssertionsChain<TSelf, TEnumerable> SequenceEqualCore(IEnumerable<T?> expected, Func<T?, T?, bool> equals)
     {
         NotBeNull();
 
@@ -190,16 +192,16 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
                 $"Value {Format.Enumerable(Value)} should sequence equal {Format.Enumerable(expected)} but it has fewer elements ({actualList.Count}) than expected.");
         }
 
-        return new EnumerableAssertionsChain<TEnumerable, T>(this);
+        return Chain();
     }
 
     /// <summary>
     /// Asserts that the enumerable is not sequence equal to the expected elements.
     /// </summary>
     /// <param name="expected">The elements the enumerable should not be sequence equal to.</param>
-    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-    public EnumerableAssertionsChain<TEnumerable, T> NotSequenceEqual(params IEnumerable<T> expected)
+    public AssertionsChain<TSelf, TEnumerable> NotSequenceEqual(params IEnumerable<T> expected)
     {
         NotBeNull();
 
@@ -208,7 +210,7 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
             throw Verify.CreateException($"Value should not sequence equal {Format.Enumerable(expected)}.");
         }
 
-        return new EnumerableAssertionsChain<TEnumerable, T>(this);
+        return Chain();
     }
 
     /// <summary>
@@ -216,9 +218,9 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
     /// </summary>
     /// <param name="expected">The elements the enumerable should not be sequence equal to.</param>
     /// <param name="comparer">The equality comparer to use for element comparison.</param>
-    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-    public EnumerableAssertionsChain<TEnumerable, T> NotSequenceEqual(IEnumerable<T> expected, IEqualityComparer<T> comparer)
+    public AssertionsChain<TSelf, TEnumerable> NotSequenceEqual(IEnumerable<T> expected, IEqualityComparer<T> comparer)
     {
         NotBeNull();
 
@@ -227,7 +229,7 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
             throw Verify.CreateException($"Value should not sequence equal {Format.Enumerable(expected)}.");
         }
 
-        return new EnumerableAssertionsChain<TEnumerable, T>(this);
+        return Chain();
     }
 
     /// <summary>
@@ -235,9 +237,9 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
     /// </summary>
     /// <param name="expected">The elements the enumerable should not be sequence equal to.</param>
     /// <param name="predicate">The predicate to use for element comparison.</param>
-    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
     [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-    public EnumerableAssertionsChain<TEnumerable, T> NotSequenceEqual(IEnumerable<T> expected, Func<T?, T?, bool> predicate)
+    public AssertionsChain<TSelf, TEnumerable> NotSequenceEqual(IEnumerable<T> expected, Func<T?, T?, bool> predicate)
     {
         NotBeNull();
 
@@ -256,12 +258,12 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
 
             if (!actualHasNext || !expectedHasNext)
             {
-                return new EnumerableAssertionsChain<TEnumerable, T>(this);
+                return Chain();
             }
 
             if (!predicate(actualEnumerator.Current, expectedEnumerator.Current))
             {
-                return new EnumerableAssertionsChain<TEnumerable, T>(this);
+                return Chain();
             }
         }
 
@@ -272,14 +274,14 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
     /// Asserts that the enumerable contains the specified item.
     /// </summary>
     /// <param name="expected">The item that should be present in the enumerable.</param>
-    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
-    public EnumerableAssertionsChain<TEnumerable, T> Contain(T expected)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<TSelf, TEnumerable> Contain(T expected)
     {
         NotBeNull();
 
         Verify.That(Value.Contains(expected), $"Value should contain {expected} but did not.");
 
-        return new EnumerableAssertionsChain<TEnumerable, T>(this);
+        return Chain();
     }
 
     /// <summary>
@@ -287,14 +289,14 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
     /// </summary>
     /// <param name="expected">The item that should be present in the enumerable.</param>
     /// <param name="comparer">The equality comparer to use for element comparison.</param>
-    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
-    public EnumerableAssertionsChain<TEnumerable, T> Contain(T expected, IEqualityComparer<T> comparer)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<TSelf, TEnumerable> Contain(T expected, IEqualityComparer<T> comparer)
     {
         NotBeNull();
 
         Verify.That(Value.Contains(expected, comparer), $"Value should contain {expected} but did not.");
 
-        return new EnumerableAssertionsChain<TEnumerable, T>(this);
+        return Chain();
     }
 
     /// <summary>
@@ -302,28 +304,28 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
     /// </summary>
     /// <param name="expected">The item that should be present in the enumerable.</param>
     /// <param name="predicate">The predicate to use for element comparison, taking the actual item and expected item as arguments.</param>
-    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
-    public EnumerableAssertionsChain<TEnumerable, T> Contain(T expected, Func<T?, T?, bool> predicate)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<TSelf, TEnumerable> Contain(T expected, Func<T?, T?, bool> predicate)
     {
         NotBeNull();
 
         Verify.That(Value.Any(item => predicate(item, expected)), $"Value should contain {expected} but did not.");
 
-        return new EnumerableAssertionsChain<TEnumerable, T>(this);
+        return Chain();
     }
 
     /// <summary>
     /// Asserts that the enumerable does not contain the specified item.
     /// </summary>
     /// <param name="expected">The item that should not be present in the enumerable.</param>
-    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
-    public EnumerableAssertionsChain<TEnumerable, T> NotContain(T expected)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<TSelf, TEnumerable> NotContain(T expected)
     {
         NotBeNull();
 
         Verify.That(!Value.Contains(expected), $"Value should not contain {expected}.");
 
-        return new EnumerableAssertionsChain<TEnumerable, T>(this);
+        return Chain();
     }
 
     /// <summary>
@@ -331,14 +333,14 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
     /// </summary>
     /// <param name="expected">The item that should not be present in the enumerable.</param>
     /// <param name="comparer">The equality comparer to use for element comparison.</param>
-    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
-    public EnumerableAssertionsChain<TEnumerable, T> NotContain(T expected, IEqualityComparer<T> comparer)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<TSelf, TEnumerable> NotContain(T expected, IEqualityComparer<T> comparer)
     {
         NotBeNull();
 
         Verify.That(!Value.Contains(expected, comparer), $"Value should not contain {expected}.");
 
-        return new EnumerableAssertionsChain<TEnumerable, T>(this);
+        return Chain();
     }
 
     /// <summary>
@@ -346,13 +348,22 @@ public class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? v
     /// </summary>
     /// <param name="expected">The item that should not be present in the enumerable.</param>
     /// <param name="predicate">The predicate to use for element comparison, taking the actual item and expected item as arguments.</param>
-    /// <returns>An <see cref="EnumerableAssertionsChain{TEnumerable, T}" /> for chaining further assertions.</returns>
-    public EnumerableAssertionsChain<TEnumerable, T> NotContain(T expected, Func<T?, T?, bool> predicate)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<TSelf, TEnumerable> NotContain(T expected, Func<T?, T?, bool> predicate)
     {
         NotBeNull();
 
         Verify.That(!Value.Any(item => predicate(item, expected)), $"Value should not contain {expected}.");
 
-        return new EnumerableAssertionsChain<TEnumerable, T>(this);
+        return Chain();
     }
 }
+
+/// <summary>
+/// Provides assertions for enumerable values.
+/// </summary>
+/// <typeparam name="TEnumerable">The type of the enumerable being asserted on.</typeparam>
+/// <typeparam name="T">The type of elements in the enumerable.</typeparam>
+/// <param name="value">The enumerable value to assert on.</param>
+public sealed class EnumerableAssertions<TEnumerable, T>([NoEnumeration] TEnumerable? value) : EnumerableAssertions<EnumerableAssertions<TEnumerable, T>, TEnumerable, T>(value)
+    where TEnumerable : IEnumerable<T>;

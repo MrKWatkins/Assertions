@@ -91,6 +91,24 @@ public sealed class ShouldExtensionsTests
     }
 
     [Test]
+    public async Task Should_DateTimeOffset()
+    {
+        var value = new DateTimeOffset(2026, 9, 30, 12, 0, 0, TimeSpan.Zero);
+
+        await Assert.That(() => value.Should().BeAfter(value.AddDays(-1))).ThrowsNothing();
+        await Assert.That(() => value.Should().BeAfter(value.AddDays(1))).Throws<AssertionException>();
+    }
+
+    [Test]
+    public async Task Should_DateOnly()
+    {
+        var value = new DateOnly(2026, 9, 30);
+
+        await Assert.That(() => value.Should().BeAfter(value.AddDays(-1))).ThrowsNothing();
+        await Assert.That(() => value.Should().BeAfter(value.AddDays(1))).Throws<AssertionException>();
+    }
+
+    [Test]
     public async Task Should_Half()
     {
         var value = (Half)42;

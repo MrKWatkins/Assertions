@@ -14,10 +14,12 @@ public static class CountExtensions
     /// <summary>
     /// Asserts that the enumerable is empty.
     /// </summary>
+    /// <typeparam name="TAssertions">The type of the assertions object.</typeparam>
     /// <typeparam name="T">The type of the enumerable.</typeparam>
     /// <param name="assertions">The assertions object.</param>
-    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public static ObjectAssertionsChain<T> BeEmpty<T>(this ObjectAssertions<T> assertions)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public static AssertionsChain<TAssertions, T> BeEmpty<TAssertions, T>(this ObjectAssertions<TAssertions, T> assertions)
+        where TAssertions : ObjectAssertions<TAssertions, T>
         where T : IEnumerable
     {
         assertions.NotBeNull();
@@ -39,16 +41,18 @@ public static class CountExtensions
             }
         }
 
-        return new ObjectAssertionsChain<T>(assertions);
+        return assertions.Chain();
     }
 
     /// <summary>
     /// Asserts that the enumerable is not empty.
     /// </summary>
+    /// <typeparam name="TAssertions">The type of the assertions object.</typeparam>
     /// <typeparam name="T">The type of the enumerable.</typeparam>
     /// <param name="assertions">The assertions object.</param>
-    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public static ObjectAssertionsChain<T> NotBeEmpty<T>(this ObjectAssertions<T> assertions)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public static AssertionsChain<TAssertions, T> NotBeEmpty<TAssertions, T>(this ObjectAssertions<TAssertions, T> assertions)
+        where TAssertions : ObjectAssertions<TAssertions, T>
         where T : IEnumerable
     {
         assertions.NotBeNull();
@@ -70,17 +74,19 @@ public static class CountExtensions
             }
         }
 
-        return new ObjectAssertionsChain<T>(assertions);
+        return assertions.Chain();
     }
 
     /// <summary>
     /// Asserts that the enumerable has the specified number of elements.
     /// </summary>
+    /// <typeparam name="TAssertions">The type of the assertions object.</typeparam>
     /// <typeparam name="T">The type of the enumerable.</typeparam>
     /// <param name="assertions">The assertions object.</param>
     /// <param name="expectedCount">The expected number of elements.</param>
-    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public static ObjectAssertionsChain<T> HaveCount<T>(this ObjectAssertions<T> assertions, int expectedCount)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public static AssertionsChain<TAssertions, T> HaveCount<TAssertions, T>(this ObjectAssertions<TAssertions, T> assertions, int expectedCount)
+        where TAssertions : ObjectAssertions<TAssertions, T>
         where T : IEnumerable
     {
         assertions.NotBeNull();
@@ -90,17 +96,19 @@ public static class CountExtensions
 
         Verify.That(actualCount == expectedCount, $"Value should have a count of {expectedCount} but has a count of {actualCount}.");
 
-        return new ObjectAssertionsChain<T>(assertions);
+        return assertions.Chain();
     }
 
     /// <summary>
     /// Asserts that the enumerable does not have the specified number of elements.
     /// </summary>
+    /// <typeparam name="TAssertions">The type of the assertions object.</typeparam>
     /// <typeparam name="T">The type of the enumerable.</typeparam>
     /// <param name="assertions">The assertions object.</param>
     /// <param name="expectedCount">The number of elements that is not expected.</param>
-    /// <returns>An <see cref="ObjectAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public static ObjectAssertionsChain<T> NotHaveCount<T>(this ObjectAssertions<T> assertions, int expectedCount)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public static AssertionsChain<TAssertions, T> NotHaveCount<TAssertions, T>(this ObjectAssertions<TAssertions, T> assertions, int expectedCount)
+        where TAssertions : ObjectAssertions<TAssertions, T>
         where T : IEnumerable
     {
         assertions.NotBeNull();
@@ -110,7 +118,7 @@ public static class CountExtensions
 
         Verify.That(actualCount != expectedCount, $"Value should not have a count of {expectedCount}.");
 
-        return new ObjectAssertionsChain<T>(assertions);
+        return assertions.Chain();
     }
 
     [Pure]
