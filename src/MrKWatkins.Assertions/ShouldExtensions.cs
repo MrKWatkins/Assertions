@@ -248,6 +248,15 @@ public static class ShouldExtensions
     public static DecimalAssertions Should(this decimal value) => new(value);
 
     /// <summary>
+    /// Begins a fluent assertion on the specified <see cref="TimeSpan" /> value.
+    /// </summary>
+    /// <param name="value">The <see cref="TimeSpan" /> value to assert on.</param>
+    /// <returns>A <see cref="TimeSpanAssertions" /> for the value.</returns>
+    [Pure]
+    [OverloadResolutionPriority(10)]
+    public static TimeSpanAssertions Should(this TimeSpan value) => new(value);
+
+    /// <summary>
     /// Begins a fluent assertion on the specified float value.
     /// </summary>
     /// <param name="value">The float value to assert on.</param>

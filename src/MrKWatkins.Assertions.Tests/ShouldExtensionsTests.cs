@@ -82,6 +82,15 @@ public sealed class ShouldExtensionsTests
     }
 
     [Test]
+    public async Task Should_TimeSpan()
+    {
+        var value = TimeSpan.FromSeconds(42);
+
+        await Assert.That(() => value.Should().BeGreaterThan(TimeSpan.Zero)).ThrowsNothing();
+        await Assert.That(() => value.Should().BeGreaterThan(TimeSpan.FromMinutes(1))).Throws<AssertionException>();
+    }
+
+    [Test]
     public async Task Should_Half()
     {
         var value = (Half)42;
