@@ -28,18 +28,30 @@ dotnet test src/MrKWatkins.Assertions.Tests --filter "FullyQualifiedName~TestMet
 - `AssertThat.Invoking(() => action())` — action/exception testing
 - `Verify.That(condition, message)` — direct verification
 
-**Assertion class hierarchy:**
-- `ObjectAssertions<T>` — base: null checks, equality, type checking
-- `StringAssertions` — Contain, NotContain
-- `EnumerableAssertions<TEnumerable, T>` — SequenceEqual, OnlyContain, ContainSingle
-- `ReadOnlySetAssertions<TSet, T>` — extends `EnumerableAssertions`: SetEquals, IsSupersetOf, IsSubsetOf
-- `ReadOnlyDictionaryAssertions<TDict, TKey, TValue>` — dictionary assertions
-- `TimeSpanAssertions` — BeZero, BePositive/Negative, BeLessThan/GreaterThan (and OrEqualTo), BeInRange, BeApproximately
+**Assertion class hierarchy:** base classes are abstract and take the derived class as a `TSelf` type parameter (CRTP), so inherited assertions return a chain for the derived class. Non-sealed
+classes that are also used directly have an abstract `TSelf` version plus a sealed version with the same name and fewer type parameters (e.g. `ObjectAssertions<TSelf, T>` and `ObjectAssertions<T>`).
+- `ObjectAssertions<TSelf, T>` — base: null checks, equality, type checking. `ObjectAssertions<T>` is the sealed version returned by `Should<T>()`
+  - `ComparableAssertions<TSelf, T>` — `T : IComparable<T>`: BeLessThan/GreaterThan (and OrEqualTo), BeInRange. Unordered values (NaN) fail all comparisons
+    - `NumericAssertions<TSelf, T>` — BeZero, BePositive/Negative and Not variants. Zero is neither positive nor negative
+      - `IntegerAssertions<T>` — cross-type Equal/NotEqual
+      - `DecimalAssertions`
+      - `FloatingPointAssertions<T>` — BeApproximately, comparisons with precision, NaN/Infinity
+      - `TimeSpanAssertions` — BeApproximately
+    - `DateTimeOffsetAssertions` — BeBefore/After (and OnOr), BeApproximately, BeExactly, HaveOffset
+    - `DateOnlyAssertions` — BeBefore/After (and OnOr), BeOnDayOfWeek
+  - `EnumerableAssertions<TSelf, TEnumerable, T>` — SequenceEqual, OnlyContain, ContainSingle. `EnumerableAssertions<TEnumerable, T>` is the sealed version
+    - `StringAssertions` — Contain, NotContain
+    - `ReadOnlySetAssertions<TSet, T>` — SetEquals, IsSupersetOf, IsSubsetOf
+  - `ReadOnlyDictionaryAssertions<TDict, TKey, TValue>` — dictionary assertions
+  - `ExceptionAssertions<T>` — HaveMessage, HaveInnerException
+  - `BooleanAssertions`
 - `ReadOnlySpanAssertions<T>` — span assertions (ref struct, zero-allocation)
-- `ExceptionAssertions<T>` — HaveMessage, HaveInnerException
 - `ActionAssertions` — Throw, NotThrow
 
-**Fluent chaining:** Each assertion class has a corresponding `*Chain` class that wraps the value and enables `.And` chaining (e.g., `value.Should().NotBeNull().And.Equal(expected)`).
+**Fluent chaining:** Assertions return `AssertionsChain<TAssertions, T>`, which wraps the assertions object and enables `.And` chaining (e.g., `value.Should().NotBeNull().And.Equal(expected)`).
+Return `Chain()` from assertion methods. Extension methods that apply to several assertion classes should be generic over the assertions type (`this ObjectAssertions<TAssertions, T> assertions`)
+and return `assertions.Chain()` so the specific type is preserved. The exceptions are `ReadOnlySpanAssertionsChain<T>` (a ref struct), and `ActionAssertionsChain<TException>` and
+`InnerExceptionAssertionsChain<TException>`, which expose an exception rather than `.And`.
 
 **Standalone extension methods** for simple types: `BooleanExtensions`, `NumericExtensions`, `CountExtensions`, `EnumerableExtensions`, `InvokingExtensions`.
 

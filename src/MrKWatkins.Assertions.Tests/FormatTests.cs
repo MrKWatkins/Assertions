@@ -76,6 +76,27 @@ public sealed class FormatTests
     }
 
     [Test]
+    public async Task DateTimeOffsetValue()
+    {
+        await Assert.That(Format.Value(new DateTimeOffset(2026, 9, 30, 12, 34, 56, TimeSpan.Zero))).IsEqualTo("2026-09-30T12:34:56+00:00");
+        await Assert.That(Format.Value(new DateTimeOffset(2026, 9, 30, 12, 34, 56, 789, TimeSpan.FromHours(-5.5)))).IsEqualTo("2026-09-30T12:34:56.789-05:30");
+        await Assert.That(Format.Value(new DateTimeOffset(2026, 9, 30, 12, 34, 56, TimeSpan.Zero).AddTicks(1))).IsEqualTo("2026-09-30T12:34:56.0000001+00:00");
+    }
+
+    [Test]
+    public async Task DateOnlyValue()
+    {
+        await Assert.That(Format.Value(new DateOnly(2026, 9, 30))).IsEqualTo("2026-09-30");
+    }
+
+    [Test]
+    public async Task TimeSpanValue()
+    {
+        await Assert.That(Format.Value(TimeSpan.FromSeconds(-5))).IsEqualTo("-00:00:05");
+        await Assert.That(Format.Value(new TimeSpan(1, 2, 3, 4, 5))).IsEqualTo("1.02:03:04.0050000");
+    }
+
+    [Test]
     [Arguments(null, 15, "15")]
     [Arguments(IntegerFormat.Decimal, 15, "15")]
     [Arguments(IntegerFormat.Hexadecimal, 15, "0x0F")]

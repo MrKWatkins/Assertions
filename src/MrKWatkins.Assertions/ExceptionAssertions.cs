@@ -5,7 +5,7 @@ namespace MrKWatkins.Assertions;
 /// </summary>
 /// <typeparam name="T">The type of the exception being asserted on.</typeparam>
 /// <param name="value">The exception to assert on.</param>
-public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value)
+public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<ExceptionAssertions<T>, T>(value)
     where T : Exception
 {
     /// <summary>
@@ -13,13 +13,13 @@ public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value
     /// </summary>
     /// <param name="expected">The expected message.</param>
     /// <param name="comparison">The <see cref="StringComparison" /> to use. Defaults to <see cref="StringComparison.InvariantCulture" />.</param>
-    /// <returns>An <see cref="ExceptionAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public ExceptionAssertionsChain<T> HaveMessage(string expected, StringComparison comparison = StringComparison.InvariantCulture)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<ExceptionAssertions<T>, T> HaveMessage(string expected, StringComparison comparison = StringComparison.InvariantCulture)
     {
         NotBeNull();
         Verify.That(string.Equals(Value.Message, expected, comparison), $"Value should have Message {expected}{FormatComparison(comparison):L} but was {Value.Message}.");
 
-        return new ExceptionAssertionsChain<T>(this);
+        return Chain();
     }
 
     /// <summary>
@@ -27,13 +27,13 @@ public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value
     /// </summary>
     /// <param name="expected">The message that is not expected.</param>
     /// <param name="comparison">The <see cref="StringComparison" /> to use. Defaults to <see cref="StringComparison.InvariantCulture" />.</param>
-    /// <returns>An <see cref="ExceptionAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public ExceptionAssertionsChain<T> NotHaveMessage(string expected, StringComparison comparison = StringComparison.InvariantCulture)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<ExceptionAssertions<T>, T> NotHaveMessage(string expected, StringComparison comparison = StringComparison.InvariantCulture)
     {
         NotBeNull();
         Verify.That(!string.Equals(Value.Message, expected, comparison), $"Value should not have Message {Value.Message}{FormatComparison(comparison):L}.");
 
-        return new ExceptionAssertionsChain<T>(this);
+        return Chain();
     }
 
     /// <summary>
@@ -41,13 +41,13 @@ public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value
     /// </summary>
     /// <param name="expected">The expected message prefix.</param>
     /// <param name="comparison">The <see cref="StringComparison" /> to use. Defaults to <see cref="StringComparison.InvariantCulture" />.</param>
-    /// <returns>An <see cref="ExceptionAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public ExceptionAssertionsChain<T> HaveMessageStartingWith(string expected, StringComparison comparison = StringComparison.InvariantCulture)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<ExceptionAssertions<T>, T> HaveMessageStartingWith(string expected, StringComparison comparison = StringComparison.InvariantCulture)
     {
         NotBeNull();
         Verify.That(Value.Message.StartsWith(expected, comparison), $"Value should have Message starting with {expected}{FormatComparison(comparison):L} but was {Value.Message}.");
 
-        return new ExceptionAssertionsChain<T>(this);
+        return Chain();
     }
 
     /// <summary>
@@ -55,13 +55,13 @@ public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value
     /// </summary>
     /// <param name="expected">The message prefix that is not expected.</param>
     /// <param name="comparison">The <see cref="StringComparison" /> to use. Defaults to <see cref="StringComparison.InvariantCulture" />.</param>
-    /// <returns>An <see cref="ExceptionAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public ExceptionAssertionsChain<T> NotHaveMessageStartingWith(string expected, StringComparison comparison = StringComparison.InvariantCulture)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<ExceptionAssertions<T>, T> NotHaveMessageStartingWith(string expected, StringComparison comparison = StringComparison.InvariantCulture)
     {
         NotBeNull();
         Verify.That(!Value.Message.StartsWith(expected, comparison), $"Value should not have Message starting with {expected}{FormatComparison(comparison):L} but was {Value.Message}.");
 
-        return new ExceptionAssertionsChain<T>(this);
+        return Chain();
     }
 
     /// <summary>
@@ -97,13 +97,13 @@ public sealed class ExceptionAssertions<T>(T? value) : ObjectAssertions<T>(value
     /// <summary>
     /// Asserts that the exception does not have an inner exception.
     /// </summary>
-    /// <returns>An <see cref="ExceptionAssertionsChain{T}" /> for chaining further assertions.</returns>
-    public ExceptionAssertionsChain<T> NotHaveInnerException()
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<ExceptionAssertions<T>, T> NotHaveInnerException()
     {
         NotBeNull();
         Verify.That(Value.InnerException is null, $"Value should not have an InnerException but has {Value.InnerException}.");
 
-        return new ExceptionAssertionsChain<T>(this);
+        return Chain();
     }
 
     [Pure]

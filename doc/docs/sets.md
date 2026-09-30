@@ -1,6 +1,6 @@
 # Sets
 
-[`ReadOnlySetAssertions<TSet, T>`](API/MrKWatkins.Assertions/ReadOnlySetAssertions-TSet-T/index.md) is available for [`IReadOnlySet<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ireadonlyset-1) and [`HashSet<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.hashset-1) via `.Should()`. It extends [`EnumerableAssertions<TEnumerable, T>`](API/MrKWatkins.Assertions/EnumerableAssertions-TEnumerable-T/index.md), so all enumerable assertions are available too.
+[`ReadOnlySetAssertions<TSet, T>`](API/MrKWatkins.Assertions/ReadOnlySetAssertions-TSet-T/index.md) is available for [`IReadOnlySet<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ireadonlyset-1) and [`HashSet<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.hashset-1) via `.Should()`. It extends [`EnumerableAssertions<TSelf, TEnumerable, T>`](API/MrKWatkins.Assertions/EnumerableAssertions-TSelf-TEnumerable-T/index.md), so all enumerable assertions are available too.
 
 ## Set Comparison
 
@@ -18,7 +18,7 @@ See [`SetEquals`](API/MrKWatkins.Assertions/ReadOnlySetAssertions-TSet-T/SetEqua
 
 ## Chaining
 
-Chainable methods return a [`ReadOnlySetAssertionsChain<TSet, T>`](API/MrKWatkins.Assertions/ReadOnlySetAssertionsChain-TSet-T/index.md):
+Chainable methods return an [`AssertionsChain<TAssertions, T>`](API/MrKWatkins.Assertions/AssertionsChain-TAssertions-T/index.md):
 
 ```csharp
 set.Should()

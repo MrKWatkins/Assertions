@@ -1,10 +1,42 @@
 # Numbers
 
+Integers, `decimal` and floating-point values share their comparison, sign and zero assertions, which are defined on
+[`ComparableAssertions<TSelf, T>`](API/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/index.md) and
+[`NumericAssertions<TSelf, T>`](API/MrKWatkins.Assertions/NumericAssertions-TSelf-T/index.md). Chainable methods return an
+[`AssertionsChain<TAssertions, T>`](API/MrKWatkins.Assertions/AssertionsChain-TAssertions-T/index.md) whose `.And` is the assertions for the specific numeric type.
+
+## Comparisons
+
+```csharp
+5.Should().BeLessThan(10);
+5.Should().BeLessThanOrEqualTo(5);
+10.Should().BeGreaterThan(5);
+10.Should().BeGreaterThanOrEqualTo(10);
+5.Should().BeInRange(1, 10); // Inclusive.
+```
+
+See [`BeLessThan`](API/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/BeLessThan.md), [`BeLessThanOrEqualTo`](API/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/BeLessThanOrEqualTo.md),
+[`BeGreaterThan`](API/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/BeGreaterThan.md), [`BeGreaterThanOrEqualTo`](API/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/BeGreaterThanOrEqualTo.md)
+and [`BeInRange`](API/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/BeInRange.md).
+
+## Sign and Zero
+
+```csharp
+42.Should().BePositive();
+42.Should().NotBeNegative();
+(-5).Should().BeNegative();
+(-5).Should().NotBePositive();
+0.Should().BeZero();
+1.Should().NotBeZero();
+```
+
+Zero is neither positive nor negative, so `0.Should().BePositive()` fails and `0.Should().NotBePositive()` passes. See
+[`BeZero`](API/MrKWatkins.Assertions/NumericAssertions-TSelf-T/BeZero.md), [`BePositive`](API/MrKWatkins.Assertions/NumericAssertions-TSelf-T/BePositive.md),
+[`BeNegative`](API/MrKWatkins.Assertions/NumericAssertions-TSelf-T/BeNegative.md) and their `Not` counterparts.
+
 ## Integers
 
 [`IntegerAssertions<T>`](API/MrKWatkins.Assertions/IntegerAssertions-T/index.md) is available for all integer types (`byte`, `sbyte`, `short`, `ushort`, `int`, `uint`, `long`, `ulong`, `nint`, `nuint`) via `.Should()`.
-
-### Equality
 
 ```csharp
 int value = 42;
@@ -22,58 +54,17 @@ b.Should().NotEqual(256); // 256 can't fit in a byte → always passes
 
 If the expected value can't be represented in the value's type (overflow), [`Equal`](API/MrKWatkins.Assertions/IntegerAssertions-T/Equal.md) throws an assertion failure with a descriptive message. [`NotEqual`](API/MrKWatkins.Assertions/IntegerAssertions-T/NotEqual.md) passes silently in this case.
 
-### Sign and Zero
-
-```csharp
-42.Should().BePositive();
-42.Should().NotBeNegative();
-(-5).Should().BeNegative();
-(-5).Should().NotBePositive();
-0.Should().BeZero();
-1.Should().NotBeZero();
-```
-
-### Comparisons
-
-```csharp
-5.Should().BeLessThan(10);
-5.Should().BeLessThanOrEqualTo(5);
-10.Should().BeGreaterThan(5);
-10.Should().BeGreaterThanOrEqualTo(10);
-```
-
-Chainable methods return an [`IntegerAssertionsChain<T>`](API/MrKWatkins.Assertions/IntegerAssertionsChain-T/index.md).
-
 ## Decimal
 
 [`DecimalAssertions`](API/MrKWatkins.Assertions/DecimalAssertions/index.md) is available for [`decimal`](https://learn.microsoft.com/en-us/dotnet/api/system.decimal) via `.Should()`. Because `decimal` is an exact type, there is no precision/approximation parameter — comparisons use exact values.
 
-### Sign and Zero
-
-```csharp
-(5m).Should().BePositive();
-(-5m).Should().BeNegative();
-(0m).Should().BeZero();
-(1m).Should().NotBeZero();
-```
-
-### Comparisons
-
-```csharp
-(5m).Should().BeLessThan(10m);
-(5m).Should().BeLessThanOrEqualTo(5m);
-(10m).Should().BeGreaterThan(5m);
-(10m).Should().BeGreaterThanOrEqualTo(10m);
-```
-
-Equality uses the base [`Equal`](API/MrKWatkins.Assertions/ObjectAssertions-T/Equal.md) and [`NotEqual`](API/MrKWatkins.Assertions/ObjectAssertions-T/NotEqual.md) from [`ObjectAssertions<T>`](API/MrKWatkins.Assertions/ObjectAssertions-T/index.md):
-
 ```csharp
 (1.5m).Should().Equal(1.5m);
 (1.5m).Should().NotEqual(2.0m);
+(5m).Should().BePositive().And.BeLessThan(10m);
 ```
 
-Chainable methods return a [`DecimalAssertionsChain`](API/MrKWatkins.Assertions/DecimalAssertionsChain/index.md).
+Equality uses the base [`Equal`](API/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/Equal.md) and [`NotEqual`](API/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/NotEqual.md).
 
 ## Floating-Point
 
@@ -94,7 +85,7 @@ halfValue.Should().BeApproximately((Half)17.5, (Half)0.1);
 
 ### Comparisons with Precision
 
-All comparison methods take a precision parameter that defines a tolerance:
+As well as the exact comparisons above, there are comparison methods that take a precision parameter that defines a tolerance:
 
 ```csharp
 double value = 5.001;
@@ -104,13 +95,18 @@ value.Should().BeGreaterThanOrEqualTo(5.001, 0.001);
 value.Should().BeLessThanOrEqualTo(5.001, 0.001);
 ```
 
-### Sign and Zero
+### NaN and Signed Zero
+
+Comparisons, sign and zero assertions follow the behaviour of the comparison operators:
+
+- [`NaN`](https://learn.microsoft.com/en-us/dotnet/api/system.double.nan) is unordered, so it is not less than, greater than or equal to anything, and is not zero, positive or negative.
+- `-0.0` is zero, and is not negative.
 
 ```csharp
-(3.14).Should().BePositive();
-(-2.5).Should().BeNegative();
-(0.0).Should().BeZero();
-(1.0).Should().NotBeZero();
+double.NaN.Should().BeLessThan(1.0);   // Fails.
+double.NaN.Should().NotBePositive();   // Passes.
+(-0.0).Should().BeZero();              // Passes.
+(-0.0).Should().BeNegative();          // Fails.
 ```
 
 ### Special Values
@@ -128,8 +124,6 @@ double.NegativeInfinity.Should().BeInfinity();
 double.PositiveInfinity.Should().BePositiveInfinity();
 double.NegativeInfinity.Should().BeNegativeInfinity();
 ```
-
-Chainable methods return a [`FloatingPointAssertionsChain<T>`](API/MrKWatkins.Assertions/FloatingPointAssertionsChain-T/index.md).
 
 ## Booleans
 

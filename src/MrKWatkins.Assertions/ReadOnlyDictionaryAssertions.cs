@@ -7,32 +7,32 @@ namespace MrKWatkins.Assertions;
 /// <typeparam name="TKey">The type of the dictionary keys.</typeparam>
 /// <typeparam name="TValue">The type of the dictionary values.</typeparam>
 /// <param name="value">The dictionary to assert on.</param>
-public sealed class ReadOnlyDictionaryAssertions<TDictionary, TKey, TValue>([NoEnumeration] TDictionary value) : ObjectAssertions<TDictionary>(value)
+public sealed class ReadOnlyDictionaryAssertions<TDictionary, TKey, TValue>([NoEnumeration] TDictionary value) : ObjectAssertions<ReadOnlyDictionaryAssertions<TDictionary, TKey, TValue>, TDictionary>(value)
     where TDictionary : IReadOnlyDictionary<TKey, TValue>
 {
     /// <summary>
     /// Asserts that the dictionary contains the specified key.
     /// </summary>
     /// <param name="key">The key that should be present.</param>
-    /// <returns>A <see cref="ReadOnlyDictionaryAssertionsChain{TDictionary, TKey, TValue}" /> for chaining further assertions.</returns>
-    public ReadOnlyDictionaryAssertionsChain<TDictionary, TKey, TValue> ContainKey(TKey key)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<ReadOnlyDictionaryAssertions<TDictionary, TKey, TValue>, TDictionary> ContainKey(TKey key)
     {
         NotBeNull();
         Verify.That(Value.ContainsKey(key), $"Value should contain key {key}.");
 
-        return new ReadOnlyDictionaryAssertionsChain<TDictionary, TKey, TValue>(this);
+        return Chain();
     }
 
     /// <summary>
     /// Asserts that the dictionary does not contain the specified key.
     /// </summary>
     /// <param name="key">The key that should not be present.</param>
-    /// <returns>A <see cref="ReadOnlyDictionaryAssertionsChain{TDictionary, TKey, TValue}" /> for chaining further assertions.</returns>
-    public ReadOnlyDictionaryAssertionsChain<TDictionary, TKey, TValue> NotContainKey(TKey key)
+    /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
+    public AssertionsChain<ReadOnlyDictionaryAssertions<TDictionary, TKey, TValue>, TDictionary> NotContainKey(TKey key)
     {
         NotBeNull();
         Verify.That(!Value.ContainsKey(key), $"Value should not contain key {key}.");
 
-        return new ReadOnlyDictionaryAssertionsChain<TDictionary, TKey, TValue>(this);
+        return Chain();
     }
 }

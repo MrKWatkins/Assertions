@@ -1,4 +1,5 @@
 using System.Collections.Frozen;
+using System.Globalization;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -92,6 +93,14 @@ internal static class Format
 
             case UInt128 uint128Value:
                 Append(message, uint128Value, 16);
+                return;
+
+            case DateTimeOffset dateTimeOffsetValue:
+                message.Append(dateTimeOffsetValue.ToString("yyyy-MM-ddTHH:mm:ss.FFFFFFFzzz", CultureInfo.InvariantCulture));
+                return;
+
+            case DateOnly dateOnlyValue:
+                message.Append(dateOnlyValue.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
                 return;
 
             default:

@@ -322,4 +322,82 @@ public sealed class FloatingPointAssertionsTests
         await Assert.That(double.IsNegativeInfinity(chain.Value)).IsTrue();
         await Assert.That(double.IsNegativeInfinity(chain.And.Value)).IsTrue();
     }
+
+    [Test]
+    public async Task ZeroAndSign_SignedZero()
+    {
+        await Assert.That(() => (0.0).Should().BePositive()).Throws<AssertionException>()
+            .WithMessage("Value should be positive but was 0.");
+        await Assert.That(() => (0.0).Should().NotBePositive()).ThrowsNothing();
+        await Assert.That(() => (0.0).Should().NotBeNegative()).ThrowsNothing();
+
+        await Assert.That(() => (-0.0).Should().BeZero()).ThrowsNothing();
+        await Assert.That(() => (-0.0).Should().BeNegative()).Throws<AssertionException>()
+            .WithMessage("Value should be negative but was -0.");
+        await Assert.That(() => (-0.0).Should().NotBeNegative()).ThrowsNothing();
+        await Assert.That(() => (-0.0).Should().NotBePositive()).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task ZeroAndSign_NaN()
+    {
+        await Assert.That(() => double.NaN.Should().BeZero()).Throws<AssertionException>()
+            .WithMessage("Value should be zero but was NaN.");
+        await Assert.That(() => double.NaN.Should().NotBeZero()).ThrowsNothing();
+        await Assert.That(() => double.NaN.Should().BePositive()).Throws<AssertionException>()
+            .WithMessage("Value should be positive but was NaN.");
+        await Assert.That(() => double.NaN.Should().NotBePositive()).ThrowsNothing();
+        await Assert.That(() => double.NaN.Should().BeNegative()).Throws<AssertionException>()
+            .WithMessage("Value should be negative but was NaN.");
+        await Assert.That(() => double.NaN.Should().NotBeNegative()).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task ZeroAndSign_Infinity()
+    {
+        await Assert.That(() => double.PositiveInfinity.Should().BePositive()).ThrowsNothing();
+        await Assert.That(() => double.NegativeInfinity.Should().BeNegative()).ThrowsNothing();
+    }
+
+    [Test]
+    public async Task ExactComparisons()
+    {
+        await Assert.That(() => (5.0).Should().BeLessThan(10.0)).ThrowsNothing();
+        await Assert.That(() => (5.0).Should().BeLessThan(5.0)).Throws<AssertionException>()
+            .WithMessage("Value should be less than 5 but was 5.");
+        await Assert.That(() => (5.0).Should().BeLessThanOrEqualTo(5.0)).ThrowsNothing();
+        await Assert.That(() => (5.0).Should().BeGreaterThan(1.0)).ThrowsNothing();
+        await Assert.That(() => (5.0).Should().BeGreaterThan(5.0)).Throws<AssertionException>()
+            .WithMessage("Value should be greater than 5 but was 5.");
+        await Assert.That(() => (5.0).Should().BeGreaterThanOrEqualTo(5.0)).ThrowsNothing();
+        await Assert.That(() => (5.0).Should().BeInRange(1.0, 10.0)).ThrowsNothing();
+        await Assert.That(() => (5.0).Should().BeInRange(6.0, 10.0)).Throws<AssertionException>()
+            .WithMessage("Value should be in the range 6 to 10 but was 5.");
+    }
+
+    [Test]
+    public async Task ExactComparisons_Half()
+    {
+        await Assert.That(() => ((Half)5).Should().BeLessThan((Half)10)).ThrowsNothing();
+        await Assert.That(() => ((Half)5).Should().BeGreaterThan((Half)10)).Throws<AssertionException>()
+            .WithMessage("Value should be greater than 10 but was 5.");
+    }
+
+    [Test]
+    public async Task ExactComparisons_NaN()
+    {
+        // NaN is unordered, so all comparisons fail, whichever side the NaN is on. (Comparer<double>.Default would sort NaN below all other values.)
+        await Assert.That(() => double.NaN.Should().BeLessThan(1.0)).Throws<AssertionException>()
+            .WithMessage("Value should be less than 1 but was NaN.");
+        await Assert.That(() => double.NaN.Should().BeLessThanOrEqualTo(1.0)).Throws<AssertionException>();
+        await Assert.That(() => double.NaN.Should().BeGreaterThan(1.0)).Throws<AssertionException>();
+        await Assert.That(() => double.NaN.Should().BeGreaterThanOrEqualTo(1.0)).Throws<AssertionException>();
+        await Assert.That(() => double.NaN.Should().BeGreaterThanOrEqualTo(double.NaN)).Throws<AssertionException>();
+        await Assert.That(() => (1.0).Should().BeGreaterThan(double.NaN)).Throws<AssertionException>();
+        await Assert.That(() => (1.0).Should().BeLessThan(double.NaN)).Throws<AssertionException>();
+        await Assert.That(() => (1.0).Should().BeInRange(double.NaN, 2.0)).Throws<AssertionException>();
+        await Assert.That(() => double.NaN.Should().BeInRange(double.MinValue, double.MaxValue)).Throws<AssertionException>();
+        await Assert.That(() => float.NaN.Should().BeLessThan(1f)).Throws<AssertionException>();
+        await Assert.That(() => Half.NaN.Should().BeLessThan((Half)1)).Throws<AssertionException>();
+    }
 }

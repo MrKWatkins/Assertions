@@ -117,9 +117,9 @@ public sealed class IntegerAssertionsTests
         const int zero = 0;
         const int negative = -1;
 
-        await Assert.That(() => positive.Should().BeZero()).Throws<AssertionException>().WithMessage("Value should be 0 but was 1.");
+        await Assert.That(() => positive.Should().BeZero()).Throws<AssertionException>().WithMessage("Value should be zero but was 1.");
         await Assert.That(() => zero.Should().BeZero()).ThrowsNothing();
-        await Assert.That(() => negative.Should().BeZero()).Throws<AssertionException>().WithMessage("Value should be 0 but was -1.");
+        await Assert.That(() => negative.Should().BeZero()).Throws<AssertionException>().WithMessage("Value should be zero but was -1.");
     }
 
     [Test]
@@ -142,7 +142,7 @@ public sealed class IntegerAssertionsTests
         const int negative = -1;
 
         await Assert.That(() => positive.Should().NotBeZero()).ThrowsNothing();
-        await Assert.That(() => zero.Should().NotBeZero()).Throws<AssertionException>().WithMessage("Value should not be 0.");
+        await Assert.That(() => zero.Should().NotBeZero()).Throws<AssertionException>().WithMessage("Value should not be zero.");
         await Assert.That(() => negative.Should().NotBeZero()).ThrowsNothing();
     }
 
@@ -210,7 +210,7 @@ public sealed class IntegerAssertionsTests
         const int positive = 1;
 
         await Assert.That(() => negative.Should().BePositive()).Throws<AssertionException>().WithMessage("Value should be positive but was -1.");
-        await Assert.That(() => zero.Should().BePositive()).ThrowsNothing();
+        await Assert.That(() => zero.Should().BePositive()).Throws<AssertionException>().WithMessage("Value should be positive but was 0.");
         await Assert.That(() => positive.Should().BePositive()).ThrowsNothing();
     }
 
@@ -234,7 +234,7 @@ public sealed class IntegerAssertionsTests
         const int positive = 1;
 
         await Assert.That(() => negative.Should().NotBePositive()).ThrowsNothing();
-        await Assert.That(() => zero.Should().NotBePositive()).Throws<AssertionException>().WithMessage("Value should not be positive but was 0.");
+        await Assert.That(() => zero.Should().NotBePositive()).ThrowsNothing();
         await Assert.That(() => positive.Should().NotBePositive()).Throws<AssertionException>().WithMessage("Value should not be positive but was 1.");
     }
 

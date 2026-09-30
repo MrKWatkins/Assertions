@@ -1,16 +1,18 @@
 namespace MrKWatkins.Assertions;
 
 /// <summary>
-/// Enables chaining of assertions on an object value after a successful assertion.
+/// Enables chaining of assertions on a value after a successful assertion.
 /// </summary>
+/// <typeparam name="TAssertions">The type of the assertions object to chain from.</typeparam>
 /// <typeparam name="T">The type of the value being asserted on.</typeparam>
-/// <param name="objectAssertions">The assertions object to chain from.</param>
-public readonly struct ObjectAssertionsChain<T>(ObjectAssertions<T> objectAssertions)
+/// <param name="assertions">The assertions object to chain from.</param>
+public readonly struct AssertionsChain<TAssertions, T>(TAssertions assertions)
+    where TAssertions : ObjectAssertions<TAssertions, T>
 {
     /// <summary>
     /// Gets the assertions object for chaining further assertions.
     /// </summary>
-    public ObjectAssertions<T> And => objectAssertions;
+    public TAssertions And { get; } = assertions;
 
     /// <summary>
     /// Gets the value being asserted on, for use in further assertions via <c>.Should()</c>.
