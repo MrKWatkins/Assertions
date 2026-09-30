@@ -34,6 +34,7 @@ dotnet test src/MrKWatkins.Assertions.Tests --filter "FullyQualifiedName~TestMet
 - `EnumerableAssertions<TEnumerable, T>` — SequenceEqual, OnlyContain, ContainSingle
 - `ReadOnlySetAssertions<TSet, T>` — extends `EnumerableAssertions`: SetEquals, IsSupersetOf, IsSubsetOf
 - `ReadOnlyDictionaryAssertions<TDict, TKey, TValue>` — dictionary assertions
+- `TimeSpanAssertions` — BeZero, BePositive/Negative, BeLessThan/GreaterThan (and OrEqualTo), BeInRange, BeApproximately
 - `ReadOnlySpanAssertions<T>` — span assertions (ref struct, zero-allocation)
 - `ExceptionAssertions<T>` — HaveMessage, HaveInnerException
 - `ActionAssertions` — Throw, NotThrow
