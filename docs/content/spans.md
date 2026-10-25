@@ -1,8 +1,8 @@
 # Spans
 
-[`ReadOnlySpanAssertions<T>`](API/MrKWatkins.Assertions/ReadOnlySpanAssertions-T/index.md) is a [`ref struct`](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/ref-struct) that provides zero-allocation assertions for [`Span<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.span-1) and [`ReadOnlySpan<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.readonlyspan-1).
+[`ReadOnlySpanAssertions<T>`](api/MrKWatkins.Assertions/ReadOnlySpanAssertions-T/index.md) is a [`ref struct`](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/ref-struct) that provides zero-allocation assertions for [`Span<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.span-1) and [`ReadOnlySpan<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.readonlyspan-1).
 
-Call `.Should()` on a span to get a [`ReadOnlySpanAssertions<T>`](API/MrKWatkins.Assertions/ReadOnlySpanAssertions-T/index.md):
+Call `.Should()` on a span to get a [`ReadOnlySpanAssertions<T>`](api/MrKWatkins.Assertions/ReadOnlySpanAssertions-T/index.md):
 
 ```csharp
 Span<int> span = [1, 2, 3];
@@ -49,7 +49,7 @@ span.Should().SequenceEqual(["HELLO", "WORLD"],
     (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
 ```
 
-See [`SequenceEqual`](API/MrKWatkins.Assertions/ReadOnlySpanAssertions-T/SequenceEqual.md) and [`NotSequenceEqual`](API/MrKWatkins.Assertions/ReadOnlySpanAssertions-T/NotSequenceEqual.md).
+See [`SequenceEqual`](api/MrKWatkins.Assertions/ReadOnlySpanAssertions-T/SequenceEqual.md) and [`NotSequenceEqual`](api/MrKWatkins.Assertions/ReadOnlySpanAssertions-T/NotSequenceEqual.md).
 
 ### Comparing Against an Enumerable
 
@@ -65,7 +65,7 @@ span.Should().SequenceEqual(expected, EqualityComparer<int>.Default);
 
 ## Chaining
 
-Chainable methods return a [`ReadOnlySpanAssertionsChain<T>`](API/MrKWatkins.Assertions/ReadOnlySpanAssertionsChain-TItem/index.md):
+Chainable methods return a [`ReadOnlySpanAssertionsChain<TItem>`](api/MrKWatkins.Assertions/ReadOnlySpanAssertionsChain-TItem/index.md):
 
 ```csharp
 Span<int> span = [1, 2, 3];

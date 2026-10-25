@@ -1,6 +1,6 @@
 # Objects
 
-[`ObjectAssertions<T>`](API/MrKWatkins.Assertions/ObjectAssertions-T/index.md) is available for any type via `.Should()`. Its assertions are defined on [`ObjectAssertions<TSelf, T>`](API/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/index.md), the base class for all the other assertion classes, so they are available for every type.
+[`ObjectAssertions<T>`](api/MrKWatkins.Assertions/ObjectAssertions-T/index.md) is available for any type via `.Should()`. Its assertions are defined on [`ObjectAssertions<TSelf, T>`](api/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/index.md), the base class for all the other assertion classes, so they are available for every type.
 
 ## Null Checks
 
@@ -13,7 +13,7 @@ string nonNull = "hello";
 nonNull.Should().NotBeNull();
 ```
 
-[`NotBeNull()`](API/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/NotBeNull.md) returns an [`AssertionsChain<TAssertions, T>`](API/MrKWatkins.Assertions/AssertionsChain-TAssertions-T/index.md) so you can continue asserting:
+[`NotBeNull()`](api/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/NotBeNull.md) returns an [`AssertionsChain<TAssertions, T>`](api/MrKWatkins.Assertions/AssertionsChain-TAssertions-T/index.md) so you can continue asserting:
 
 ```csharp
 string? maybeNull = GetValue();
@@ -41,7 +41,7 @@ Or a predicate:
 myObj.Should().Equal(other, (a, b) => a.Id == b.Id);
 ```
 
-See [`Equal`](API/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/Equal.md) and [`NotEqual`](API/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/NotEqual.md) for full overload details.
+See [`Equal`](api/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/Equal.md) and [`NotEqual`](api/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/NotEqual.md) for full overload details.
 
 ## Reference Equality
 
@@ -75,4 +75,4 @@ object value = 42;
 value.Should().NotBeOfType<string>();
 ```
 
-See [`BeOfType`](API/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/BeOfType.md) and [`NotBeOfType`](API/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/NotBeOfType.md).
+See [`BeOfType`](api/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/BeOfType.md) and [`NotBeOfType`](api/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/NotBeOfType.md).

@@ -1,6 +1,6 @@
 # Strings
 
-[`StringAssertions`](API/MrKWatkins.Assertions/StringAssertions/index.md) provides assertions for [`string`](https://learn.microsoft.com/en-us/dotnet/api/system.string) values. Obtain one via `.Should()` on any string.
+[`StringAssertions`](api/MrKWatkins.Assertions/StringAssertions/index.md) provides assertions for [`string`](https://learn.microsoft.com/en-us/dotnet/api/system.string) values. Obtain one via `.Should()` on any string.
 
 String comparison methods default to [`StringComparison.Ordinal`](https://learn.microsoft.com/en-us/dotnet/api/system.stringcomparison). Pass an alternative [`StringComparison`](https://learn.microsoft.com/en-us/dotnet/api/system.stringcomparison) to any method that accepts one.
 
@@ -67,7 +67,7 @@ Case-insensitive comparison:
 
 ## Chaining
 
-Chainable methods return an [`AssertionsChain<TAssertions, T>`](API/MrKWatkins.Assertions/AssertionsChain-TAssertions-T/index.md):
+Chainable methods return an [`AssertionsChain<TAssertions, T>`](api/MrKWatkins.Assertions/AssertionsChain-TAssertions-T/index.md):
 
 ```csharp
 "Hello, World!"

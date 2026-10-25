@@ -12,11 +12,11 @@ MrKWatkins.Assertions is a .NET assertion library for unit testing, created as a
 # Build
 dotnet build src/Assertions.sln
 
-# Run all tests
-dotnet test src/Assertions.sln
+# Run all tests using Microsoft Testing Platform
+dotnet test --solution src/Assertions.sln
 
-# Run a single test by name filter
-dotnet test src/MrKWatkins.Assertions.Tests --filter "FullyQualifiedName~TestMethodName"
+# Run the test project directly
+dotnet test --project src/MrKWatkins.Assertions.Tests/MrKWatkins.Assertions.Tests.csproj
 ```
 
 ## Architecture
@@ -75,8 +75,10 @@ and return `assertions.Chain()` so the specific type is preserved. The exception
 
 ## Documentation
 
-- Documentation is generated using MKDocs and is found in the `doc` folder.
-- Documentation in `doc/docs/API` is generated from the assembly using the sesharp tool from the root of the repository: `sesharp MrKWatkins.Assertions/bin/Release/net10.0/MrKWatkins.Assertions.dll doc/docs/API`
-- Documentation in the root of `doc/docs` is handwritten.
-- Handwritten documentation should link to the generated API documentation and Microsoft's API docs (https://learn.microsoft.com/en-us/dotnet/api/) for types, members, etc.
-- ReadMe.md gives a brief summary of the project, the reasons why and licence information. It is included in the NuGet package.
+- Handwritten pages live in `docs/content`; `docs/site.json` defines guide order and API assembly inputs.
+- The shared `MrKWatkins/build/dotnet/project` action uses Sesharp, VitePress and Vale to generate and validate the complete site.
+- API pages and site output are generated under ignored `artifacts/` directories; do not commit generated documentation.
+- Use `python3 docs/preview.py` or the shared JetBrains **Preview documentation** run configuration for a local preview.
+- Keep handwritten links to generated API pages under `api/`, and link to Microsoft API documentation for framework types.
+- `ReadMe.md` gives a brief summary of the project, the reasons why and licence information. It is included in the NuGet package.
+- Build and release workflows call the shared project action; keep project YAML short and leave publication logic in the shared build repo.

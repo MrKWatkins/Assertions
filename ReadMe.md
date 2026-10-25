@@ -41,8 +41,7 @@ numbers.Should().Contain(2);
 
 // Exceptions
 (() => throw new InvalidOperationException("oops"))
-    .Should().Throw<InvalidOperationException>()
-    .WithMessage("oops");
+    .Should().Throw<InvalidOperationException>("oops");
 ```
 
 ## Chaining
@@ -85,3 +84,21 @@ just don't expect me to look at them with any sense of urgency.
 # Licence
 
 MIT. And I won't change it. Honest.
+
+## Building and documentation
+
+Build and test with `dotnet test --solution src/Assertions.sln`. Tests use TUnit and Microsoft Testing Platform.
+
+Handwritten documentation lives in `docs/content`; `docs/site.json` defines navigation and the API assembly input. The shared build action generates, lints and
+validates the site using the documentation image. Run `python3 docs/preview.py` with Docker and the .NET 10 SDK installed, or select **Preview documentation** in a
+JetBrains IDE. The preview is available at `http://localhost:5173/Assertions/`.
+
+**Build and Test** runs on pushes and pull requests. **Release** runs the same validation and optionally publishes packages and documentation in one job. Both
+publication options default to true. Leave the version blank for the next minor version, or enter an explicit stable version. For a documentation update without a
+new package, turn **publish-packages** off and leave **publish-docs** on; it uses the latest released API and version. The optional `api-ref` overrides API source
+for XML comment corrections. Package builds still validate documentation when deployment is disabled.
+For the initial documentation update on 2.0.0, set `api-ref: main` after pushing this migration: its released XML comments fail the new prose rules. The next
+package release will include those corrections, so subsequent documentation updates can use the released source normally.
+
+Configure NuGet trusted publishing for owner `MrKWatkins`, repository `Assertions`, workflow `release.yml`, environment `github-pages` and package
+`MrKWatkins.Assertions`. Set GitHub Pages to **GitHub Actions**, and allow `main` to deploy to the `github-pages` environment. No stored NuGet API key is required.

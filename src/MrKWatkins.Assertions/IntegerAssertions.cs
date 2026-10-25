@@ -17,7 +17,7 @@ public sealed class IntegerAssertions<T>(T value) : NumericAssertions<IntegerAss
     /// <param name="expected">The expected value.</param>
     /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
     /// <remarks>
-    /// If the expected value cannot be represented in type <typeparamref name="T"/> (e.g., comparing a <c>byte</c> with <c>300</c>),
+    /// If the expected value cannot be represented in type <typeparamref name="T"/> (for example, comparing a <c>byte</c> with <c>300</c>),
     /// an <see cref="AssertionException"/> will be thrown with a descriptive message indicating the overflow.
     /// </remarks>
     public AssertionsChain<IntegerAssertions<T>, T> Equal<TOther>(TOther expected)
@@ -46,7 +46,7 @@ public sealed class IntegerAssertions<T>(T value) : NumericAssertions<IntegerAss
     /// <param name="expected">The value that is not expected.</param>
     /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
     /// <remarks>
-    /// If the expected value cannot be represented in type <typeparamref name="T"/> (e.g., comparing a <c>byte</c> with <c>300</c>),
+    /// If the expected value cannot be represented in type <typeparamref name="T"/> (for example, comparing a <c>byte</c> with <c>300</c>),
     /// the assertion succeeds because the value cannot equal something that cannot be represented in its type.
     /// </remarks>
     public AssertionsChain<IntegerAssertions<T>, T> NotEqual<TOther>(TOther expected)

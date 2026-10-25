@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "title": "Assertions",
+  "description": "Fluent assertions for .NET unit testing.",
+  "repository": "https://github.com/MrKWatkins/Assertions",
+  "base": "/Assertions/",
+  "vocabularyDirectory": "docs/vocabulary",
+  "guide": [
+    {
+      "text": "Overview",
+      "link": "/"
+    },
+    {
+      "text": "Collections",
+      "link": "/collections"
+    },
+    {
+      "text": "Dates and Times",
+      "link": "/dates-and-times"
+    },
+    {
+      "text": "Dictionaries",
+      "link": "/dictionaries"
+    },
+    {
+      "text": "Exceptions",
+      "link": "/exceptions"
+    },
+    {
+      "text": "Numbers",
+      "link": "/numbers"
+    },
+    {
+      "text": "Objects",
+      "link": "/objects"
+    },
+    {
+      "text": "Sets",
+      "link": "/sets"
+    },
+    {
+      "text": "Spans",
+      "link": "/spans"
+    },
+    {
+      "text": "Strings",
+      "link": "/strings"
+    }
+  ],
+  "api": {
+    "generator": "sesharp",
+    "assemblies": [
+      "src/MrKWatkins.Assertions/bin/Release/net10.0/MrKWatkins.Assertions.dll"
+    ]
+  }
+}

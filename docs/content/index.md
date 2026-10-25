@@ -41,13 +41,12 @@ numbers.Should().Contain(2);
 
 // Exceptions
 (() => throw new InvalidOperationException("oops"))
-    .Should().Throw<InvalidOperationException>()
-    .WithMessage("oops");
+    .Should().Throw<InvalidOperationException>("oops");
 ```
 
 ## Chaining
 
-Most assertions return an [`AssertionsChain<TAssertions, T>`](API/MrKWatkins.Assertions/AssertionsChain-TAssertions-T/index.md) that lets you keep asserting on the same value. `.And` returns the most specific assertions for the value, even after a general assertion such as `NotBeNull` or `Equal`:
+Most assertions return an [`AssertionsChain<TAssertions, T>`](api/MrKWatkins.Assertions/AssertionsChain-TAssertions-T/index.md) that lets you keep asserting on the same value. `.And` returns the most specific assertions for the value, even after a general assertion such as `NotBeNull` or `Equal`:
 
 ```csharp
 "hello world"
@@ -73,11 +72,11 @@ on the way, such as:
 
 As such, this is purely designed for use in my other projects. If you want to use it, go for it, but don't expect me to fix bugs or add features anytime soon.
 
-# Contributing, PRs, etc.
+## Contributing
 
-Not accepting contributions or PRs at the current time, as it's just a project for my own amusement and to support my other projects. Feel free to submit issues,
+Not accepting contributions or pull requests at the current time, as it's just a project for my own amusement and to support my other projects. Feel free to submit issues,
 just don't expect me to look at them with any sense of urgency.
 
-# Licence
+## Licence
 
 MIT. And I won't change it. Honest.

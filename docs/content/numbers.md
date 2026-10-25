@@ -1,9 +1,9 @@
 # Numbers
 
 Integers, `decimal` and floating-point values share their comparison, sign and zero assertions, which are defined on
-[`ComparableAssertions<TSelf, T>`](API/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/index.md) and
-[`NumericAssertions<TSelf, T>`](API/MrKWatkins.Assertions/NumericAssertions-TSelf-T/index.md). Chainable methods return an
-[`AssertionsChain<TAssertions, T>`](API/MrKWatkins.Assertions/AssertionsChain-TAssertions-T/index.md) whose `.And` is the assertions for the specific numeric type.
+[`ComparableAssertions<TSelf, T>`](api/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/index.md) and
+[`NumericAssertions<TSelf, T>`](api/MrKWatkins.Assertions/NumericAssertions-TSelf-T/index.md). Chainable methods return an
+[`AssertionsChain<TAssertions, T>`](api/MrKWatkins.Assertions/AssertionsChain-TAssertions-T/index.md) whose `.And` is the assertions for the specific numeric type.
 
 ## Comparisons
 
@@ -15,9 +15,9 @@ Integers, `decimal` and floating-point values share their comparison, sign and z
 5.Should().BeInRange(1, 10); // Inclusive.
 ```
 
-See [`BeLessThan`](API/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/BeLessThan.md), [`BeLessThanOrEqualTo`](API/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/BeLessThanOrEqualTo.md),
-[`BeGreaterThan`](API/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/BeGreaterThan.md), [`BeGreaterThanOrEqualTo`](API/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/BeGreaterThanOrEqualTo.md)
-and [`BeInRange`](API/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/BeInRange.md).
+See [`BeLessThan`](api/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/BeLessThan.md), [`BeLessThanOrEqualTo`](api/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/BeLessThanOrEqualTo.md),
+[`BeGreaterThan`](api/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/BeGreaterThan.md), [`BeGreaterThanOrEqualTo`](api/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/BeGreaterThanOrEqualTo.md)
+and [`BeInRange`](api/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/BeInRange.md).
 
 ## Sign and Zero
 
@@ -31,12 +31,12 @@ and [`BeInRange`](API/MrKWatkins.Assertions/ComparableAssertions-TSelf-T/BeInRan
 ```
 
 Zero is neither positive nor negative, so `0.Should().BePositive()` fails and `0.Should().NotBePositive()` passes. See
-[`BeZero`](API/MrKWatkins.Assertions/NumericAssertions-TSelf-T/BeZero.md), [`BePositive`](API/MrKWatkins.Assertions/NumericAssertions-TSelf-T/BePositive.md),
-[`BeNegative`](API/MrKWatkins.Assertions/NumericAssertions-TSelf-T/BeNegative.md) and their `Not` counterparts.
+[`BeZero`](api/MrKWatkins.Assertions/NumericAssertions-TSelf-T/BeZero.md), [`BePositive`](api/MrKWatkins.Assertions/NumericAssertions-TSelf-T/BePositive.md),
+[`BeNegative`](api/MrKWatkins.Assertions/NumericAssertions-TSelf-T/BeNegative.md) and their `Not` counterparts.
 
 ## Integers
 
-[`IntegerAssertions<T>`](API/MrKWatkins.Assertions/IntegerAssertions-T/index.md) is available for all integer types (`byte`, `sbyte`, `short`, `ushort`, `int`, `uint`, `long`, `ulong`, `nint`, `nuint`) via `.Should()`.
+[`IntegerAssertions<T>`](api/MrKWatkins.Assertions/IntegerAssertions-T/index.md) is available for all integer types (`byte`, `sbyte`, `short`, `ushort`, `int`, `uint`, `long`, `ulong`, `nint`, `nuint`) via `.Should()`.
 
 ```csharp
 int value = 42;
@@ -52,11 +52,11 @@ b.Should().Equal(10);   // int literal compared to byte
 b.Should().NotEqual(256); // 256 can't fit in a byte → always passes
 ```
 
-If the expected value can't be represented in the value's type (overflow), [`Equal`](API/MrKWatkins.Assertions/IntegerAssertions-T/Equal.md) throws an assertion failure with a descriptive message. [`NotEqual`](API/MrKWatkins.Assertions/IntegerAssertions-T/NotEqual.md) passes silently in this case.
+If the expected value can't be represented in the value's type (overflow), [`Equal`](api/MrKWatkins.Assertions/IntegerAssertions-T/Equal.md) throws an assertion failure with a descriptive message. [`NotEqual`](api/MrKWatkins.Assertions/IntegerAssertions-T/NotEqual.md) passes silently in this case.
 
 ## Decimal
 
-[`DecimalAssertions`](API/MrKWatkins.Assertions/DecimalAssertions/index.md) is available for [`decimal`](https://learn.microsoft.com/en-us/dotnet/api/system.decimal) via `.Should()`. Because `decimal` is an exact type, there is no precision/approximation parameter — comparisons use exact values.
+[`DecimalAssertions`](api/MrKWatkins.Assertions/DecimalAssertions/index.md) is available for [`decimal`](https://learn.microsoft.com/en-us/dotnet/api/system.decimal) via `.Should()`. Because `decimal` is an exact type, there is no precision/approximation parameter — comparisons use exact values.
 
 ```csharp
 (1.5m).Should().Equal(1.5m);
@@ -64,15 +64,15 @@ If the expected value can't be represented in the value's type (overflow), [`Equ
 (5m).Should().BePositive().And.BeLessThan(10m);
 ```
 
-Equality uses the base [`Equal`](API/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/Equal.md) and [`NotEqual`](API/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/NotEqual.md).
+Equality uses the base [`Equal`](api/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/Equal.md) and [`NotEqual`](api/MrKWatkins.Assertions/ObjectAssertions-TSelf-T/NotEqual.md).
 
 ## Floating-Point
 
-[`FloatingPointAssertions<T>`](API/MrKWatkins.Assertions/FloatingPointAssertions-T/index.md) is available for [`Half`](https://learn.microsoft.com/en-us/dotnet/api/system.half), `float`, and `double` via `.Should()`.
+[`FloatingPointAssertions<T>`](api/MrKWatkins.Assertions/FloatingPointAssertions-T/index.md) is available for [`Half`](https://learn.microsoft.com/en-us/dotnet/api/system.half), `float`, and `double` via `.Should()`.
 
 ### Approximate Equality
 
-Floating-point comparisons should generally use [`BeApproximately`](API/MrKWatkins.Assertions/FloatingPointAssertions-T/BeApproximately.md) rather than `Equal`:
+Floating-point comparisons should generally use [`BeApproximately`](api/MrKWatkins.Assertions/FloatingPointAssertions-T/BeApproximately.md) rather than `Equal`:
 
 ```csharp
 double value = 1.0 / 3.0;
@@ -127,7 +127,7 @@ double.NegativeInfinity.Should().BeNegativeInfinity();
 
 ## Booleans
 
-[`BooleanAssertions`](API/MrKWatkins.Assertions/BooleanAssertions/index.md) is available for `bool` via `.Should()`. For nullable booleans (`bool?`), use the extension methods from [`BooleanExtensions`](API/MrKWatkins.Assertions/BooleanExtensions/index.md).
+[`BooleanAssertions`](api/MrKWatkins.Assertions/BooleanAssertions/index.md) is available for `bool` via `.Should()`. For nullable booleans (`bool?`), use the extension methods from [`BooleanExtensions`](api/MrKWatkins.Assertions/BooleanExtensions/index.md).
 
 ```csharp
 bool value = true;
@@ -153,7 +153,7 @@ nullValue.Should().NotBeFalse(); // passes — null is not false
 
 ## Integer Display Format
 
-By default integers in assertion messages are displayed in decimal. Use [`With.IntegerFormat`](API/MrKWatkins.Assertions/With/IntegerFormat.md) to display them in hexadecimal within a scope:
+By default integers in assertion messages are displayed in decimal. Use [`With.IntegerFormat`](api/MrKWatkins.Assertions/With/IntegerFormat.md) to display them in hexadecimal within a scope:
 
 ```csharp
 using (With.IntegerFormat(IntegerFormat.Hexadecimal))
@@ -162,4 +162,4 @@ using (With.IntegerFormat(IntegerFormat.Hexadecimal))
 }
 ```
 
-[`With.IntegerFormat`](API/MrKWatkins.Assertions/With/IntegerFormat.md) returns an [`IDisposable`](https://learn.microsoft.com/en-us/dotnet/api/system.idisposable) that restores the previous format when disposed. See [`IntegerFormat`](API/MrKWatkins.Assertions/IntegerFormat/index.md) for the available formats.
+[`With.IntegerFormat`](api/MrKWatkins.Assertions/With/IntegerFormat.md) returns an [`IDisposable`](https://learn.microsoft.com/en-us/dotnet/api/system.idisposable) that restores the previous format when disposed. See [`IntegerFormat`](api/MrKWatkins.Assertions/IntegerFormat/index.md) for the available formats.

@@ -1,10 +1,10 @@
 # Exceptions
 
-There are three ways to assert on exceptions, depending on whether the code under test is synchronous or asynchronous, and whether you already have an exception instance.
+Choose from three ways to assert on exceptions, depending on whether the code under test is synchronous or asynchronous, and whether you already have an exception instance.
 
 ## Actions (Synchronous)
 
-Call `.Should()` on an [`Action`](https://learn.microsoft.com/en-us/dotnet/api/system.action) to get [`ActionAssertions`](API/MrKWatkins.Assertions/ActionAssertions/index.md):
+Call `.Should()` on an [`Action`](https://learn.microsoft.com/en-us/dotnet/api/system.action) to get [`ActionAssertions`](api/MrKWatkins.Assertions/ActionAssertions/index.md):
 
 ```csharp
 Action throws = () => throw new InvalidOperationException("oops");
@@ -51,7 +51,7 @@ Action badArg = () => throw new ArgumentException("must be positive", "count");
 badArg.Should().ThrowArgumentException("must be positive", "count");
 ```
 
-See [`ThrowArgumentException`](API/MrKWatkins.Assertions/ActionAssertions/ThrowArgumentException.md).
+See [`ThrowArgumentException`](api/MrKWatkins.Assertions/ActionAssertions/ThrowArgumentException.md).
 
 ### ArgumentOutOfRangeException Shorthand
 
@@ -61,11 +61,11 @@ Action outOfRange = () => throw new ArgumentOutOfRangeException("count", -1, "mu
 outOfRange.Should().ThrowArgumentOutOfRangeException("must be positive", "count", -1);
 ```
 
-See [`ThrowArgumentOutOfRangeException`](API/MrKWatkins.Assertions/ActionAssertions/ThrowArgumentOutOfRangeException.md).
+See [`ThrowArgumentOutOfRangeException`](api/MrKWatkins.Assertions/ActionAssertions/ThrowArgumentOutOfRangeException.md).
 
 ## Async Actions
 
-Call `.Should()` on a [`Func<Task>`](https://learn.microsoft.com/en-us/dotnet/api/system.func-1) to get [`AsyncActionAssertions`](API/MrKWatkins.Assertions/AsyncActionAssertions/index.md). All methods return [`Task`](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task) and should be awaited:
+Call `.Should()` on a [`Func<Task>`](https://learn.microsoft.com/en-us/dotnet/api/system.func-1) to get [`AsyncActionAssertions`](api/MrKWatkins.Assertions/AsyncActionAssertions/index.md). All methods return [`Task`](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task) and should be awaited:
 
 ```csharp
 Func<Task> throwsAsync = async () =>
@@ -85,7 +85,7 @@ await safeAsync.Should().NotThrowAsync();
 
 ## The Invoking / Awaiting Pattern
 
-Use [`Invoking`](API/MrKWatkins.Assertions/InvokingExtensions/Invoking.md) and [`Awaiting`](API/MrKWatkins.Assertions/InvokingExtensions/Awaiting.md) extension methods from [`InvokingExtensions`](API/MrKWatkins.Assertions/InvokingExtensions/index.md) to test methods on an object without creating a separate `Action` variable:
+Use [`Invoking`](api/MrKWatkins.Assertions/InvokingExtensions/Invoking.md) and [`Awaiting`](api/MrKWatkins.Assertions/InvokingExtensions/Awaiting.md) extension methods from [`InvokingExtensions`](api/MrKWatkins.Assertions/InvokingExtensions/index.md) to test methods on an object without creating a separate `Action` variable:
 
 ```csharp
 var parser = new Parser();
@@ -108,7 +108,7 @@ parser.Invoking(p => p.TryParse(null!, out _))
 
 ## Asserting on an Exception Directly
 
-Call `.Should()` on an [`Exception`](https://learn.microsoft.com/en-us/dotnet/api/system.exception) instance to get [`ExceptionAssertions<T>`](API/MrKWatkins.Assertions/ExceptionAssertions-T/index.md):
+Call `.Should()` on an [`Exception`](https://learn.microsoft.com/en-us/dotnet/api/system.exception) instance to get [`ExceptionAssertions<T>`](api/MrKWatkins.Assertions/ExceptionAssertions-T/index.md):
 
 ```csharp
 var exception = new InvalidOperationException("oops");
@@ -124,7 +124,7 @@ exception.Should().HaveMessageStartingWith("oo");
 var inner = new ArgumentException("inner");
 var outer = new InvalidOperationException("outer", inner);
 
-outer.Should().HaveInnerException<ArgumentException>().And.HaveMessage("inner");
+outer.Should().HaveInnerException<ArgumentException>().That.Should().HaveMessage("inner");
 
 // Assert a specific instance
 outer.Should().HaveInnerException(inner);
@@ -133,11 +133,11 @@ outer.Should().HaveInnerException(inner);
 new Exception("no inner").Should().NotHaveInnerException();
 ```
 
-See [`HaveInnerException`](API/MrKWatkins.Assertions/ExceptionAssertions-T/HaveInnerException.md) and [`NotHaveInnerException`](API/MrKWatkins.Assertions/ExceptionAssertions-T/NotHaveInnerException.md).
+See [`HaveInnerException`](api/MrKWatkins.Assertions/ExceptionAssertions-T/HaveInnerException.md) and [`NotHaveInnerException`](api/MrKWatkins.Assertions/ExceptionAssertions-T/NotHaveInnerException.md).
 
 ### Chaining After Throw
 
-[`Throw<T>`](API/MrKWatkins.Assertions/ActionAssertions/Throw.md) and [`ThrowAsync<T>`](API/MrKWatkins.Assertions/AsyncActionAssertions/ThrowAsync.md) return an [`ActionAssertionsChain<TException>`](API/MrKWatkins.Assertions/ActionAssertionsChain-TException/index.md) with `.Exception` and `.That` properties for further assertions:
+[`Throw<T>`](api/MrKWatkins.Assertions/ActionAssertions/Throw.md) and [`ThrowAsync<T>`](api/MrKWatkins.Assertions/AsyncActionAssertions/ThrowAsync.md) return an [`ActionAssertionsChain<TException>`](api/MrKWatkins.Assertions/ActionAssertionsChain-TException/index.md) with `.Exception` and `.That` properties for further assertions:
 
 ```csharp
 var chain = throws.Should().Throw<ArgumentException>();
@@ -145,8 +145,8 @@ var chain = throws.Should().Throw<ArgumentException>();
 // .Exception gives the thrown exception
 chain.Exception.Should().HaveMessage("bad argument");
 
-// .That gives ExceptionAssertions<T> directly for chaining
+// .That exposes the exception for further assertions
 throws.Should().Throw<ArgumentException>()
-    .And.HaveMessage("bad argument")
+    .That.Should().HaveMessage("bad argument")
     .And.HaveParamName("value");
 ```

@@ -37,7 +37,7 @@ public abstract class NumericAssertions<TSelf, T>(T value, T zero) : ComparableA
     }
 
     /// <summary>
-    /// Asserts that the value is negative, i.e. less than zero.
+    /// Asserts that the value is negative (less than zero).
     /// </summary>
     /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
     public AssertionsChain<TSelf, T> BeNegative()
@@ -48,7 +48,7 @@ public abstract class NumericAssertions<TSelf, T>(T value, T zero) : ComparableA
     }
 
     /// <summary>
-    /// Asserts that the value is not negative, i.e. not less than zero.
+    /// Asserts that the value is not negative (not less than zero).
     /// </summary>
     /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
     public AssertionsChain<TSelf, T> NotBeNegative()
@@ -59,7 +59,7 @@ public abstract class NumericAssertions<TSelf, T>(T value, T zero) : ComparableA
     }
 
     /// <summary>
-    /// Asserts that the value is positive, i.e. greater than zero.
+    /// Asserts that the value is positive (greater than zero).
     /// </summary>
     /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
     public AssertionsChain<TSelf, T> BePositive()
@@ -70,7 +70,7 @@ public abstract class NumericAssertions<TSelf, T>(T value, T zero) : ComparableA
     }
 
     /// <summary>
-    /// Asserts that the value is not positive, i.e. not greater than zero.
+    /// Asserts that the value is not positive (not greater than zero).
     /// </summary>
     /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
     public AssertionsChain<TSelf, T> NotBePositive()

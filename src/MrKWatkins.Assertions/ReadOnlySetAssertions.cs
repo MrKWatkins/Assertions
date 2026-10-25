@@ -43,7 +43,7 @@ public sealed class ReadOnlySetAssertions<TSet, T>([NoEnumeration] TSet? value) 
     }
 
     /// <summary>
-    /// Asserts that the set is a superset of the expected elements, i.e. it contains every expected element.
+    /// Asserts that the set contains every expected element.
     /// </summary>
     /// <param name="expected">The expected elements.</param>
     /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
@@ -63,7 +63,7 @@ public sealed class ReadOnlySetAssertions<TSet, T>([NoEnumeration] TSet? value) 
     }
 
     /// <summary>
-    /// Asserts that the set is a subset of the expected elements, i.e. every element in the set is expected.
+    /// Asserts that every element in the set is expected.
     /// </summary>
     /// <param name="expected">The expected elements.</param>
     /// <returns>An <see cref="AssertionsChain{TAssertions, T}" /> for chaining further assertions.</returns>
