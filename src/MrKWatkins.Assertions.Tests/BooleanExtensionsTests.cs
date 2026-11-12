@@ -3,90 +3,90 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class BooleanExtensionsTests
 {
     [Test]
-    public async Task BeTrue_NullableBoolean()
+    public void BeTrue_NullableBoolean()
     {
         bool? nullableTrue = true;
         bool? nullableFalse = false;
         bool? nullableNull = null;
 
-        await Assert.That(() => nullableTrue.Should().BeTrue()).ThrowsNothing();
-        await Assert.That(() => nullableFalse.Should().BeTrue()).Throws<AssertionException>().WithMessage("Value should be true but was false.");
-        await Assert.That(() => nullableNull.Should().BeTrue()).Throws<AssertionException>().WithMessage("Value should be true but was null.");
+        Assert.DoesNotThrow(() => nullableTrue.Should().BeTrue());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be true but was false."), () => nullableFalse.Should().BeTrue());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be true but was null."), () => nullableNull.Should().BeTrue());
     }
 
     [Test]
-    public async Task BeTrue_NullableBoolean_Chain()
+    public void BeTrue_NullableBoolean_Chain()
     {
         bool? nullableTrue = true;
 
         var chain = nullableTrue.Should().BeTrue();
-        await Assert.That(chain.Value).IsTrue();
-        await Assert.That(chain.And.Value).IsTrue();
+        Assert.That(chain.Value, Is.True);
+        Assert.That(chain.And.Value, Is.True);
     }
 
     [Test]
-    public async Task NotBeTrue_NullableBoolean()
+    public void NotBeTrue_NullableBoolean()
     {
         bool? nullableTrue = true;
         bool? nullableFalse = false;
         bool? nullableNull = null;
 
-        await Assert.That(() => nullableTrue.Should().NotBeTrue()).Throws<AssertionException>().WithMessage("Value should not be true.");
-        await Assert.That(() => nullableFalse.Should().NotBeTrue()).ThrowsNothing();
-        await Assert.That(() => nullableNull.Should().NotBeTrue()).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be true."), () => nullableTrue.Should().NotBeTrue());
+        Assert.DoesNotThrow(() => nullableFalse.Should().NotBeTrue());
+        Assert.DoesNotThrow(() => nullableNull.Should().NotBeTrue());
     }
 
     [Test]
-    public async Task NotBeTrue_NullableBoolean_Chain()
+    public void NotBeTrue_NullableBoolean_Chain()
     {
         bool? nullableFalse = false;
 
         var chain = nullableFalse.Should().NotBeTrue();
-        await Assert.That(chain.Value).IsFalse();
-        await Assert.That(chain.And.Value).IsFalse();
+        Assert.That(chain.Value, Is.False);
+        Assert.That(chain.And.Value, Is.False);
     }
 
     [Test]
-    public async Task BeFalse_NullableBoolean()
+    public void BeFalse_NullableBoolean()
     {
         bool? nullableTrue = true;
         bool? nullableFalse = false;
         bool? nullableNull = null;
 
-        await Assert.That(() => nullableTrue.Should().BeFalse()).Throws<AssertionException>().WithMessage("Value should be false but was true.");
-        await Assert.That(() => nullableFalse.Should().BeFalse()).ThrowsNothing();
-        await Assert.That(() => nullableNull.Should().BeFalse()).Throws<AssertionException>().WithMessage("Value should be false but was null.");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be false but was true."), () => nullableTrue.Should().BeFalse());
+        Assert.DoesNotThrow(() => nullableFalse.Should().BeFalse());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be false but was null."), () => nullableNull.Should().BeFalse());
     }
 
     [Test]
-    public async Task BeFalse_NullableBoolean_Chain()
+    public void BeFalse_NullableBoolean_Chain()
     {
         bool? nullableFalse = false;
 
         var chain = nullableFalse.Should().BeFalse();
-        await Assert.That(chain.Value).IsFalse();
-        await Assert.That(chain.And.Value).IsFalse();
+        Assert.That(chain.Value, Is.False);
+        Assert.That(chain.And.Value, Is.False);
     }
 
     [Test]
-    public async Task NotBeFalse_NullableBoolean()
+    public void NotBeFalse_NullableBoolean()
     {
         bool? nullableTrue = true;
         bool? nullableFalse = false;
         bool? nullableNull = null;
 
-        await Assert.That(() => nullableTrue.Should().NotBeFalse()).ThrowsNothing();
-        await Assert.That(() => nullableFalse.Should().NotBeFalse()).Throws<AssertionException>().WithMessage("Value should not be false.");
-        await Assert.That(() => nullableNull.Should().NotBeFalse()).ThrowsNothing();
+        Assert.DoesNotThrow(() => nullableTrue.Should().NotBeFalse());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be false."), () => nullableFalse.Should().NotBeFalse());
+        Assert.DoesNotThrow(() => nullableNull.Should().NotBeFalse());
     }
 
     [Test]
-    public async Task NotBeFalse_NullableBoolean_Chain()
+    public void NotBeFalse_NullableBoolean_Chain()
     {
         bool? nullableFalse = true;
 
         var chain = nullableFalse.Should().NotBeFalse();
-        await Assert.That(chain.Value).IsTrue();
-        await Assert.That(chain.And.Value).IsTrue();
+        Assert.That(chain.Value, Is.True);
+        Assert.That(chain.And.Value, Is.True);
     }
 }

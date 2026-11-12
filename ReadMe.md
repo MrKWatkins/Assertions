@@ -87,7 +87,7 @@ MIT. And I won't change it. Honest.
 
 ## Building and documentation
 
-Build and test with `dotnet test --solution src/Assertions.sln`. Tests use TUnit and Microsoft Testing Platform.
+Build and test with `dotnet test --solution src/Assertions.sln`. Tests use NUnit and Microsoft Testing Platform.
 
 Handwritten documentation lives in `docs/content`; `docs/site.json` defines navigation and the API assembly input. The shared build action generates, lints and
 validates the site using the documentation image. Run `python3 docs/preview.py` with Docker and the .NET 10 SDK installed, or select **Preview documentation** in a

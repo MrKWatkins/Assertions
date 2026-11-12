@@ -1,5 +1,7 @@
 # AGENTS.md
 
+- For C# changes, load and follow the `csharp-conventions` skill.
+
 This file provides guidance to AI agents when working with code in this repository.
 
 ## Project Overview
@@ -61,16 +63,21 @@ and return `assertions.Chain()` so the specific type is preserved. The exception
 
 ## Conventions
 
+- Shared compiler rules, test defaults and packaging assets come from `MrKWatkins.CSharpConventions`.
+- Verify whitespace with `dotnet format whitespace src/Assertions.sln --no-restore --verify-no-changes`.
+
 - **Target:** .NET 10.0 with C# preview language features
 - **Nullable reference types:** enabled; warnings are errors
 - **Implicit usings** include `System.Diagnostics.CodeAnalysis`, `System.Diagnostics.Contracts`, `Pure` (aliased), and `JetBrains.Annotations`
 - **JetBrains.Annotations:** Use `[Pure]`, `[NoEnumeration]`, `[InstantHandle]` etc. on public API methods
 - **CallerArgumentExpression:** Used for predicate parameter logging
 - **OverloadResolutionPriority:** Used to disambiguate generic overloads
-- **Test framework:** TUnit (not NUnit/xUnit) — tests are async by default
+- **Test framework:** NUnit on Microsoft Testing Platform. Use NUnit assertions to test this assertion library independently.
+- Expected assertion failures use `NUnit.Framework.AssertionException`; constructor tests still cover the library's own exception type.
+- `MrKWatkins.Assertions.TestsWithoutNUnit` is an isolated console fixture for fallback exception tests. Keep NUnit out of its dependencies.
 - **Test naming:** Underscores in test method names (CA1707 suppressed)
 - **Centralized package management:** versions in `src/Directory.Packages.props`, no version overrides allowed
-- **Editor:** 4-space indents, LF line endings, max 200 char line length
+- **Editor:** 4-space indents, LF line endings, max 180 char line length
 - **Documentation:** XML comments on public API, Markdown for the API is automatically generated
 
 ## Documentation

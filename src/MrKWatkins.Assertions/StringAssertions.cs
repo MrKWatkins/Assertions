@@ -119,10 +119,7 @@ public sealed class StringAssertions(string? value) : EnumerableAssertions<Strin
     /// <summary>
     /// Asserts that the string is <see langword="null" /> or empty.
     /// </summary>
-    public void BeNullOrEmpty()
-    {
-        Verify.That(string.IsNullOrEmpty(Value), $"Value should be null or empty but was {Value}.");
-    }
+    public void BeNullOrEmpty() => Verify.That(string.IsNullOrEmpty(Value), $"Value should be null or empty but was {Value}.");
 
     /// <summary>
     /// Asserts that the string is not <see langword="null" /> or empty.
@@ -138,10 +135,7 @@ public sealed class StringAssertions(string? value) : EnumerableAssertions<Strin
     /// <summary>
     /// Asserts that the string is <see langword="null" />, empty, or consists only of white-space characters.
     /// </summary>
-    public void BeNullOrWhiteSpace()
-    {
-        Verify.That(string.IsNullOrWhiteSpace(Value), $"Value should be null or white space but was {Value}.");
-    }
+    public void BeNullOrWhiteSpace() => Verify.That(string.IsNullOrWhiteSpace(Value), $"Value should be null or white space but was {Value}.");
 
     /// <summary>
     /// Asserts that the string is not <see langword="null" />, empty, or consisting only of white-space characters.

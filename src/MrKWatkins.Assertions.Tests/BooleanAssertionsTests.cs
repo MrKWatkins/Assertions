@@ -3,79 +3,79 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class BooleanAssertionsTests
 {
     [Test]
-    public async Task BeTrue()
+    public void BeTrue()
     {
-        await Assert.That(() => true.Should().BeTrue()).ThrowsNothing();
-        await Assert.That(() => false.Should().BeTrue()).Throws<AssertionException>().WithMessage("Value should be true but was false.");
+        Assert.DoesNotThrow(() => true.Should().BeTrue());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be true but was false."), () => false.Should().BeTrue());
     }
 
     [Test]
-    public async Task BeTrue_Chain()
+    public void BeTrue_Chain()
     {
         var chain = true.Should().BeTrue();
-        await Assert.That(chain.Value).IsTrue();
-        await Assert.That(chain.And.Value).IsTrue();
+        Assert.That(chain.Value, Is.True);
+        Assert.That(chain.And.Value, Is.True);
     }
 
     [Test]
-    public async Task NotBeTrue()
+    public void NotBeTrue()
     {
-        await Assert.That(() => true.Should().NotBeTrue()).Throws<AssertionException>().WithMessage("Value should not be true.");
-        await Assert.That(() => false.Should().NotBeTrue()).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be true."), () => true.Should().NotBeTrue());
+        Assert.DoesNotThrow(() => false.Should().NotBeTrue());
     }
 
     [Test]
-    public async Task NotBeTrue_Chain()
+    public void NotBeTrue_Chain()
     {
         var chain = false.Should().NotBeTrue();
-        await Assert.That(chain.Value).IsFalse();
-        await Assert.That(chain.And.Value).IsFalse();
+        Assert.That(chain.Value, Is.False);
+        Assert.That(chain.And.Value, Is.False);
     }
 
     [Test]
-    public async Task BeFalse()
+    public void BeFalse()
     {
-        await Assert.That(() => false.Should().BeFalse()).ThrowsNothing();
-        await Assert.That(() => true.Should().BeFalse()).Throws<AssertionException>().WithMessage("Value should be false but was true.");
+        Assert.DoesNotThrow(() => false.Should().BeFalse());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be false but was true."), () => true.Should().BeFalse());
     }
 
     [Test]
-    public async Task BeFalse_Chain()
+    public void BeFalse_Chain()
     {
         var chain = false.Should().BeFalse();
-        await Assert.That(chain.Value).IsFalse();
-        await Assert.That(chain.And.Value).IsFalse();
+        Assert.That(chain.Value, Is.False);
+        Assert.That(chain.And.Value, Is.False);
     }
 
     [Test]
-    public async Task NotBeFalse()
+    public void NotBeFalse()
     {
-        await Assert.That(() => true.Should().NotBeFalse()).ThrowsNothing();
-        await Assert.That(() => false.Should().NotBeFalse()).Throws<AssertionException>().WithMessage("Value should not be false.");
+        Assert.DoesNotThrow(() => true.Should().NotBeFalse());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be false."), () => false.Should().NotBeFalse());
     }
 
     [Test]
-    public async Task NotBeFalse_Chain()
+    public void NotBeFalse_Chain()
     {
         var chain = true.Should().NotBeFalse();
-        await Assert.That(chain.Value).IsTrue();
-        await Assert.That(chain.And.Value).IsTrue();
+        Assert.That(chain.Value, Is.True);
+        Assert.That(chain.And.Value, Is.True);
     }
 
     [Test]
-    public async Task InheritedMethods_FromObjectAssertions()
+    public void InheritedMethods_FromObjectAssertions()
     {
         // BooleanAssertions methods work alongside ObjectAssertions methods
-        await Assert.That(() => true.Should().NotBeNull()).ThrowsNothing();
-        await Assert.That(() => true.Should().Equal(true)).ThrowsNothing();
-        await Assert.That(() => true.Should().NotEqual(false)).ThrowsNothing();
+        Assert.DoesNotThrow(() => true.Should().NotBeNull());
+        Assert.DoesNotThrow(() => true.Should().Equal(true));
+        Assert.DoesNotThrow(() => true.Should().NotEqual(false));
     }
 
     [Test]
-    public async Task ChainWithInheritedMethods()
+    public void ChainWithInheritedMethods()
     {
         // Should be able to chain boolean-specific and object assertions
-        await Assert.That(() => true.Should().BeTrue().And.NotEqual(false)).ThrowsNothing();
-        await Assert.That(() => false.Should().BeFalse().And.NotEqual(true)).ThrowsNothing();
+        Assert.DoesNotThrow(() => true.Should().BeTrue().And.NotEqual(false));
+        Assert.DoesNotThrow(() => false.Should().BeFalse().And.NotEqual(true));
     }
 }

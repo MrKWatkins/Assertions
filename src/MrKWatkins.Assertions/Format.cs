@@ -145,7 +145,7 @@ internal static class Format
         var (prefix, format) = FormattingScope.Current?.GetIntegerFormat<T>(byteSize) ?? ("", "");
 
         message.Append(prefix);
-        message.Append(value.ToString(format, null));
+        message.Append(value.ToString(format, CultureInfo.InvariantCulture));
     }
 
     [Pure]
@@ -191,7 +191,7 @@ internal static class Format
                 startIndex = 0;
             }
 
-            AppendValues(message, value.Slice(startIndex, highlightIndex - startIndex));
+            AppendValues(message, value[startIndex..highlightIndex]);
             if (highlightIndex > 0)
             {
                 message.Append(", ");

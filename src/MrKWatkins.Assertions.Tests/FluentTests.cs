@@ -9,53 +9,44 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class FluentTests
 {
     [Test]
-    public async Task SequenceEqual()
-    {
-        await Assert.That(() =>
-        {
-            // Params overload of SequenceEqual with a single string should go resolve to IEnumerable<string>, not IEnumerable<char>.
-            new[] { "One" }.Should().SequenceEqual("One");
-            new[] { "One", "Two", "Three" }.Should().SequenceEqual("One", "Two", "Three");
+    public void SequenceEqual() => Assert.DoesNotThrow(() =>
+                                              {
+                                                  // Params overload of SequenceEqual with a single string should go resolve to IEnumerable<string>, not IEnumerable<char>.
+                                                  new[] { "One" }.Should().SequenceEqual("One");
+                                                  new[] { "One", "Two", "Three" }.Should().SequenceEqual("One", "Two", "Three");
 
-            // Should be able to use an enumeration of a subtype.
-            new object[] { "One" }.Should().SequenceEqual("One");
-            new object[] { "One", "Two", "Three" }.Should().SequenceEqual("One", "Two", "Three");
+                                                  // Should be able to use an enumeration of a subtype.
+                                                  new object[] { "One" }.Should().SequenceEqual("One");
+                                                  new object[] { "One", "Two", "Three" }.Should().SequenceEqual("One", "Two", "Three");
 
-            // Should be able to use null values.
-            new string?[] { null }.Should().SequenceEqual((string?)null);
-            new[] { null, "Two", "Three" }.Should().SequenceEqual(null, "Two", "Three");
+                                                  // Should be able to use null values.
+                                                  new string?[] { null }.Should().SequenceEqual((string?)null);
+                                                  new[] { null, "Two", "Three" }.Should().SequenceEqual(null, "Two", "Three");
 
-            // Should work with non-generic IEnumerable.
-            ((IEnumerable)new object[] { "One" }).Should().SequenceEqual("One");
-            ((IEnumerable)new object[] { "One", "Two", "Three" }).Should().SequenceEqual("One", "Two", "Three");
-        }).ThrowsNothing();
-    }
+                                                  // Should work with non-generic IEnumerable.
+                                                  ((IEnumerable)new object[] { "One" }).Should().SequenceEqual("One");
+                                                  ((IEnumerable)new object[] { "One", "Two", "Three" }).Should().SequenceEqual("One", "Two", "Three");
+                                              });
 
     [Test]
-    public async Task ContainsSingle()
-    {
-        await Assert.That(() =>
-        {
-            new[] { "One", "Two", "Three" }.Should().ContainSingle(x => x.Length == 5).That.Should().Equal("Three");
-        }).ThrowsNothing();
-    }
+    public void ContainsSingle() => Assert.DoesNotThrow(() =>
+                                               {
+                                                   new[] { "One", "Two", "Three" }.Should().ContainSingle(x => x.Length == 5).That.Should().Equal("Three");
+                                               });
 
     [Test]
-    public async Task AllBeOfType()
-    {
-        await Assert.That(() =>
-        {
-            // Chain should continue with the more specific type.
-            new object[] { "One", "Two", "Three" }.Should().AllBeOfType<string>().And.OnlyContain(x => x.Length >= 3);
-        }).ThrowsNothing();
-    }
+    public void AllBeOfType() => Assert.DoesNotThrow(() =>
+                                            {
+                                                // Chain should continue with the more specific type.
+                                                new object[] { "One", "Two", "Three" }.Should().AllBeOfType<string>().And.OnlyContain(x => x.Length >= 3);
+                                            });
 
     [Test]
-    public async Task Exceptions()
+    public void Exceptions()
     {
         var inner = new InvalidOperationException("Inner");
         var outer = new NotSupportedException("Outer", inner);
-        await Assert.That(() =>
+        Assert.DoesNotThrow(() =>
         {
             AssertThat.Invoking(() => throw inner).Should().Throw<InvalidOperationException>()
                 .That.Should()
@@ -65,6 +56,6 @@ public sealed class FluentTests
             AssertThat.Invoking(() => throw outer).Should().Throw<NotSupportedException>()
                 .That.Should().HaveMessage("Outer").And.HaveInnerException<InvalidOperationException>()
                 .That.Should().HaveMessage("Inner");
-        }).ThrowsNothing();
+        });
     }
 }

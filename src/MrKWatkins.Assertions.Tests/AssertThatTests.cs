@@ -3,14 +3,9 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class AssertThatTests
 {
     [Test]
-    public async Task Invoking_Action()
-    {
-        await Assert.That(() => AssertThat.Invoking(() => throw new InvalidOperationException()).Should().NotThrow()).Throws<AssertionException>();
-    }
+    public void Invoking_Action() =>
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => AssertThat.Invoking(() => throw new InvalidOperationException()).Should().NotThrow());
 
     [Test]
-    public async Task Invoking_Func()
-    {
-        await Assert.That(() => AssertThat.Invoking(() => 5).Should().Throw<InvalidOperationException>()).Throws<AssertionException>();
-    }
+    public void Invoking_Func() => Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => AssertThat.Invoking(() => 5).Should().Throw<InvalidOperationException>());
 }

@@ -4,7 +4,7 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class ActionAssertionsTests
 {
     [Test]
-    public async Task Throw()
+    public void Throw()
     {
         var doesNotThrow = () => { };
 
@@ -13,29 +13,35 @@ public sealed class ActionAssertionsTests
 
         Action throwsWrongException = () => throw new NotSupportedException("Wrong");
 
-        await Assert.That(() => throws.Should().Throw<InvalidOperationException>()).ThrowsNothing();
+        Assert.DoesNotThrow(() => throws.Should().Throw<InvalidOperationException>());
 
-        await Assert.That(() => doesNotThrow.Should().Throw<InvalidOperationException>())
-            .Throws<AssertionException>().WithMessage("Function should throw an InvalidOperationException.");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Function should throw an InvalidOperationException."),
+            () => doesNotThrow.Should().Throw<InvalidOperationException>()
+        );
 
-        await Assert.That(() => throwsWrongException.Should().Throw<InvalidOperationException>())
-            .Throws<AssertionException>().WithMessage("Function should throw an InvalidOperationException but threw a NotSupportedException with message \"Wrong\".");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo(
+                "Function should throw an InvalidOperationException but threw a NotSupportedException with message \"Wrong\"."
+            ),
+            () => throwsWrongException.Should().Throw<InvalidOperationException>()
+        );
     }
 
     [Test]
-    public async Task Throw_Chain()
+    public void Throw_Chain()
     {
         var exception = new InvalidOperationException("Test");
         Action throws = () => throw exception;
 
         var chain = throws.Should().Throw<InvalidOperationException>();
 
-        await Assert.That(chain.Exception).IsSameReferenceAs(exception);
-        await Assert.That(chain.That).IsSameReferenceAs(exception);
+        Assert.That(chain.Exception, Is.SameAs(exception));
+        Assert.That(chain.That, Is.SameAs(exception));
     }
 
     [Test]
-    public async Task Throw_String()
+    public void Throw_String()
     {
         var doesNotThrow = () => { };
 
@@ -44,32 +50,40 @@ public sealed class ActionAssertionsTests
 
         Action throwsWrongException = () => throw new NotSupportedException("Wrong");
 
-        await Assert.That(() => throws.Should().Throw<InvalidOperationException>("Test")).ThrowsNothing();
+        Assert.DoesNotThrow(() => throws.Should().Throw<InvalidOperationException>("Test"));
 
-        await Assert.That(() => throws.Should().Throw<InvalidOperationException>("Wrong Message"))
-            .Throws<AssertionException>().WithMessage("Value should have Message \"Wrong Message\" but was \"Test\".");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should have Message \"Wrong Message\" but was \"Test\"."),
+            () => throws.Should().Throw<InvalidOperationException>("Wrong Message")
+        );
 
-        await Assert.That(() => doesNotThrow.Should().Throw<InvalidOperationException>("Test"))
-            .Throws<AssertionException>().WithMessage("Function should throw an InvalidOperationException.");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Function should throw an InvalidOperationException."),
+            () => doesNotThrow.Should().Throw<InvalidOperationException>("Test")
+        );
 
-        await Assert.That(() => throwsWrongException.Should().Throw<InvalidOperationException>("Test"))
-            .Throws<AssertionException>().WithMessage("Function should throw an InvalidOperationException but threw a NotSupportedException with message \"Wrong\".");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo(
+                "Function should throw an InvalidOperationException but threw a NotSupportedException with message \"Wrong\"."
+            ),
+            () => throwsWrongException.Should().Throw<InvalidOperationException>("Test")
+        );
     }
 
     [Test]
-    public async Task Throw_String_Chain()
+    public void Throw_String_Chain()
     {
         var exception = new InvalidOperationException("Test");
         Action throws = () => throw exception;
 
         var chain = throws.Should().Throw<InvalidOperationException>("Test");
 
-        await Assert.That(chain.Exception).IsSameReferenceAs(exception);
-        await Assert.That(chain.That).IsSameReferenceAs(exception);
+        Assert.That(chain.Exception, Is.SameAs(exception));
+        Assert.That(chain.That, Is.SameAs(exception));
     }
 
     [Test]
-    public async Task Throw_String_Exception()
+    public void Throw_String_Exception()
     {
         var doesNotThrow = () => { };
 
@@ -81,40 +95,52 @@ public sealed class ActionAssertionsTests
 
         Action throwsWrongException = () => throw new NotSupportedException("Wrong");
 
-        await Assert.That(() => throws.Should().Throw<InvalidOperationException>("Test", null)).ThrowsNothing();
+        Assert.DoesNotThrow(() => throws.Should().Throw<InvalidOperationException>("Test", null));
 
-        await Assert.That(() => throws.Should().Throw<InvalidOperationException>("Test", exception))
-            .Throws<AssertionException>().WithMessage("Value should have InnerException InvalidOperationException with message \"Test\" but was null.");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should have InnerException InvalidOperationException with message \"Test\" but was null."),
+            () => throws.Should().Throw<InvalidOperationException>("Test", exception)
+        );
 
-        await Assert.That(() => throwsExceptionWithInner.Should().Throw<NotSupportedException>("HasInner", exception)).ThrowsNothing();
+        Assert.DoesNotThrow(() => throwsExceptionWithInner.Should().Throw<NotSupportedException>("HasInner", exception));
 
-        await Assert.That(() => throwsExceptionWithInner.Should().Throw<NotSupportedException>("HasInner", null))
-            .Throws<AssertionException>().WithMessage("Value should not have an InnerException but has InvalidOperationException with message \"Test\".");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not have an InnerException but has InvalidOperationException with message \"Test\"."),
+            () => throwsExceptionWithInner.Should().Throw<NotSupportedException>("HasInner", null)
+        );
 
-        await Assert.That(() => throws.Should().Throw<InvalidOperationException>("Wrong Message"))
-            .Throws<AssertionException>().WithMessage("Value should have Message \"Wrong Message\" but was \"Test\".");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should have Message \"Wrong Message\" but was \"Test\"."),
+            () => throws.Should().Throw<InvalidOperationException>("Wrong Message")
+        );
 
-        await Assert.That(() => doesNotThrow.Should().Throw<InvalidOperationException>("Test"))
-            .Throws<AssertionException>().WithMessage("Function should throw an InvalidOperationException.");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Function should throw an InvalidOperationException."),
+            () => doesNotThrow.Should().Throw<InvalidOperationException>("Test")
+        );
 
-        await Assert.That(() => throwsWrongException.Should().Throw<InvalidOperationException>("Test"))
-            .Throws<AssertionException>().WithMessage("Function should throw an InvalidOperationException but threw a NotSupportedException with message \"Wrong\".");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo(
+                "Function should throw an InvalidOperationException but threw a NotSupportedException with message \"Wrong\"."
+            ),
+            () => throwsWrongException.Should().Throw<InvalidOperationException>("Test")
+        );
     }
 
     [Test]
-    public async Task Throw_String_Exception_Chain()
+    public void Throw_String_Exception_Chain()
     {
         var exception = new InvalidOperationException("Test");
         Action throws = () => throw exception;
 
         var chain = throws.Should().Throw<InvalidOperationException>("Test", null);
 
-        await Assert.That(chain.Exception).IsSameReferenceAs(exception);
-        await Assert.That(chain.That).IsSameReferenceAs(exception);
+        Assert.That(chain.Exception, Is.SameAs(exception));
+        Assert.That(chain.That, Is.SameAs(exception));
     }
 
     [Test]
-    public async Task Throw_Exception()
+    public void Throw_Exception()
     {
         var doesNotThrow = () => { };
 
@@ -123,29 +149,35 @@ public sealed class ActionAssertionsTests
 
         var otherException = new InvalidOperationException("Other");
 
-        await Assert.That(() => throws.Should().Throw(exception)).ThrowsNothing();
+        Assert.DoesNotThrow(() => throws.Should().Throw(exception));
 
-        await Assert.That(() => doesNotThrow.Should().Throw<InvalidOperationException>("Test"))
-            .Throws<AssertionException>().WithMessage("Function should throw an InvalidOperationException.");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Function should throw an InvalidOperationException."),
+            () => doesNotThrow.Should().Throw<InvalidOperationException>("Test")
+        );
 
-        await Assert.That(() => throws.Should().Throw(otherException))
-            .Throws<AssertionException>().WithMessage("Value should be the same instance as InvalidOperationException with message \"Other\" but was InvalidOperationException with message \"Test\".");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo(
+                "Value should be the same instance as InvalidOperationException with message \"Other\" but was InvalidOperationException with message \"Test\"."
+            ),
+            () => throws.Should().Throw(otherException)
+        );
     }
 
     [Test]
-    public async Task Throw_Exception_Chain()
+    public void Throw_Exception_Chain()
     {
         var exception = new InvalidOperationException("Test");
         Action throws = () => throw exception;
 
         var chain = throws.Should().Throw(exception);
 
-        await Assert.That(chain.Exception).IsSameReferenceAs(exception);
-        await Assert.That(chain.That).IsSameReferenceAs(exception);
+        Assert.That(chain.Exception, Is.SameAs(exception));
+        Assert.That(chain.That, Is.SameAs(exception));
     }
 
     [Test]
-    public async Task Throw_ArgumentException()
+    public void Throw_ArgumentException()
     {
         var doesNotThrow = () => { };
 
@@ -154,35 +186,47 @@ public sealed class ActionAssertionsTests
 
         Action throwsWrongException = () => throw new NotSupportedException("Wrong");
 
-        await Assert.That(() => throws.Should().ThrowArgumentException("TestMessage", "TestParam")).ThrowsNothing();
+        Assert.DoesNotThrow(() => throws.Should().ThrowArgumentException("TestMessage", "TestParam"));
 
-        await Assert.That(() => throws.Should().ThrowArgumentException("OtherMessage", "TestParam"))
-            .Throws<AssertionException>().WithMessage("Value should have Message starting with \"OtherMessage\" but was \"TestMessage (Parameter 'TestParam')\".");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo(
+                "Value should have Message starting with \"OtherMessage\" but was \"TestMessage (Parameter 'TestParam')\"."
+            ),
+            () => throws.Should().ThrowArgumentException("OtherMessage", "TestParam")
+        );
 
-        await Assert.That(() => throws.Should().ThrowArgumentException("TestMessage", "OtherParam"))
-            .Throws<AssertionException>().WithMessage("Value should have ParamName \"OtherParam\" but was \"TestParam\".");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should have ParamName \"OtherParam\" but was \"TestParam\"."),
+            () => throws.Should().ThrowArgumentException("TestMessage", "OtherParam")
+        );
 
-        await Assert.That(() => doesNotThrow.Should().ThrowArgumentException("TestMessage", "TestParam"))
-            .Throws<AssertionException>().WithMessage("Function should throw an ArgumentException.");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Function should throw an ArgumentException."),
+            () => doesNotThrow.Should().ThrowArgumentException("TestMessage", "TestParam")
+        );
 
-        await Assert.That(() => throwsWrongException.Should().ThrowArgumentException("TestMessage", "TestParam"))
-            .Throws<AssertionException>().WithMessage("Function should throw an ArgumentException but threw a NotSupportedException with message \"Wrong\".");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo(
+                "Function should throw an ArgumentException but threw a NotSupportedException with message \"Wrong\"."
+            ),
+            () => throwsWrongException.Should().ThrowArgumentException("TestMessage", "TestParam")
+        );
     }
 
     [Test]
-    public async Task Throw_ArgumentException_Chain()
+    public void Throw_ArgumentException_Chain()
     {
         var exception = new ArgumentException("TestMessage", "TestParam");
         Action throws = () => throw exception;
 
         var chain = throws.Should().ThrowArgumentException("TestMessage", "TestParam");
 
-        await Assert.That(chain.Exception).IsSameReferenceAs(exception);
-        await Assert.That(chain.That).IsSameReferenceAs(exception);
+        Assert.That(chain.Exception, Is.SameAs(exception));
+        Assert.That(chain.That, Is.SameAs(exception));
     }
 
     [Test]
-    public async Task Throw_ArgumentOutOfRangeException()
+    public void Throw_ArgumentOutOfRangeException()
     {
         var doesNotThrow = () => { };
 
@@ -191,48 +235,63 @@ public sealed class ActionAssertionsTests
 
         Action throwsWrongException = () => throw new NotSupportedException("Wrong");
 
-        await Assert.That(() => throws.Should().ThrowArgumentOutOfRangeException("TestMessage", "TestParam", 123)).ThrowsNothing();
+        Assert.DoesNotThrow(() => throws.Should().ThrowArgumentOutOfRangeException("TestMessage", "TestParam", 123));
 
-        await Assert.That(() => throws.Should().ThrowArgumentOutOfRangeException("OtherMessage", "TestParam", 123))
-            .Throws<AssertionException>().WithMessage($"Value should have Message starting with \"OtherMessage\" but was \"TestMessage (Parameter 'TestParam'){Environment.NewLine}Actual value was 123.\".");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo(
+                $"Value should have Message starting with \"OtherMessage\" but was \"TestMessage (Parameter 'TestParam'){Environment.NewLine}Actual value was 123.\"."
+            ),
+            () => throws.Should().ThrowArgumentOutOfRangeException("OtherMessage", "TestParam", 123)
+        );
 
-        await Assert.That(() => throws.Should().ThrowArgumentOutOfRangeException("TestMessage", "OtherParam", 123))
-            .Throws<AssertionException>().WithMessage("Value should have ParamName \"OtherParam\" but was \"TestParam\".");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should have ParamName \"OtherParam\" but was \"TestParam\"."),
+            () => throws.Should().ThrowArgumentOutOfRangeException("TestMessage", "OtherParam", 123)
+        );
 
-        await Assert.That(() => throws.Should().ThrowArgumentOutOfRangeException("TestMessage", "TestParam", 456))
-            .Throws<AssertionException>().WithMessage("Value should have ActualValue 456 but was 123.");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should have ActualValue 456 but was 123."),
+            () => throws.Should().ThrowArgumentOutOfRangeException("TestMessage", "TestParam", 456)
+        );
 
-        await Assert.That(() => doesNotThrow.Should().ThrowArgumentOutOfRangeException("TestMessage", "TestParam", 123))
-            .Throws<AssertionException>().WithMessage("Function should throw an ArgumentOutOfRangeException.");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Function should throw an ArgumentOutOfRangeException."),
+            () => doesNotThrow.Should().ThrowArgumentOutOfRangeException("TestMessage", "TestParam", 123)
+        );
 
-        await Assert.That(() => throwsWrongException.Should().ThrowArgumentOutOfRangeException("TestMessage", "TestParam", 123))
-            .Throws<AssertionException>().WithMessage("Function should throw an ArgumentOutOfRangeException but threw a NotSupportedException with message \"Wrong\".");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo(
+                "Function should throw an ArgumentOutOfRangeException but threw a NotSupportedException with message \"Wrong\"."
+            ),
+            () => throwsWrongException.Should().ThrowArgumentOutOfRangeException("TestMessage", "TestParam", 123)
+        );
     }
 
     [Test]
-    public async Task Throw_ArgumentOutOfRangeException_Chain()
+    public void Throw_ArgumentOutOfRangeException_Chain()
     {
         var exception = new ArgumentOutOfRangeException("TestParam", 123, "TestMessage");
         Action throws = () => throw exception;
 
         var chain = throws.Should().ThrowArgumentOutOfRangeException("TestMessage", "TestParam", 123);
 
-        await Assert.That(chain.Exception).IsSameReferenceAs(exception);
-        await Assert.That(chain.That).IsSameReferenceAs(exception);
+        Assert.That(chain.Exception, Is.SameAs(exception));
+        Assert.That(chain.That, Is.SameAs(exception));
     }
 
     [Test]
-    public async Task NotThrow()
+    public void NotThrow()
     {
         var doesNotThrow = () => { };
 
         var exception = new InvalidOperationException("Test");
         Action throws = () => throw exception;
 
-        await Assert.That(() => doesNotThrow.Should().NotThrow()).ThrowsNothing();
-        var actualException = await Assert.That(() => throws.Should().NotThrow())
-            .Throws<AssertionException>()
-            .WithMessage("Function should not throw but threw an InvalidOperationException with message \"Test\".");
-        await Assert.That(actualException!.InnerException).IsSameReferenceAs(exception);
+        Assert.DoesNotThrow(() => doesNotThrow.Should().NotThrow());
+        var actualException = Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Function should not throw but threw an InvalidOperationException with message \"Test\"."),
+            () => throws.Should().NotThrow()
+        );
+        Assert.That(actualException!.InnerException, Is.SameAs(exception));
     }
 }

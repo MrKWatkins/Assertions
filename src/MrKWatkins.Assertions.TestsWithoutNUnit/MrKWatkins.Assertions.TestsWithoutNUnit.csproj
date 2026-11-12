@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <UseAppHost>false</UseAppHost>
+        <IsTestProject>false</IsTestProject>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="../MrKWatkins.Assertions/MrKWatkins.Assertions.csproj" />
+    </ItemGroup>
+</Project>

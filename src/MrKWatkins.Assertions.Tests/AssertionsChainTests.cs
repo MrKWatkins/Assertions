@@ -9,143 +9,141 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class AssertionsChainTests
 {
     [Test]
-    public async Task Object()
+    public void Object()
     {
         var value = new object();
 
         var and = value.Should().NotBeNull().And;
-        await Assert.That(and.Value).IsSameReferenceAs(value);
+        Assert.That(and.Value, Is.SameAs(value));
 
         var chain = value.Should().Equal(value);
-        await Assert.That(chain.That).IsSameReferenceAs(value);
+        Assert.That(chain.That, Is.SameAs(value));
     }
 
     [Test]
-    public async Task Object_BeOfType()
+    public void Object_BeOfType()
     {
         object value = "Test";
 
         var and = value.Should().BeOfType<string>().And;
-        await Assert.That(and.Value).IsEqualTo("Test");
+        Assert.That(and.Value, Is.EqualTo("Test"));
     }
 
     [Test]
-    public async Task Boolean()
+    public void Boolean()
     {
         var and = true.Should().Equal(true).And;
-        await Assert.That(and.BeTrue).ThrowsNothing();
+        Assert.DoesNotThrow(() => and.BeTrue());
     }
 
     [Test]
-    public async Task Integer()
+    public void Integer()
     {
         var and = 5.Should().NotBeNull().And;
-        await Assert.That(() => and.BePositive().And.Equal(5L).And.BeLessThan(10).And.BeInRange(0, 10).And.NotBeZero()).ThrowsNothing();
+        Assert.DoesNotThrow(() => and.BePositive().And.Equal(5L).And.BeLessThan(10).And.BeInRange(0, 10).And.NotBeZero());
 
         var comparer = 5.Should().Equal(5, EqualityComparer<int>.Default).And;
-        await Assert.That(comparer.Value).IsEqualTo(5);
+        Assert.That(comparer.Value, Is.EqualTo(5));
     }
 
     [Test]
-    public async Task Decimal()
+    public void Decimal()
     {
         var and = 5m.Should().Equal(5m).And;
-        await Assert.That(() => and.BePositive().And.BeGreaterThan(1m).And.NotEqual(0m).And.BeInRange(0m, 10m)).ThrowsNothing();
+        Assert.DoesNotThrow(() => and.BePositive().And.BeGreaterThan(1m).And.NotEqual(0m).And.BeInRange(0m, 10m));
     }
 
     [Test]
-    public async Task FloatingPoint()
+    public void FloatingPoint()
     {
         var and = 5.0.Should().Equal(5.0).And;
-        await Assert.That(() => and.BePositive().And.BeLessThan(10.0).And.BeApproximately(5.0, 0.1).And.NotBeNaN()).ThrowsNothing();
+        Assert.DoesNotThrow(() => and.BePositive().And.BeLessThan(10.0).And.BeApproximately(5.0, 0.1).And.NotBeNaN());
     }
 
     [Test]
-    public async Task TimeSpan()
+    public void TimeSpan()
     {
         var and = System.TimeSpan.FromSeconds(5).Should().Equal(System.TimeSpan.FromSeconds(5)).And;
-        await Assert.That(() => and.BePositive().And.BeLessThan(System.TimeSpan.FromMinutes(1)).And.BeApproximately(System.TimeSpan.FromSeconds(5), System.TimeSpan.Zero))
-            .ThrowsNothing();
+        Assert.DoesNotThrow(() => and.BePositive().And.BeLessThan(System.TimeSpan.FromMinutes(1)).And.BeApproximately(System.TimeSpan.FromSeconds(5), System.TimeSpan.Zero));
     }
 
     [Test]
-    public async Task DateTimeOffset()
+    public void DateTimeOffset()
     {
         var value = new DateTimeOffset(2026, 9, 30, 12, 0, 0, System.TimeSpan.Zero);
 
         var and = value.Should().Equal(value).And;
-        await Assert.That(() => and.BeGreaterThan(value.AddDays(-1)).And.BeBefore(value.AddDays(1)).And.HaveOffset(System.TimeSpan.Zero)).ThrowsNothing();
+        Assert.DoesNotThrow(() => and.BeGreaterThan(value.AddDays(-1)).And.BeBefore(value.AddDays(1)).And.HaveOffset(System.TimeSpan.Zero));
     }
 
     [Test]
-    public async Task DateOnly()
+    public void DateOnly()
     {
         var value = new DateOnly(2026, 9, 30);
 
         var and = value.Should().Equal(value).And;
-        await Assert.That(() => and.BeLessThan(value.AddDays(1)).And.BeAfter(value.AddDays(-1)).And.BeOnDayOfWeek(DayOfWeek.Wednesday)).ThrowsNothing();
+        Assert.DoesNotThrow(() => and.BeLessThan(value.AddDays(1)).And.BeAfter(value.AddDays(-1)).And.BeOnDayOfWeek(DayOfWeek.Wednesday));
     }
 
     [Test]
-    public async Task String()
+    public void String()
     {
         var and = "Hello".Should().NotBeNull().And;
-        await Assert.That(() => and.StartWith("He").And.Contain('l').And.HaveCount(5).And.EndWith("lo").And.SequenceEqual('H', 'e', 'l', 'l', 'o').And.HaveLength(5))
-            .ThrowsNothing();
+        Assert.DoesNotThrow(() => and.StartWith("He").And.Contain('l').And.HaveCount(5).And.EndWith("lo").And.SequenceEqual('H', 'e', 'l', 'l', 'o').And.HaveLength(5));
     }
 
     [Test]
-    public async Task Enumerable()
+    public void Enumerable()
     {
         IEnumerable<int> value = [1, 2, 3];
 
         var and = value.Should().NotBeEmpty().And;
-        await Assert.That(() => and.Contain(2).And.HaveCount(3).And.SequenceEqual(1, 2, 3)).ThrowsNothing();
+        Assert.DoesNotThrow(() => and.Contain(2).And.HaveCount(3).And.SequenceEqual(1, 2, 3));
     }
 
     [Test]
-    public async Task NonGenericEnumerable()
+    public void NonGenericEnumerable()
     {
         IEnumerable value = new[] { 1, 2, 3 };
 
         var and = value.Should().SequenceEqual(1, 2, 3).And;
-        await Assert.That(() => and.HaveCount(3)).ThrowsNothing();
+        Assert.DoesNotThrow(() => and.HaveCount(3));
     }
 
     [Test]
-    public async Task Set()
+    public void Set()
     {
         var value = new HashSet<int> { 1, 2, 3 };
 
         var and = value.Should().Contain(1).And;
-        await Assert.That(() => and.SetEquals(3, 2, 1).And.HaveCount(3).And.NotBeNull().And.IsSupersetOf(1)).ThrowsNothing();
+        Assert.DoesNotThrow(() => and.SetEquals(3, 2, 1).And.HaveCount(3).And.NotBeNull().And.IsSupersetOf(1));
     }
 
     [Test]
-    public async Task Dictionary()
+    public void Dictionary()
     {
         var value = new Dictionary<string, int> { ["One"] = 1 };
 
         var and = value.Should().NotBeNull().And;
-        await Assert.That(() => and.ContainKey("One").And.HaveCount(1).And.NotContainKey("Two")).ThrowsNothing();
+        Assert.DoesNotThrow(() => and.ContainKey("One").And.HaveCount(1).And.NotContainKey("Two"));
     }
 
     [Test]
-    public async Task Exception()
+    public void Exception()
     {
         // ReSharper disable once NotResolvedInText
         var value = new ArgumentException("Message", "param");
 
         var and = value.Should().NotBeNull().And;
-        await Assert.That(() => and.HaveMessageStartingWith("Message").And.HaveParamName("param").And.NotHaveInnerException()).ThrowsNothing();
+        Assert.DoesNotThrow(() => and.HaveMessageStartingWith("Message").And.HaveParamName("param").And.NotHaveInnerException());
     }
 
     [Test]
-    public async Task NullableBoolean()
+    public void NullableBoolean()
     {
         bool? value = true;
 
         var and = value.Should().NotBeNull().And;
-        await Assert.That(() => and.BeTrue().And.NotBeFalse()).ThrowsNothing();
+        Assert.DoesNotThrow(() => and.BeTrue().And.NotBeFalse());
     }
 }

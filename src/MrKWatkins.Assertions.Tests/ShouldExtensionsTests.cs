@@ -3,117 +3,117 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class ShouldExtensionsTests
 {
     [Test]
-    public async Task Should_Span()
+    public void Should_Span()
     {
-        await Assert.That(() =>
+        Assert.DoesNotThrow(() =>
         {
             Span<int> value = [1, 2, 3];
             value.Should().SequenceEqual(1, 2, 3);
-        }).ThrowsNothing();
+        });
 
-        await Assert.That(() =>
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () =>
         {
             Span<int> value = [1, 2, 4];
             value.Should().SequenceEqual(1, 2, 3);
-        }).Throws<AssertionException>();
+        });
     }
 
     [Test]
-    public async Task Should_SByte()
+    public void Should_SByte()
     {
         sbyte value = -42;
 
-        await Assert.That(() => value.Should().Equal((sbyte)-42)).ThrowsNothing();
-        await Assert.That(() => value.Should().Equal((sbyte)0)).Throws<AssertionException>();
+        Assert.DoesNotThrow(() => value.Should().Equal((sbyte)-42));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => value.Should().Equal((sbyte)0));
     }
 
     [Test]
-    public async Task Should_UShort()
+    public void Should_UShort()
     {
         ushort value = 42;
 
-        await Assert.That(() => value.Should().Equal((ushort)42)).ThrowsNothing();
-        await Assert.That(() => value.Should().Equal((ushort)0)).Throws<AssertionException>();
+        Assert.DoesNotThrow(() => value.Should().Equal((ushort)42));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => value.Should().Equal((ushort)0));
     }
 
     [Test]
-    public async Task Should_UInt()
+    public void Should_UInt()
     {
         uint value = 42;
 
-        await Assert.That(() => value.Should().Equal(42u)).ThrowsNothing();
-        await Assert.That(() => value.Should().Equal(0u)).Throws<AssertionException>();
+        Assert.DoesNotThrow(() => value.Should().Equal(42u));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => value.Should().Equal(0u));
     }
 
     [Test]
-    public async Task Should_ULong()
+    public void Should_ULong()
     {
         ulong value = 42;
 
-        await Assert.That(() => value.Should().Equal(42ul)).ThrowsNothing();
-        await Assert.That(() => value.Should().Equal(0ul)).Throws<AssertionException>();
+        Assert.DoesNotThrow(() => value.Should().Equal(42ul));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => value.Should().Equal(0ul));
     }
 
     [Test]
-    public async Task Should_NInt()
+    public void Should_NInt()
     {
         nint value = 42;
 
-        await Assert.That(() => value.Should().Equal((nint)42)).ThrowsNothing();
-        await Assert.That(() => value.Should().Equal((nint)0)).Throws<AssertionException>();
+        Assert.DoesNotThrow(() => value.Should().Equal((nint)42));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => value.Should().Equal((nint)0));
     }
 
     [Test]
-    public async Task Should_NUInt()
+    public void Should_NUInt()
     {
         nuint value = 42;
 
-        await Assert.That(() => value.Should().Equal((nuint)42)).ThrowsNothing();
-        await Assert.That(() => value.Should().Equal((nuint)0)).Throws<AssertionException>();
+        Assert.DoesNotThrow(() => value.Should().Equal((nuint)42));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => value.Should().Equal((nuint)0));
     }
 
     [Test]
-    public async Task Should_Decimal()
+    public void Should_Decimal()
     {
         var value = 42m;
 
-        await Assert.That(() => value.Should().BeGreaterThan(0m)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeGreaterThan(100m)).Throws<AssertionException>();
+        Assert.DoesNotThrow(() => value.Should().BeGreaterThan(0m));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => value.Should().BeGreaterThan(100m));
     }
 
     [Test]
-    public async Task Should_TimeSpan()
+    public void Should_TimeSpan()
     {
         var value = TimeSpan.FromSeconds(42);
 
-        await Assert.That(() => value.Should().BeGreaterThan(TimeSpan.Zero)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeGreaterThan(TimeSpan.FromMinutes(1))).Throws<AssertionException>();
+        Assert.DoesNotThrow(() => value.Should().BeGreaterThan(TimeSpan.Zero));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => value.Should().BeGreaterThan(TimeSpan.FromMinutes(1)));
     }
 
     [Test]
-    public async Task Should_DateTimeOffset()
+    public void Should_DateTimeOffset()
     {
         var value = new DateTimeOffset(2026, 9, 30, 12, 0, 0, TimeSpan.Zero);
 
-        await Assert.That(() => value.Should().BeAfter(value.AddDays(-1))).ThrowsNothing();
-        await Assert.That(() => value.Should().BeAfter(value.AddDays(1))).Throws<AssertionException>();
+        Assert.DoesNotThrow(() => value.Should().BeAfter(value.AddDays(-1)));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => value.Should().BeAfter(value.AddDays(1)));
     }
 
     [Test]
-    public async Task Should_DateOnly()
+    public void Should_DateOnly()
     {
         var value = new DateOnly(2026, 9, 30);
 
-        await Assert.That(() => value.Should().BeAfter(value.AddDays(-1))).ThrowsNothing();
-        await Assert.That(() => value.Should().BeAfter(value.AddDays(1))).Throws<AssertionException>();
+        Assert.DoesNotThrow(() => value.Should().BeAfter(value.AddDays(-1)));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => value.Should().BeAfter(value.AddDays(1)));
     }
 
     [Test]
-    public async Task Should_Half()
+    public void Should_Half()
     {
         var value = (Half)42;
 
-        await Assert.That(() => value.Should().BeApproximately((Half)42, (Half)1)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeApproximately((Half)100, (Half)1)).Throws<AssertionException>();
+        Assert.DoesNotThrow(() => value.Should().BeApproximately((Half)42, (Half)1));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => value.Should().BeApproximately((Half)100, (Half)1));
     }
 }

@@ -6,135 +6,145 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class CountExtensionsTests
 {
     [Test]
-    public async Task BeEmpty()
+    public void BeEmpty()
     {
         IEnumerable<byte> nullValue = null!;
         IEnumerable<byte> notEmptyValue = [1, 2, 3];
         IEnumerable<byte> emptyValue = [];
 
-        await Assert.That(() => nullValue.Should().BeEmpty()).Throws<AssertionException>().WithMessage("Value should not be null.");
-        await Assert.That(() => notEmptyValue.Should().BeEmpty()).Throws<AssertionException>().WithMessage("Value should be empty but has 3 items.");
-        await Assert.That(() => emptyValue.Should().BeEmpty()).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullValue.Should().BeEmpty());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be empty but has 3 items."), () => notEmptyValue.Should().BeEmpty());
+        Assert.DoesNotThrow(() => emptyValue.Should().BeEmpty());
     }
 
     [Test]
-    public async Task BeEmpty_Chain()
+    public void BeEmpty_Chain()
     {
         IEnumerable<byte> emptyValue = [];
 
         var chain = emptyValue.Should().BeEmpty();
-        await Assert.That(chain.Value).IsEqualTo(emptyValue);
+        Assert.That(chain.Value, Is.EqualTo(emptyValue));
 
         var and = chain.And;
-        await Assert.That(and.Value).IsEqualTo(emptyValue);
+        Assert.That(and.Value, Is.EqualTo(emptyValue));
     }
 
     [Test]
-    public async Task NotBeEmpty()
+    public void NotBeEmpty()
     {
         IEnumerable<byte> nullValue = null!;
         IEnumerable<byte> notEmptyValue = [1, 2, 3];
         IEnumerable<byte> emptyValue = [];
 
-        await Assert.That(() => nullValue.Should().NotBeEmpty()).Throws<AssertionException>().WithMessage("Value should not be null.");
-        await Assert.That(() => notEmptyValue.Should().NotBeEmpty()).ThrowsNothing();
-        await Assert.That(() => emptyValue.Should().NotBeEmpty()).Throws<AssertionException>().WithMessage("Value should not be empty.");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullValue.Should().NotBeEmpty());
+        Assert.DoesNotThrow(() => notEmptyValue.Should().NotBeEmpty());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be empty."), () => emptyValue.Should().NotBeEmpty());
     }
 
     [Test]
-    public async Task NotBeEmpty_Chain()
+    public void NotBeEmpty_Chain()
     {
         IEnumerable<byte> emptyValue = [1, 2, 3];
 
         var chain = emptyValue.Should().NotBeEmpty();
-        await Assert.That(chain.Value).IsEqualTo(emptyValue);
+        Assert.That(chain.Value, Is.EqualTo(emptyValue));
 
         var and = chain.And;
-        await Assert.That(and.Value).IsEqualTo(emptyValue);
+        Assert.That(and.Value, Is.EqualTo(emptyValue));
     }
 
     [Test]
-    public async Task HaveCount()
+    public void HaveCount()
     {
         IEnumerable nullValue = null!;
         var enumerableValue = new Enumerable(5);
         var collectionValue = new Collection(5);
         var readOnlyCollectionValue = new ReadOnlyCollection(5);
 
-        await Assert.That(() => nullValue.Should().HaveCount(5)).Throws<AssertionException>().WithMessage("Value should not be null.");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullValue.Should().HaveCount(5));
 
-        await Assert.That(() => enumerableValue.Should().HaveCount(3)).Throws<AssertionException>().WithMessage("Value should have a count of 3 but has a count of 5.");
-        await Assert.That(() => collectionValue.Should().HaveCount(3)).Throws<AssertionException>().WithMessage("Value should have a count of 3 but has a count of 5.");
-        await Assert.That(() => readOnlyCollectionValue.Should().HaveCount(3)).Throws<AssertionException>().WithMessage("Value should have a count of 3 but has a count of 5.");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should have a count of 3 but has a count of 5."),
+            () => enumerableValue.Should().HaveCount(3)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should have a count of 3 but has a count of 5."),
+            () => collectionValue.Should().HaveCount(3)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should have a count of 3 but has a count of 5."),
+            () => readOnlyCollectionValue.Should().HaveCount(3)
+        );
 
-        await Assert.That(() => enumerableValue.Should().HaveCount(5)).ThrowsNothing();
-        await Assert.That(() => collectionValue.Should().HaveCount(5)).ThrowsNothing();
-        await Assert.That(() => readOnlyCollectionValue.Should().HaveCount(5)).ThrowsNothing();
+        Assert.DoesNotThrow(() => enumerableValue.Should().HaveCount(5));
+        Assert.DoesNotThrow(() => collectionValue.Should().HaveCount(5));
+        Assert.DoesNotThrow(() => readOnlyCollectionValue.Should().HaveCount(5));
     }
 
     [Test]
-    public async Task HaveCount_Chain()
+    public void HaveCount_Chain()
     {
         IEnumerable<byte> value = [1, 2, 3];
 
         var chain = value.Should().HaveCount(3);
-        await Assert.That(chain.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
 
         var and = chain.And;
-        await Assert.That(and.Value).IsEqualTo(value);
+        Assert.That(and.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task NotHaveCount()
+    public void NotHaveCount()
     {
         IEnumerable nullValue = null!;
         var enumerableValue = new Enumerable(5);
         var collectionValue = new Collection(5);
         var readOnlyCollectionValue = new ReadOnlyCollection(5);
 
-        await Assert.That(() => nullValue.Should().NotHaveCount(5)).Throws<AssertionException>().WithMessage("Value should not be null.");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullValue.Should().NotHaveCount(5));
 
-        await Assert.That(() => enumerableValue.Should().NotHaveCount(3)).ThrowsNothing();
-        await Assert.That(() => collectionValue.Should().NotHaveCount(3)).ThrowsNothing();
-        await Assert.That(() => readOnlyCollectionValue.Should().NotHaveCount(3)).ThrowsNothing();
+        Assert.DoesNotThrow(() => enumerableValue.Should().NotHaveCount(3));
+        Assert.DoesNotThrow(() => collectionValue.Should().NotHaveCount(3));
+        Assert.DoesNotThrow(() => readOnlyCollectionValue.Should().NotHaveCount(3));
 
-        await Assert.That(() => enumerableValue.Should().NotHaveCount(5)).Throws<AssertionException>().WithMessage("Value should not have a count of 5.");
-        await Assert.That(() => collectionValue.Should().NotHaveCount(5)).Throws<AssertionException>().WithMessage("Value should not have a count of 5.");
-        await Assert.That(() => readOnlyCollectionValue.Should().NotHaveCount(5)).Throws<AssertionException>().WithMessage("Value should not have a count of 5.");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not have a count of 5."), () => enumerableValue.Should().NotHaveCount(5));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not have a count of 5."), () => collectionValue.Should().NotHaveCount(5));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not have a count of 5."),
+            () => readOnlyCollectionValue.Should().NotHaveCount(5)
+        );
     }
 
     [Test]
-    public async Task NotHaveCount_Chain()
+    public void NotHaveCount_Chain()
     {
         IEnumerable<byte> value = [1, 2, 3];
 
         var chain = value.Should().NotHaveCount(5);
-        await Assert.That(chain.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
 
         var and = chain.And;
-        await Assert.That(and.Value).IsEqualTo(value);
+        Assert.That(and.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task BeEmpty_NonCollection()
+    public void BeEmpty_NonCollection()
     {
         var notEmptyEnumerable = System.Linq.Enumerable.Range(0, 3).Select(x => x);
         var emptyEnumerable = System.Linq.Enumerable.Range(0, 0).Select(x => x);
 
-        await Assert.That(() => notEmptyEnumerable.Should().BeEmpty()).Throws<AssertionException>()
-            .WithMessage("Value should be empty.");
-        await Assert.That(() => emptyEnumerable.Should().BeEmpty()).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be empty."), () => notEmptyEnumerable.Should().BeEmpty());
+        Assert.DoesNotThrow(() => emptyEnumerable.Should().BeEmpty());
     }
 
     [Test]
-    public async Task NotBeEmpty_NonCollection()
+    public void NotBeEmpty_NonCollection()
     {
         var notEmptyEnumerable = System.Linq.Enumerable.Range(0, 3).Select(x => x);
         var emptyEnumerable = System.Linq.Enumerable.Range(0, 0).Select(x => x);
 
-        await Assert.That(() => notEmptyEnumerable.Should().NotBeEmpty()).ThrowsNothing();
-        await Assert.That(() => emptyEnumerable.Should().NotBeEmpty()).Throws<AssertionException>()
-            .WithMessage("Value should not be empty.");
+        Assert.DoesNotThrow(() => notEmptyEnumerable.Should().NotBeEmpty());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be empty."), () => emptyEnumerable.Should().NotBeEmpty());
     }
 
     private sealed class Enumerable(int count) : IEnumerable

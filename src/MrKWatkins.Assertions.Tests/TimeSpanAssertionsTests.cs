@@ -8,262 +8,280 @@ public sealed class TimeSpanAssertionsTests
     private static readonly TimeSpan MinusFive = TimeSpan.FromSeconds(-5);
 
     [Test]
-    public async Task Equal()
+    public void Equal()
     {
-        await Assert.That(() => Five.Should().Equal(TimeSpan.FromMilliseconds(5000))).ThrowsNothing();
-        await Assert.That(() => Five.Should().Equal(Ten)).Throws<AssertionException>()
-            .WithMessage("Value should equal 00:00:10 but was 00:00:05.");
+        Assert.DoesNotThrow(() => Five.Should().Equal(TimeSpan.FromMilliseconds(5000)));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should equal 00:00:10 but was 00:00:05."), () => Five.Should().Equal(Ten));
     }
 
     [Test]
-    public async Task NotEqual()
+    public void NotEqual()
     {
-        await Assert.That(() => Five.Should().NotEqual(Ten)).ThrowsNothing();
-        await Assert.That(() => Five.Should().NotEqual(TimeSpan.FromMilliseconds(5000))).Throws<AssertionException>()
-            .WithMessage("Value should not equal 00:00:05.");
+        Assert.DoesNotThrow(() => Five.Should().NotEqual(Ten));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not equal 00:00:05."),
+            () => Five.Should().NotEqual(TimeSpan.FromMilliseconds(5000))
+        );
     }
 
     [Test]
-    public async Task BeZero()
+    public void BeZero()
     {
-        await Assert.That(() => TimeSpan.Zero.Should().BeZero()).ThrowsNothing();
-        await Assert.That(() => Five.Should().BeZero()).Throws<AssertionException>()
-            .WithMessage("Value should be zero but was 00:00:05.");
+        Assert.DoesNotThrow(() => TimeSpan.Zero.Should().BeZero());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be zero but was 00:00:05."), () => Five.Should().BeZero());
     }
 
     [Test]
-    public async Task BeZero_Chain()
+    public void BeZero_Chain()
     {
         var chain = TimeSpan.Zero.Should().BeZero();
-        await Assert.That(chain.Value).IsEqualTo(TimeSpan.Zero);
-        await Assert.That(chain.And.Value).IsEqualTo(TimeSpan.Zero);
+        Assert.That(chain.Value, Is.EqualTo(TimeSpan.Zero));
+        Assert.That(chain.And.Value, Is.EqualTo(TimeSpan.Zero));
     }
 
     [Test]
-    public async Task NotBeZero()
+    public void NotBeZero()
     {
-        await Assert.That(() => Five.Should().NotBeZero()).ThrowsNothing();
-        await Assert.That(() => TimeSpan.Zero.Should().NotBeZero()).Throws<AssertionException>()
-            .WithMessage("Value should not be zero.");
+        Assert.DoesNotThrow(() => Five.Should().NotBeZero());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be zero."), () => TimeSpan.Zero.Should().NotBeZero());
     }
 
     [Test]
-    public async Task NotBeZero_Chain()
+    public void NotBeZero_Chain()
     {
         var chain = Five.Should().NotBeZero();
-        await Assert.That(chain.Value).IsEqualTo(Five);
-        await Assert.That(chain.And.Value).IsEqualTo(Five);
+        Assert.That(chain.Value, Is.EqualTo(Five));
+        Assert.That(chain.And.Value, Is.EqualTo(Five));
     }
 
     [Test]
-    public async Task BeNegative()
+    public void BeNegative()
     {
-        await Assert.That(() => MinusFive.Should().BeNegative()).ThrowsNothing();
-        await Assert.That(() => Five.Should().BeNegative()).Throws<AssertionException>()
-            .WithMessage("Value should be negative but was 00:00:05.");
-        await Assert.That(() => TimeSpan.Zero.Should().BeNegative()).Throws<AssertionException>()
-            .WithMessage("Value should be negative but was 00:00:00.");
+        Assert.DoesNotThrow(() => MinusFive.Should().BeNegative());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be negative but was 00:00:05."), () => Five.Should().BeNegative());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be negative but was 00:00:00."), () => TimeSpan.Zero.Should().BeNegative());
     }
 
     [Test]
-    public async Task BeNegative_Chain()
+    public void BeNegative_Chain()
     {
         var chain = MinusFive.Should().BeNegative();
-        await Assert.That(chain.Value).IsEqualTo(MinusFive);
-        await Assert.That(chain.And.Value).IsEqualTo(MinusFive);
+        Assert.That(chain.Value, Is.EqualTo(MinusFive));
+        Assert.That(chain.And.Value, Is.EqualTo(MinusFive));
     }
 
     [Test]
-    public async Task NotBeNegative()
+    public void NotBeNegative()
     {
-        await Assert.That(() => Five.Should().NotBeNegative()).ThrowsNothing();
-        await Assert.That(() => TimeSpan.Zero.Should().NotBeNegative()).ThrowsNothing();
-        await Assert.That(() => MinusFive.Should().NotBeNegative()).Throws<AssertionException>()
-            .WithMessage("Value should not be negative but was -00:00:05.");
+        Assert.DoesNotThrow(() => Five.Should().NotBeNegative());
+        Assert.DoesNotThrow(() => TimeSpan.Zero.Should().NotBeNegative());
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be negative but was -00:00:05."),
+            () => MinusFive.Should().NotBeNegative()
+        );
     }
 
     [Test]
-    public async Task NotBeNegative_Chain()
+    public void NotBeNegative_Chain()
     {
         var chain = Five.Should().NotBeNegative();
-        await Assert.That(chain.Value).IsEqualTo(Five);
-        await Assert.That(chain.And.Value).IsEqualTo(Five);
+        Assert.That(chain.Value, Is.EqualTo(Five));
+        Assert.That(chain.And.Value, Is.EqualTo(Five));
     }
 
     [Test]
-    public async Task BePositive()
+    public void BePositive()
     {
-        await Assert.That(() => Five.Should().BePositive()).ThrowsNothing();
-        await Assert.That(() => MinusFive.Should().BePositive()).Throws<AssertionException>()
-            .WithMessage("Value should be positive but was -00:00:05.");
-        await Assert.That(() => TimeSpan.Zero.Should().BePositive()).Throws<AssertionException>()
-            .WithMessage("Value should be positive but was 00:00:00.");
+        Assert.DoesNotThrow(() => Five.Should().BePositive());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be positive but was -00:00:05."), () => MinusFive.Should().BePositive());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be positive but was 00:00:00."), () => TimeSpan.Zero.Should().BePositive());
     }
 
     [Test]
-    public async Task BePositive_Chain()
+    public void BePositive_Chain()
     {
         var chain = Five.Should().BePositive();
-        await Assert.That(chain.Value).IsEqualTo(Five);
-        await Assert.That(chain.And.Value).IsEqualTo(Five);
+        Assert.That(chain.Value, Is.EqualTo(Five));
+        Assert.That(chain.And.Value, Is.EqualTo(Five));
     }
 
     [Test]
-    public async Task NotBePositive()
+    public void NotBePositive()
     {
-        await Assert.That(() => MinusFive.Should().NotBePositive()).ThrowsNothing();
-        await Assert.That(() => TimeSpan.Zero.Should().NotBePositive()).ThrowsNothing();
-        await Assert.That(() => Five.Should().NotBePositive()).Throws<AssertionException>()
-            .WithMessage("Value should not be positive but was 00:00:05.");
+        Assert.DoesNotThrow(() => MinusFive.Should().NotBePositive());
+        Assert.DoesNotThrow(() => TimeSpan.Zero.Should().NotBePositive());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be positive but was 00:00:05."), () => Five.Should().NotBePositive());
     }
 
     [Test]
-    public async Task NotBePositive_Chain()
+    public void NotBePositive_Chain()
     {
         var chain = MinusFive.Should().NotBePositive();
-        await Assert.That(chain.Value).IsEqualTo(MinusFive);
-        await Assert.That(chain.And.Value).IsEqualTo(MinusFive);
+        Assert.That(chain.Value, Is.EqualTo(MinusFive));
+        Assert.That(chain.And.Value, Is.EqualTo(MinusFive));
     }
 
     [Test]
-    public async Task BeLessThan()
+    public void BeLessThan()
     {
-        await Assert.That(() => Five.Should().BeLessThan(Ten)).ThrowsNothing();
-        await Assert.That(() => Five.Should().BeLessThan(Five)).Throws<AssertionException>()
-            .WithMessage("Value should be less than 00:00:05 but was 00:00:05.");
-        await Assert.That(() => Five.Should().BeLessThan(One)).Throws<AssertionException>()
-            .WithMessage("Value should be less than 00:00:01 but was 00:00:05.");
+        Assert.DoesNotThrow(() => Five.Should().BeLessThan(Ten));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be less than 00:00:05 but was 00:00:05."),
+            () => Five.Should().BeLessThan(Five)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be less than 00:00:01 but was 00:00:05."),
+            () => Five.Should().BeLessThan(One)
+        );
     }
 
     [Test]
-    public async Task BeLessThan_Chain()
+    public void BeLessThan_Chain()
     {
         var chain = Five.Should().BeLessThan(Ten);
-        await Assert.That(chain.Value).IsEqualTo(Five);
-        await Assert.That(chain.And.Value).IsEqualTo(Five);
+        Assert.That(chain.Value, Is.EqualTo(Five));
+        Assert.That(chain.And.Value, Is.EqualTo(Five));
     }
 
     [Test]
-    public async Task BeLessThanOrEqualTo()
+    public void BeLessThanOrEqualTo()
     {
-        await Assert.That(() => Five.Should().BeLessThanOrEqualTo(Ten)).ThrowsNothing();
-        await Assert.That(() => Five.Should().BeLessThanOrEqualTo(Five)).ThrowsNothing();
-        await Assert.That(() => Five.Should().BeLessThanOrEqualTo(One)).Throws<AssertionException>()
-            .WithMessage("Value should be less than or equal to 00:00:01 but was 00:00:05.");
+        Assert.DoesNotThrow(() => Five.Should().BeLessThanOrEqualTo(Ten));
+        Assert.DoesNotThrow(() => Five.Should().BeLessThanOrEqualTo(Five));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be less than or equal to 00:00:01 but was 00:00:05."),
+            () => Five.Should().BeLessThanOrEqualTo(One)
+        );
     }
 
     [Test]
-    public async Task BeLessThanOrEqualTo_Chain()
+    public void BeLessThanOrEqualTo_Chain()
     {
         var chain = Five.Should().BeLessThanOrEqualTo(Five);
-        await Assert.That(chain.Value).IsEqualTo(Five);
-        await Assert.That(chain.And.Value).IsEqualTo(Five);
+        Assert.That(chain.Value, Is.EqualTo(Five));
+        Assert.That(chain.And.Value, Is.EqualTo(Five));
     }
 
     [Test]
-    public async Task BeGreaterThan()
+    public void BeGreaterThan()
     {
-        await Assert.That(() => Five.Should().BeGreaterThan(One)).ThrowsNothing();
-        await Assert.That(() => Five.Should().BeGreaterThan(Five)).Throws<AssertionException>()
-            .WithMessage("Value should be greater than 00:00:05 but was 00:00:05.");
-        await Assert.That(() => Five.Should().BeGreaterThan(Ten)).Throws<AssertionException>()
-            .WithMessage("Value should be greater than 00:00:10 but was 00:00:05.");
+        Assert.DoesNotThrow(() => Five.Should().BeGreaterThan(One));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be greater than 00:00:05 but was 00:00:05."),
+            () => Five.Should().BeGreaterThan(Five)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be greater than 00:00:10 but was 00:00:05."),
+            () => Five.Should().BeGreaterThan(Ten)
+        );
     }
 
     [Test]
-    public async Task BeGreaterThan_Chain()
+    public void BeGreaterThan_Chain()
     {
         var chain = Five.Should().BeGreaterThan(One);
-        await Assert.That(chain.Value).IsEqualTo(Five);
-        await Assert.That(chain.And.Value).IsEqualTo(Five);
+        Assert.That(chain.Value, Is.EqualTo(Five));
+        Assert.That(chain.And.Value, Is.EqualTo(Five));
     }
 
     [Test]
-    public async Task BeGreaterThanOrEqualTo()
+    public void BeGreaterThanOrEqualTo()
     {
-        await Assert.That(() => Five.Should().BeGreaterThanOrEqualTo(One)).ThrowsNothing();
-        await Assert.That(() => Five.Should().BeGreaterThanOrEqualTo(Five)).ThrowsNothing();
-        await Assert.That(() => Five.Should().BeGreaterThanOrEqualTo(Ten)).Throws<AssertionException>()
-            .WithMessage("Value should be greater than or equal to 00:00:10 but was 00:00:05.");
+        Assert.DoesNotThrow(() => Five.Should().BeGreaterThanOrEqualTo(One));
+        Assert.DoesNotThrow(() => Five.Should().BeGreaterThanOrEqualTo(Five));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be greater than or equal to 00:00:10 but was 00:00:05."),
+            () => Five.Should().BeGreaterThanOrEqualTo(Ten)
+        );
     }
 
     [Test]
-    public async Task BeGreaterThanOrEqualTo_Chain()
+    public void BeGreaterThanOrEqualTo_Chain()
     {
         var chain = Five.Should().BeGreaterThanOrEqualTo(Five);
-        await Assert.That(chain.Value).IsEqualTo(Five);
-        await Assert.That(chain.And.Value).IsEqualTo(Five);
+        Assert.That(chain.Value, Is.EqualTo(Five));
+        Assert.That(chain.And.Value, Is.EqualTo(Five));
     }
 
     [Test]
-    public async Task BeInRange()
+    public void BeInRange()
     {
-        await Assert.That(() => Five.Should().BeInRange(One, Ten)).ThrowsNothing();
-        await Assert.That(() => Five.Should().BeInRange(Five, Ten)).ThrowsNothing();
-        await Assert.That(() => Five.Should().BeInRange(One, Five)).ThrowsNothing();
-        await Assert.That(() => Five.Should().BeInRange(Five, Five)).ThrowsNothing();
-        await Assert.That(() => One.Should().BeInRange(Five, Ten)).Throws<AssertionException>()
-            .WithMessage("Value should be in the range 00:00:05 to 00:00:10 but was 00:00:01.");
-        await Assert.That(() => Ten.Should().BeInRange(One, Five)).Throws<AssertionException>()
-            .WithMessage("Value should be in the range 00:00:01 to 00:00:05 but was 00:00:10.");
+        Assert.DoesNotThrow(() => Five.Should().BeInRange(One, Ten));
+        Assert.DoesNotThrow(() => Five.Should().BeInRange(Five, Ten));
+        Assert.DoesNotThrow(() => Five.Should().BeInRange(One, Five));
+        Assert.DoesNotThrow(() => Five.Should().BeInRange(Five, Five));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be in the range 00:00:05 to 00:00:10 but was 00:00:01."),
+            () => One.Should().BeInRange(Five, Ten)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be in the range 00:00:01 to 00:00:05 but was 00:00:10."),
+            () => Ten.Should().BeInRange(One, Five)
+        );
     }
 
     [Test]
-    public async Task BeInRange_Chain()
+    public void BeInRange_Chain()
     {
         var chain = Five.Should().BeInRange(One, Ten);
-        await Assert.That(chain.Value).IsEqualTo(Five);
-        await Assert.That(chain.And.Value).IsEqualTo(Five);
+        Assert.That(chain.Value, Is.EqualTo(Five));
+        Assert.That(chain.And.Value, Is.EqualTo(Five));
     }
 
     [Test]
-    public async Task BeApproximately()
+    public void BeApproximately()
     {
         var precision = TimeSpan.FromMilliseconds(100);
 
-        await Assert.That(() => Five.Should().BeApproximately(Five, precision)).ThrowsNothing();
-        await Assert.That(() => Five.Should().BeApproximately(TimeSpan.FromMilliseconds(4900), precision)).ThrowsNothing();
-        await Assert.That(() => Five.Should().BeApproximately(TimeSpan.FromMilliseconds(5100), precision)).ThrowsNothing();
-        await Assert.That(() => Five.Should().BeApproximately(TimeSpan.FromMilliseconds(4899), precision)).Throws<AssertionException>()
-            .WithMessage("Value should be approximately 00:00:04.8990000 (±00:00:00.1000000) but was 00:00:05.");
-        await Assert.That(() => Five.Should().BeApproximately(TimeSpan.FromMilliseconds(5101), precision)).Throws<AssertionException>()
-            .WithMessage("Value should be approximately 00:00:05.1010000 (±00:00:00.1000000) but was 00:00:05.");
+        Assert.DoesNotThrow(() => Five.Should().BeApproximately(Five, precision));
+        Assert.DoesNotThrow(() => Five.Should().BeApproximately(TimeSpan.FromMilliseconds(4900), precision));
+        Assert.DoesNotThrow(() => Five.Should().BeApproximately(TimeSpan.FromMilliseconds(5100), precision));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be approximately 00:00:04.8990000 (±00:00:00.1000000) but was 00:00:05."),
+            () => Five.Should().BeApproximately(TimeSpan.FromMilliseconds(4899), precision)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be approximately 00:00:05.1010000 (±00:00:00.1000000) but was 00:00:05."),
+            () => Five.Should().BeApproximately(TimeSpan.FromMilliseconds(5101), precision)
+        );
     }
 
     [Test]
-    public async Task BeApproximately_ExtremeValues()
+    public void BeApproximately_ExtremeValues()
     {
-        await Assert.That(() => TimeSpan.MinValue.Should().BeApproximately(TimeSpan.MaxValue, One)).Throws<AssertionException>();
-        await Assert.That(() => TimeSpan.MaxValue.Should().BeApproximately(TimeSpan.MinValue, One)).Throws<AssertionException>();
-        await Assert.That(() => TimeSpan.MinValue.Should().BeApproximately(TimeSpan.MaxValue, TimeSpan.MaxValue)).Throws<AssertionException>();
-        await Assert.That(() => TimeSpan.MaxValue.Should().BeApproximately(TimeSpan.Zero, TimeSpan.MaxValue)).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => TimeSpan.MinValue.Should().BeApproximately(TimeSpan.MaxValue, One));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => TimeSpan.MaxValue.Should().BeApproximately(TimeSpan.MinValue, One));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => TimeSpan.MinValue.Should().BeApproximately(TimeSpan.MaxValue, TimeSpan.MaxValue));
+        Assert.DoesNotThrow(() => TimeSpan.MaxValue.Should().BeApproximately(TimeSpan.Zero, TimeSpan.MaxValue));
     }
 
     [Test]
-    public async Task BeApproximately_Chain()
+    public void BeApproximately_Chain()
     {
         var chain = Five.Should().BeApproximately(Five, One);
-        await Assert.That(chain.Value).IsEqualTo(Five);
-        await Assert.That(chain.And.Value).IsEqualTo(Five);
+        Assert.That(chain.Value, Is.EqualTo(Five));
+        Assert.That(chain.And.Value, Is.EqualTo(Five));
     }
 
     [Test]
-    public async Task NotBeApproximately()
+    public void NotBeApproximately()
     {
         var precision = TimeSpan.FromMilliseconds(100);
 
-        await Assert.That(() => Five.Should().NotBeApproximately(TimeSpan.FromMilliseconds(4899), precision)).ThrowsNothing();
-        await Assert.That(() => Five.Should().NotBeApproximately(TimeSpan.FromMilliseconds(5101), precision)).ThrowsNothing();
-        await Assert.That(() => TimeSpan.MinValue.Should().NotBeApproximately(TimeSpan.MaxValue, One)).ThrowsNothing();
-        await Assert.That(() => Five.Should().NotBeApproximately(TimeSpan.FromMilliseconds(5100), precision)).Throws<AssertionException>()
-            .WithMessage("Value should not be approximately 00:00:05.1000000 (±00:00:00.1000000) but was 00:00:05.");
+        Assert.DoesNotThrow(() => Five.Should().NotBeApproximately(TimeSpan.FromMilliseconds(4899), precision));
+        Assert.DoesNotThrow(() => Five.Should().NotBeApproximately(TimeSpan.FromMilliseconds(5101), precision));
+        Assert.DoesNotThrow(() => TimeSpan.MinValue.Should().NotBeApproximately(TimeSpan.MaxValue, One));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be approximately 00:00:05.1000000 (±00:00:00.1000000) but was 00:00:05."),
+            () => Five.Should().NotBeApproximately(TimeSpan.FromMilliseconds(5100), precision)
+        );
     }
 
     [Test]
-    public async Task NotBeApproximately_Chain()
+    public void NotBeApproximately_Chain()
     {
         var chain = Five.Should().NotBeApproximately(Ten, One);
-        await Assert.That(chain.Value).IsEqualTo(Five);
-        await Assert.That(chain.And.Value).IsEqualTo(Five);
+        Assert.That(chain.Value, Is.EqualTo(Five));
+        Assert.That(chain.And.Value, Is.EqualTo(Five));
     }
 }

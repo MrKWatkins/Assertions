@@ -1,5 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
         <ProjectReference Include="..\MrKWatkins.Assertions\MrKWatkins.Assertions.csproj" />
+        <ProjectReference Include="../MrKWatkins.Assertions.TestsWithoutNUnit/MrKWatkins.Assertions.TestsWithoutNUnit.csproj" ReferenceOutputAssembly="false" />
     </ItemGroup>
+    <Target Name="CopyFallbackHost" AfterTargets="Build">
+        <ItemGroup>
+            <_FallbackHostFile Include="$(MSBuildProjectDirectory)/../MrKWatkins.Assertions.TestsWithoutNUnit/bin/$(Configuration)/net10.0/*" />
+        </ItemGroup>
+        <Copy SourceFiles="@(_FallbackHostFile)" DestinationFolder="$(TargetDir)fallback-host" />
+    </Target>
 </Project>

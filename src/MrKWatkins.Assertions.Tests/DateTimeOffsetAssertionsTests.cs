@@ -8,209 +8,251 @@ public sealed class DateTimeOffsetAssertionsTests
     private static readonly DateTimeOffset NoonPlusOne = new(2026, 9, 30, 13, 0, 0, TimeSpan.FromHours(1));
 
     [Test]
-    public async Task Equal()
+    public void Equal()
     {
-        await Assert.That(() => Noon.Should().Equal(Noon)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().Equal(NoonPlusOne)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().Equal(Evening)).Throws<AssertionException>()
-            .WithMessage("Value should equal 2026-09-30T18:00:00+00:00 but was 2026-09-30T12:00:00+00:00.");
+        Assert.DoesNotThrow(() => Noon.Should().Equal(Noon));
+        Assert.DoesNotThrow(() => Noon.Should().Equal(NoonPlusOne));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should equal 2026-09-30T18:00:00+00:00 but was 2026-09-30T12:00:00+00:00."),
+            () => Noon.Should().Equal(Evening)
+        );
     }
 
     [Test]
-    public async Task NotEqual()
+    public void NotEqual()
     {
-        await Assert.That(() => Noon.Should().NotEqual(Evening)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().NotEqual(NoonPlusOne)).Throws<AssertionException>()
-            .WithMessage("Value should not equal 2026-09-30T13:00:00+01:00.");
+        Assert.DoesNotThrow(() => Noon.Should().NotEqual(Evening));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not equal 2026-09-30T13:00:00+01:00."),
+            () => Noon.Should().NotEqual(NoonPlusOne)
+        );
     }
 
     [Test]
-    public async Task Comparisons()
+    public void Comparisons()
     {
-        await Assert.That(() => Noon.Should().BeLessThan(Evening)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeLessThanOrEqualTo(NoonPlusOne)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeGreaterThan(Morning)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeGreaterThanOrEqualTo(NoonPlusOne)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeInRange(Morning, Evening)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeGreaterThan(Evening)).Throws<AssertionException>()
-            .WithMessage("Value should be greater than 2026-09-30T18:00:00+00:00 but was 2026-09-30T12:00:00+00:00.");
+        Assert.DoesNotThrow(() => Noon.Should().BeLessThan(Evening));
+        Assert.DoesNotThrow(() => Noon.Should().BeLessThanOrEqualTo(NoonPlusOne));
+        Assert.DoesNotThrow(() => Noon.Should().BeGreaterThan(Morning));
+        Assert.DoesNotThrow(() => Noon.Should().BeGreaterThanOrEqualTo(NoonPlusOne));
+        Assert.DoesNotThrow(() => Noon.Should().BeInRange(Morning, Evening));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be greater than 2026-09-30T18:00:00+00:00 but was 2026-09-30T12:00:00+00:00."),
+            () => Noon.Should().BeGreaterThan(Evening)
+        );
     }
 
     [Test]
-    public async Task BeBefore()
+    public void BeBefore()
     {
-        await Assert.That(() => Noon.Should().BeBefore(Evening)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeBefore(Noon)).Throws<AssertionException>()
-            .WithMessage("Value should be before 2026-09-30T12:00:00+00:00 but was 2026-09-30T12:00:00+00:00.");
-        await Assert.That(() => Noon.Should().BeBefore(NoonPlusOne)).Throws<AssertionException>()
-            .WithMessage("Value should be before 2026-09-30T13:00:00+01:00 but was 2026-09-30T12:00:00+00:00.");
-        await Assert.That(() => Noon.Should().BeBefore(Morning)).Throws<AssertionException>()
-            .WithMessage("Value should be before 2026-09-30T09:00:00+00:00 but was 2026-09-30T12:00:00+00:00.");
+        Assert.DoesNotThrow(() => Noon.Should().BeBefore(Evening));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be before 2026-09-30T12:00:00+00:00 but was 2026-09-30T12:00:00+00:00."),
+            () => Noon.Should().BeBefore(Noon)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be before 2026-09-30T13:00:00+01:00 but was 2026-09-30T12:00:00+00:00."),
+            () => Noon.Should().BeBefore(NoonPlusOne)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be before 2026-09-30T09:00:00+00:00 but was 2026-09-30T12:00:00+00:00."),
+            () => Noon.Should().BeBefore(Morning)
+        );
     }
 
     [Test]
-    public async Task BeBefore_Chain()
+    public void BeBefore_Chain()
     {
         var chain = Noon.Should().BeBefore(Evening);
-        await Assert.That(chain.Value).IsEqualTo(Noon);
-        await Assert.That(chain.And.Value).IsEqualTo(Noon);
+        Assert.That(chain.Value, Is.EqualTo(Noon));
+        Assert.That(chain.And.Value, Is.EqualTo(Noon));
     }
 
     [Test]
-    public async Task BeOnOrBefore()
+    public void BeOnOrBefore()
     {
-        await Assert.That(() => Noon.Should().BeOnOrBefore(Evening)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeOnOrBefore(Noon)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeOnOrBefore(NoonPlusOne)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeOnOrBefore(Morning)).Throws<AssertionException>()
-            .WithMessage("Value should be on or before 2026-09-30T09:00:00+00:00 but was 2026-09-30T12:00:00+00:00.");
+        Assert.DoesNotThrow(() => Noon.Should().BeOnOrBefore(Evening));
+        Assert.DoesNotThrow(() => Noon.Should().BeOnOrBefore(Noon));
+        Assert.DoesNotThrow(() => Noon.Should().BeOnOrBefore(NoonPlusOne));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be on or before 2026-09-30T09:00:00+00:00 but was 2026-09-30T12:00:00+00:00."),
+            () => Noon.Should().BeOnOrBefore(Morning)
+        );
     }
 
     [Test]
-    public async Task BeOnOrBefore_Chain()
+    public void BeOnOrBefore_Chain()
     {
         var chain = Noon.Should().BeOnOrBefore(Noon);
-        await Assert.That(chain.Value).IsEqualTo(Noon);
-        await Assert.That(chain.And.Value).IsEqualTo(Noon);
+        Assert.That(chain.Value, Is.EqualTo(Noon));
+        Assert.That(chain.And.Value, Is.EqualTo(Noon));
     }
 
     [Test]
-    public async Task BeAfter()
+    public void BeAfter()
     {
-        await Assert.That(() => Noon.Should().BeAfter(Morning)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeAfter(Noon)).Throws<AssertionException>()
-            .WithMessage("Value should be after 2026-09-30T12:00:00+00:00 but was 2026-09-30T12:00:00+00:00.");
-        await Assert.That(() => Noon.Should().BeAfter(Evening)).Throws<AssertionException>()
-            .WithMessage("Value should be after 2026-09-30T18:00:00+00:00 but was 2026-09-30T12:00:00+00:00.");
+        Assert.DoesNotThrow(() => Noon.Should().BeAfter(Morning));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be after 2026-09-30T12:00:00+00:00 but was 2026-09-30T12:00:00+00:00."),
+            () => Noon.Should().BeAfter(Noon)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be after 2026-09-30T18:00:00+00:00 but was 2026-09-30T12:00:00+00:00."),
+            () => Noon.Should().BeAfter(Evening)
+        );
     }
 
     [Test]
-    public async Task BeAfter_Chain()
+    public void BeAfter_Chain()
     {
         var chain = Noon.Should().BeAfter(Morning);
-        await Assert.That(chain.Value).IsEqualTo(Noon);
-        await Assert.That(chain.And.Value).IsEqualTo(Noon);
+        Assert.That(chain.Value, Is.EqualTo(Noon));
+        Assert.That(chain.And.Value, Is.EqualTo(Noon));
     }
 
     [Test]
-    public async Task BeOnOrAfter()
+    public void BeOnOrAfter()
     {
-        await Assert.That(() => Noon.Should().BeOnOrAfter(Morning)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeOnOrAfter(Noon)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeOnOrAfter(NoonPlusOne)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeOnOrAfter(Evening)).Throws<AssertionException>()
-            .WithMessage("Value should be on or after 2026-09-30T18:00:00+00:00 but was 2026-09-30T12:00:00+00:00.");
+        Assert.DoesNotThrow(() => Noon.Should().BeOnOrAfter(Morning));
+        Assert.DoesNotThrow(() => Noon.Should().BeOnOrAfter(Noon));
+        Assert.DoesNotThrow(() => Noon.Should().BeOnOrAfter(NoonPlusOne));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be on or after 2026-09-30T18:00:00+00:00 but was 2026-09-30T12:00:00+00:00."),
+            () => Noon.Should().BeOnOrAfter(Evening)
+        );
     }
 
     [Test]
-    public async Task BeOnOrAfter_Chain()
+    public void BeOnOrAfter_Chain()
     {
         var chain = Noon.Should().BeOnOrAfter(Noon);
-        await Assert.That(chain.Value).IsEqualTo(Noon);
-        await Assert.That(chain.And.Value).IsEqualTo(Noon);
+        Assert.That(chain.Value, Is.EqualTo(Noon));
+        Assert.That(chain.And.Value, Is.EqualTo(Noon));
     }
 
     [Test]
-    public async Task BeApproximately()
+    public void BeApproximately()
     {
         var precision = TimeSpan.FromSeconds(1);
 
-        await Assert.That(() => Noon.Should().BeApproximately(Noon, precision)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeApproximately(NoonPlusOne, precision)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeApproximately(Noon.AddSeconds(1), precision)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeApproximately(Noon.AddSeconds(-1), precision)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeApproximately(Noon.AddMilliseconds(1500), precision)).Throws<AssertionException>()
-            .WithMessage("Value should be approximately 2026-09-30T12:00:01.5+00:00 (±00:00:01) but was 2026-09-30T12:00:00+00:00.");
-        await Assert.That(() => Noon.Should().BeApproximately(Noon.AddMilliseconds(-1500), precision)).Throws<AssertionException>()
-            .WithMessage("Value should be approximately 2026-09-30T11:59:58.5+00:00 (±00:00:01) but was 2026-09-30T12:00:00+00:00.");
+        Assert.DoesNotThrow(() => Noon.Should().BeApproximately(Noon, precision));
+        Assert.DoesNotThrow(() => Noon.Should().BeApproximately(NoonPlusOne, precision));
+        Assert.DoesNotThrow(() => Noon.Should().BeApproximately(Noon.AddSeconds(1), precision));
+        Assert.DoesNotThrow(() => Noon.Should().BeApproximately(Noon.AddSeconds(-1), precision));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo(
+                "Value should be approximately 2026-09-30T12:00:01.5+00:00 (±00:00:01) but was 2026-09-30T12:00:00+00:00."
+            ),
+            () => Noon.Should().BeApproximately(Noon.AddMilliseconds(1500), precision)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo(
+                "Value should be approximately 2026-09-30T11:59:58.5+00:00 (±00:00:01) but was 2026-09-30T12:00:00+00:00."
+            ),
+            () => Noon.Should().BeApproximately(Noon.AddMilliseconds(-1500), precision)
+        );
     }
 
     [Test]
-    public async Task BeApproximately_ExtremeValues()
+    public void BeApproximately_ExtremeValues()
     {
-        await Assert.That(() => DateTimeOffset.MinValue.Should().BeApproximately(DateTimeOffset.MaxValue, TimeSpan.FromDays(1))).Throws<AssertionException>();
-        await Assert.That(() => DateTimeOffset.MaxValue.Should().BeApproximately(DateTimeOffset.MinValue, TimeSpan.FromDays(1))).Throws<AssertionException>();
-        await Assert.That(() => DateTimeOffset.MinValue.Should().BeApproximately(DateTimeOffset.MaxValue, TimeSpan.MaxValue)).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => DateTimeOffset.MinValue.Should().BeApproximately(DateTimeOffset.MaxValue, TimeSpan.FromDays(1)));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => DateTimeOffset.MaxValue.Should().BeApproximately(DateTimeOffset.MinValue, TimeSpan.FromDays(1)));
+        Assert.DoesNotThrow(() => DateTimeOffset.MinValue.Should().BeApproximately(DateTimeOffset.MaxValue, TimeSpan.MaxValue));
     }
 
     [Test]
-    public async Task BeApproximately_Chain()
+    public void BeApproximately_Chain()
     {
         var chain = Noon.Should().BeApproximately(Noon, TimeSpan.FromSeconds(1));
-        await Assert.That(chain.Value).IsEqualTo(Noon);
-        await Assert.That(chain.And.Value).IsEqualTo(Noon);
+        Assert.That(chain.Value, Is.EqualTo(Noon));
+        Assert.That(chain.And.Value, Is.EqualTo(Noon));
     }
 
     [Test]
-    public async Task NotBeApproximately()
+    public void NotBeApproximately()
     {
         var precision = TimeSpan.FromSeconds(1);
 
-        await Assert.That(() => Noon.Should().NotBeApproximately(Evening, precision)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().NotBeApproximately(Noon.AddMilliseconds(1500), precision)).ThrowsNothing();
-        await Assert.That(() => DateTimeOffset.MinValue.Should().NotBeApproximately(DateTimeOffset.MaxValue, precision)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().NotBeApproximately(Noon.AddSeconds(1), precision)).Throws<AssertionException>()
-            .WithMessage("Value should not be approximately 2026-09-30T12:00:01+00:00 (±00:00:01) but was 2026-09-30T12:00:00+00:00.");
+        Assert.DoesNotThrow(() => Noon.Should().NotBeApproximately(Evening, precision));
+        Assert.DoesNotThrow(() => Noon.Should().NotBeApproximately(Noon.AddMilliseconds(1500), precision));
+        Assert.DoesNotThrow(() => DateTimeOffset.MinValue.Should().NotBeApproximately(DateTimeOffset.MaxValue, precision));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo(
+                "Value should not be approximately 2026-09-30T12:00:01+00:00 (±00:00:01) but was 2026-09-30T12:00:00+00:00."
+            ),
+            () => Noon.Should().NotBeApproximately(Noon.AddSeconds(1), precision)
+        );
     }
 
     [Test]
-    public async Task NotBeApproximately_Chain()
+    public void NotBeApproximately_Chain()
     {
         var chain = Noon.Should().NotBeApproximately(Evening, TimeSpan.FromSeconds(1));
-        await Assert.That(chain.Value).IsEqualTo(Noon);
-        await Assert.That(chain.And.Value).IsEqualTo(Noon);
+        Assert.That(chain.Value, Is.EqualTo(Noon));
+        Assert.That(chain.And.Value, Is.EqualTo(Noon));
     }
 
     [Test]
-    public async Task BeExactly()
+    public void BeExactly()
     {
-        await Assert.That(() => Noon.Should().BeExactly(new DateTimeOffset(2026, 9, 30, 12, 0, 0, TimeSpan.Zero))).ThrowsNothing();
-        await Assert.That(() => Noon.Should().BeExactly(NoonPlusOne)).Throws<AssertionException>()
-            .WithMessage("Value should be exactly 2026-09-30T13:00:00+01:00 but was 2026-09-30T12:00:00+00:00.");
-        await Assert.That(() => Noon.Should().BeExactly(Evening)).Throws<AssertionException>()
-            .WithMessage("Value should be exactly 2026-09-30T18:00:00+00:00 but was 2026-09-30T12:00:00+00:00.");
+        Assert.DoesNotThrow(() => Noon.Should().BeExactly(new DateTimeOffset(2026, 9, 30, 12, 0, 0, TimeSpan.Zero)));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be exactly 2026-09-30T13:00:00+01:00 but was 2026-09-30T12:00:00+00:00."),
+            () => Noon.Should().BeExactly(NoonPlusOne)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be exactly 2026-09-30T18:00:00+00:00 but was 2026-09-30T12:00:00+00:00."),
+            () => Noon.Should().BeExactly(Evening)
+        );
     }
 
     [Test]
-    public async Task BeExactly_Chain()
+    public void BeExactly_Chain()
     {
         var chain = Noon.Should().BeExactly(Noon);
-        await Assert.That(chain.Value).IsEqualTo(Noon);
-        await Assert.That(chain.And.Value).IsEqualTo(Noon);
+        Assert.That(chain.Value, Is.EqualTo(Noon));
+        Assert.That(chain.And.Value, Is.EqualTo(Noon));
     }
 
     [Test]
-    public async Task NotBeExactly()
+    public void NotBeExactly()
     {
-        await Assert.That(() => Noon.Should().NotBeExactly(NoonPlusOne)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().NotBeExactly(Evening)).ThrowsNothing();
-        await Assert.That(() => Noon.Should().NotBeExactly(Noon)).Throws<AssertionException>()
-            .WithMessage("Value should not be exactly 2026-09-30T12:00:00+00:00.");
+        Assert.DoesNotThrow(() => Noon.Should().NotBeExactly(NoonPlusOne));
+        Assert.DoesNotThrow(() => Noon.Should().NotBeExactly(Evening));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be exactly 2026-09-30T12:00:00+00:00."),
+            () => Noon.Should().NotBeExactly(Noon)
+        );
     }
 
     [Test]
-    public async Task NotBeExactly_Chain()
+    public void NotBeExactly_Chain()
     {
         var chain = Noon.Should().NotBeExactly(NoonPlusOne);
-        await Assert.That(chain.Value).IsEqualTo(Noon);
-        await Assert.That(chain.And.Value).IsEqualTo(Noon);
+        Assert.That(chain.Value, Is.EqualTo(Noon));
+        Assert.That(chain.And.Value, Is.EqualTo(Noon));
     }
 
     [Test]
-    public async Task HaveOffset()
+    public void HaveOffset()
     {
-        await Assert.That(() => NoonPlusOne.Should().HaveOffset(TimeSpan.FromHours(1))).ThrowsNothing();
-        await Assert.That(() => Noon.Should().HaveOffset(TimeSpan.FromHours(1))).Throws<AssertionException>()
-            .WithMessage("Value should have offset 01:00:00 but had offset 00:00:00.");
-        await Assert.That(() => NoonPlusOne.Should().HaveOffset(TimeSpan.FromHours(-5.5))).Throws<AssertionException>()
-            .WithMessage("Value should have offset -05:30:00 but had offset 01:00:00.");
+        Assert.DoesNotThrow(() => NoonPlusOne.Should().HaveOffset(TimeSpan.FromHours(1)));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should have offset 01:00:00 but had offset 00:00:00."),
+            () => Noon.Should().HaveOffset(TimeSpan.FromHours(1))
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should have offset -05:30:00 but had offset 01:00:00."),
+            () => NoonPlusOne.Should().HaveOffset(TimeSpan.FromHours(-5.5))
+        );
     }
 
     [Test]
-    public async Task HaveOffset_Chain()
+    public void HaveOffset_Chain()
     {
         var chain = NoonPlusOne.Should().HaveOffset(TimeSpan.FromHours(1));
-        await Assert.That(chain.Value).IsEqualTo(NoonPlusOne);
-        await Assert.That(chain.And.Value).IsEqualTo(NoonPlusOne);
+        Assert.That(chain.Value, Is.EqualTo(NoonPlusOne));
+        Assert.That(chain.And.Value, Is.EqualTo(NoonPlusOne));
     }
 }

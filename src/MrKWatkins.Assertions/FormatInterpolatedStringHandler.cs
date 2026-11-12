@@ -17,10 +17,9 @@ public readonly struct FormatInterpolatedStringHandler
     /// </summary>
     /// <param name="literalLength">The number of literal characters in the interpolated string.</param>
     /// <param name="_">The number of interpolation holes (unused).</param>
-    public FormatInterpolatedStringHandler(int literalLength, int _)
-    {
-        message = new StringBuilder(literalLength);
-    }
+#pragma warning disable IDE0290 // The handler signature requires an unused count.
+    public FormatInterpolatedStringHandler(int literalLength, int _) => message = new StringBuilder(literalLength);
+#pragma warning restore IDE0290
 
     /// <summary>
     /// Appends a literal string to the message.

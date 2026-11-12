@@ -3,94 +3,94 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class ReadOnlyDictionaryAssertionsTests
 {
     [Test]
-    public async Task ContainKey_IReadOnlyDictionary()
+    public void ContainKey_IReadOnlyDictionary()
     {
         IReadOnlyDictionary<string, int> nullValue = null!;
         IReadOnlyDictionary<string, int> value = new Dictionary<string, int> { ["Test"] = 123 };
 
-        await Assert.That(() => nullValue.Should().ContainKey("Test")).Throws<AssertionException>().WithMessage("Value should not be null.");
-        await Assert.That(() => value.Should().ContainKey("Other")).Throws<AssertionException>().WithMessage("Value should contain key \"Other\".");
-        await Assert.That(() => value.Should().ContainKey("Test")).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullValue.Should().ContainKey("Test"));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should contain key \"Other\"."), () => value.Should().ContainKey("Other"));
+        Assert.DoesNotThrow(() => value.Should().ContainKey("Test"));
     }
 
     [Test]
-    public async Task ContainKey_IReadOnlyDictionary_Chain()
+    public void ContainKey_IReadOnlyDictionary_Chain()
     {
         IReadOnlyDictionary<string, int> value = new Dictionary<string, int> { ["Test"] = 123 };
 
         var chain = value.Should().ContainKey("Test");
-        await Assert.That(chain.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
 
         var and = chain.And;
-        await Assert.That(and.Value).IsEqualTo(value);
+        Assert.That(and.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task NotContainKey_IReadOnlyDictionary()
+    public void NotContainKey_IReadOnlyDictionary()
     {
         IReadOnlyDictionary<string, int> nullValue = null!;
         IReadOnlyDictionary<string, int> value = new Dictionary<string, int> { ["Test"] = 123 };
 
-        await Assert.That(() => nullValue.Should().NotContainKey("Test")).Throws<AssertionException>().WithMessage("Value should not be null.");
-        await Assert.That(() => value.Should().NotContainKey("Other")).ThrowsNothing();
-        await Assert.That(() => value.Should().NotContainKey("Test")).Throws<AssertionException>().WithMessage("Value should not contain key \"Test\".");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullValue.Should().NotContainKey("Test"));
+        Assert.DoesNotThrow(() => value.Should().NotContainKey("Other"));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not contain key \"Test\"."), () => value.Should().NotContainKey("Test"));
     }
 
     [Test]
-    public async Task NotContainKey_IReadOnlyDictionary_Chain()
+    public void NotContainKey_IReadOnlyDictionary_Chain()
     {
         IReadOnlyDictionary<string, int> value = new Dictionary<string, int> { ["Test"] = 123 };
 
         var chain = value.Should().NotContainKey("Other");
-        await Assert.That(chain.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
 
         var and = chain.And;
-        await Assert.That(and.Value).IsEqualTo(value);
+        Assert.That(and.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task ContainKey_Dictionary()
+    public void ContainKey_Dictionary()
     {
         Dictionary<string, int> nullValue = null!;
         var value = new Dictionary<string, int> { ["Test"] = 123 };
 
-        await Assert.That(() => nullValue.Should().ContainKey("Test")).Throws<AssertionException>().WithMessage("Value should not be null.");
-        await Assert.That(() => value.Should().ContainKey("Other")).Throws<AssertionException>().WithMessage("Value should contain key \"Other\".");
-        await Assert.That(() => value.Should().ContainKey("Test")).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullValue.Should().ContainKey("Test"));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should contain key \"Other\"."), () => value.Should().ContainKey("Other"));
+        Assert.DoesNotThrow(() => value.Should().ContainKey("Test"));
     }
 
     [Test]
-    public async Task ContainKey_Dictionary_Chain()
+    public void ContainKey_Dictionary_Chain()
     {
         var value = new Dictionary<string, int> { ["Test"] = 123 };
 
         var chain = value.Should().ContainKey("Test");
-        await Assert.That(chain.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
 
         var and = chain.And;
-        await Assert.That(and.Value).IsEqualTo(value);
+        Assert.That(and.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task NotContainKey_Dictionary()
+    public void NotContainKey_Dictionary()
     {
         Dictionary<string, int> nullValue = null!;
         var value = new Dictionary<string, int> { ["Test"] = 123 };
 
-        await Assert.That(() => nullValue.Should().NotContainKey("Test")).Throws<AssertionException>().WithMessage("Value should not be null.");
-        await Assert.That(() => value.Should().NotContainKey("Other")).ThrowsNothing();
-        await Assert.That(() => value.Should().NotContainKey("Test")).Throws<AssertionException>().WithMessage("Value should not contain key \"Test\".");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullValue.Should().NotContainKey("Test"));
+        Assert.DoesNotThrow(() => value.Should().NotContainKey("Other"));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not contain key \"Test\"."), () => value.Should().NotContainKey("Test"));
     }
 
     [Test]
-    public async Task NotContainKey_Dictionary_Chain()
+    public void NotContainKey_Dictionary_Chain()
     {
         var value = new Dictionary<string, int> { ["Test"] = 123 };
 
         var chain = value.Should().NotContainKey("Other");
-        await Assert.That(chain.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
 
         var and = chain.And;
-        await Assert.That(and.Value).IsEqualTo(value);
+        Assert.That(and.Value, Is.EqualTo(value));
     }
 }

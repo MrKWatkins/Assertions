@@ -24,10 +24,7 @@ public abstract class ObjectAssertions<TSelf, T>(T? value)
     /// <summary>
     /// Asserts that the value is <see langword="null" />.
     /// </summary>
-    public void BeNull()
-    {
-        Verify.That(Value is null, $"Value should be null but was {Value}.");
-    }
+    public void BeNull() => Verify.That(Value is null, $"Value should be null but was {Value}.");
 
     /// <summary>
     /// Asserts that the value is not <see langword="null" />.

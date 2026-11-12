@@ -3,455 +3,472 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class EnumerableAssertionsTests
 {
     [Test]
-    public async Task AllBeOfType_Null()
+    public void AllBeOfType_Null()
     {
         IEnumerable<object> nullEnumerable = null!;
 
-        await Assert.That(() => nullEnumerable.Should().AllBeOfType<string>()).Throws<AssertionException>()
-            .WithMessage("Value should not be null.");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullEnumerable.Should().AllBeOfType<string>());
     }
 
     [Test]
-    public async Task AllBeOfType()
+    public void AllBeOfType()
     {
         var value = new List<object> { "one", 2, "three" };
 
-        await Assert.That(() => value.Should().AllBeOfType<string>()).Throws<AssertionException>()
-            .WithMessage("Value should only contain items of type String but the item at index 1 is not.");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should only contain items of type String but the item at index 1 is not."),
+            () => value.Should().AllBeOfType<string>()
+        );
 
-        await Assert.That(() => value.Should().AllBeOfType<int>()).Throws<AssertionException>()
-            .WithMessage("Value should only contain items of type Int32 but the items at indices 0, 2 are not.");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should only contain items of type Int32 but the items at indices 0, 2 are not."),
+            () => value.Should().AllBeOfType<int>()
+        );
 
-        await Assert.That(() => value.Should().AllBeOfType<object>()).ThrowsNothing();
+        Assert.DoesNotThrow(() => value.Should().AllBeOfType<object>());
     }
 
     [Test]
-    public async Task AllBeOfType_Chain()
+    public void AllBeOfType_Chain()
     {
         var value = new List<object> { "one", "two", "three" };
 
         var chain = value.Should().AllBeOfType<string>();
-        await Assert.That(chain.Value).IsEquivalentTo(["one", "two", "three"]);
-        await Assert.That(chain.And.Value).IsEquivalentTo(["one", "two", "three"]);
+        Assert.That(chain.Value, Is.EquivalentTo(new[] { "one", "two", "three" }));
+        Assert.That(chain.And.Value, Is.EquivalentTo(new[] { "one", "two", "three" }));
     }
 
     [Test]
-    public async Task OnlyContain_Null()
+    public void OnlyContain_Null()
     {
         IEnumerable<int> nullEnumerable = null!;
 
-        await Assert.That(() => nullEnumerable.Should().OnlyContain(x => x != 2)).Throws<AssertionException>()
-            .WithMessage("Value should not be null.");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullEnumerable.Should().OnlyContain(x => x != 2));
     }
 
     [Test]
-    public async Task OnlyContain()
+    public void OnlyContain()
     {
         var value = new List<int> { 1, 2, 3 };
 
-        await Assert.That(() => value.Should().OnlyContain(x => x != 2)).Throws<AssertionException>()
-            .WithMessage("Value should only contain items that satisfy the predicate x => x != 2 but the item 2 at index 1 does not.");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo(
+                "Value should only contain items that satisfy the predicate x => x != 2 but the item 2 at index 1 does not."
+            ),
+            () => value.Should().OnlyContain(x => x != 2)
+        );
 
-        await Assert.That(() => value.Should().OnlyContain(x => x < 5)).ThrowsNothing();
+        Assert.DoesNotThrow(() => value.Should().OnlyContain(x => x < 5));
     }
 
     [Test]
-    public async Task OnlyContain_Chain()
+    public void OnlyContain_Chain()
     {
         var value = new List<int> { 1, 2, 3 };
 
         var chain = value.Should().OnlyContain(x => x < 5);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task ContainSingle_Null()
+    public void ContainSingle_Null()
     {
         IEnumerable<int> nullEnumerable = null!;
 
-        await Assert.That(() => nullEnumerable.Should().ContainSingle(x => x != 2)).Throws<AssertionException>()
-            .WithMessage("Value should not be null.");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullEnumerable.Should().ContainSingle(x => x != 2));
     }
 
     [Test]
-    public async Task ContainSingle()
+    public void ContainSingle()
     {
         var value = new List<int> { 1, 2, 3 };
 
-        await Assert.That(() => value.Should().ContainSingle(x => x == 5)).Throws<AssertionException>()
-            .WithMessage("Value should only contain a single item that satisfies the predicate x => x == 5 but it contains 0 items.");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo(
+                "Value should only contain a single item that satisfies the predicate x => x == 5 but it contains 0 items."
+            ),
+            () => value.Should().ContainSingle(x => x == 5)
+        );
 
-        await Assert.That(() => value.Should().ContainSingle(x => x != 2)).Throws<AssertionException>()
-            .WithMessage("Value should only contain a single item that satisfies the predicate x => x != 2 but it contains 2 items.");
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo(
+                "Value should only contain a single item that satisfies the predicate x => x != 2 but it contains 2 items."
+            ),
+            () => value.Should().ContainSingle(x => x != 2)
+        );
 
-        await Assert.That(() => value.Should().ContainSingle(x => x == 2)).ThrowsNothing();
+        Assert.DoesNotThrow(() => value.Should().ContainSingle(x => x == 2));
     }
 
     [Test]
-    public async Task ContainSingle_Chain()
+    public void ContainSingle_Chain()
     {
         var value = new List<int> { 1, 2, 3 };
 
         var chain = value.Should().ContainSingle(x => x == 3);
-        await Assert.That(chain.That).IsEqualTo(3);
-        await Assert.That(chain.Value).IsEqualTo(3);
-        await Assert.That(chain.And.Value).IsEqualTo(3);
+        Assert.That(chain.That, Is.EqualTo(3));
+        Assert.That(chain.Value, Is.EqualTo(3));
+        Assert.That(chain.And.Value, Is.EqualTo(3));
     }
 
     [Test]
-    public async Task SequenceEqual_Null()
+    public void SequenceEqual_Null()
     {
         IEnumerable<int> nullEnumerable = null!;
 
-        await Assert.That(() => nullEnumerable.Should().SequenceEqual(1)).Throws<AssertionException>()
-            .WithMessage("Value should not be null.");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullEnumerable.Should().SequenceEqual(1));
     }
-
-    [Test]
-    [Arguments(new int[0], true, new[] { 1, 2, 3 }, true, "Value [] should sequence equal [1, 2, 3] but it has 0 elements rather than the expected 3.")]
-    [Arguments(new int[0], true, new[] { 1, 2, 3 }, false, "Value [] should sequence equal [1, 2, ...] but it has fewer elements (0) than expected.")]
-    [Arguments(new int[0], false, new[] { 1, 2, 3 }, true, "Value [] should sequence equal [1, 2, 3] but it has 0 elements rather than the expected 3.")]
-    [Arguments(new int[0], false, new[] { 1, 2, 3 }, false, "Value [] should sequence equal [1, 2, ...] but it has fewer elements (0) than expected.")]
-    [Arguments(new[] { 1 }, true, new int[0], true, "Value [1] should sequence equal [] but it has 1 element rather than the expected 0.")]
-    [Arguments(new[] { 1, 2, 3 }, true, new int[0], false, "Value [1, 2, 3] should sequence equal [] but it has 3 elements rather than the expected 0.")]
-    [Arguments(new[] { 1, 2, 3 }, false, new int[0], true, "Value [1, 2, ...] should sequence equal [] but it has more elements than the expected 0.")]
-    [Arguments(new[] { 1, 2, 3 }, false, new int[0], false, "Value [1, 2, ...] should sequence equal [] but it has more elements than the expected 0.")]
-    [Arguments(new[] { 1, 2, 3 }, true, new[] { 1, 2, 4 }, true, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
-    [Arguments(new[] { 1, 2, 3 }, false, new[] { 1, 2, 4 }, true, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
-    [Arguments(new[] { 1, 2, 3 }, true, new[] { 1, 2, 4 }, false, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
-    [Arguments(new[] { 1, 2, 3 }, false, new[] { 1, 2, 4 }, false, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
-    public async Task SequenceEqual_Throws(int[] actual, bool actualIsCollection, int[] expected, bool expectedIsCollection, string expectedMessage)
+    [TestCase(new int[0], true, new[] { 1, 2, 3 }, true, "Value [] should sequence equal [1, 2, 3] but it has 0 elements rather than the expected 3.")]
+    [TestCase(new int[0], true, new[] { 1, 2, 3 }, false, "Value [] should sequence equal [1, 2, ...] but it has fewer elements (0) than expected.")]
+    [TestCase(new int[0], false, new[] { 1, 2, 3 }, true, "Value [] should sequence equal [1, 2, 3] but it has 0 elements rather than the expected 3.")]
+    [TestCase(new int[0], false, new[] { 1, 2, 3 }, false, "Value [] should sequence equal [1, 2, ...] but it has fewer elements (0) than expected.")]
+    [TestCase(new[] { 1 }, true, new int[0], true, "Value [1] should sequence equal [] but it has 1 element rather than the expected 0.")]
+    [TestCase(new[] { 1, 2, 3 }, true, new int[0], false, "Value [1, 2, 3] should sequence equal [] but it has 3 elements rather than the expected 0.")]
+    [TestCase(new[] { 1, 2, 3 }, false, new int[0], true, "Value [1, 2, ...] should sequence equal [] but it has more elements than the expected 0.")]
+    [TestCase(new[] { 1, 2, 3 }, false, new int[0], false, "Value [1, 2, ...] should sequence equal [] but it has more elements than the expected 0.")]
+    [TestCase(new[] { 1, 2, 3 }, true, new[] { 1, 2, 4 }, true, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
+    [TestCase(new[] { 1, 2, 3 }, false, new[] { 1, 2, 4 }, true, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
+    [TestCase(new[] { 1, 2, 3 }, true, new[] { 1, 2, 4 }, false, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
+    [TestCase(new[] { 1, 2, 3 }, false, new[] { 1, 2, 4 }, false, "Value [1, 2, *3*, ...] should sequence equal [1, 2, *4*, ...] but it differs at index 2.")]
+    public void SequenceEqual_Throws(int[] actual, bool actualIsCollection, int[] expected, bool expectedIsCollection, string expectedMessage)
     {
         var actualEnumerable = actualIsCollection ? actual : actual.Select(x => x);
         var expectedEnumerable = expectedIsCollection ? expected : expected.Select(x => x);
 
-        await Assert.That(() => actualEnumerable.Should().SequenceEqual(expectedEnumerable)).Throws<AssertionException>()
-            .WithMessage(expectedMessage);
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo(expectedMessage), () => actualEnumerable.Should().SequenceEqual(expectedEnumerable));
     }
-
-    [Test]
-    [Arguments(new int[0], true, new int[0], true)]
-    [Arguments(new int[0], false, new int[0], true)]
-    [Arguments(new int[0], true, new int[0], false)]
-    [Arguments(new int[0], false, new int[0], false)]
-    [Arguments(new[] { 1, 2, 3 }, true, new[] { 1, 2, 3 }, true)]
-    [Arguments(new[] { 1, 2, 3 }, false, new[] { 1, 2, 3 }, true)]
-    [Arguments(new[] { 1, 2, 3 }, true, new[] { 1, 2, 3 }, false)]
-    [Arguments(new[] { 1, 2, 3 }, false, new[] { 1, 2, 3 }, false)]
-    public async Task SequenceEqual(int[] actual, bool actualIsCollection, int[] expected, bool expectedIsCollection)
+    [TestCase(new int[0], true, new int[0], true)]
+    [TestCase(new int[0], false, new int[0], true)]
+    [TestCase(new int[0], true, new int[0], false)]
+    [TestCase(new int[0], false, new int[0], false)]
+    [TestCase(new[] { 1, 2, 3 }, true, new[] { 1, 2, 3 }, true)]
+    [TestCase(new[] { 1, 2, 3 }, false, new[] { 1, 2, 3 }, true)]
+    [TestCase(new[] { 1, 2, 3 }, true, new[] { 1, 2, 3 }, false)]
+    [TestCase(new[] { 1, 2, 3 }, false, new[] { 1, 2, 3 }, false)]
+    public void SequenceEqual(int[] actual, bool actualIsCollection, int[] expected, bool expectedIsCollection)
     {
         var actualEnumerable = actualIsCollection ? actual : actual.Select(x => x);
         var expectedEnumerable = expectedIsCollection ? expected : expected.Select(x => x);
 
-        await Assert.That(() => actualEnumerable.Should().SequenceEqual(expectedEnumerable)).ThrowsNothing();
+        Assert.DoesNotThrow(() => actualEnumerable.Should().SequenceEqual(expectedEnumerable));
     }
 
     [Test]
-    public async Task SequenceEqual_SubType()
+    public void SequenceEqual_SubType()
     {
         var value = new List<object> { "A", "B", "C" };
 
-        await Assert.That(() => value.Should().SequenceEqual("A", "B", "C")).ThrowsNothing();
+        Assert.DoesNotThrow(() => value.Should().SequenceEqual("A", "B", "C"));
     }
 
     [Test]
-    public async Task SequenceEqual_Chain()
+    public void SequenceEqual_Chain()
     {
         var value = new List<int> { 1, 2, 3 };
 
         var chain = value.Should().SequenceEqual(value);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task SequenceEqual_Comparer()
+    public void SequenceEqual_Comparer()
     {
         var value = new List<string> { "a", "b", "c" };
 
-        await Assert.That(() => value.Should().SequenceEqual(new List<string> { "A", "B", "D" }, StringComparer.OrdinalIgnoreCase)).Throws<AssertionException>();
-        await Assert.That(() => value.Should().SequenceEqual(new List<string> { "A", "B", "C" }, StringComparer.OrdinalIgnoreCase)).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => value.Should().SequenceEqual(new List<string> { "A", "B", "D" }, StringComparer.OrdinalIgnoreCase));
+        Assert.DoesNotThrow(() => value.Should().SequenceEqual(new List<string> { "A", "B", "C" }, StringComparer.OrdinalIgnoreCase));
     }
 
     [Test]
-    public async Task SequenceEqual_Comparer_Chain()
+    public void SequenceEqual_Comparer_Chain()
     {
         var value = new List<string> { "a", "b", "c" };
 
         var chain = value.Should().SequenceEqual(new List<string> { "A", "B", "C" }, StringComparer.OrdinalIgnoreCase);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task SequenceEqual_Predicate()
+    public void SequenceEqual_Predicate()
     {
         var value = new List<string> { "a", "b", "c" };
 
-        await Assert.That(() => value.Should().SequenceEqual(new List<string> { "A", "B", "D" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).Throws<AssertionException>();
-        await Assert.That(() => value.Should().SequenceEqual(new List<string> { "A", "B", "C" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).ThrowsNothing();
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>(),
+            () => value.Should().SequenceEqual(new List<string> { "A", "B", "D" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))
+        );
+        Assert.DoesNotThrow(() => value.Should().SequenceEqual(new List<string> { "A", "B", "C" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase)));
     }
 
     [Test]
-    public async Task SequenceEqual_Predicate_Chain()
+    public void SequenceEqual_Predicate_Chain()
     {
         var value = new List<string> { "a", "b", "c" };
 
         var chain = value.Should().SequenceEqual(new List<string> { "A", "B", "C" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task NotSequenceEqual_Null()
+    public void NotSequenceEqual_Null()
     {
         IEnumerable<int> nullEnumerable = null!;
 
-        await Assert.That(() => nullEnumerable.Should().NotSequenceEqual(1)).Throws<AssertionException>()
-            .WithMessage("Value should not be null.");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullEnumerable.Should().NotSequenceEqual(1));
     }
-
-    [Test]
-    [Arguments(new int[0], true, new int[0], true, "Value should not sequence equal [].")]
-    [Arguments(new int[0], false, new int[0], true, "Value should not sequence equal [].")]
-    [Arguments(new int[0], true, new int[0], false, "Value should not sequence equal [].")]
-    [Arguments(new int[0], false, new int[0], false, "Value should not sequence equal [].")]
-    [Arguments(new[] { 1, 2, 3 }, true, new[] { 1, 2, 3 }, true, "Value should not sequence equal [1, 2, 3].")]
-    [Arguments(new[] { 1, 2, 3 }, false, new[] { 1, 2, 3 }, true, "Value should not sequence equal [1, 2, 3].")]
-    [Arguments(new[] { 1, 2, 3 }, true, new[] { 1, 2, 3 }, false, "Value should not sequence equal [1, 2, ...].")]
-    [Arguments(new[] { 1, 2, 3 }, false, new[] { 1, 2, 3 }, false, "Value should not sequence equal [1, 2, ...].")]
-    public async Task NotSequenceEqual_Throws(int[] actual, bool actualIsCollection, int[] expected, bool expectedIsCollection, string expectedMessage)
+    [TestCase(new int[0], true, new int[0], true, "Value should not sequence equal [].")]
+    [TestCase(new int[0], false, new int[0], true, "Value should not sequence equal [].")]
+    [TestCase(new int[0], true, new int[0], false, "Value should not sequence equal [].")]
+    [TestCase(new int[0], false, new int[0], false, "Value should not sequence equal [].")]
+    [TestCase(new[] { 1, 2, 3 }, true, new[] { 1, 2, 3 }, true, "Value should not sequence equal [1, 2, 3].")]
+    [TestCase(new[] { 1, 2, 3 }, false, new[] { 1, 2, 3 }, true, "Value should not sequence equal [1, 2, 3].")]
+    [TestCase(new[] { 1, 2, 3 }, true, new[] { 1, 2, 3 }, false, "Value should not sequence equal [1, 2, ...].")]
+    [TestCase(new[] { 1, 2, 3 }, false, new[] { 1, 2, 3 }, false, "Value should not sequence equal [1, 2, ...].")]
+    public void NotSequenceEqual_Throws(int[] actual, bool actualIsCollection, int[] expected, bool expectedIsCollection, string expectedMessage)
     {
         var actualEnumerable = actualIsCollection ? actual : actual.Select(x => x);
         var expectedEnumerable = expectedIsCollection ? expected : expected.Select(x => x);
 
-        await Assert.That(() => actualEnumerable.Should().NotSequenceEqual(expectedEnumerable)).Throws<AssertionException>()
-            .WithMessage(expectedMessage);
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo(expectedMessage), () => actualEnumerable.Should().NotSequenceEqual(expectedEnumerable));
     }
 
     [Test]
-    public async Task NotSequenceEqual_Chain()
+    public void NotSequenceEqual_Chain()
     {
         var value = new List<int> { 1, 2, 3 };
 
         var chain = value.Should().SequenceEqual(value);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task NotSequenceEqual_Comparer()
+    public void NotSequenceEqual_Comparer()
     {
         var value = new List<string> { "a", "b", "c" };
 
-        await Assert.That(() => value.Should().NotSequenceEqual(new List<string> { "A", "B", "C" }, StringComparer.OrdinalIgnoreCase)).Throws<AssertionException>()
-            .WithMessage("Value should not sequence equal [\"A\", \"B\", \"C\"].");
-        await Assert.That(() => value.Should().NotSequenceEqual(new List<string> { "A", "B", "D" }, StringComparer.OrdinalIgnoreCase)).ThrowsNothing();
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not sequence equal [\"A\", \"B\", \"C\"]."),
+            () => value.Should().NotSequenceEqual(new List<string> { "A", "B", "C" }, StringComparer.OrdinalIgnoreCase)
+        );
+        Assert.DoesNotThrow(() => value.Should().NotSequenceEqual(new List<string> { "A", "B", "D" }, StringComparer.OrdinalIgnoreCase));
     }
 
     [Test]
-    public async Task NotSequenceEqual_Comparer_Chain()
+    public void NotSequenceEqual_Comparer_Chain()
     {
         var value = new List<string> { "a", "b", "c" };
 
         var chain = value.Should().NotSequenceEqual(new List<string> { "x", "y", "z" }, StringComparer.OrdinalIgnoreCase);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task NotSequenceEqual_Predicate()
+    public void NotSequenceEqual_Predicate()
     {
         var value = new List<string> { "a", "b", "c" };
 
-        await Assert.That(() => value.Should().NotSequenceEqual(new List<string> { "A", "B", "C" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).Throws<AssertionException>()
-            .WithMessage("Value should not sequence equal [\"A\", \"B\", \"C\"].");
-        await Assert.That(() => value.Should().NotSequenceEqual(new List<string> { "A", "B", "D" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).ThrowsNothing();
-        await Assert.That(() => value.Should().NotSequenceEqual(new List<string> { "A", "B" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).ThrowsNothing();
-        await Assert.That(() => value.Should().NotSequenceEqual(new List<string> { "A", "B", "C", "D" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).ThrowsNothing();
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not sequence equal [\"A\", \"B\", \"C\"]."),
+            () => value.Should().NotSequenceEqual(new List<string> { "A", "B", "C" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))
+        );
+        Assert.DoesNotThrow(() => value.Should().NotSequenceEqual(new List<string> { "A", "B", "D" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase)));
+        Assert.DoesNotThrow(() => value.Should().NotSequenceEqual(new List<string> { "A", "B" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase)));
+        Assert.DoesNotThrow(() => value.Should().NotSequenceEqual(new List<string> { "A", "B", "C", "D" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase)));
     }
 
     [Test]
-    public async Task NotSequenceEqual_Predicate_Chain()
+    public void NotSequenceEqual_Predicate_Chain()
     {
         var value = new List<string> { "a", "b", "c" };
 
         var chain = value.Should().NotSequenceEqual(new List<string> { "x", "y", "z" }, (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task Contain_Null()
+    public void Contain_Null()
     {
         IEnumerable<int> nullEnumerable = null!;
 
-        await Assert.That(() => nullEnumerable.Should().Contain(1)).Throws<AssertionException>()
-            .WithMessage("Value should not be null.");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullEnumerable.Should().Contain(1));
     }
 
     [Test]
-    public async Task Contain()
+    public void Contain()
     {
         var value = new List<int> { 1, 2, 3 };
 
-        await Assert.That(() => value.Should().Contain(2)).ThrowsNothing();
-        await Assert.That(() => value.Should().Contain(5)).Throws<AssertionException>()
-            .WithMessage("Value should contain 5 but did not.");
+        Assert.DoesNotThrow(() => value.Should().Contain(2));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should contain 5 but did not."), () => value.Should().Contain(5));
     }
 
     [Test]
-    public async Task Contain_Chain()
+    public void Contain_Chain()
     {
         var value = new List<int> { 1, 2, 3 };
 
         var chain = value.Should().Contain(2);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task Contain_Comparer()
+    public void Contain_Comparer()
     {
         var value = new List<string> { "a", "b", "c" };
 
-        await Assert.That(() => value.Should().Contain("A", StringComparer.OrdinalIgnoreCase)).ThrowsNothing();
-        await Assert.That(() => value.Should().Contain("D", StringComparer.OrdinalIgnoreCase)).Throws<AssertionException>()
-            .WithMessage("Value should contain \"D\" but did not.");
+        Assert.DoesNotThrow(() => value.Should().Contain("A", StringComparer.OrdinalIgnoreCase));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should contain \"D\" but did not."),
+            () => value.Should().Contain("D", StringComparer.OrdinalIgnoreCase)
+        );
     }
 
     [Test]
-    public async Task Contain_Comparer_Chain()
+    public void Contain_Comparer_Chain()
     {
         var value = new List<string> { "a", "b", "c" };
 
         var chain = value.Should().Contain("A", StringComparer.OrdinalIgnoreCase);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task Contain_Predicate()
+    public void Contain_Predicate()
     {
         var value = new List<string> { "a", "b", "c" };
 
-        await Assert.That(() => value.Should().Contain("A", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).ThrowsNothing();
-        await Assert.That(() => value.Should().Contain("D", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).Throws<AssertionException>()
-            .WithMessage("Value should contain \"D\" but did not.");
+        Assert.DoesNotThrow(() => value.Should().Contain("A", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase)));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should contain \"D\" but did not."),
+            () => value.Should().Contain("D", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))
+        );
     }
 
     [Test]
-    public async Task Contain_Predicate_Chain()
+    public void Contain_Predicate_Chain()
     {
         var value = new List<string> { "a", "b", "c" };
 
         var chain = value.Should().Contain("A", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task NotContain_Null()
+    public void NotContain_Null()
     {
         IEnumerable<int> nullEnumerable = null!;
 
-        await Assert.That(() => nullEnumerable.Should().NotContain(1)).Throws<AssertionException>()
-            .WithMessage("Value should not be null.");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullEnumerable.Should().NotContain(1));
     }
 
     [Test]
-    public async Task NotContain()
+    public void NotContain()
     {
         var value = new List<int> { 1, 2, 3 };
 
-        await Assert.That(() => value.Should().NotContain(5)).ThrowsNothing();
-        await Assert.That(() => value.Should().NotContain(2)).Throws<AssertionException>()
-            .WithMessage("Value should not contain 2.");
+        Assert.DoesNotThrow(() => value.Should().NotContain(5));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not contain 2."), () => value.Should().NotContain(2));
     }
 
     [Test]
-    public async Task NotContain_Chain()
+    public void NotContain_Chain()
     {
         var value = new List<int> { 1, 2, 3 };
 
         var chain = value.Should().NotContain(5);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task NotContain_Comparer()
+    public void NotContain_Comparer()
     {
         var value = new List<string> { "a", "b", "c" };
 
-        await Assert.That(() => value.Should().NotContain("D", StringComparer.OrdinalIgnoreCase)).ThrowsNothing();
-        await Assert.That(() => value.Should().NotContain("A", StringComparer.OrdinalIgnoreCase)).Throws<AssertionException>()
-            .WithMessage("Value should not contain \"A\".");
+        Assert.DoesNotThrow(() => value.Should().NotContain("D", StringComparer.OrdinalIgnoreCase));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not contain \"A\"."),
+            () => value.Should().NotContain("A", StringComparer.OrdinalIgnoreCase)
+        );
     }
 
     [Test]
-    public async Task NotContain_Comparer_Chain()
+    public void NotContain_Comparer_Chain()
     {
         var value = new List<string> { "a", "b", "c" };
 
         var chain = value.Should().NotContain("D", StringComparer.OrdinalIgnoreCase);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task NotContain_Predicate()
+    public void NotContain_Predicate()
     {
         var value = new List<string> { "a", "b", "c" };
 
-        await Assert.That(() => value.Should().NotContain("D", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).ThrowsNothing();
-        await Assert.That(() => value.Should().NotContain("A", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))).Throws<AssertionException>()
-            .WithMessage("Value should not contain \"A\".");
+        Assert.DoesNotThrow(() => value.Should().NotContain("D", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase)));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not contain \"A\"."),
+            () => value.Should().NotContain("A", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase))
+        );
     }
 
     [Test]
-    public async Task NotContain_Predicate_Chain()
+    public void NotContain_Predicate_Chain()
     {
         var value = new List<string> { "a", "b", "c" };
 
         var chain = value.Should().NotContain("D", (a, b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase));
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task ContainSingle_NoArg_Null()
+    public void ContainSingle_NoArg_Null()
     {
         IEnumerable<int> nullEnumerable = null!;
 
-        await Assert.That(() => nullEnumerable.Should().ContainSingle()).Throws<AssertionException>()
-            .WithMessage("Value should not be null.");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullEnumerable.Should().ContainSingle());
     }
 
     [Test]
-    public async Task ContainSingle_NoArg()
+    public void ContainSingle_NoArg()
     {
         // ReSharper disable once CollectionNeverUpdated.Local
         var empty = new List<int>();
         var single = new List<int> { 42 };
         var multiple = new List<int> { 1, 2, 3 };
 
-        await Assert.That(() => empty.Should().ContainSingle()).Throws<AssertionException>()
-            .WithMessage("Value should contain a single item but was empty.");
-        await Assert.That(() => multiple.Should().ContainSingle()).Throws<AssertionException>()
-            .WithMessage("Value should contain a single item but contains more than one item.");
-        await Assert.That(() => single.Should().ContainSingle()).ThrowsNothing();
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should contain a single item but was empty."),
+            () => empty.Should().ContainSingle()
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should contain a single item but contains more than one item."),
+            () => multiple.Should().ContainSingle()
+        );
+        Assert.DoesNotThrow(() => single.Should().ContainSingle());
     }
 
     [Test]
-    public async Task ContainSingle_NoArg_Chain()
+    public void ContainSingle_NoArg_Chain()
     {
         var single = new List<int> { 42 };
 
         var chain = single.Should().ContainSingle();
-        await Assert.That(chain.That).IsEqualTo(42);
-        await Assert.That(chain.Value).IsEqualTo(42);
-        await Assert.That(chain.And.Value).IsEqualTo(42);
+        Assert.That(chain.That, Is.EqualTo(42));
+        Assert.That(chain.Value, Is.EqualTo(42));
+        Assert.That(chain.And.Value, Is.EqualTo(42));
     }
 }

@@ -3,156 +3,195 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class ReadOnlySetAssertionsTests
 {
     [Test]
-    public async Task SetEquals_IReadOnlySet()
+    public void SetEquals_IReadOnlySet()
     {
         IReadOnlySet<int> nullValue = null!;
         IReadOnlySet<int> value = new HashSet<int> { 1, 2, 3 };
         IReadOnlySet<int> empty = new HashSet<int>();
 
-        await Assert.That(() => nullValue.Should().SetEquals(1, 2, 3)).Throws<AssertionException>().WithMessage("Value should not be null.");
-        await Assert.That(() => value.Should().SetEquals(1, 2, 3, 4)).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should set equal [1, 2, 3, 4] but it is missing [4].");
-        await Assert.That(() => value.Should().SetEquals(1, 2)).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should set equal [1, 2] but it has extra item [3].");
-        await Assert.That(() => value.Should().SetEquals(1)).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should set equal [1] but it has extra items [2, 3].");
-        await Assert.That(() => value.Should().SetEquals(1, 2, 4)).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should set equal [1, 2, 4] but it is missing [4] and has extra item [3].");
-        await Assert.That(() => value.Should().SetEquals(4, 4)).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should set equal [4, 4] but it is missing [4] and has extra items [1, 2, 3].");
-        await Assert.That(() => value.Should().SetEquals(1, 2, 3)).ThrowsNothing();
-        await Assert.That(() => value.Should().SetEquals(3, 2, 1)).ThrowsNothing();
-        await Assert.That(() => value.Should().SetEquals(1, 2, 3, 3)).ThrowsNothing();
-        await Assert.That(() => empty.Should().SetEquals()).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullValue.Should().SetEquals(1, 2, 3));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value [1, 2, 3] should set equal [1, 2, 3, 4] but it is missing [4]."),
+            () => value.Should().SetEquals(1, 2, 3, 4)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value [1, 2, 3] should set equal [1, 2] but it has extra item [3]."),
+            () => value.Should().SetEquals(1, 2)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value [1, 2, 3] should set equal [1] but it has extra items [2, 3]."),
+            () => value.Should().SetEquals(1)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value [1, 2, 3] should set equal [1, 2, 4] but it is missing [4] and has extra item [3]."),
+            () => value.Should().SetEquals(1, 2, 4)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value [1, 2, 3] should set equal [4, 4] but it is missing [4] and has extra items [1, 2, 3]."),
+            () => value.Should().SetEquals(4, 4)
+        );
+        Assert.DoesNotThrow(() => value.Should().SetEquals(1, 2, 3));
+        Assert.DoesNotThrow(() => value.Should().SetEquals(3, 2, 1));
+        Assert.DoesNotThrow(() => value.Should().SetEquals(1, 2, 3, 3));
+        Assert.DoesNotThrow(() => empty.Should().SetEquals());
     }
 
     [Test]
-    public async Task SetEquals_IReadOnlySet_Chain()
+    public void SetEquals_IReadOnlySet_Chain()
     {
         IReadOnlySet<int> value = new HashSet<int> { 1, 2, 3 };
 
         var chain = value.Should().SetEquals(1, 2, 3);
-        await Assert.That(chain.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
 
         var and = chain.And;
-        await Assert.That(and.Value).IsEqualTo(value);
+        Assert.That(and.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task SetEquals_HashSet()
+    public void SetEquals_HashSet()
     {
         HashSet<int> nullValue = null!;
         var value = new HashSet<int> { 1, 2, 3 };
 
-        await Assert.That(() => nullValue.Should().SetEquals(1, 2, 3)).Throws<AssertionException>().WithMessage("Value should not be null.");
-        await Assert.That(() => value.Should().SetEquals(1, 2, 3, 4)).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should set equal [1, 2, 3, 4] but it is missing [4].");
-        await Assert.That(() => value.Should().SetEquals(1, 2)).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should set equal [1, 2] but it has extra item [3].");
-        await Assert.That(() => value.Should().SetEquals(1, 2, 3)).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullValue.Should().SetEquals(1, 2, 3));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value [1, 2, 3] should set equal [1, 2, 3, 4] but it is missing [4]."),
+            () => value.Should().SetEquals(1, 2, 3, 4)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value [1, 2, 3] should set equal [1, 2] but it has extra item [3]."),
+            () => value.Should().SetEquals(1, 2)
+        );
+        Assert.DoesNotThrow(() => value.Should().SetEquals(1, 2, 3));
     }
 
     [Test]
-    public async Task SetEquals_HashSet_Chain()
+    public void SetEquals_HashSet_Chain()
     {
         var value = new HashSet<int> { 1, 2, 3 };
 
         var chain = value.Should().SetEquals(1, 2, 3);
-        await Assert.That(chain.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
 
         var and = chain.And;
-        await Assert.That(and.Value).IsEqualTo(value);
+        Assert.That(and.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task IsSupersetOf_IReadOnlySet()
+    public void IsSupersetOf_IReadOnlySet()
     {
         IReadOnlySet<int> nullValue = null!;
         IReadOnlySet<int> value = new HashSet<int> { 1, 2, 3 };
 
-        await Assert.That(() => nullValue.Should().IsSupersetOf(1, 2)).Throws<AssertionException>().WithMessage("Value should not be null.");
-        await Assert.That(() => value.Should().IsSupersetOf(1, 4)).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should be a superset of [1, 4] but it is missing [4].");
-        await Assert.That(() => value.Should().IsSupersetOf(4, 5, 4)).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should be a superset of [4, 5, 4] but it is missing [4, 5].");
-        await Assert.That(() => value.Should().IsSupersetOf(1, 2)).ThrowsNothing();
-        await Assert.That(() => value.Should().IsSupersetOf(1, 2, 3)).ThrowsNothing();
-        await Assert.That(() => value.Should().IsSupersetOf()).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullValue.Should().IsSupersetOf(1, 2));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value [1, 2, 3] should be a superset of [1, 4] but it is missing [4]."),
+            () => value.Should().IsSupersetOf(1, 4)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value [1, 2, 3] should be a superset of [4, 5, 4] but it is missing [4, 5]."),
+            () => value.Should().IsSupersetOf(4, 5, 4)
+        );
+        Assert.DoesNotThrow(() => value.Should().IsSupersetOf(1, 2));
+        Assert.DoesNotThrow(() => value.Should().IsSupersetOf(1, 2, 3));
+        Assert.DoesNotThrow(() => value.Should().IsSupersetOf());
     }
 
     [Test]
-    public async Task IsSupersetOf_IReadOnlySet_Chain()
+    public void IsSupersetOf_IReadOnlySet_Chain()
     {
         IReadOnlySet<int> value = new HashSet<int> { 1, 2, 3 };
 
         var chain = value.Should().IsSupersetOf(1, 2);
-        await Assert.That(chain.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
 
         var and = chain.And;
-        await Assert.That(and.Value).IsEqualTo(value);
+        Assert.That(and.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task IsSupersetOf_HashSet()
+    public void IsSupersetOf_HashSet()
     {
         HashSet<int> nullValue = null!;
         var value = new HashSet<int> { 1, 2, 3 };
 
-        await Assert.That(() => nullValue.Should().IsSupersetOf(1, 2)).Throws<AssertionException>().WithMessage("Value should not be null.");
-        await Assert.That(() => value.Should().IsSupersetOf(1, 4)).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should be a superset of [1, 4] but it is missing [4].");
-        await Assert.That(() => value.Should().IsSupersetOf(1, 2)).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullValue.Should().IsSupersetOf(1, 2));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value [1, 2, 3] should be a superset of [1, 4] but it is missing [4]."),
+            () => value.Should().IsSupersetOf(1, 4)
+        );
+        Assert.DoesNotThrow(() => value.Should().IsSupersetOf(1, 2));
     }
 
     [Test]
-    public async Task IsSupersetOf_HashSet_Chain()
+    public void IsSupersetOf_HashSet_Chain()
     {
         var value = new HashSet<int> { 1, 2, 3 };
 
         var chain = value.Should().IsSupersetOf(1, 2);
-        await Assert.That(chain.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
 
         var and = chain.And;
-        await Assert.That(and.Value).IsEqualTo(value);
+        Assert.That(and.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task IsSubsetOf_IReadOnlySet()
+    public void IsSubsetOf_IReadOnlySet()
     {
         IReadOnlySet<int> nullValue = null!;
         IReadOnlySet<int> value = new HashSet<int> { 1, 2, 3 };
         IReadOnlySet<int> empty = new HashSet<int>();
 
-        await Assert.That(() => nullValue.Should().IsSubsetOf(1, 2, 3)).Throws<AssertionException>().WithMessage("Value should not be null.");
-        await Assert.That(() => value.Should().IsSubsetOf(1, 2)).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should be a subset of [1, 2] but it has extra item [3].");
-        await Assert.That(() => value.Should().IsSubsetOf(1)).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should be a subset of [1] but it has extra items [2, 3].");
-        await Assert.That(() => value.Should().IsSubsetOf(1, 2, 3)).ThrowsNothing();
-        await Assert.That(() => value.Should().IsSubsetOf(1, 2, 3, 4)).ThrowsNothing();
-        await Assert.That(() => empty.Should().IsSubsetOf(1)).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullValue.Should().IsSubsetOf(1, 2, 3));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value [1, 2, 3] should be a subset of [1, 2] but it has extra item [3]."),
+            () => value.Should().IsSubsetOf(1, 2)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value [1, 2, 3] should be a subset of [1] but it has extra items [2, 3]."),
+            () => value.Should().IsSubsetOf(1)
+        );
+        Assert.DoesNotThrow(() => value.Should().IsSubsetOf(1, 2, 3));
+        Assert.DoesNotThrow(() => value.Should().IsSubsetOf(1, 2, 3, 4));
+        Assert.DoesNotThrow(() => empty.Should().IsSubsetOf(1));
     }
 
     [Test]
-    public async Task IsSubsetOf_IReadOnlySet_Chain()
+    public void IsSubsetOf_IReadOnlySet_Chain()
     {
         IReadOnlySet<int> value = new HashSet<int> { 1, 2, 3 };
 
         var chain = value.Should().IsSubsetOf(1, 2, 3, 4);
-        await Assert.That(chain.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
 
         var and = chain.And;
-        await Assert.That(and.Value).IsEqualTo(value);
+        Assert.That(and.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task IsSubsetOf_HashSet()
+    public void IsSubsetOf_HashSet()
     {
         HashSet<int> nullValue = null!;
         var value = new HashSet<int> { 1, 2, 3 };
 
-        await Assert.That(() => nullValue.Should().IsSubsetOf(1, 2, 3)).Throws<AssertionException>().WithMessage("Value should not be null.");
-        await Assert.That(() => value.Should().IsSubsetOf(1, 2)).Throws<AssertionException>().WithMessage("Value [1, 2, 3] should be a subset of [1, 2] but it has extra item [3].");
-        await Assert.That(() => value.Should().IsSubsetOf(1, 2, 3)).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullValue.Should().IsSubsetOf(1, 2, 3));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value [1, 2, 3] should be a subset of [1, 2] but it has extra item [3]."),
+            () => value.Should().IsSubsetOf(1, 2)
+        );
+        Assert.DoesNotThrow(() => value.Should().IsSubsetOf(1, 2, 3));
     }
 
     [Test]
-    public async Task IsSubsetOf_HashSet_Chain()
+    public void IsSubsetOf_HashSet_Chain()
     {
         var value = new HashSet<int> { 1, 2, 3 };
 
         var chain = value.Should().IsSubsetOf(1, 2, 3, 4);
-        await Assert.That(chain.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
 
         var and = chain.And;
-        await Assert.That(and.Value).IsEqualTo(value);
+        Assert.That(and.Value, Is.EqualTo(value));
     }
 }

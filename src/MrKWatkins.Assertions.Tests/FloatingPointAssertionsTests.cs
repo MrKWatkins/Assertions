@@ -3,401 +3,401 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class FloatingPointAssertionsTests
 {
     [Test]
-    public async Task BeApproximately()
+    public void BeApproximately()
     {
         const double value = 17.5;
 
-        await Assert.That(() => value.Should().BeApproximately(17.5, 0.1)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeApproximately(17.45, 0.1)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeApproximately(17.55, 0.1)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeApproximately(17.6, 0.1)).Throws<AssertionException>()
-            .WithMessage("Value should be approximately 17.6 (±0.1) but was 17.5.");
-        await Assert.That(() => value.Should().BeApproximately(17.4, 0.1)).Throws<AssertionException>()
-            .WithMessage("Value should be approximately 17.4 (±0.1) but was 17.5.");
+        Assert.DoesNotThrow(() => value.Should().BeApproximately(17.5, 0.1));
+        Assert.DoesNotThrow(() => value.Should().BeApproximately(17.45, 0.1));
+        Assert.DoesNotThrow(() => value.Should().BeApproximately(17.55, 0.1));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be approximately 17.6 (±0.1) but was 17.5."),
+            () => value.Should().BeApproximately(17.6, 0.1)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be approximately 17.4 (±0.1) but was 17.5."),
+            () => value.Should().BeApproximately(17.4, 0.1)
+        );
     }
 
     [Test]
-    public async Task BeApproximately_Float()
+    public void BeApproximately_Float()
     {
         const float value = 17.5f;
 
-        await Assert.That(() => value.Should().BeApproximately(17.5f, 0.1f)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeApproximately(17.6f, 0.05f)).Throws<AssertionException>();
+        Assert.DoesNotThrow(() => value.Should().BeApproximately(17.5f, 0.1f));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => value.Should().BeApproximately(17.6f, 0.05f));
     }
 
     [Test]
-    public async Task BeApproximately_Half()
+    public void BeApproximately_Half()
     {
         var value = (Half)17.5;
 
-        await Assert.That(() => value.Should().BeApproximately((Half)17.5, (Half)0.1)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeApproximately((Half)17.6, (Half)0.05)).Throws<AssertionException>();
+        Assert.DoesNotThrow(() => value.Should().BeApproximately((Half)17.5, (Half)0.1));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => value.Should().BeApproximately((Half)17.6, (Half)0.05));
     }
 
     [Test]
-    public async Task BeApproximately_Chain()
+    public void BeApproximately_Chain()
     {
         const double value = 17.5;
 
         var chain = value.Should().BeApproximately(17.5, 0.1);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task BeLessThan()
+    public void BeLessThan()
     {
         const double value = 5.0;
 
-        await Assert.That(() => value.Should().BeLessThan(10.0, 0.001)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeLessThan(5.0, 0.001)).Throws<AssertionException>()
-            .WithMessage("Value should be less than 5 (±0.001) but was 5.");
-        await Assert.That(() => value.Should().BeLessThan(1.0, 0.001)).Throws<AssertionException>()
-            .WithMessage("Value should be less than 1 (±0.001) but was 5.");
+        Assert.DoesNotThrow(() => value.Should().BeLessThan(10.0, 0.001));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be less than 5 (±0.001) but was 5."),
+            () => value.Should().BeLessThan(5.0, 0.001)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be less than 1 (±0.001) but was 5."),
+            () => value.Should().BeLessThan(1.0, 0.001)
+        );
     }
 
     [Test]
-    public async Task BeLessThan_Chain()
+    public void BeLessThan_Chain()
     {
         const double value = 5.0;
 
         var chain = value.Should().BeLessThan(10.0, 0.001);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task BeLessThanOrEqualTo()
+    public void BeLessThanOrEqualTo()
     {
         const double value = 5.0;
 
-        await Assert.That(() => value.Should().BeLessThanOrEqualTo(10.0, 0.001)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeLessThanOrEqualTo(5.0, 0.001)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeLessThanOrEqualTo(1.0, 0.001)).Throws<AssertionException>()
-            .WithMessage("Value should be less than or equal to 1 (±0.001) but was 5.");
+        Assert.DoesNotThrow(() => value.Should().BeLessThanOrEqualTo(10.0, 0.001));
+        Assert.DoesNotThrow(() => value.Should().BeLessThanOrEqualTo(5.0, 0.001));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be less than or equal to 1 (±0.001) but was 5."),
+            () => value.Should().BeLessThanOrEqualTo(1.0, 0.001)
+        );
     }
 
     [Test]
-    public async Task BeLessThanOrEqualTo_Chain()
+    public void BeLessThanOrEqualTo_Chain()
     {
         const double value = 5.0;
 
         var chain = value.Should().BeLessThanOrEqualTo(5.0, 0.001);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task BeGreaterThan()
+    public void BeGreaterThan()
     {
         const double value = 5.0;
 
-        await Assert.That(() => value.Should().BeGreaterThan(1.0, 0.001)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeGreaterThan(5.0, 0.001)).Throws<AssertionException>()
-            .WithMessage("Value should be greater than 5 (±0.001) but was 5.");
-        await Assert.That(() => value.Should().BeGreaterThan(10.0, 0.001)).Throws<AssertionException>()
-            .WithMessage("Value should be greater than 10 (±0.001) but was 5.");
+        Assert.DoesNotThrow(() => value.Should().BeGreaterThan(1.0, 0.001));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be greater than 5 (±0.001) but was 5."),
+            () => value.Should().BeGreaterThan(5.0, 0.001)
+        );
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be greater than 10 (±0.001) but was 5."),
+            () => value.Should().BeGreaterThan(10.0, 0.001)
+        );
     }
 
     [Test]
-    public async Task BeGreaterThan_Chain()
+    public void BeGreaterThan_Chain()
     {
         const double value = 5.0;
 
         var chain = value.Should().BeGreaterThan(1.0, 0.001);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task BeGreaterThanOrEqualTo()
+    public void BeGreaterThanOrEqualTo()
     {
         const double value = 5.0;
 
-        await Assert.That(() => value.Should().BeGreaterThanOrEqualTo(1.0, 0.001)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeGreaterThanOrEqualTo(5.0, 0.001)).ThrowsNothing();
-        await Assert.That(() => value.Should().BeGreaterThanOrEqualTo(10.0, 0.001)).Throws<AssertionException>()
-            .WithMessage("Value should be greater than or equal to 10 (±0.001) but was 5.");
+        Assert.DoesNotThrow(() => value.Should().BeGreaterThanOrEqualTo(1.0, 0.001));
+        Assert.DoesNotThrow(() => value.Should().BeGreaterThanOrEqualTo(5.0, 0.001));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be greater than or equal to 10 (±0.001) but was 5."),
+            () => value.Should().BeGreaterThanOrEqualTo(10.0, 0.001)
+        );
     }
 
     [Test]
-    public async Task BeGreaterThanOrEqualTo_Chain()
+    public void BeGreaterThanOrEqualTo_Chain()
     {
         const double value = 5.0;
 
         var chain = value.Should().BeGreaterThanOrEqualTo(5.0, 0.001);
-        await Assert.That(chain.Value).IsEqualTo(value);
-        await Assert.That(chain.And.Value).IsEqualTo(value);
+        Assert.That(chain.Value, Is.EqualTo(value));
+        Assert.That(chain.And.Value, Is.EqualTo(value));
     }
 
     [Test]
-    public async Task BeZero()
+    public void BeZero()
     {
-        await Assert.That(() => (0.0).Should().BeZero()).ThrowsNothing();
-        await Assert.That(() => (5.0).Should().BeZero()).Throws<AssertionException>()
-            .WithMessage("Value should be zero but was 5.");
+        Assert.DoesNotThrow(() => 0.0.Should().BeZero());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be zero but was 5."), () => 5.0.Should().BeZero());
     }
 
     [Test]
-    public async Task BeZero_Chain()
+    public void BeZero_Chain()
     {
-        var chain = (0.0).Should().BeZero();
-        await Assert.That(chain.Value).IsEqualTo(0.0);
-        await Assert.That(chain.And.Value).IsEqualTo(0.0);
+        var chain = 0.0.Should().BeZero();
+        Assert.That(chain.Value, Is.EqualTo(0.0));
+        Assert.That(chain.And.Value, Is.EqualTo(0.0));
     }
 
     [Test]
-    public async Task NotBeZero()
+    public void NotBeZero()
     {
-        await Assert.That(() => (5.0).Should().NotBeZero()).ThrowsNothing();
-        await Assert.That(() => (0.0).Should().NotBeZero()).Throws<AssertionException>()
-            .WithMessage("Value should not be zero.");
+        Assert.DoesNotThrow(() => 5.0.Should().NotBeZero());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be zero."), () => 0.0.Should().NotBeZero());
     }
 
     [Test]
-    public async Task NotBeZero_Chain()
+    public void NotBeZero_Chain()
     {
-        var chain = (5.0).Should().NotBeZero();
-        await Assert.That(chain.Value).IsEqualTo(5.0);
-        await Assert.That(chain.And.Value).IsEqualTo(5.0);
+        var chain = 5.0.Should().NotBeZero();
+        Assert.That(chain.Value, Is.EqualTo(5.0));
+        Assert.That(chain.And.Value, Is.EqualTo(5.0));
     }
 
     [Test]
-    public async Task BeNegative()
+    public void BeNegative()
     {
-        await Assert.That(() => (-5.0).Should().BeNegative()).ThrowsNothing();
-        await Assert.That(() => (5.0).Should().BeNegative()).Throws<AssertionException>()
-            .WithMessage("Value should be negative but was 5.");
+        Assert.DoesNotThrow(() => (-5.0).Should().BeNegative());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be negative but was 5."), () => 5.0.Should().BeNegative());
     }
 
     [Test]
-    public async Task BeNegative_Chain()
+    public void BeNegative_Chain()
     {
         var chain = (-5.0).Should().BeNegative();
-        await Assert.That(chain.Value).IsEqualTo(-5.0);
-        await Assert.That(chain.And.Value).IsEqualTo(-5.0);
+        Assert.That(chain.Value, Is.EqualTo(-5.0));
+        Assert.That(chain.And.Value, Is.EqualTo(-5.0));
     }
 
     [Test]
-    public async Task NotBeNegative()
+    public void NotBeNegative()
     {
-        await Assert.That(() => (5.0).Should().NotBeNegative()).ThrowsNothing();
-        await Assert.That(() => (-5.0).Should().NotBeNegative()).Throws<AssertionException>()
-            .WithMessage("Value should not be negative but was -5.");
+        Assert.DoesNotThrow(() => 5.0.Should().NotBeNegative());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be negative but was -5."), () => (-5.0).Should().NotBeNegative());
     }
 
     [Test]
-    public async Task NotBeNegative_Chain()
+    public void NotBeNegative_Chain()
     {
-        var chain = (5.0).Should().NotBeNegative();
-        await Assert.That(chain.Value).IsEqualTo(5.0);
-        await Assert.That(chain.And.Value).IsEqualTo(5.0);
+        var chain = 5.0.Should().NotBeNegative();
+        Assert.That(chain.Value, Is.EqualTo(5.0));
+        Assert.That(chain.And.Value, Is.EqualTo(5.0));
     }
 
     [Test]
-    public async Task BePositive()
+    public void BePositive()
     {
-        await Assert.That(() => (5.0).Should().BePositive()).ThrowsNothing();
-        await Assert.That(() => (-5.0).Should().BePositive()).Throws<AssertionException>()
-            .WithMessage("Value should be positive but was -5.");
+        Assert.DoesNotThrow(() => 5.0.Should().BePositive());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be positive but was -5."), () => (-5.0).Should().BePositive());
     }
 
     [Test]
-    public async Task BePositive_Chain()
+    public void BePositive_Chain()
     {
-        var chain = (5.0).Should().BePositive();
-        await Assert.That(chain.Value).IsEqualTo(5.0);
-        await Assert.That(chain.And.Value).IsEqualTo(5.0);
+        var chain = 5.0.Should().BePositive();
+        Assert.That(chain.Value, Is.EqualTo(5.0));
+        Assert.That(chain.And.Value, Is.EqualTo(5.0));
     }
 
     [Test]
-    public async Task NotBePositive()
+    public void NotBePositive()
     {
-        await Assert.That(() => (-5.0).Should().NotBePositive()).ThrowsNothing();
-        await Assert.That(() => (5.0).Should().NotBePositive()).Throws<AssertionException>()
-            .WithMessage("Value should not be positive but was 5.");
+        Assert.DoesNotThrow(() => (-5.0).Should().NotBePositive());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be positive but was 5."), () => 5.0.Should().NotBePositive());
     }
 
     [Test]
-    public async Task NotBePositive_Chain()
+    public void NotBePositive_Chain()
     {
         var chain = (-5.0).Should().NotBePositive();
-        await Assert.That(chain.Value).IsEqualTo(-5.0);
-        await Assert.That(chain.And.Value).IsEqualTo(-5.0);
+        Assert.That(chain.Value, Is.EqualTo(-5.0));
+        Assert.That(chain.And.Value, Is.EqualTo(-5.0));
     }
 
     [Test]
-    public async Task BeNaN()
+    public void BeNaN()
     {
-        await Assert.That(() => double.NaN.Should().BeNaN()).ThrowsNothing();
-        await Assert.That(() => (5.0).Should().BeNaN()).Throws<AssertionException>()
-            .WithMessage("Value should be NaN but was 5.");
+        Assert.DoesNotThrow(() => double.NaN.Should().BeNaN());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be NaN but was 5."), () => 5.0.Should().BeNaN());
     }
 
     [Test]
-    public async Task BeNaN_Chain()
+    public void BeNaN_Chain()
     {
         var chain = double.NaN.Should().BeNaN();
-        await Assert.That(double.IsNaN(chain.Value)).IsTrue();
-        await Assert.That(double.IsNaN(chain.And.Value)).IsTrue();
+        Assert.That(double.IsNaN(chain.Value), Is.True);
+        Assert.That(double.IsNaN(chain.And.Value), Is.True);
     }
 
     [Test]
-    public async Task NotBeNaN()
+    public void NotBeNaN()
     {
-        await Assert.That(() => (5.0).Should().NotBeNaN()).ThrowsNothing();
-        await Assert.That(() => double.NaN.Should().NotBeNaN()).Throws<AssertionException>()
-            .WithMessage("Value should not be NaN.");
+        Assert.DoesNotThrow(() => 5.0.Should().NotBeNaN());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be NaN."), () => double.NaN.Should().NotBeNaN());
     }
 
     [Test]
-    public async Task NotBeNaN_Chain()
+    public void NotBeNaN_Chain()
     {
-        var chain = (5.0).Should().NotBeNaN();
-        await Assert.That(chain.Value).IsEqualTo(5.0);
-        await Assert.That(chain.And.Value).IsEqualTo(5.0);
+        var chain = 5.0.Should().NotBeNaN();
+        Assert.That(chain.Value, Is.EqualTo(5.0));
+        Assert.That(chain.And.Value, Is.EqualTo(5.0));
     }
 
     [Test]
-    public async Task BeInfinity()
+    public void BeInfinity()
     {
-        await Assert.That(() => double.PositiveInfinity.Should().BeInfinity()).ThrowsNothing();
-        await Assert.That(() => double.NegativeInfinity.Should().BeInfinity()).ThrowsNothing();
-        await Assert.That(() => (5.0).Should().BeInfinity()).Throws<AssertionException>()
-            .WithMessage("Value should be infinity but was 5.");
+        Assert.DoesNotThrow(() => double.PositiveInfinity.Should().BeInfinity());
+        Assert.DoesNotThrow(() => double.NegativeInfinity.Should().BeInfinity());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be infinity but was 5."), () => 5.0.Should().BeInfinity());
     }
 
     [Test]
-    public async Task BeInfinity_Chain()
+    public void BeInfinity_Chain()
     {
         var chain = double.PositiveInfinity.Should().BeInfinity();
-        await Assert.That(double.IsInfinity(chain.Value)).IsTrue();
-        await Assert.That(double.IsInfinity(chain.And.Value)).IsTrue();
+        Assert.That(double.IsInfinity(chain.Value), Is.True);
+        Assert.That(double.IsInfinity(chain.And.Value), Is.True);
     }
 
     [Test]
-    public async Task NotBeInfinity()
+    public void NotBeInfinity()
     {
-        await Assert.That(() => (5.0).Should().NotBeInfinity()).ThrowsNothing();
-        await Assert.That(() => double.PositiveInfinity.Should().NotBeInfinity()).Throws<AssertionException>()
-            .WithMessage("Value should not be infinity.");
+        Assert.DoesNotThrow(() => 5.0.Should().NotBeInfinity());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be infinity."), () => double.PositiveInfinity.Should().NotBeInfinity());
     }
 
     [Test]
-    public async Task NotBeInfinity_Chain()
+    public void NotBeInfinity_Chain()
     {
-        var chain = (5.0).Should().NotBeInfinity();
-        await Assert.That(chain.Value).IsEqualTo(5.0);
-        await Assert.That(chain.And.Value).IsEqualTo(5.0);
+        var chain = 5.0.Should().NotBeInfinity();
+        Assert.That(chain.Value, Is.EqualTo(5.0));
+        Assert.That(chain.And.Value, Is.EqualTo(5.0));
     }
 
     [Test]
-    public async Task BePositiveInfinity()
+    public void BePositiveInfinity()
     {
-        await Assert.That(() => double.PositiveInfinity.Should().BePositiveInfinity()).ThrowsNothing();
-        await Assert.That(() => (5.0).Should().BePositiveInfinity()).Throws<AssertionException>()
-            .WithMessage("Value should be positive infinity but was 5.");
+        Assert.DoesNotThrow(() => double.PositiveInfinity.Should().BePositiveInfinity());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be positive infinity but was 5."), () => 5.0.Should().BePositiveInfinity());
     }
 
     [Test]
-    public async Task BePositiveInfinity_Chain()
+    public void BePositiveInfinity_Chain()
     {
         var chain = double.PositiveInfinity.Should().BePositiveInfinity();
-        await Assert.That(double.IsPositiveInfinity(chain.Value)).IsTrue();
-        await Assert.That(double.IsPositiveInfinity(chain.And.Value)).IsTrue();
+        Assert.That(double.IsPositiveInfinity(chain.Value), Is.True);
+        Assert.That(double.IsPositiveInfinity(chain.And.Value), Is.True);
     }
 
     [Test]
-    public async Task BeNegativeInfinity()
+    public void BeNegativeInfinity()
     {
-        await Assert.That(() => double.NegativeInfinity.Should().BeNegativeInfinity()).ThrowsNothing();
-        await Assert.That(() => (5.0).Should().BeNegativeInfinity()).Throws<AssertionException>()
-            .WithMessage("Value should be negative infinity but was 5.");
+        Assert.DoesNotThrow(() => double.NegativeInfinity.Should().BeNegativeInfinity());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be negative infinity but was 5."), () => 5.0.Should().BeNegativeInfinity());
     }
 
     [Test]
-    public async Task BeNegativeInfinity_Chain()
+    public void BeNegativeInfinity_Chain()
     {
         var chain = double.NegativeInfinity.Should().BeNegativeInfinity();
-        await Assert.That(double.IsNegativeInfinity(chain.Value)).IsTrue();
-        await Assert.That(double.IsNegativeInfinity(chain.And.Value)).IsTrue();
+        Assert.That(double.IsNegativeInfinity(chain.Value), Is.True);
+        Assert.That(double.IsNegativeInfinity(chain.And.Value), Is.True);
     }
 
     [Test]
-    public async Task ZeroAndSign_SignedZero()
+    public void ZeroAndSign_SignedZero()
     {
-        await Assert.That(() => (0.0).Should().BePositive()).Throws<AssertionException>()
-            .WithMessage("Value should be positive but was 0.");
-        await Assert.That(() => (0.0).Should().NotBePositive()).ThrowsNothing();
-        await Assert.That(() => (0.0).Should().NotBeNegative()).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be positive but was 0."), () => 0.0.Should().BePositive());
+        Assert.DoesNotThrow(() => 0.0.Should().NotBePositive());
+        Assert.DoesNotThrow(() => 0.0.Should().NotBeNegative());
 
-        await Assert.That(() => (-0.0).Should().BeZero()).ThrowsNothing();
-        await Assert.That(() => (-0.0).Should().BeNegative()).Throws<AssertionException>()
-            .WithMessage("Value should be negative but was -0.");
-        await Assert.That(() => (-0.0).Should().NotBeNegative()).ThrowsNothing();
-        await Assert.That(() => (-0.0).Should().NotBePositive()).ThrowsNothing();
+        Assert.DoesNotThrow(() => (-0.0).Should().BeZero());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be negative but was -0."), () => (-0.0).Should().BeNegative());
+        Assert.DoesNotThrow(() => (-0.0).Should().NotBeNegative());
+        Assert.DoesNotThrow(() => (-0.0).Should().NotBePositive());
     }
 
     [Test]
-    public async Task ZeroAndSign_NaN()
+    public void ZeroAndSign_NaN()
     {
-        await Assert.That(() => double.NaN.Should().BeZero()).Throws<AssertionException>()
-            .WithMessage("Value should be zero but was NaN.");
-        await Assert.That(() => double.NaN.Should().NotBeZero()).ThrowsNothing();
-        await Assert.That(() => double.NaN.Should().BePositive()).Throws<AssertionException>()
-            .WithMessage("Value should be positive but was NaN.");
-        await Assert.That(() => double.NaN.Should().NotBePositive()).ThrowsNothing();
-        await Assert.That(() => double.NaN.Should().BeNegative()).Throws<AssertionException>()
-            .WithMessage("Value should be negative but was NaN.");
-        await Assert.That(() => double.NaN.Should().NotBeNegative()).ThrowsNothing();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be zero but was NaN."), () => double.NaN.Should().BeZero());
+        Assert.DoesNotThrow(() => double.NaN.Should().NotBeZero());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be positive but was NaN."), () => double.NaN.Should().BePositive());
+        Assert.DoesNotThrow(() => double.NaN.Should().NotBePositive());
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be negative but was NaN."), () => double.NaN.Should().BeNegative());
+        Assert.DoesNotThrow(() => double.NaN.Should().NotBeNegative());
     }
 
     [Test]
-    public async Task ZeroAndSign_Infinity()
+    public void ZeroAndSign_Infinity()
     {
-        await Assert.That(() => double.PositiveInfinity.Should().BePositive()).ThrowsNothing();
-        await Assert.That(() => double.NegativeInfinity.Should().BeNegative()).ThrowsNothing();
+        Assert.DoesNotThrow(() => double.PositiveInfinity.Should().BePositive());
+        Assert.DoesNotThrow(() => double.NegativeInfinity.Should().BeNegative());
     }
 
     [Test]
-    public async Task ExactComparisons()
+    public void ExactComparisons()
     {
-        await Assert.That(() => (5.0).Should().BeLessThan(10.0)).ThrowsNothing();
-        await Assert.That(() => (5.0).Should().BeLessThan(5.0)).Throws<AssertionException>()
-            .WithMessage("Value should be less than 5 but was 5.");
-        await Assert.That(() => (5.0).Should().BeLessThanOrEqualTo(5.0)).ThrowsNothing();
-        await Assert.That(() => (5.0).Should().BeGreaterThan(1.0)).ThrowsNothing();
-        await Assert.That(() => (5.0).Should().BeGreaterThan(5.0)).Throws<AssertionException>()
-            .WithMessage("Value should be greater than 5 but was 5.");
-        await Assert.That(() => (5.0).Should().BeGreaterThanOrEqualTo(5.0)).ThrowsNothing();
-        await Assert.That(() => (5.0).Should().BeInRange(1.0, 10.0)).ThrowsNothing();
-        await Assert.That(() => (5.0).Should().BeInRange(6.0, 10.0)).Throws<AssertionException>()
-            .WithMessage("Value should be in the range 6 to 10 but was 5.");
+        Assert.DoesNotThrow(() => 5.0.Should().BeLessThan(10.0));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be less than 5 but was 5."), () => 5.0.Should().BeLessThan(5.0));
+        Assert.DoesNotThrow(() => 5.0.Should().BeLessThanOrEqualTo(5.0));
+        Assert.DoesNotThrow(() => 5.0.Should().BeGreaterThan(1.0));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be greater than 5 but was 5."), () => 5.0.Should().BeGreaterThan(5.0));
+        Assert.DoesNotThrow(() => 5.0.Should().BeGreaterThanOrEqualTo(5.0));
+        Assert.DoesNotThrow(() => 5.0.Should().BeInRange(1.0, 10.0));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be in the range 6 to 10 but was 5."),
+            () => 5.0.Should().BeInRange(6.0, 10.0)
+        );
     }
 
     [Test]
-    public async Task ExactComparisons_Half()
+    public void ExactComparisons_Half()
     {
-        await Assert.That(() => ((Half)5).Should().BeLessThan((Half)10)).ThrowsNothing();
-        await Assert.That(() => ((Half)5).Should().BeGreaterThan((Half)10)).Throws<AssertionException>()
-            .WithMessage("Value should be greater than 10 but was 5.");
+        Assert.DoesNotThrow(() => ((Half)5).Should().BeLessThan((Half)10));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be greater than 10 but was 5."),
+            () => ((Half)5).Should().BeGreaterThan((Half)10)
+        );
     }
 
     [Test]
-    public async Task ExactComparisons_NaN()
+    public void ExactComparisons_NaN()
     {
         // NaN is unordered, so all comparisons fail, whichever side the NaN is on. (Comparer<double>.Default would sort NaN below all other values.)
-        await Assert.That(() => double.NaN.Should().BeLessThan(1.0)).Throws<AssertionException>()
-            .WithMessage("Value should be less than 1 but was NaN.");
-        await Assert.That(() => double.NaN.Should().BeLessThanOrEqualTo(1.0)).Throws<AssertionException>();
-        await Assert.That(() => double.NaN.Should().BeGreaterThan(1.0)).Throws<AssertionException>();
-        await Assert.That(() => double.NaN.Should().BeGreaterThanOrEqualTo(1.0)).Throws<AssertionException>();
-        await Assert.That(() => double.NaN.Should().BeGreaterThanOrEqualTo(double.NaN)).Throws<AssertionException>();
-        await Assert.That(() => (1.0).Should().BeGreaterThan(double.NaN)).Throws<AssertionException>();
-        await Assert.That(() => (1.0).Should().BeLessThan(double.NaN)).Throws<AssertionException>();
-        await Assert.That(() => (1.0).Should().BeInRange(double.NaN, 2.0)).Throws<AssertionException>();
-        await Assert.That(() => double.NaN.Should().BeInRange(double.MinValue, double.MaxValue)).Throws<AssertionException>();
-        await Assert.That(() => float.NaN.Should().BeLessThan(1f)).Throws<AssertionException>();
-        await Assert.That(() => Half.NaN.Should().BeLessThan((Half)1)).Throws<AssertionException>();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should be less than 1 but was NaN."), () => double.NaN.Should().BeLessThan(1.0));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => double.NaN.Should().BeLessThanOrEqualTo(1.0));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => double.NaN.Should().BeGreaterThan(1.0));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => double.NaN.Should().BeGreaterThanOrEqualTo(1.0));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => double.NaN.Should().BeGreaterThanOrEqualTo(double.NaN));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => 1.0.Should().BeGreaterThan(double.NaN));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => 1.0.Should().BeLessThan(double.NaN));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => 1.0.Should().BeInRange(double.NaN, 2.0));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => double.NaN.Should().BeInRange(double.MinValue, double.MaxValue));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => float.NaN.Should().BeLessThan(1f));
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => Half.NaN.Should().BeLessThan((Half)1));
     }
 }

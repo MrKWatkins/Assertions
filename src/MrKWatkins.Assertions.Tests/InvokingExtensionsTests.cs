@@ -3,17 +3,17 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class InvokingExtensionsTests
 {
     [Test]
-    public async Task Invoking_Action()
+    public void Invoking_Action()
     {
         var value = new TestClass();
-        await Assert.That(() => value.Invoking(v => v.Throw()).Should().Throw<InvalidOperationException>()).Throws<AssertionException>();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => value.Invoking(v => v.Throw()).Should().Throw<InvalidOperationException>());
     }
 
     [Test]
-    public async Task Invoking_Func()
+    public void Invoking_Func()
     {
         var value = new TestClass();
-        await Assert.That(() => value.Invoking(v => v.ThrowWithReturn()).Should().Throw<InvalidOperationException>()).Throws<AssertionException>();
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>(), () => value.Invoking(v => v.ThrowWithReturn()).Should().Throw<InvalidOperationException>());
     }
 
     private sealed class TestClass

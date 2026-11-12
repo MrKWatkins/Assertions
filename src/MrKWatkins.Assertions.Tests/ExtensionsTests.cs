@@ -5,47 +5,47 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class ExtensionsTests
 {
     [Test]
-    public async Task TryGetCount_IEnumerable()
+    public void TryGetCount_IEnumerable()
     {
         IEnumerable enumerable = new Enumerable();
 
-        await Assert.That(enumerable.TryGetCount(out _)).IsFalse();
+        Assert.That(enumerable.TryGetCount(out _), Is.False);
     }
 
     [Test]
-    public async Task TryGetCount_IEnumerable_IsICollection()
+    public void TryGetCount_IEnumerable_IsICollection()
     {
         IEnumerable collection = new Collection(3);
 
-        await Assert.That(collection.TryGetCount(out var count)).IsTrue();
-        await Assert.That(count).IsEqualTo(3);
+        Assert.That(collection.TryGetCount(out var count), Is.True);
+        Assert.That(count, Is.EqualTo(3));
     }
 
     [Test]
-    public async Task TryGetCount_IEnumerableOfT_IsICollectionOfT()
+    public void TryGetCount_IEnumerableOfT_IsICollectionOfT()
     {
         // ReSharper disable once CollectionNeverUpdated.Local
         ICollection<int> collection = new Collection<int>(3);
 
-        await Assert.That(collection.TryGetCount(out var count)).IsTrue();
-        await Assert.That(count).IsEqualTo(3);
+        Assert.That(collection.TryGetCount(out var count), Is.True);
+        Assert.That(count, Is.EqualTo(3));
     }
 
     [Test]
-    public async Task TryGetCount_IEnumerableOfT_IsIReadOnlyCollection()
+    public void TryGetCount_IEnumerableOfT_IsIReadOnlyCollection()
     {
         IReadOnlyCollection<int> collection = new ReadOnlyCollection<int>(3);
 
-        await Assert.That(collection.TryGetCount(out var count)).IsTrue();
-        await Assert.That(count).IsEqualTo(3);
+        Assert.That(collection.TryGetCount(out var count), Is.True);
+        Assert.That(count, Is.EqualTo(3));
     }
 
     [Test]
-    public async Task TryGetCount_IEnumerableOfT()
+    public void TryGetCount_IEnumerableOfT()
     {
         var enumerable = new[] { 1, 2, 3 }.Select(i => i);
 
-        await Assert.That(enumerable.TryGetCount(out _)).IsFalse();
+        Assert.That(enumerable.TryGetCount(out _), Is.False);
     }
 
     // Custom collection types to ensure we are testing the right interface and not accidentally testing the wrong one by using a List<T> or similar.

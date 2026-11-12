@@ -3,19 +3,19 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class AssertionExceptionTests
 {
     [Test]
-    public async Task Constructor_NoInnerException()
+    public void Constructor_NoInnerException()
     {
         var exception = new AssertionException("Test");
-        await Assert.That(exception.Message).IsEqualTo("Test");
-        await Assert.That(exception.InnerException).IsNull();
+        Assert.That(exception.Message, Is.EqualTo("Test"));
+        Assert.That(exception.InnerException, Is.Null);
     }
 
     [Test]
-    public async Task Constructor_WithInnerException()
+    public void Constructor_WithInnerException()
     {
         var inner = new InvalidOperationException("Inner");
         var exception = new AssertionException("Test", inner);
-        await Assert.That(exception.Message).IsEqualTo("Test");
-        await Assert.That(exception.InnerException).IsEqualTo(inner);
+        Assert.That(exception.Message, Is.EqualTo("Test"));
+        Assert.That(exception.InnerException, Is.EqualTo(inner));
     }
 }

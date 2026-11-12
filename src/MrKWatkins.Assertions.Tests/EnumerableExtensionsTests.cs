@@ -5,62 +5,62 @@ namespace MrKWatkins.Assertions.Tests;
 public sealed class EnumerableExtensionsTests
 {
     [Test]
-    public async Task SequenceEqual_Null()
+    public void SequenceEqual_Null()
     {
         IEnumerable nullEnumerable = null!;
 
-        await Assert.That(() => nullEnumerable.Should().SequenceEqual(1)).Throws<AssertionException>()
-            .WithMessage("Value should not be null.");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullEnumerable.Should().SequenceEqual(1));
     }
 
     [Test]
-    public async Task SequenceEqual()
+    public void SequenceEqual()
     {
         IEnumerable value = new List<int> { 1, 2, 3 };
 
-        await Assert.That(() => value.Should().SequenceEqual(1, 2, 3)).ThrowsNothing();
-        await Assert.That(() => value.Should().SequenceEqual(1, 2)).Throws<AssertionException>()
-            .WithMessage("Value [1, 2, ...] should sequence equal [1, 2] but it has more elements than the expected 2.");
+        Assert.DoesNotThrow(() => value.Should().SequenceEqual(1, 2, 3));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value [1, 2, ...] should sequence equal [1, 2] but it has more elements than the expected 2."),
+            () => value.Should().SequenceEqual(1, 2)
+        );
     }
 
     [Test]
-    public async Task SequenceEqual_Chain()
+    public void SequenceEqual_Chain()
     {
         IEnumerable value = new List<int> { 1, 2, 3 };
 
         var chain = value.Should().SequenceEqual(1, 2, 3);
-        // https://github.com/thomhurst/TUnit/issues/1718
-        await Assert.That(ReferenceEquals(chain.Value, value)).IsTrue();
-        await Assert.That(ReferenceEquals(chain.And.Value, value)).IsTrue();
+        Assert.That(ReferenceEquals(chain.Value, value), Is.True);
+        Assert.That(ReferenceEquals(chain.And.Value, value), Is.True);
     }
 
     [Test]
-    public async Task NotSequenceEqual_Null()
+    public void NotSequenceEqual_Null()
     {
         IEnumerable nullEnumerable = null!;
 
-        await Assert.That(() => nullEnumerable.Should().NotSequenceEqual(1)).Throws<AssertionException>()
-            .WithMessage("Value should not be null.");
+        Assert.Throws(Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not be null."), () => nullEnumerable.Should().NotSequenceEqual(1));
     }
 
     [Test]
-    public async Task NotSequenceEqual()
+    public void NotSequenceEqual()
     {
         IEnumerable value = new List<int> { 1, 2, 3 };
 
-        await Assert.That(() => value.Should().NotSequenceEqual(1, 2)).ThrowsNothing();
-        await Assert.That(() => value.Should().NotSequenceEqual(1, 2, 3)).Throws<AssertionException>()
-            .WithMessage("Value should not sequence equal [1, 2, 3].");
+        Assert.DoesNotThrow(() => value.Should().NotSequenceEqual(1, 2));
+        Assert.Throws(
+            Is.TypeOf<NUnit.Framework.AssertionException>().And.Message.EqualTo("Value should not sequence equal [1, 2, 3]."),
+            () => value.Should().NotSequenceEqual(1, 2, 3)
+        );
     }
 
     [Test]
-    public async Task NotSequenceEqual_Chain()
+    public void NotSequenceEqual_Chain()
     {
         IEnumerable value = new List<int> { 1, 2, 3 };
 
         var chain = value.Should().NotSequenceEqual(1, 2);
-        // https://github.com/thomhurst/TUnit/issues/1718
-        await Assert.That(ReferenceEquals(chain.Value, value)).IsTrue();
-        await Assert.That(ReferenceEquals(chain.And.Value, value)).IsTrue();
+        Assert.That(ReferenceEquals(chain.Value, value), Is.True);
+        Assert.That(ReferenceEquals(chain.And.Value, value), Is.True);
     }
 }
